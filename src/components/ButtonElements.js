@@ -31,7 +31,7 @@ export const ButtonSmall = styled.button`
   min-width: 130px;
   height: 44px;
   border-radius: 6px;
-  background: '#fff';
+  background: #fff;
   color: #0a0f18;
   padding: 0 16px;
   font-size: 16px;

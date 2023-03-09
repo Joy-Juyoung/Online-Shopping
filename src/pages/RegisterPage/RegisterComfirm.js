@@ -16,6 +16,7 @@ const RegisterComfirm = () => {
         </div>
         <div>
           <Input placeholder='Enter your verificaiton code.' />
+          <Input />
           <button>Resend</button>
         </div>
         <div>The verification code is vaild for 30 minutes.</div>
