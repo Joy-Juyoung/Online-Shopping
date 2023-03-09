@@ -2,7 +2,7 @@ import React from 'react';
 
 const HeroPage = () => {
   return (
-    <div>
+    <div style={{backgroundColor: 'black', height: '500px'}}>
       <div>Main page</div>
     </div>
   );
