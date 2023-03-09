@@ -2,18 +2,24 @@ import React, { useState } from 'react';
 import { ButtonLarge } from '../../components/ButtonElements';
 import { Input } from '../../components/InputElements';
 import {
-  EyeIcon,
-  InputPassword,
   InputWrap,
   LoginCheck,
-  PesnalContainer,
   LoginOptions,
   LoginOptionsLegend,
-  PesnalWrapper,
   RegisterLink,
-} from '../StyledElements';
+} from './LoginElements';
+import {
+  PesnalContainer,
+  PesnalWrapper,
+  EyeIcon,
+  InputPassword,
+} from '../CommonElements';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+
+// 다른 경로 로그인하는 방법 추가
+// Validation 조건 충족 에러 넣기
+// Keep~ Forgot~ 이거 나중에 활성화해보기
 
 const LoginPage = () => {
   const [passwordType, setPasswordType] = useState('password');
