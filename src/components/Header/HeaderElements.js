@@ -4,14 +4,24 @@ import { Link } from 'react-router-dom';
 
 export const HeaderContainer = styled.div`
   max-width: 1280px;
-  margin: 0 auto;
   color: #0a0f18;
   position: sticky;
+  margin: 0 auto;
+  /* @media screen and (min-width: 576px) {
+    max-width: 375px; */
+  }
+
 `;
+
+export const HeaderWrapper = styled.div`
+  margin: 0 auto;
+
+`;
+
 export const HeaderUp = styled.div`
     padding-top: 20px;
-    padding-left: 125px;
-    padding-right: 125px;
+    /* padding-left: 10px;
+    padding-right: 10px; */
     display: flex;
     align-items: center;
     font-size: 16px;
@@ -63,7 +73,7 @@ export const RightIcon = styled.div`
 `;
 export const HeaderDown = styled.div`
     padding-top:20px;
-    padding-left: 125px;
+    /* padding-left: 125px; */
     align-items: center;
     display: flex;
 `;
@@ -71,6 +81,7 @@ export const HeaderDown = styled.div`
 export const DropdownContainer = styled.div`
   position: relative;
   text-align: center;
+  
 `;
 
 export const DropdownButton = styled.div`
@@ -82,7 +93,6 @@ export const DropdownButton = styled.div`
 
 export const Menu = styled.div`
   position: absolute;
-  width: ;
   top: 40px;
   left: 50%;
   width: 100px;
@@ -92,6 +102,7 @@ export const Menu = styled.div`
   transform: translate(-50%, -20px);
   transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
   z-index: 9;
+  background-color: white;
 
   &:after {
     content: "";
