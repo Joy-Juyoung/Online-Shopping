@@ -17,6 +17,9 @@ import {
     MidLink, 
     RightSide, 
     RightIcon,
+    FaLink,
+    CartLink,
+    PermLink,
     HeaderDown,
     DropdownContainer,
     DropdownButton,
@@ -64,13 +67,19 @@ const Header = () => {
                     </RightIcon>
                     {/* 추후 각각 링크 변경*/}
                     <RightIcon>
-                        <FavoriteBorderIcon fontSize='medium'/>
+                        <FaLink>
+                            <FavoriteBorderIcon fontSize='medium'/>
+                        </FaLink>
                     </RightIcon>
                     <RightIcon>
-                        <AddShoppingCartIcon fontSize='medium'/>
+                        <CartLink>
+                            <AddShoppingCartIcon fontSize='medium'/>
+                        </CartLink>
                     </RightIcon>
                     <RightIcon>
-                        <PermIdentityRoundedIcon fontSize='medium'/>
+                        <PermLink to='/login'>
+                            <PermIdentityRoundedIcon fontSize='medium'/>
+                        </PermLink>
                     </RightIcon>
                 </RightSide>
             </HeaderUp>

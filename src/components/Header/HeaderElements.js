@@ -72,6 +72,22 @@ export const RightIcon = styled.div`
     align-items: center;
     cursor: pointer;
 `;
+
+export const FaLink = styled(Link)`
+    text-decoration: none;
+    cursor: pointer;
+`;
+
+export const CartLink = styled(Link)`
+    text-decoration: none;
+    cursor: pointer;
+`;
+
+export const PermLink = styled(Link)`
+    text-decoration: none;
+    cursor: pointer;
+`;
+
 export const HeaderDown = styled.div`
     padding-top:20px;
     /* padding-left: 125px; */
@@ -110,6 +126,7 @@ export const Menu = styled.div`
     width: 0;
     position: absolute;
      transform: translate(-50%, -50%);
+     left: 50%;
 
   }
 
@@ -119,6 +136,7 @@ export const Menu = styled.div`
       opacity: 1;
       visibility: visible;
       transform: translate(-75%, 0);
+      left: 50%;
         `};
 `;
 
