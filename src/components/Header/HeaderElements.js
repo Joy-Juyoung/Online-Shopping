@@ -33,11 +33,12 @@ export const LeftSide = styled.div`
   align-items: left;
 
 `;
-export const SearchBar = styled.input`
+export const ModalBtn = styled.button`
     width:200px;
     height: 35px;
     border: none;
     display: flex;
+    cursor: pointer;
     background-color: #F5F5F5;
 
 `;
@@ -71,6 +72,22 @@ export const RightIcon = styled.div`
     align-items: center;
     cursor: pointer;
 `;
+
+export const FaLink = styled(Link)`
+    text-decoration: none;
+    cursor: pointer;
+`;
+
+export const CartLink = styled(Link)`
+    text-decoration: none;
+    cursor: pointer;
+`;
+
+export const PermLink = styled(Link)`
+    text-decoration: none;
+    cursor: pointer;
+`;
+
 export const HeaderDown = styled.div`
     padding-top:20px;
     /* padding-left: 125px; */
@@ -93,13 +110,12 @@ export const DropdownButton = styled.div`
 
 export const Menu = styled.div`
   position: absolute;
-  top: 40px;
   left: 50%;
-  width: 100px;
+  width: 150px;
   text-align: center;
   opacity: 0;
   visibility: hidden;
-  transform: translate(-50%, -20px);
+  transform: translate(100% );
   transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
   z-index: 9;
   background-color: white;
@@ -109,9 +125,8 @@ export const Menu = styled.div`
     height: 0;
     width: 0;
     position: absolute;
-    top: -3px;
-    left: 50%;
-    transform: translate(-50%, -50%);
+     transform: translate(-50%, -50%);
+     left: 50%;
 
   }
 
@@ -122,10 +137,11 @@ export const Menu = styled.div`
       visibility: visible;
       transform: translate(-75%, 0);
       left: 50%;
-    `};
+        `};
 `;
 
 export const Ul = styled.ul`
+
   & > li {
     margin-bottom: 20px;
   }
@@ -143,7 +159,9 @@ export const Ul = styled.ul`
   align-items: center;
 `;
 
-export const Li = styled.li``;
+export const Li = styled.li`
+font-family: 'Roboto', sans-serif;
+`;
 
 
 
