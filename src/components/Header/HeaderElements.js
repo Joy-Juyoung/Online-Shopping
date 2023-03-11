@@ -58,6 +58,10 @@ export const MidLink = styled(Link)`
     font-size: 35px;
     font-family: 'Roboto', sans-serif;
     cursor: pointer;
+    & :hover {
+      color: gray;
+    }
+    
 `;
 
 export const RightSide = styled.div`
@@ -75,17 +79,29 @@ export const RightIcon = styled.div`
 
 export const FaLink = styled(Link)`
     text-decoration: none;
+    color: black;
     cursor: pointer;
+    & :hover {
+      color: lightgray;
+    }
 `;
 
 export const CartLink = styled(Link)`
     text-decoration: none;
+    color: black;
     cursor: pointer;
+    & :hover {
+      color: lightgray;
+    }
 `;
 
 export const PermLink = styled(Link)`
     text-decoration: none;
+    color: black;
     cursor: pointer;
+    & :hover {
+      color: lightgray;
+    }
 `;
 
 export const HeaderDown = styled.div`
@@ -98,6 +114,7 @@ export const HeaderDown = styled.div`
 export const DropdownContainer = styled.div`
   position: relative;
   text-align: center;
+  margin-bottom: 20px;
   
 `;
 
@@ -105,11 +122,12 @@ export const DropdownButton = styled.div`
     font-size: 20px;
     font-family: 'Roboto', sans-serif;
     margin-right  : 50px;
-     cursor: pointer;
+    cursor: pointer;
 `;
 
 export const Menu = styled.div`
   position: absolute;
+  
   left: 50%;
   width: 150px;
   text-align: center;
@@ -127,6 +145,7 @@ export const Menu = styled.div`
     position: absolute;
      transform: translate(-50%, -50%);
      left: 50%;
+     
 
   }
 
@@ -137,6 +156,8 @@ export const Menu = styled.div`
       visibility: visible;
       transform: translate(-75%, 0);
       left: 50%;
+      border-top: 3px solid red;
+      margin-top: 20px;
         `};
 `;
 
@@ -160,7 +181,6 @@ export const Ul = styled.ul`
 `;
 
 export const Li = styled.li`
-font-family: 'Roboto', sans-serif;
 `;
 
 
