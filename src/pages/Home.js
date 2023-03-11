@@ -11,11 +11,7 @@ const Home = () => {
       <Route path='/' element={<HeroPage />} exact={true} />
       <Route path='/login' element={<LoginPage />} exact={true} />
       <Route path='/register' element={<RegisterPage />} exact={true} />
-      <Route
-        path='/register/:email'
-        element={<RegisterComfirm />}
-        exact={true}
-      />
+      <Route path='/confirm' element={<RegisterComfirm />} exact={true} />
     </Routes>
   );
 };
