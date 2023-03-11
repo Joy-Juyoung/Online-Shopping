@@ -113,6 +113,7 @@ const Footer = () => {
           </SocialPart>
         </FooterLineTwo>
         <FooterLineThree>
+          {/* 추후 드랍다운 */}
           <LocationInfoBtn>
             Learn more about MUSINSA Co.,Ltd.
           </LocationInfoBtn>

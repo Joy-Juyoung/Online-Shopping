@@ -79,7 +79,7 @@ export const HelpBtn =  styled.button`
     box-sizing: border-box;
     font-size: 16px;
     font-weight: bold;
- 
+    background-color: white;
     cursor: pointer;
     a {
         text-Decoration: none;
