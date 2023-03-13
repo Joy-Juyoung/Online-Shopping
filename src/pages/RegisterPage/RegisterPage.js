@@ -174,7 +174,7 @@ const RegisterPage = () => {
               <Input
                 type='text'
                 id='username'
-                ref={userRef}
+                // ref={userRef}
                 autoComplete='off'
                 onChange={(e) => setUsername(e.target.value)}
                 value={username}
