@@ -82,91 +82,93 @@ const RegisterPage = () => {
   return (
     <PesnalContainer>
       <PesnalWrapper>
-        Create Account
-        <RegisterInput>
-          <RegisterInputLabel>Email address</RegisterInputLabel>
-          <Input
-            type='email'
-            onChange={(e) => setEmailInput(e.target.value)}
-            value={emailInput}
-            placeholder='Enter your Email address.'
-          />
-          <RegisterInputLabel>Name</RegisterInputLabel>
-          <Input
-            type='text'
-            onChange={(e) => setNameInput(e.target.value)}
-            value={nameInput}
-            placeholder='Enter name'
-          />
-          <RegisterInputLabel>Password</RegisterInputLabel>
-          <InputPassword>
+        <h1>Create Account</h1>
+        <form>
+          <RegisterInput>
+            <RegisterInputLabel>Email address</RegisterInputLabel>
             <Input
-              placeholder='Enter password'
-              type={passwordType}
-              onChange={handlePasswordChange}
-              value={passwordInput}
-              name='password'
+              type='email'
+              onChange={(e) => setEmailInput(e.target.value)}
+              value={emailInput}
+              placeholder='Enter your Email address.'
             />
-            <EyeIcon>
-              {passwordType === 'password' ? (
-                <VisibilityOff onClick={togglePassword} fontSize='small' />
-              ) : (
-                <Visibility onClick={togglePassword} fontSize='small' />
-              )}
-            </EyeIcon>
-          </InputPassword>
-          <InputPassword>
+            <RegisterInputLabel>Name</RegisterInputLabel>
             <Input
-              placeholder='Re-enter password'
-              type={rePasswordType}
-              onChange={handleRePasswordChange}
-              value={rePasswordInput}
-              name='password'
+              type='text'
+              onChange={(e) => setNameInput(e.target.value)}
+              value={nameInput}
+              placeholder='Enter name'
             />
+            <RegisterInputLabel>Password</RegisterInputLabel>
+            <InputPassword>
+              <Input
+                placeholder='Enter password'
+                type={passwordType}
+                onChange={handlePasswordChange}
+                value={passwordInput}
+                name='password'
+              />
+              <EyeIcon>
+                {passwordType === 'password' ? (
+                  <VisibilityOff onClick={togglePassword} fontSize='small' />
+                ) : (
+                  <Visibility onClick={togglePassword} fontSize='small' />
+                )}
+              </EyeIcon>
+            </InputPassword>
+            <InputPassword>
+              <Input
+                placeholder='Re-enter password'
+                type={rePasswordType}
+                onChange={handleRePasswordChange}
+                value={rePasswordInput}
+                name='password'
+              />
 
-            <EyeIcon>
-              {rePasswordType === 'password' ? (
-                <VisibilityOff onClick={toggleRePassword} fontSize='small' />
-              ) : (
-                <Visibility onClick={toggleRePassword} fontSize='small' />
-              )}
-            </EyeIcon>
-          </InputPassword>
-        </RegisterInput>
-        <Agreements style={isValid ? {} : validStyle}>
-          <AgreementsWrap>
-            <AgreeAll>
-              <AgreeAllCheckbox type='checkbox' disabled={!isValid} />
-              <AgreeContents>I agree to all terms</AgreeContents>
-            </AgreeAll>
-            <AgreeEach>
-              <button disabled={!isValid}>
-                <CheckIcon fontSize='small' />
-              </button>
-              <AgreeContents>
-                I have read and agreed to he SHOP Terms & Conditions and Privacy
-                Policy.
-              </AgreeContents>
-            </AgreeEach>
-            <AgreeEach>
-              <button disabled={!isValid}>
-                <CheckIcon fontSize='small' />
-              </button>
-              <AgreeContents>
-                I subscribe to advertising and marketing services (Optional.)
-                Read more
-              </AgreeContents>
-            </AgreeEach>
-          </AgreementsWrap>
-        </Agreements>
-        <Link to='/register/:email'>
-          <ButtonLarge
-            disabled={!isValid}
-            style={isValid ? {} : validStyleButton}
-          >
-            Next
-          </ButtonLarge>
-        </Link>
+              <EyeIcon>
+                {rePasswordType === 'password' ? (
+                  <VisibilityOff onClick={toggleRePassword} fontSize='small' />
+                ) : (
+                  <Visibility onClick={toggleRePassword} fontSize='small' />
+                )}
+              </EyeIcon>
+            </InputPassword>
+          </RegisterInput>
+          <Agreements style={isValid ? {} : validStyle}>
+            <AgreementsWrap>
+              <AgreeAll>
+                <AgreeAllCheckbox type='checkbox' disabled={!isValid} />
+                <AgreeContents>I agree to all terms</AgreeContents>
+              </AgreeAll>
+              <AgreeEach>
+                <button disabled={!isValid}>
+                  <CheckIcon fontSize='small' />
+                </button>
+                <AgreeContents>
+                  I have read and agreed to he SHOP Terms & Conditions and
+                  Privacy Policy.
+                </AgreeContents>
+              </AgreeEach>
+              <AgreeEach>
+                <button disabled={!isValid}>
+                  <CheckIcon fontSize='small' />
+                </button>
+                <AgreeContents>
+                  I subscribe to advertising and marketing services (Optional.)
+                  Read more
+                </AgreeContents>
+              </AgreeEach>
+            </AgreementsWrap>
+          </Agreements>
+          <Link to='/register/:email'>
+            <ButtonLarge
+              disabled={!isValid}
+              style={isValid ? {} : validStyleButton}
+            >
+              Next
+            </ButtonLarge>
+          </Link>
+        </form>
       </PesnalWrapper>
     </PesnalContainer>
   );
