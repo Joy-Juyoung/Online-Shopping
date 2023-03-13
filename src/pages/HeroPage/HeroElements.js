@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const MainContainer = styled.div`
-min-height: 100%;
+    min-height: 100%;
     font-family: proximanova, -apple-system, BlinkMacSystemFont, "Noto Sans", "Segoe UI", Roboto, system-ui, "Helvetica Neue", Arial, sans-serif;
     font-size: 14px;
     line-height: 1.5;
@@ -19,7 +19,7 @@ export const TopWrapper = styled.div`
 export const FreeInfo = styled.div`
     min-height: 40px;
     display: grid;
-    -webkit-box-align: center;
+    /* -webkit-box-align: center; */
     align-items: center;
     grid-template-columns: 100%;
     padding: 3px 12px;
@@ -60,7 +60,7 @@ export const MidInfo = styled.div`
 
 export const SectionOne = styled.section`
     display: flex;
-    -webkit-box-align: center;
+    /* -webkit-box-align: center; */
     align-items: center;
     max-width: 1280px;
     margin: 50px auto 0px;
@@ -104,9 +104,9 @@ export const SectionOneRightInfo = styled.div`
 `;
 
 export const OneRightInfoUp = styled.div`
-    -webkit-box-align: center;
+    /* -webkit-box-align: center; */
     align-items: center;
-    -webkit-box-pack: center;
+    /* -webkit-box-pack: center; */
     justify-content: center;
     padding-top: 0px;
     text-align: left;
@@ -157,7 +157,7 @@ export const SectionTwo = styled.section`
 export const SectionTwoWrapper = styled.div`
     display: flex;
     flex-direction: row;
-    -webkit-box-align: center;
+    /* -webkit-box-align: center; */
     align-items: center;
     padding: 0px 20px;
     max-width: 1280px;
@@ -192,8 +192,8 @@ export const ParagraghTwoTitle = styled.h2`
     text-overflow: ellipsis;
     white-space: normal;
     overflow-wrap: break-word;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    /* -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; */
     word-break: break-word;
 `;
 
@@ -237,7 +237,7 @@ export const SectionThree = styled.section`
 `;
 export const SectionThreeWrapper = styled.div`
     display: flex;
-    -webkit-box-align: center;
+    /* -webkit-box-align: center; */
     align-items: center;
     padding: 0px 20px;
     flex-direction: row-reverse;
@@ -295,8 +295,8 @@ export const ParagraghThreeTitle = styled.h2`
     text-overflow: ellipsis;
     white-space: normal;
     overflow-wrap: break-word;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    /* -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; */
     word-break: break-word;
 `;
 
@@ -318,7 +318,7 @@ export const SectionFour = styled.section`
 export const SectionFourWrapper = styled.div`
     display: flex;
     flex-direction: row;
-    -webkit-box-align: center;
+    /* -webkit-box-align: center; */
     align-items: center;
     padding: 0px 20px;
     max-width: 1280px;
@@ -353,8 +353,8 @@ export const ParagraghFourTitle = styled.h2`
     text-overflow: ellipsis;
     white-space: normal;
     overflow-wrap: break-word;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    /* -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; */
     word-break: break-word;
 `;
 
