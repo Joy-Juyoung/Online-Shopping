@@ -37,6 +37,7 @@ const LoginPage = () => {
   return (
     <PesnalContainer>
       <PesnalWrapper>
+        <h1>Sign In</h1>
         <InputWrap>
           <Input placeholder='Enter your email address.' />
           <InputPassword>

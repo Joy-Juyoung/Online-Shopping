@@ -1,118 +1,157 @@
-import styled, { css }  from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
-
 export const HeaderContainer = styled.div`
-  max-width: 1280px;
+  max-width: 1250px;
+  width: 100%;
   color: #0a0f18;
   position: sticky;
   margin: 0 auto;
+  padding: 0 20px;
+
   /* @media screen and (min-width: 576px) {
     max-width: 375px; */
-  }
-
+  /* } */
 `;
 
 export const HeaderWrapper = styled.div`
   margin: 0 auto;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 export const HeaderUp = styled.div`
-    padding-top: 20px;
-    /* padding-left: 10px;
+  padding-top: 20px;
+  /* padding-left: 10px;
     padding-right: 10px; */
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    top: 0;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  top: 0;
 `;
+
 export const LeftSide = styled.div`
   width: 100%;
   display: flex;
-  align-items: left;
-
+  align-items: center;
+  justify-content: start;
 `;
-export const SearchBar = styled.input`
-    width:200px;
-    height: 35px;
-    border: none;
-    display: flex;
-    background-color: #F5F5F5;
 
+export const ModalBtn = styled.button`
+  width: 200px;
+  height: 35px;
+  border: none;
+  display: flex;
+  cursor: pointer;
+  background-color: #f5f5f5;
 `;
 
 export const SearchIcon = styled.div`
- cursor: pointer;
+  cursor: pointer;
 `;
 
 export const MiddleSide = styled.div`
-    width: 100%;
-    display: flex;
-    cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 `;
+
 export const MidLink = styled(Link)`
-    text-decoration: none;
-    color: black;
-    font-size: 35px;
-    font-family: 'Roboto', sans-serif;
-    cursor: pointer;
+  text-decoration: none;
+  color: black;
+  font-size: 35px;
+  font-family: 'Roboto', sans-serif;
+  cursor: pointer;
+  & :hover {
+    color: gray;
+  }
 `;
 
 export const RightSide = styled.div`
-    width: 100%;
-    display: flex;
-    align-items: right;
-
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: end;
 `;
 
 export const RightIcon = styled.div`
-    margin-left: 10px;
-    align-items: center;
-    cursor: pointer;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 `;
+
+export const FaLink = styled(Link)`
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+  & :hover {
+    color: lightgray;
+  }
+`;
+
+export const CartLink = styled(Link)`
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+  & :hover {
+    color: lightgray;
+  }
+`;
+
+export const PermLink = styled(Link)`
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+  & :hover {
+    color: lightgray;
+  }
+`;
+
 export const HeaderDown = styled.div`
-    padding-top:20px;
-    /* padding-left: 125px; */
-    align-items: center;
-    display: flex;
+  padding-top: 20px;
+  /* padding-left: 125px; */
+  display: flex;
+  align-items: center;
+  display: flex;
 `;
 
 export const DropdownContainer = styled.div`
   position: relative;
   text-align: center;
-  
+  margin-bottom: 20px;
 `;
 
 export const DropdownButton = styled.div`
-    font-size: 20px;
-    font-family: 'Roboto', sans-serif;
-    margin-right  : 50px;
-     cursor: pointer;
+  font-size: 20px;
+  font-family: 'Roboto', sans-serif;
+  margin-right: 50px;
+  cursor: pointer;
 `;
 
 export const Menu = styled.div`
   position: absolute;
-  top: 40px;
+
   left: 50%;
-  width: 100px;
+  width: 150px;
   text-align: center;
   opacity: 0;
   visibility: hidden;
-  transform: translate(-50%, -20px);
+  transform: translate(100%);
   transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
   z-index: 9;
   background-color: white;
 
   &:after {
-    content: "";
+    content: '';
     height: 0;
     width: 0;
     position: absolute;
-    top: -3px;
-    left: 50%;
     transform: translate(-50%, -50%);
-
+    left: 50%;
   }
 
   ${({ isDropped }) =>
@@ -122,6 +161,8 @@ export const Menu = styled.div`
       visibility: visible;
       transform: translate(-75%, 0);
       left: 50%;
+      border-top: 3px solid red;
+      margin-top: 20px;
     `};
 `;
 
@@ -144,6 +185,3 @@ export const Ul = styled.ul`
 `;
 
 export const Li = styled.li``;
-
-
-

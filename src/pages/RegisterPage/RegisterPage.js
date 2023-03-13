@@ -82,7 +82,7 @@ const RegisterPage = () => {
   return (
     <PesnalContainer>
       <PesnalWrapper>
-        Create Account
+        <h1>Create Account</h1>
         <RegisterInput>
           <RegisterInputLabel>Email address</RegisterInputLabel>
           <Input

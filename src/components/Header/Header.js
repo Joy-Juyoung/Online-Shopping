@@ -1,21 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 //import { Link } from 'react-router-dom';
 import FlagIcon from '@mui/icons-material/Flag';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import PermIdentityRoundedIcon from '@mui/icons-material/PermIdentityRounded';
 //import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+import { Modal } from './Modal';
 import {
   HeaderContainer,
   HeaderWrapper,
   HeaderUp,
   LeftSide,
-  SearchBar,
+  ModalBtn,
   SearchIcon,
   MiddleSide,
   MidLink,
   RightSide,
   RightIcon,
+  FaLink,
+  CartLink,
+  PermLink,
   HeaderDown,
   DropdownContainer,
   DropdownButton,
@@ -32,6 +36,11 @@ const Header = () => {
   const [shoesIsOpen, shoesRef, shoesHandler] = useDetectClose(false);
   const [accessoriesIsOpen, accessoriesRef, accessoriesHandler] =
     useDetectClose(false);
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => {
+    setShowModal((showModal) => !showModal);
+  };
 
   return (
     <HeaderContainer>
@@ -39,7 +48,8 @@ const Header = () => {
         <HeaderUp>
           <LeftSide>
             {/* 인풋 드랍 다운 또는 버튼 드랍다운 중 결정해야함*/}
-            <SearchBar placeholder='Search' />
+            <ModalBtn onClick={openModal}> Search</ModalBtn>
+            <Modal showModal={showModal} setShowModal={setShowModal} />
             {/* <SearchIcon>
                         <SearchRoundedIcon fontSize='medium' color='disabled'/>
                     </SearchIcon> */}
@@ -57,13 +67,19 @@ const Header = () => {
             </RightIcon>
             {/* 추후 각각 링크 변경*/}
             <RightIcon>
-              <FavoriteBorderIcon fontSize='medium' />
+              <FaLink>
+                <FavoriteBorderIcon fontSize='medium' />
+              </FaLink>
             </RightIcon>
             <RightIcon>
-              <AddShoppingCartIcon fontSize='medium' />
+              <CartLink>
+                <AddShoppingCartIcon fontSize='medium' />
+              </CartLink>
             </RightIcon>
             <RightIcon>
-              <PermIdentityRoundedIcon fontSize='medium' />
+              <PermLink to='/login'>
+                <PermIdentityRoundedIcon fontSize='medium' />
+              </PermLink>
             </RightIcon>
           </RightSide>
         </HeaderUp>
