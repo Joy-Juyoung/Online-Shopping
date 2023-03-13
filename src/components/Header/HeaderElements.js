@@ -5,11 +5,10 @@ export const HeaderContainer = styled.div`
   max-width: 1250px;
   width: 100%;
   color: #0a0f18;
-  position: fixed;
+  position: sticky;
   margin: 0 auto;
   padding: 0 20px;
   z-index: 100;
-  background-color: white;
   /* @media screen and (min-width: 576px) {
     max-width: 375px; */
   /* } */
@@ -119,14 +118,12 @@ export const HeaderDown = styled.div`
   /* padding-left: 125px; */
   display: flex;
   align-items: center;
-  display: flex;
-  margin-bottom: 20px;
 `;
 
 export const DropdownContainer = styled.div`
   position: relative;
   text-align: center;
-
+  margin-bottom: 20px;
 `;
 
 export const DropdownButton = styled.div`
@@ -138,15 +135,10 @@ export const DropdownButton = styled.div`
 
 export const Menu = styled.div`
   position: absolute;
-
-  left: 50%;
-  width: 150px;
+  width: 100%;
   text-align: center;
   opacity: 0;
   visibility: hidden;
-  transform: translate(100%);
-  transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
-  z-index: 9;
   background-color: white;
 
   &:after {
@@ -154,8 +146,6 @@ export const Menu = styled.div`
     height: 0;
     width: 0;
     position: absolute;
-    transform: translate(-50%, -50%);
-    left: 50%;
   }
 
   ${({ isDropped }) =>
@@ -163,10 +153,9 @@ export const Menu = styled.div`
     css`
       opacity: 1;
       visibility: visible;
-      transform: translate(-75%, 0);
-      left: 50%;
       border-top: 3px solid red;
       margin-top: 20px;
+      width: 100%;
     `};
 `;
 
