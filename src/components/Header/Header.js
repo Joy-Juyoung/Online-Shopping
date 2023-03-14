@@ -1,4 +1,4 @@
-import React, { useState,useRef } from 'react';
+import React, { useState, useRef } from 'react';
 //import { Link } from 'react-router-dom';
 import FlagIcon from '@mui/icons-material/Flag';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -44,7 +44,7 @@ const Header = () => {
     setMenuShoesIsOpen(false);
     setMenuAccessoriesIsOpen(false);
   };
-  useDetectClose(dropdownRef, closeHoverMenu); 
+  useDetectClose(dropdownRef, closeHoverMenu);
 
   const [showModal, setShowModal] = useState(false);
 
@@ -96,8 +96,11 @@ const Header = () => {
 
         <HeaderDown>
           {/* 드랍 다운 해야함*/}
-          <DropdownContainer >
-            <DropdownButton onMouseOver={() => setMenuTopIsOpen(true)} ref={dropdownRef}>
+          <DropdownContainer>
+            <DropdownButton
+              onMouseOver={() => setMenuTopIsOpen(true)}
+              ref={dropdownRef}
+            >
               {/* 각각 링크 걸어야함 */}
               TOPS
             </DropdownButton>
@@ -113,8 +116,11 @@ const Header = () => {
             </Menu>
           </DropdownContainer>
 
-          <DropdownContainer >
-            <DropdownButton onMouseOver={() => setMenuBottomIsOpen(true)} ref={dropdownRef}>
+          <DropdownContainer>
+            <DropdownButton
+              onMouseOver={() => setMenuBottomIsOpen(true)}
+              ref={dropdownRef}
+            >
               {/* 각각 링크 걸어야함 */}
               BOTTOMS
             </DropdownButton>
@@ -124,13 +130,16 @@ const Header = () => {
                 <Li>Denim</Li>
                 <Li>Joggers</Li>
                 <Li>Jeans</Li>
-                <Li>Shors</Li>
+                <Li>Shorts</Li>
                 <Li>Jumpsuits</Li>
               </Ul>
             </Menu>
           </DropdownContainer>
-          <DropdownContainer >
-            <DropdownButton onMouseOver={() => setMenuOuterIsOpen(true)} ref={dropdownRef}>
+          <DropdownContainer>
+            <DropdownButton
+              onMouseOver={() => setMenuOuterIsOpen(true)}
+              ref={dropdownRef}
+            >
               {/* 각각 링크 걸어야함 */}
               OUTERS
             </DropdownButton>
@@ -146,8 +155,11 @@ const Header = () => {
             </Menu>
           </DropdownContainer>
 
-          <DropdownContainer >
-            <DropdownButton onMouseOver={() => setMenuShoesIsOpen(true)} ref={dropdownRef}>
+          <DropdownContainer>
+            <DropdownButton
+              onMouseOver={() => setMenuShoesIsOpen(true)}
+              ref={dropdownRef}
+            >
               {/* 각각 링크 걸어야함 */}
               SHOES
             </DropdownButton>
@@ -163,8 +175,11 @@ const Header = () => {
             </Menu>
           </DropdownContainer>
 
-          <DropdownContainer >
-            <DropdownButton onMouseOver={() => setMenuAccessoriesIsOpen(true)} ref={dropdownRef}>
+          <DropdownContainer>
+            <DropdownButton
+              onMouseOver={() => setMenuAccessoriesIsOpen(true)}
+              ref={dropdownRef}
+            >
               {/* 각각 링크 걸어야함 */}
               ACCESSORIES
             </DropdownButton>

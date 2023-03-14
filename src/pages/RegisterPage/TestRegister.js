@@ -1,173 +1,156 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useRef, useEffect, useState } from 'react';
 import { Input } from '../../components/InputElements';
 import { ButtonLarge } from '../../components/ButtonElements';
 import {
-  AgreeAll,
-  AgreeAllCheckbox,
-  AgreeContents,
-  AgreeEach,
-  Agreements,
-  AgreementsWrap,
+  ErrorMsg,
+  GobackLogin,
+  RegisterForm,
   RegisterInput,
   RegisterInputLabel,
+  VerificationMsg,
 } from './RegisterElements';
 import {
   PesnalContainer,
   PesnalWrapper,
-  EyeIcon,
   InputPassword,
 } from '../CommonElements';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import CheckIcon from '@material-ui/icons/Check';
+import axios from '../../api/axios';
+import { Link } from 'react-router-dom';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
-// email, name, password validation 디테일하게 조건 설정하기
-// next 누르면 email로 confirm 넘버 보내기
-// agree버튼 All 또는 위에꺼 체크하면 다음으로가기
-// policy랑 conditions 알아보기
-// 체크아이콘에 클릭 이벤트 넣기
+// const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+const USERNAME_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const REGISTER_URL = '/users/log-in';
+// const PRODUCTS_URL = '/products';
 
 const TestRegister = () => {
-  const [passwordType, setPasswordType] = useState('password');
-  const [rePasswordType, setRePasswordType] = useState('password');
-  const [passwordInput, setPasswordInput] = useState('');
-  const [rePasswordInput, setRePasswordInput] = useState('');
-  const [emailInput, setEmailInput] = useState('');
-  const [nameInput, setNameInput] = useState('');
-  const [isValid, setValid] = useState(false);
+  const userRef = useRef();
+  const errRef = useRef();
 
-  const validStyle = { color: 'lightgrey' };
-  const validStyleButton = {
-    backgroundColor: 'lightgrey',
-    border: 'lightgrey',
-  };
+  const [username, setUsername] = useState('');
+  const [validUsername, setValidUsername] = useState(false);
+  const [usernameFocus, setUsernameFocus] = useState(false);
 
-  const validate = () => {
-    return (
-      emailInput.length &
-      nameInput.length &
-      passwordInput.length &
-      rePasswordInput.length
-    );
-  };
+  const [pwd, setPwd] = useState('');
+  const [validPwd, setValidPwd] = useState(false);
+  const [pwdFocus, setPwdFocus] = useState(false);
+
+  // useEffect(() => {
+  //   userRef.current.focus();
+  // }, []);
 
   useEffect(() => {
-    const isValid = validate();
-    setValid(isValid);
-  }, [emailInput, nameInput, passwordInput, rePasswordInput]);
+    setValidUsername(USERNAME_REGEX.test(username));
+  }, [username]);
 
-  const handlePasswordChange = (evnt) => {
-    setPasswordInput(evnt.target.value);
-  };
-  const togglePassword = () => {
-    if (passwordType === 'password') {
-      setPasswordType('text');
-      return;
-    }
-    setPasswordType('password');
-  };
+  useEffect(() => {
+    setValidPwd(PWD_REGEX.test(pwd));
+  }, [pwd]);
 
-  const handleRePasswordChange = (evnt) => {
-    setRePasswordInput(evnt.target.value);
-  };
-  const toggleRePassword = () => {
-    if (rePasswordType === 'password') {
-      setRePasswordType('text');
-      return;
-    }
-    setRePasswordType('password');
+  // useEffect(() => {
+  //   setErrMsg('');
+  // }, [email, username, pwd, matchPwd]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    console.log(username);
+    console.log(pwd);
+
+    const response = await axios.post(
+      REGISTER_URL,
+      {
+        username: 'juyoung',
+        password: '1234',
+      },
+      {
+        headers: { 'Content-Type': 'application/json' },
+        // 유저인증 토큰 쿠키를 자동으로 보내줌 Django라서 ...
+        withCredentials: true,
+      }
+    );
+
+    console.log('login', response?.data);
+
+    setUsername('');
+    setPwd('');
   };
 
   return (
     <PesnalContainer>
       <PesnalWrapper>
         <h1>Create Account</h1>
-        <form>
+        <RegisterForm onSubmit={handleSubmit}>
           <RegisterInput>
-            <RegisterInputLabel>Email address</RegisterInputLabel>
-            <Input
-              type='email'
-              onChange={(e) => setEmailInput(e.target.value)}
-              value={emailInput}
-              placeholder='Enter your Email address.'
-            />
-            <RegisterInputLabel>Name</RegisterInputLabel>
+            <RegisterInputLabel htmlFor='username'>Username</RegisterInputLabel>
+
             <Input
               type='text'
-              onChange={(e) => setNameInput(e.target.value)}
-              value={nameInput}
-              placeholder='Enter name'
+              id='username'
+              // ref={userRef}
+              autoComplete='off'
+              onChange={(e) => setUsername(e.target.value)}
+              value={username}
+              required
+              aria-invalid={validUsername ? 'false' : 'true'}
+              aria-describedby='uidnote'
+              onFocus={() => setUsernameFocus(true)}
+              onBlur={() => setUsernameFocus(false)}
+              placeholder='Enter username.'
             />
-            <RegisterInputLabel>Password</RegisterInputLabel>
+            <VerificationMsg
+              id='uidnote'
+              style={{
+                display: validUsername || !username ? 'none' : 'flex',
+                marginBottom: '20px',
+              }}
+            >
+              <ErrorOutlineIcon fontSize='small' style={{ color: 'red' }} />
+              <span>
+                4 to 24 characters.Must begin with a letter. Letters, numbers,
+                underscores, hyphens allowed.
+              </span>
+            </VerificationMsg>
+            <RegisterInputLabel htmlFor='password'>Password</RegisterInputLabel>
+
             <InputPassword>
               <Input
                 placeholder='Enter password'
-                type={passwordType}
-                onChange={handlePasswordChange}
-                value={passwordInput}
-                name='password'
+                type='password'
+                id='password'
+                onChange={(e) => setPwd(e.target.value)}
+                value={pwd}
+                required
+                aria-invalid={validPwd ? 'false' : 'flex'}
+                aria-describedby='pwdnote'
+                onFocus={() => setPwdFocus(true)}
+                onBlur={() => setPwdFocus(false)}
               />
-              <EyeIcon>
-                {passwordType === 'password' ? (
-                  <VisibilityOff onClick={togglePassword} fontSize='small' />
-                ) : (
-                  <Visibility onClick={togglePassword} fontSize='small' />
-                )}
-              </EyeIcon>
             </InputPassword>
-            <InputPassword>
-              <Input
-                placeholder='Re-enter password'
-                type={rePasswordType}
-                onChange={handleRePasswordChange}
-                value={rePasswordInput}
-                name='password'
-              />
-
-              <EyeIcon>
-                {rePasswordType === 'password' ? (
-                  <VisibilityOff onClick={toggleRePassword} fontSize='small' />
-                ) : (
-                  <Visibility onClick={toggleRePassword} fontSize='small' />
-                )}
-              </EyeIcon>
-            </InputPassword>
+            <VerificationMsg
+              id='pwdnote'
+              style={{
+                display: validPwd || !pwd ? 'none' : 'flex',
+                marginBottom: '20px',
+              }}
+            >
+              <ErrorOutlineIcon fontSize='small' style={{ color: 'red' }} />
+              <span>
+                8 to 24 characters. Must include uppercase and lowercase
+                letters, a number and a special character. Allowed special
+                characters: ! @ # $ %
+              </span>
+            </VerificationMsg>
           </RegisterInput>
-          {/* <Agreements style={isValid ? {} : validStyle}>
-            <AgreementsWrap>
-              <AgreeAll>
-                <AgreeAllCheckbox type='checkbox' disabled={!isValid} />
-                <AgreeContents>I agree to all terms</AgreeContents>
-              </AgreeAll>
-              <AgreeEach>
-                <button disabled={!isValid}>
-                  <CheckIcon fontSize='small' />
-                </button>
-                <AgreeContents>
-                  I have read and agreed to he SHOP Terms & Conditions and
-                  Privacy Policy.
-                </AgreeContents>
-              </AgreeEach>
-              <AgreeEach>
-                <button disabled={!isValid}>
-                  <CheckIcon fontSize='small' />
-                </button>
-                <AgreeContents>
-                  I subscribe to advertising and marketing services (Optional.)
-                  Read more
-                </AgreeContents>
-              </AgreeEach>
-            </AgreementsWrap>
-          </Agreements> */}
-          <Link to='/login'>
-            {/* <ButtonLarge
-              disabled={!isValid}
-              style={isValid ? {} : validStyleButton}
-            > */}
-            <ButtonLarge style={{ marginTop: '40px' }}>Sign up</ButtonLarge>
-          </Link>
-        </form>
+
+          <ButtonLarge>Submit</ButtonLarge>
+          <GobackLogin>
+            <span>Already registered?</span>
+            <Link to='/login'>Go to Sign In</Link>
+          </GobackLogin>
+        </RegisterForm>
       </PesnalWrapper>
     </PesnalContainer>
   );
