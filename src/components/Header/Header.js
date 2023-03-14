@@ -1,4 +1,4 @@
-import React, { useState,useRef } from 'react';
+import React, { useState, useRef } from 'react';
 //import { Link } from 'react-router-dom';
 import FlagIcon from '@mui/icons-material/Flag';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -45,7 +45,7 @@ const Header = () => {
     setMenuAccessoriesIsOpen(false);
   };
 
-  useDetectClose(dropdownRef, closeHoverMenu); 
+  useDetectClose(dropdownRef, closeHoverMenu);
 
   const [showModal, setShowModal] = useState(false);
 
@@ -124,7 +124,7 @@ const Header = () => {
                 <Li>Denim</Li>
                 <Li>Joggers</Li>
                 <Li>Jeans</Li>
-                <Li>Shors</Li>
+                <Li>Shorts</Li>
                 <Li>Jumpsuits</Li>
               </Ul>
             </Menu>
