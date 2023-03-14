@@ -1,30 +1,53 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState} from "react";
 
-const useDetectClose = (initialState) => {
-    const [isOpen, setIsOpen] = useState(initialState);
-    const ref = useRef(null);
+const useDetectClose = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const ref = useRef(null);
+  
+  const removeHandler = () => {
+         setIsOpen(!isOpen);
+       };
 
-    const removeHandler = () => {
-      setIsOpen(!isOpen);
-    };
-    
-  useEffect(
-    () => {
+  useEffect(() => {
       const listener = (e) => {
-        if (!ref.current ||  ref.current.contains(e.target)) {
-          return;
+        if (ref.current !== null && !ref.current.contains(e.target)) {
+          removeHandler(!isOpen);
         }
       };
-      if (isOpen) {
-        window.addEventListener("mouseover", listener);
-      }
-  
+
+      if(isOpen){
+         window.addEventListener("mouseover", listener);
+        }
       return () => {
         window.removeEventListener("mouseout", listener);
       };
-    });
-
+    },);
     return [isOpen, ref, removeHandler];
+
+  //   const [isOpen, setIsOpen] = useState(initialState);
+  //   const ref = useRef(null);
+
+  //   const removeHandler = () => {
+  //     setIsOpen(!isOpen);
+  //   };
+    
+  // useEffect(
+  //   () => {
+  //     const listener = (e) => {
+  //       if (ref.current !== null && !ref.current.contains(e.target)) {
+  //         setIsOpen(!isOpen);
+  //       }
+  //     };
+  //     if (isOpen) {
+  //       window.addEventListener("mouseover", listener);
+  //     }
+  
+  //     return () => {
+  //       window.removeEventListener("mouseout", listener);
+  //     };
+  //   });
+
+  //   return [isOpen, ref, removeHandler];
 
 };
 
