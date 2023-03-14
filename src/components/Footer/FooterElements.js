@@ -61,7 +61,7 @@ export const FooterLineTwo =  styled.div`
     display: flex;
     align-items: flex-start;
     flex-direction: column;
-    -webkit-box-pack: start;
+    /* -webkit-box-pack: start; */
     justify-content: flex-start;
     margin: 28px 0px;
 
@@ -70,9 +70,9 @@ export const HelpBtn =  styled.button`
     width: 236px;
     height: 40px;
     display: flex;
-    -webkit-box-align: center;
+    /* -webkit-box-align: center; */
     align-items: center;
-    -webkit-box-pack: center;
+    /* -webkit-box-pack: center; */
     justify-content: center;
     border: 1px solid black;
     border-radius: 6px;
@@ -158,9 +158,9 @@ export const GooImg =  styled.img`
 
 export const SocialPart =  styled.div`
     display: flex;
-    -webkit-box-align: center;
+    /* -webkit-box-align: center; */
     align-items: center;
-    -webkit-box-pack: start;
+    /* -webkit-box-pack: start; */
     justify-content: flex-start;
     align-self: flex-start;
     margin-top: 28px;
@@ -218,7 +218,7 @@ export const FooterLineThree =  styled.div`
 
 export const LocationInfoBtn =  styled.button`
     display: flex;
-    -webkit-box-align: center;
+    /* -webkit-box-align: center; */
     align-items: center;
     line-height: 18px;
     appearance: none;

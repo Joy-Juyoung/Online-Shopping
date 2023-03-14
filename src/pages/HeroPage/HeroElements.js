@@ -12,7 +12,7 @@ export const MainWrapper = styled.div``;
 
 export const TopWrapper = styled.div`
   width: 100%;
-  display: flex;
+  /* display: flex; */
   align-items: center;
   justify-content: start;
   margin: 0 auto;

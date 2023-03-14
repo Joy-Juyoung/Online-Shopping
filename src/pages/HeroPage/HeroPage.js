@@ -50,6 +50,7 @@ import FirstImage from '../../asset/firstimage.png';
 import SecondImage from '../../asset/couple.png';
 import ThirdImage from '../../asset/fashion.png';
 import FourthImage from '../../asset/newjeans.png';
+import Header from '../../components/Header/Header.js';
 
 
 const HeroPage = () => {
