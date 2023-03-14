@@ -1,21 +1,31 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const useDetectClose = (ref, handler) => {
+const useDetectClose = (initialState) => {
+    const [isOpen, setIsOpen] = useState(initialState);
+    const ref = useRef(null);
+
+    const removeHandler = () => {
+      setIsOpen(!isOpen);
+    };
+    
   useEffect(
     () => {
-      const listener = (event) => {
-        if (!ref.current || ref.current.contains(event.target)) {
+      const listener = (e) => {
+        if (!ref.current ||  ref.current.contains(e.target)) {
           return;
         }
-        handler(event);
       };
-      document.addEventListener("mouseover", listener);
+      if (isOpen) {
+        window.addEventListener("mouseover", listener);
+      }
+  
       return () => {
-        document.removeEventListener("mouseout", listener);
+        window.removeEventListener("mouseout", listener);
       };
-    },
-    [ref, handler]
-  );
+    });
+
+    return [isOpen, ref, removeHandler];
+
 };
 
 export default useDetectClose;
