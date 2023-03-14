@@ -44,7 +44,6 @@ const Header = () => {
     setMenuShoesIsOpen(false);
     setMenuAccessoriesIsOpen(false);
   };
-
   useDetectClose(dropdownRef, closeHoverMenu);
 
   const [showModal, setShowModal] = useState(false);
@@ -97,8 +96,11 @@ const Header = () => {
 
         <HeaderDown>
           {/* 드랍 다운 해야함*/}
-          <DropdownContainer ref={dropdownRef}>
-            <DropdownButton onMouseOver={() => setMenuTopIsOpen(true)}>
+          <DropdownContainer>
+            <DropdownButton
+              onMouseOver={() => setMenuTopIsOpen(true)}
+              ref={dropdownRef}
+            >
               {/* 각각 링크 걸어야함 */}
               TOPS
             </DropdownButton>
@@ -113,8 +115,12 @@ const Header = () => {
               </Ul>
             </Menu>
           </DropdownContainer>
-          <DropdownContainer ref={dropdownRef}>
-            <DropdownButton onMouseOver={() => setMenuBottomIsOpen(true)}>
+
+          <DropdownContainer>
+            <DropdownButton
+              onMouseOver={() => setMenuBottomIsOpen(true)}
+              ref={dropdownRef}
+            >
               {/* 각각 링크 걸어야함 */}
               BOTTOMS
             </DropdownButton>
@@ -129,8 +135,11 @@ const Header = () => {
               </Ul>
             </Menu>
           </DropdownContainer>
-          <DropdownContainer ref={dropdownRef}>
-            <DropdownButton onMouseOver={() => setMenuOuterIsOpen(true)}>
+          <DropdownContainer>
+            <DropdownButton
+              onMouseOver={() => setMenuOuterIsOpen(true)}
+              ref={dropdownRef}
+            >
               {/* 각각 링크 걸어야함 */}
               OUTERS
             </DropdownButton>
@@ -145,8 +154,12 @@ const Header = () => {
               </Ul>
             </Menu>
           </DropdownContainer>
-          <DropdownContainer ref={dropdownRef}>
-            <DropdownButton onMouseOver={() => setMenuShoesIsOpen(true)}>
+
+          <DropdownContainer>
+            <DropdownButton
+              onMouseOver={() => setMenuShoesIsOpen(true)}
+              ref={dropdownRef}
+            >
               {/* 각각 링크 걸어야함 */}
               SHOES
             </DropdownButton>
@@ -161,8 +174,12 @@ const Header = () => {
               </Ul>
             </Menu>
           </DropdownContainer>
-          <DropdownContainer ref={dropdownRef}>
-            <DropdownButton onMouseOver={() => setMenuAccessoriesIsOpen(true)}>
+
+          <DropdownContainer>
+            <DropdownButton
+              onMouseOver={() => setMenuAccessoriesIsOpen(true)}
+              ref={dropdownRef}
+            >
               {/* 각각 링크 걸어야함 */}
               ACCESSORIES
             </DropdownButton>
