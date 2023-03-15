@@ -136,7 +136,7 @@ export const DropdownButton = styled.div`
 export const Menu = styled.div`
   position: absolute;
   width: 100%;
-  text-align: center;
+  /* text-align: center; */
   opacity: 0;
   visibility: hidden;
   background-color: white;
@@ -151,6 +151,7 @@ export const Menu = styled.div`
   ${({ isDropped }) =>
     isDropped &&
     css`
+      /* text-align: left; */
       opacity: 1;
       visibility: visible;
       border-top: 3px solid red;

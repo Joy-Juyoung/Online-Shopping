@@ -98,13 +98,13 @@ const Header = () => {
 
         <HeaderDown>
           {/* 드랍 다운 해야함*/}
-          <DropdownContainer ref={dropdownRef}>
-            <DropdownButton onMouseOver={() => setMenuTopIsOpen(true)} onMouseLeave={() => setMenuTopIsOpen(false)}>
+          <DropdownContainer ref={dropdownRef} >
+            <DropdownButton onMouseOver={() => setMenuTopIsOpen(true)} >
 
               {/* 각각 링크 걸어야함 */}
               TOPS
             </DropdownButton>
-            <Menu isDropped={topIsOpen}>
+            <Menu isDropped={topIsOpen} onMouseLeave={() => setMenuTopIsOpen(false)}>
               <Ul>
                 {/* 각각 링크 걸어야함 */}
                 <Li>Short Sleeves</Li>
@@ -118,12 +118,12 @@ const Header = () => {
 
 
           <DropdownContainer ref={dropdownRef}>
-            <DropdownButton onMouseOver={() => setMenuBottomIsOpen(true)} onMouseLeave={() => setMenuBottomIsOpen(false)}>
+            <DropdownButton onMouseOver={() => setMenuBottomIsOpen(true)} >
 
               {/* 각각 링크 걸어야함 */}
               BOTTOMS
             </DropdownButton>
-            <Menu isDropped={bottomIsOpen}>
+            <Menu isDropped={bottomIsOpen} onMouseLeave={() => setMenuBottomIsOpen(false)}>
               <Ul>
                 {/* 각각 링크 걸어야함 */}
                 <Li>Denim</Li>
@@ -136,58 +136,52 @@ const Header = () => {
           </DropdownContainer>
 
           <DropdownContainer ref={dropdownRef}>
-            <DropdownButton onMouseOver={() => setMenuOuterIsOpen(true)} onMouseLeave={() => setMenuOuterIsOpen(false)}>
+            <DropdownButton onMouseOver={() => setMenuOuterIsOpen(true)} >
 
               {/* 각각 링크 걸어야함 */}
               OUTERS
             </DropdownButton>
-            <Menu isDropped={outerIsOpen}>
+            <Menu isDropped={outerIsOpen}onMouseLeave={() => setMenuOuterIsOpen(false)}>
               <Ul>
                 {/* 각각 링크 걸어야함 */}
-                <Li>Blazers</Li>
-                <Li>Hooded Jackets</Li>
+                <Li>Jackets</Li>
                 <Li>Cardigans</Li>
                 <Li>Coats</Li>
-                <Li>Bomber Jackets</Li>
               </Ul>
             </Menu>
           </DropdownContainer>
 
 
           <DropdownContainer ref={dropdownRef}>
-            <DropdownButton onMouseOver={() => setMenuShoesIsOpen(true)} onMouseLeave={() => setMenuShoesIsOpen(false)}>
+            <DropdownButton onMouseOver={() => setMenuShoesIsOpen(true)} >
 
 
               {/* 각각 링크 걸어야함 */}
               SHOES
             </DropdownButton>
-            <Menu isDropped={shoesIsOpen}>
+            <Menu isDropped={shoesIsOpen} onMouseLeave={() => setMenuShoesIsOpen(false)}>
               <Ul>
                 {/* 각각 링크 걸어야함 */}
                 <Li>Boots</Li>
-                <Li>Sports Shoes</Li>
                 <Li>Sneakers</Li>
-                <Li>Loafers</Li>
                 <Li>Sandals</Li>
               </Ul>
             </Menu>
           </DropdownContainer>
 
 
-          <DropdownContainer ref={dropdownRef}>
-            <DropdownButton onMouseOver={() => setMenuAccessoriesIsOpen(true)} onMouseLeave={() => setMenuAccessoriesIsOpen(false)}>
+          <DropdownContainer ref={dropdownRef} >
+            <DropdownButton onMouseOver={() => setMenuAccessoriesIsOpen(true)}>
 
               {/* 각각 링크 걸어야함 */}
               ACCESSORIES
             </DropdownButton>
-            <Menu isDropped={accessoriesIsOpen}>
+            <Menu isDropped={accessoriesIsOpen} onMouseLeave={() => setMenuAccessoriesIsOpen(false)} >
               <Ul>
                 {/* 각각 링크 걸어야함 */}
                 <Li>Cap & Hat</Li>
                 <Li>Rings</Li>
                 <Li>Watches</Li>
-                <Li>Earrings</Li>
-                <Li>Wallets</Li>
               </Ul>
             </Menu>
           </DropdownContainer>
