@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useCallback } from 'react';
-import { useSpring, animated } from 'react-spring';
+// import React, { useState } from 'react';
 import { 
         Background, 
         ModalWrapper,
@@ -10,16 +10,13 @@ import {
      }
 from "./ModalElements";
 
-export const Modal = ({ showModal, setShowModal }) => {
+// export const Modal = () => {
+//   const [modal, setModal] = useState(false);
+//   const toggleModal = () => {
+//     setModal(!modal);
+//   };
+  export const Modal = ({ showModal, setShowModal }) => {
   const modalRef = useRef();
-
-  const animation = useSpring({
-    config: {
-      duration: 100
-    },
-    opacity: showModal ? 1 : 0,
-    transform: showModal ? `translateY(0%)` : `translateY(-100%)`
-  });
 
   const closeModal = e => {
     if (modalRef.current === e.target) {
@@ -47,24 +44,35 @@ export const Modal = ({ showModal, setShowModal }) => {
 
   return (
     <>
+{/*       
+        <ModalWrapper>
+        <ModalContent>
+          <h1>Popular</h1>
+          <p>shorts</p>
+          <p>shoes</p>
+        </ModalContent>
+        <CloseModalButton onClick={toggleModal} />
+      </ModalWrapper> */}
+
+        
+
       {showModal ? (
         <Background onClick={closeModal} ref={modalRef}>
-          <animated.div style={animation}>
             <ModalWrapper showModal={showModal}>
               <ModalSearch>  
                 <ModalInput placeholder='Search'/>
               </ModalSearch>
+              <CloseModalButton
+                aria-label='Close modal'
+                onClick={() => setShowModal(prev => !prev)}
+              />
               <ModalContent>
                 <h1>Popular</h1>
                 <p>shorts</p>
                 <p>shoes</p>
               </ModalContent>
-              <CloseModalButton
-                aria-label='Close modal'
-                onClick={() => setShowModal(prev => !prev)}
-              />
+
             </ModalWrapper>
-          </animated.div>
         </Background>
       ) : null}
     </>
