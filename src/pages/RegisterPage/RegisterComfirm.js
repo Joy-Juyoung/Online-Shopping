@@ -4,6 +4,7 @@ import { Input } from '../../components/InputElements';
 import { PesnalContainer, PesnalWrapper } from '../CommonElements';
 
 // Confirm버튼은 verifcation code가 입력되면 활성화
+// 이건 일단 보류
 
 const RegisterComfirm = () => {
   return (

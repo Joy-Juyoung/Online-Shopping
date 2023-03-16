@@ -52,60 +52,65 @@ const RegisterPage = () => {
   const [errMsg, setErrMsg] = useState('');
   const [success, setSuccess] = useState(false);
 
-  useEffect(() => {
-    userRef.current.focus();
-  }, []);
+  // useEffect(() => {
+  //   userRef.current.focus();
+  // }, []);
 
-  useEffect(() => {
-    setValidEmail(EMAIL_REGEX.test(email));
-  }, [email]);
+  // useEffect(() => {
+  //   setValidEmail(EMAIL_REGEX.test(email));
+  // }, [email]);
 
   useEffect(() => {
     setValidUsername(USERNAME_REGEX.test(username));
   }, [username]);
 
-  useEffect(() => {
-    setValidPwd(PWD_REGEX.test(pwd));
-    setValidMatch(pwd === matchPwd);
-  }, [pwd, matchPwd]);
+  // useEffect(() => {
+  //   setValidPwd(PWD_REGEX.test(pwd));
+  //   setValidMatch(pwd === matchPwd);
+  // }, [pwd, matchPwd]);
 
-  useEffect(() => {
-    setErrMsg('');
-  }, [email, username, pwd, matchPwd]);
+  // useEffect(() => {
+  //   setErrMsg('');
+  // }, [email, username, pwd, matchPwd]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(email);
+    // console.log(email);
     console.log(username);
     console.log(pwd);
-    console.log(matchPwd);
+    // console.log(matchPwd);
 
-    const v1 = EMAIL_REGEX.test(email);
+    // const v1 = EMAIL_REGEX.test(email);
     const v2 = USERNAME_REGEX.test(username);
     const v3 = PWD_REGEX.test(pwd);
-    if (!v1 || !v2 || !v3) {
+    // if (!v1 || !v2 || !v3) {
+    if (!v2 || !v3) {
       setErrMsg('Invalid Entry');
       return;
     }
     try {
       const response = await axios.post(
         REGISTER_URL,
-        JSON.stringify({ email, username, pwd }),
+        {
+          username: username,
+          // email: email,
+          password: pwd,
+          type: 'user',
+        },
         {
           headers: { 'Content-Type': 'application/json' },
           withCredentials: true,
         }
       );
 
-      console.log(JSON.stringify(response?.data));
-      //console.log(JSON.stringify(response))
+      console.log('register', response?.data);
       setSuccess(true);
 
-      setEmail('');
+      // setEmail('');
       setUsername('');
       setPwd('');
-      setMatchPwd('');
+      // setMatchPwd('');
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response');
@@ -140,7 +145,7 @@ const RegisterPage = () => {
           <h1>Create Account</h1>
           <RegisterForm onSubmit={handleSubmit}>
             <RegisterInput>
-              <RegisterInputLabel htmlFor='email'>
+              {/* <RegisterInputLabel htmlFor='email'>
                 Email address
               </RegisterInputLabel>
               <Input
@@ -167,7 +172,7 @@ const RegisterPage = () => {
               >
                 <ErrorOutlineIcon fontSize='small' style={{ color: 'red' }} />
                 <span>example@email.com</span>
-              </VerificationMsg>
+              </VerificationMsg> */}
               <RegisterInputLabel htmlFor='username'>
                 Username
               </RegisterInputLabel>
@@ -231,7 +236,7 @@ const RegisterPage = () => {
                   characters: ! @ # $ %
                 </span>
               </VerificationMsg>
-              <RegisterInputLabel htmlFor='confirm_pwd'>
+              {/* <RegisterInputLabel htmlFor='confirm_pwd'>
                 Confirm Password
               </RegisterInputLabel>
 
@@ -258,15 +263,15 @@ const RegisterPage = () => {
               >
                 <ErrorOutlineIcon fontSize='small' style={{ color: 'red' }} />
                 <span>Must match the first password input field.</span>
-              </VerificationMsg>
+              </VerificationMsg> */}
             </RegisterInput>
 
             <ButtonLarge
-              disabled={
-                !validEmail || !validUsername || !validPwd || !validMatch
-                  ? true
-                  : false
-              }
+            // disabled={
+            //   !validEmail || !validUsername || !validPwd || !validMatch
+            //     ? true
+            //     : false
+            // }
             >
               Submit
             </ButtonLarge>
