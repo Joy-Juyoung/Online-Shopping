@@ -1,62 +1,72 @@
-import React, { useRef, useEffect, useCallback } from 'react';
-// import React, { useState } from 'react';
+// import React, { useRef, useEffect, useCallback } from 'react';
+import { Container } from '@mui/system';
+import React, { useState } from 'react';
 import { 
         Background, 
         ModalWrapper,
         ModalSearch,
         ModalInput,
         ModalContent,
-        CloseModalButton
+        CloseButtonWrapper,
+        CloseModalButton,
+        ModalContainer,
+        ModalTopWrapper,
+        SearchModalIpt
      }
 from "./ModalElements";
 
-// export const Modal = () => {
-//   const [modal, setModal] = useState(false);
-//   const toggleModal = () => {
-//     setModal(!modal);
-//   };
-  export const Modal = ({ showModal, setShowModal }) => {
-  const modalRef = useRef();
+export const Modal = ({setOpenModal}) => {
 
-  const closeModal = e => {
-    if (modalRef.current === e.target) {
-      setShowModal(false);
-    }
-  };
+  // export const Modal = ({ showModal, setShowModal }) => {
+  // const modalRef = useRef();
 
-  const keyPress = useCallback(
-    e => {
-      if (e.key === 'Escape' && showModal) {
-        setShowModal(false);
-        console.log('I pressed');
-      }
-    },
-    [setShowModal, showModal]
-  );
+  // const closeModal = e => {
+  //   if (modalRef.current === e.target) {
+  //     setShowModal(false);
+  //   }
+  // };
 
-  useEffect(
-    () => {
-      document.addEventListener('keydown', keyPress);
-      return () => document.removeEventListener('keydown', keyPress);
-    },
-    [keyPress]
-  );
+  // const keyPress = useCallback(
+  //   e => {
+  //     if (e.key === 'Escape' && showModal) {
+  //       setShowModal(false);
+  //       console.log('I pressed');
+  //     }
+  //   },
+  //   [setShowModal, showModal]
+  // );
+
+  // useEffect(
+  //   () => {
+  //     document.addEventListener('keydown', keyPress);
+  //     return () => document.removeEventListener('keydown', keyPress);
+  //   },
+  //   [keyPress]
+  // );
 
   return (
-    <>
-{/*       
-        <ModalWrapper>
-        <ModalContent>
-          <h1>Popular</h1>
-          <p>shorts</p>
-          <p>shoes</p>
-        </ModalContent>
-        <CloseModalButton onClick={toggleModal} />
-      </ModalWrapper> */}
 
+      <ModalContainer>
+            <ModalWrapper>
+              <ModalTopWrapper>
+
+                  <SearchModalIpt placeholder='Search' />
+
+
+                  <CloseModalButton onClick={() => {setOpenModal(false);}}/>
+
+              </ModalTopWrapper>
+              <ModalContent>
+                <h1>Popular</h1>
+                <p>shorts</p>
+                <p>shoes</p>
+              </ModalContent>
+            </ModalWrapper>
+        </ModalContainer>
+        );
         
 
-      {showModal ? (
+      /* {showModal ? (
         <Background onClick={closeModal} ref={modalRef}>
             <ModalWrapper showModal={showModal}>
               <ModalSearch>  
@@ -74,7 +84,7 @@ from "./ModalElements";
 
             </ModalWrapper>
         </Background>
-      ) : null}
-    </>
+
   );
+}; */
 };

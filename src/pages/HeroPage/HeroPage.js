@@ -57,13 +57,7 @@ const HeroPage = () => {
   return (
     <MainContainer>
       <MainWrapper>
-        <TopWrapper>
-          <FreeInfo>
-            <FreeInfoTitle>
-              <p>FREE SHIPPING on all orders $200+</p>
-            </FreeInfoTitle>
-          </FreeInfo>
-        </TopWrapper>
+
         <MidWrapper>
           <MidInfo>
             <SectionOne>

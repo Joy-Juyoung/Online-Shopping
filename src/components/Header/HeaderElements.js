@@ -5,7 +5,7 @@ export const HeaderContainer = styled.div`
   max-width: 1250px;
   width: 100%;
   color: #0a0f18;
-  position: sticky;
+  /* position: sticky; */
   margin: 0 auto;
   padding: 0 20px;
   z-index: 100;
@@ -17,10 +17,11 @@ export const HeaderContainer = styled.div`
 export const HeaderWrapper = styled.div`
   margin: 0 auto;
   display: flex;
+  position: sticky;
   flex-direction: column;
   justify-content: center;
-  /* position: fixed;
-  z-index: 50; */
+  /* position: fixed; */
+  z-index: 50;
 `;
 
 export const HeaderUp = styled.div`
@@ -140,7 +141,7 @@ export const Menu = styled.div`
   opacity: 0;
   visibility: hidden;
   background-color: white;
-
+  color: black;
   &:after {
     content: '';
     height: 0;
@@ -157,11 +158,13 @@ export const Menu = styled.div`
       border-top: 3px solid red;
       margin-top: 20px;
       width: 100%;
+      color: black;
     `};
 `;
 
 export const Ul = styled.ul`
   & > li {
+
     margin-bottom: 20px;
   }
 
@@ -176,6 +179,49 @@ export const Ul = styled.ul`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+`;
+
+export const TopWrapper = styled.div`
+  width: 100%;
+  /* display: flex; */
+  align-items: center;
+  justify-content: start;
+  margin: 0 auto;
+`;
+
+export const FreeInfo = styled.div`
+  width: 100%;
+  min-height: 40px;
+  display: grid;
+  -webkit-box-align: center;
+  align-items: center;
+  grid-template-columns: 100%;
+  padding: 3px 12px;
+  background-color: rgb(10, 15, 24);
+  box-sizing: border-box;
+`;
+
+export const FreeInfoTitle = styled.div`
+  position: relative;
+  grid-row-start: 1;
+  grid-column-start: 1;
+  height: auto;
+  transition-property: z-index;
+  display: block;
+  animation: 0.5s linear 1s 1 normal both running lbWRkT;
+  transition-delay: 1s;
+  /* z-index: 1; */
+  p {
+    /* max-width: 1250px; */
+    margin: 0px auto;
+    font-size: 16px;
+    line-height: 24px;
+    display: block;
+    font-weight: 400;
+    color: #ffffff;
+    text-align: center;
+    word-break: keep-all;
+  }
 `;
 
 export const Li = styled.li``;

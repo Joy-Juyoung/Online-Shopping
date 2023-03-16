@@ -10,48 +10,6 @@ export const MainContainer = styled.div`
 
 export const MainWrapper = styled.div``;
 
-export const TopWrapper = styled.div`
-  width: 100%;
-  /* display: flex; */
-  align-items: center;
-  justify-content: start;
-  margin: 0 auto;
-`;
-
-export const FreeInfo = styled.div`
-  width: 100%;
-  min-height: 40px;
-  display: grid;
-  -webkit-box-align: center;
-  align-items: center;
-  grid-template-columns: 100%;
-  padding: 3px 12px;
-  background-color: rgb(10, 15, 24);
-  box-sizing: border-box;
-`;
-
-export const FreeInfoTitle = styled.div`
-  position: relative;
-  grid-row-start: 1;
-  grid-column-start: 1;
-  height: auto;
-  transition-property: z-index;
-  display: block;
-  animation: 0.5s linear 1s 1 normal both running lbWRkT;
-  transition-delay: 1s;
-  z-index: 1;
-  p {
-    /* max-width: 1250px; */
-    margin: 0px auto;
-    font-size: 16px;
-    line-height: 24px;
-    display: block;
-    font-weight: 400;
-    color: #ffffff;
-    text-align: center;
-    word-break: keep-all;
-  }
-`;
 
 export const MidWrapper = styled.div``;
 

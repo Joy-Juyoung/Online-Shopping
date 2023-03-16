@@ -26,6 +26,9 @@ import {
   Menu,
   Ul,
   Li,
+  TopWrapper,
+  FreeInfo,
+  FreeInfoTitle,
 } from './HeaderElements';
 import useDetectClose from './useDetectClose';
 
@@ -48,11 +51,12 @@ const Header = () => {
 
   useDetectClose(dropdownRef, closeHoverMenu);
 
-  const [showModal, setShowModal] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
 
-  const openModal = () => {
-    setShowModal((showModal) => !showModal);
-  };
+  // const openModal = () => {
+  //   setShowModal((showModal) => !showModal);
+  // };
+  const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <HeaderContainer>
@@ -60,8 +64,17 @@ const Header = () => {
         <HeaderUp>
           <LeftSide>
             {/* 인풋 드랍 다운 또는 버튼 드랍다운 중 결정해야함*/}
-            <ModalBtn onClick={openModal}> Search</ModalBtn>
-            <Modal showModal={showModal} setShowModal={setShowModal} />
+
+            <ModalBtn 
+              onClick={() => {
+                setModalOpen(true);}}> 
+                Search
+            </ModalBtn>
+            {modalOpen && <Modal setOpenModal={setModalOpen} />}
+            
+            {/* <ModalBtn onClick={openModal}> Search</ModalBtn>
+            
+            <Modal showModal={showModal} setShowModal={setShowModal} /> */}
             {/* <SearchIcon>
                         <SearchRoundedIcon fontSize='medium' color='disabled'/>
                     </SearchIcon> */}
@@ -187,6 +200,13 @@ const Header = () => {
           </DropdownContainer>
         </HeaderDown>
       </HeaderWrapper>
+      <TopWrapper>
+          <FreeInfo>
+            <FreeInfoTitle>
+              <p>FREE SHIPPING on all orders $200+</p>
+            </FreeInfoTitle>
+          </FreeInfo>
+        </TopWrapper>
     </HeaderContainer>
   );
 };
