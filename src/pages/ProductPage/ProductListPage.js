@@ -25,7 +25,7 @@ const ProductsListPage = () => {
         <div>
           <ul>
             {items.map((item) => (
-              <li key={item.pk}>{item.kind.name}</li>
+              <li key={item.pk}>{item.name}</li>
             ))}
           </ul>
         </div>
