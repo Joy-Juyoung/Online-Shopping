@@ -22,13 +22,11 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 // const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const USERNAME_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = '/users/log-in';
+// const LOGIN_URL = '/users/log-in';
+const REGISTER_URL = '/users';
 // const PRODUCTS_URL = '/products';
 
 const TestRegister = () => {
-  const userRef = useRef();
-  const errRef = useRef();
-
   const [username, setUsername] = useState('');
   const [validUsername, setValidUsername] = useState(false);
   const [usernameFocus, setUsernameFocus] = useState(false);
@@ -37,10 +35,6 @@ const TestRegister = () => {
   const [validPwd, setValidPwd] = useState(false);
   const [pwdFocus, setPwdFocus] = useState(false);
 
-  // useEffect(() => {
-  //   userRef.current.focus();
-  // }, []);
-
   useEffect(() => {
     setValidUsername(USERNAME_REGEX.test(username));
   }, [username]);
@@ -48,10 +42,6 @@ const TestRegister = () => {
   useEffect(() => {
     setValidPwd(PWD_REGEX.test(pwd));
   }, [pwd]);
-
-  // useEffect(() => {
-  //   setErrMsg('');
-  // }, [email, username, pwd, matchPwd]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,8 +52,9 @@ const TestRegister = () => {
     const response = await axios.post(
       REGISTER_URL,
       {
-        username: 'juyoung',
-        password: '1234',
+        username: username,
+        password: pwd,
+        type: 'user',
       },
       {
         headers: { 'Content-Type': 'application/json' },
@@ -72,7 +63,7 @@ const TestRegister = () => {
       }
     );
 
-    console.log('login', response?.data);
+    console.log('Register', response?.data);
 
     setUsername('');
     setPwd('');
