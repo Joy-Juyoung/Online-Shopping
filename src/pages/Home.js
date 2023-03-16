@@ -6,6 +6,7 @@ import RegisterPage from './RegisterPage/RegisterPage';
 import TestRegister from './RegisterPage/TestRegister';
 import { Container } from './CommonElements';
 
+
 const Home = () => {
   return (
     <Container>
@@ -14,6 +15,7 @@ const Home = () => {
         <Route path='/login' element={<LoginPage />} exact={true} />
         <Route path='/register' element={<RegisterPage />} exact={true} />
         <Route path='/test' element={<TestRegister />} exact={true} />
+
       </Routes>
     </Container>
   );
