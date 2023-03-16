@@ -9,7 +9,7 @@ import TestHeader from './components/Header/TestHeader';
 function App() {
   return (
     <Router>
-      {/* <Header /> */}
+      <Header />
       {/* <TestHeader /> */}
       <Home />
       <Footer />
