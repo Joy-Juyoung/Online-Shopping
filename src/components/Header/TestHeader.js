@@ -1,17 +1,41 @@
 import React, { useState, useRef, useEffect } from 'react';
 //import { Link } from 'react-router-dom';
 import axios from '../../api/axios';
-
 import {
+  CartLink,
+  FaLink,
   HeaderContainer,
+  HeaderUp,
   HeaderWrapper,
+  LeftSide,
+  MiddleSide,
+  MidLink,
+  ModalBtn,
+  PermLink,
+  RightIcon,
+  RightSide,
+  DropMenu,
+  DropMenuParents,
+  DropMenuChild,
+  DropMenuItem,
   HeaderDown,
-  DropdownContainer,
   DropdownButton,
-  Menu,
-  Ul,
-  Li,
+  DropMenuList,
+  TopWrapper,
+  FreeInfo,
+  FreeInfoTitle,
+  HeaderWrap,
 } from './HeaderElements';
+import FlagIcon from '@mui/icons-material/Flag';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import PermIdentityRoundedIcon from '@mui/icons-material/PermIdentityRounded';
+// import {
+//   DropMenu,
+//   DropMenuParents,
+//   DropMenuChild,
+//   DropMenuItem,
+// } from './TestHeaderElements';
 
 const CATEGORY_URL = '/products/productAllParentsKinds';
 const TestHeader = () => {
@@ -23,99 +47,85 @@ const TestHeader = () => {
       withCredentials: true,
     });
     // console.log('category', categoryData);
-    console.log('categoryData', categoryData?.data);
+    // console.log('categoryData', categoryData?.data);
     setCategories(categoryData?.data);
   };
 
-  console.log('category', categories);
+  // console.log('category', categories);
 
   useEffect(() => {
     getCategory();
   }, []);
 
   return (
-    <div>
-      <div>
-        Test Header Page
-        <div>
-          <ul>
-            {categories.map((category) => {
-              <li key={category.pk}>{category.name}</li>;
-            })}
-          </ul>
-        </div>
-      </div>
-    </div>
-    // <HeaderContainer>
-    //   <HeaderWrapper>
-    //  <HeaderDown>
-    //   <DropdownContainer>
-    //     <DropdownButton>TOPS</DropdownButton>
-    //     <Menu>
-    //       <Ul>
-    //         <Li>Short Sleeves</Li>
-    //         <Li>Long Sleeves</Li>
-    //         <Li>Shorts & Blouses</Li>
-    //         <Li>Sweatshirts</Li>
-    //         <Li>Hoodies</Li>
-    //       </Ul>
-    //     </Menu>
-    //   </DropdownContainer>
+    <>
+      {/* <HeaderContainer> */}
+      <HeaderWrap>
+        <HeaderWrapper>
+          <HeaderUp>
+            <LeftSide>
+              <ModalBtn>Search</ModalBtn>
+            </LeftSide>
 
-    //      <DropdownContainer>
-    //         <DropdownButton>BOTTOMS</DropdownButton>
-    //         <Menu>
-    //           <Ul>
-    //             <Li>Denim</Li>
-    //             <Li>Joggers</Li>
-    //             <Li>Jeans</Li>
-    //             <Li>Shorts</Li>
-    //             <Li>Jumpsuits</Li>
-    //           </Ul>
-    //         </Menu>
-    //       </DropdownContainer>
+            <MiddleSide>
+              <MidLink to='/'>
+                <div>MUSINSA</div>
+              </MidLink>
+            </MiddleSide>
+            <RightSide>
+              <RightIcon>
+                <FlagIcon fontSize='medium' />
+              </RightIcon>
 
-    //       <DropdownContainer>
-    //         <DropdownButton>OUTERS</DropdownButton>
-    //         <Menu>
-    //           <Ul>
-    //             <Li>Blazers</Li>
-    //             <Li>Hooded Jackets</Li>
-    //             <Li>Cardigans</Li>
-    //             <Li>Coats</Li>
-    //             <Li>Bomber Jackets</Li>
-    //           </Ul>
-    //         </Menu>
-    //       </DropdownContainer>
+              <RightIcon>
+                <FaLink>
+                  <FavoriteBorderIcon fontSize='medium' />
+                </FaLink>
+              </RightIcon>
+              <RightIcon>
+                <CartLink>
+                  <AddShoppingCartIcon fontSize='medium' />
+                </CartLink>
+              </RightIcon>
+              <RightIcon>
+                <PermLink to='/login'>
+                  <PermIdentityRoundedIcon fontSize='medium' />
+                </PermLink>
+              </RightIcon>
+            </RightSide>
+          </HeaderUp>
+          <HeaderDown>
+            <DropMenu>
+              {categories.map((category) => {
+                return (
+                  <DropMenuList key={category.pk}>
+                    <DropMenuParents>
+                      <DropdownButton>{category.name}</DropdownButton>
 
-    //       <DropdownContainer>
-    //         <DropdownButton>SHOES</DropdownButton>
-    //         <Menu>
-    //           <Ul>
-    //             <Li>Boots</Li>
-    //             <Li>Sports Shoes</Li>
-    //             <Li>Sneakers</Li>
-    //             <Li>Loafers</Li>
-    //             <Li>Sandals</Li>
-    //           </Ul>
-    //         </Menu>
-    //       </DropdownContainer>
-
-    //       <DropdownContainer>
-    //         <DropdownButton>ACCESSORIES</DropdownButton>
-    //         <Menu>
-    //           <Ul>
-    //             <Li>Cap & Hat</Li>
-    //             <Li>Rings</Li>
-    //             <Li>Watches</Li>
-    //             <Li>Earrings</Li>
-    //             <Li>Wallets</Li>
-    //           </Ul>
-    //         </Menu>
-    //       </DropdownContainer>
-    //      </HeaderDown>
-    //   </HeaderWrapper>
-    // </HeaderContainer>
+                      <DropMenuChild>
+                        {category.productKinds.map((child) => {
+                          return (
+                            <DropMenuItem key={child.pk}>
+                              <span>{child.name}</span>
+                            </DropMenuItem>
+                          );
+                        })}
+                      </DropMenuChild>
+                    </DropMenuParents>
+                  </DropMenuList>
+                );
+              })}
+            </DropMenu>
+          </HeaderDown>
+        </HeaderWrapper>
+      </HeaderWrap>
+      <TopWrapper>
+        <FreeInfo>
+          <FreeInfoTitle>FREE SHIPPING on all orders $200+</FreeInfoTitle>
+        </FreeInfo>
+      </TopWrapper>
+      {/* </HeaderContainer> */}
+    </>
   );
 };
 

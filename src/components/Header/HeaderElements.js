@@ -1,33 +1,31 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const HeaderContainer = styled.div`
-  max-width: 1250px;
-  width: 100%;
-  color: #0a0f18;
-  /* position: sticky; */
+  /* color: #0a0f18;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0;
   z-index: 100;
-  /* @media screen and (min-width: 576px) {
-    max-width: 375px; */
-  /* } */
+  background: #fff; */
+`;
+
+export const HeaderWrap = styled.div`
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 100;
 `;
 
 export const HeaderWrapper = styled.div`
+  max-width: 1250px;
   margin: 0 auto;
   display: flex;
-  position: sticky;
   flex-direction: column;
   justify-content: center;
-  /* position: fixed; */
-  z-index: 50;
 `;
 
 export const HeaderUp = styled.div`
   padding-top: 20px;
-  /* padding-left: 10px;
-    padding-right: 10px; */
   display: flex;
   align-items: center;
   font-size: 16px;
@@ -114,114 +112,98 @@ export const PermLink = styled(Link)`
   }
 `;
 
+// ------------------------
+
 export const HeaderDown = styled.div`
-  padding-top: 20px;
-  /* padding-left: 125px; */
-  display: flex;
-  align-items: center;
-`;
-
-export const DropdownContainer = styled.div`
-  position: relative;
-  text-align: center;
-  margin-bottom: 20px;
-`;
-
-export const DropdownButton = styled.div`
-  font-size: 20px;
-  font-family: 'Roboto', sans-serif;
-  margin-right: 50px;
-  cursor: pointer;
-`;
-
-export const Menu = styled.div`
-  position: absolute;
   width: 100%;
-  /* text-align: center; */
-  opacity: 0;
-  visibility: hidden;
-  background-color: white;
-  color: black;
-  &:after {
-    content: '';
-    height: 0;
-    width: 0;
-    position: absolute;
-  }
-
-  ${({ isDropped }) =>
-    isDropped &&
-    css`
-      /* text-align: left; */
-      opacity: 1;
-      visibility: visible;
-      border-top: 3px solid red;
-      margin-top: 20px;
-      width: 100%;
-      color: black;
-    `};
+  padding: 0;
+  margin: 30px 0 0;
+  /* border-bottom: 1px solid lightgrey; */
 `;
 
-export const Ul = styled.ul`
-  & > li {
-
-    margin-bottom: 20px;
-  }
-
-  & > li:first-of-type {
-    margin-top: 10px;
-  }
-
+export const DropMenu = styled.ul`
   list-style-type: none;
   padding: 0;
   margin: 0;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   align-items: center;
+  justify-content: flex-start;
 `;
 
-export const TopWrapper = styled.div`
-  width: 100%;
-  /* display: flex; */
-  align-items: center;
-  justify-content: start;
-  margin: 0 auto;
-`;
-
-export const FreeInfo = styled.div`
-  width: 100%;
-  min-height: 40px;
-  display: grid;
-  -webkit-box-align: center;
-  align-items: center;
-  grid-template-columns: 100%;
-  padding: 3px 12px;
-  background-color: rgb(10, 15, 24);
-  box-sizing: border-box;
-`;
-
-export const FreeInfoTitle = styled.div`
+export const DropMenuList = styled.li`
+  /* display: inline-block; */
   position: relative;
-  grid-row-start: 1;
-  grid-column-start: 1;
-  height: auto;
-  transition-property: z-index;
-  display: block;
-  animation: 0.5s linear 1s 1 normal both running lbWRkT;
-  transition-delay: 1s;
-  /* z-index: 1; */
-  p {
-    /* max-width: 1250px; */
-    margin: 0px auto;
-    font-size: 16px;
-    line-height: 24px;
-    display: block;
-    font-weight: 400;
-    color: #ffffff;
-    text-align: center;
-    word-break: keep-all;
+`;
+
+export const DropMenuParents = styled.div`
+  margin-right: 80px;
+
+  &:hover {
+    ul {
+      display: block;
+      /* border-top: 2px solid; */
+      margin-right: 20px;
+    }
   }
 `;
 
-export const Li = styled.li``;
+export const DropdownButton = styled.button`
+  font-size: 16px;
+  border: none;
+  outline: none;
+  background: none;
+  font-weight: 600;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 10px;
+
+  &:hover {
+    border-bottom: 2px solid;
+  }
+`;
+
+// parents에 hover후, child를 볼 때, 하단바의 색이 유지되게 하는방법?
+
+export const DropMenuChild = styled.ul`
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  /* min-width: 100px; */
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+`;
+
+export const DropMenuItem = styled.li`
+  width: 200px;
+  padding: 20px 15px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #eee;
+  }
+`;
+
+// ---------------------------------
+
+export const TopWrapper = styled.div`
+  width: 100vw;
+  margin: 0 auto;
+  /* background: #0a0f18; */
+  background: #0a0f18;
+  color: #fff;
+  z-index: -100;
+`;
+
+export const FreeInfo = styled.div`
+  padding: 3px 12px;
+  background: #0a0f18;
+  color: #fff;
+`;
+
+export const FreeInfoTitle = styled.div`
+  text-align: center;
+  font-size: 13px;
+`;
