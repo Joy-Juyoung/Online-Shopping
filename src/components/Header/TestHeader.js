@@ -51,7 +51,7 @@ const TestHeader = () => {
     setCategories(categoryData?.data);
   };
 
-  // console.log('category', categories);
+  console.log('category', categories);
 
   useEffect(() => {
     getCategory();
@@ -101,7 +101,6 @@ const TestHeader = () => {
                   <DropMenuList key={category.pk}>
                     <DropMenuParents>
                       <DropdownButton>{category.name}</DropdownButton>
-
                       <DropMenuChild>
                         {category.productKinds.map((child) => {
                           return (

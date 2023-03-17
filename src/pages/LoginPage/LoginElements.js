@@ -22,6 +22,29 @@ export const InputWrap = styled.div`
 //   cursor: pointer;
 // `;
 
+export const ErrorMsg = styled.div`
+  text-align: center;
+  margin: 20px 0 -20px;
+  padding: 10px 0;
+  border: 1px solid #ffe9ad;
+  background: #ffe9ad;
+  color: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const VerificationMsg = styled.div`
+  /* display: flex; */
+  align-items: center;
+  /* justify-content: center; */
+
+  span {
+    margin-left: 10px;
+    color: grey;
+  }
+`;
+
 export const LoginCheck = styled.div`
   margin: 0 auto;
   display: flex;
