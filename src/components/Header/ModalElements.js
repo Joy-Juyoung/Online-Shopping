@@ -5,7 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 
 export const ModalContainer = styled.div`
-  min-width: 1280px;
+  max-width: 1280px;
   height: 1000%;
   background-color: #a9a9a9;
   position: fixed;
