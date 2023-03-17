@@ -27,7 +27,7 @@ const TestHeader = () => {
     setCategories(categoryData?.data);
   };
 
-  // console.log('category', categories?.name);
+  console.log('category', categories);
 
   useEffect(() => {
     getCategory();

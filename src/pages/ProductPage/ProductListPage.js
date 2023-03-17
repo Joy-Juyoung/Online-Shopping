@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../../api/axios';
+import {
+  ProductsList,
+  ProductsListWrap,
+  ProdutsListContainer,
+} from './ProductListElements';
+import ProductsCard from './ProductsCard';
 
 const PRODUCTS_URL = '/products';
 const ProductsListPage = () => {
@@ -10,7 +16,7 @@ const ProductsListPage = () => {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    console.log('Product', itemsList?.data);
+    console.log('ProductList', itemsList?.data);
     setItems(itemsList?.data);
   };
 
@@ -19,18 +25,21 @@ const ProductsListPage = () => {
   }, []);
 
   return (
-    <div>
-      <div>
-        Product Page
-        <div>
-          <ul>
-            {items.map((item) => (
-              <li key={item.pk}>{item.kind.name}</li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </div>
+    <ProdutsListContainer>
+      <ProductsListWrap>
+        <h1>All Products</h1>
+        <ProductsList>
+          {items.map((item) => (
+            // <ProductsCard key={item.pk} product={item} />
+            <div key={item.pk}>
+              {item.name}
+              <img src={item.photos[0].picture} alt='' />
+              {/* <ProductsCard key={item.pk} product={item} /> */}
+            </div>
+          ))}
+        </ProductsList>
+      </ProductsListWrap>
+    </ProdutsListContainer>
   );
 };
 
