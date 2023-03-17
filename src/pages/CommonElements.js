@@ -28,6 +28,13 @@ export const PesnalWrapper = styled.div`
   }
 `;
 
+// 둘중 하나로 통일
+export const InputPwd = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 export const InputPassword = styled.div`
   width: 100%;
   display: flex;

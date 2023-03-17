@@ -13,23 +13,21 @@ import {
   PesnalContainer,
   PesnalWrapper,
   InputPassword,
+  EyeIcon,
 } from '../CommonElements';
 import axios from '../../api/axios';
 import { Link } from 'react-router-dom';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import { Visibility, VisibilityOff } from '@material-ui/icons';
 
 const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const USERNAME_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = '/users';
-// const PRODUCTS_URL = '/products';
+
+const REGISTER_URL = '/users/';
 
 const RegisterPage = () => {
-  // const [emailInput, setEmailInput] = useState('');
-  // const [nameInput, setNameInput] = useState('');
-  // const [passwordInput, setPasswordInput] = useState('');
-
   const userRef = useRef();
   const errRef = useRef();
 
@@ -52,40 +50,65 @@ const RegisterPage = () => {
   const [errMsg, setErrMsg] = useState('');
   const [success, setSuccess] = useState(false);
 
-  // useEffect(() => {
-  //   userRef.current.focus();
-  // }, []);
+  const [pwdType, setPwdType] = useState('password');
+  const [matchPwdType, setMatchPwdType] = useState('password');
 
-  // useEffect(() => {
-  //   setValidEmail(EMAIL_REGEX.test(email));
-  // }, [email]);
+  const handlePwdChange = (evnt) => {
+    setPwd(evnt.target.value);
+  };
+  const togglePwd = () => {
+    if (pwdType === 'password') {
+      setPwdType('text');
+      return;
+    }
+    setPwdType('password');
+  };
+
+  const handleMatchPwdChange = (evnt) => {
+    setMatchPwd(evnt.target.value);
+  };
+  const toggleMatchPwd = () => {
+    if (pwdType === 'password') {
+      setMatchPwdType('text');
+      return;
+    }
+    setMatchPwdType('password');
+  };
+
+  useEffect(() => {
+    userRef.current.focus();
+  }, []);
+
+  useEffect(() => {
+    setValidEmail(EMAIL_REGEX.test(email));
+  }, [email]);
 
   useEffect(() => {
     setValidUsername(USERNAME_REGEX.test(username));
   }, [username]);
 
-  // useEffect(() => {
-  //   setValidPwd(PWD_REGEX.test(pwd));
-  //   setValidMatch(pwd === matchPwd);
-  // }, [pwd, matchPwd]);
+  useEffect(() => {
+    setValidPwd(PWD_REGEX.test(pwd));
+    setValidMatch(pwd === matchPwd);
+  }, [pwd, matchPwd]);
 
-  // useEffect(() => {
-  //   setErrMsg('');
-  // }, [email, username, pwd, matchPwd]);
+  useEffect(() => {
+    setErrMsg('');
+  }, [email, username, pwd, matchPwd]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // console.log(email);
+    console.log(email);
     console.log(username);
     console.log(pwd);
-    // console.log(matchPwd);
+    console.log(matchPwd);
 
-    // const v1 = EMAIL_REGEX.test(email);
+    const v1 = EMAIL_REGEX.test(email);
     const v2 = USERNAME_REGEX.test(username);
     const v3 = PWD_REGEX.test(pwd);
-    // if (!v1 || !v2 || !v3) {
-    if (!v2 || !v3) {
+    if (!v1 || !v2 || !v3) {
+      // if (!v2 || !v3) {
       setErrMsg('Invalid Entry');
       return;
     }
@@ -94,7 +117,7 @@ const RegisterPage = () => {
         REGISTER_URL,
         {
           username: username,
-          // email: email,
+          email: email,
           password: pwd,
           type: 'user',
         },
@@ -107,10 +130,10 @@ const RegisterPage = () => {
       console.log('register', response?.data);
       setSuccess(true);
 
-      // setEmail('');
+      setEmail('');
       setUsername('');
       setPwd('');
-      // setMatchPwd('');
+      setMatchPwd('');
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response');
@@ -145,14 +168,14 @@ const RegisterPage = () => {
           <h1>Create Account</h1>
           <RegisterForm onSubmit={handleSubmit}>
             <RegisterInput>
-              {/* <RegisterInputLabel htmlFor='email'>
+              <RegisterInputLabel htmlFor='email'>
                 Email address
               </RegisterInputLabel>
               <Input
                 // type='email'
+                ref={userRef}
                 type='text'
                 id='email'
-                ref={userRef}
                 autoComplete='off'
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
@@ -172,15 +195,15 @@ const RegisterPage = () => {
               >
                 <ErrorOutlineIcon fontSize='small' style={{ color: 'red' }} />
                 <span>example@email.com</span>
-              </VerificationMsg> */}
+              </VerificationMsg>
               <RegisterInputLabel htmlFor='username'>
                 Username
               </RegisterInputLabel>
 
               <Input
+                // ref={userRef}
                 type='text'
                 id='username'
-                // ref={userRef}
                 autoComplete='off'
                 onChange={(e) => setUsername(e.target.value)}
                 value={username}
@@ -211,9 +234,11 @@ const RegisterPage = () => {
               <InputPassword>
                 <Input
                   placeholder='Enter password'
-                  type='password'
+                  // type='password'
+                  type={pwdType}
                   id='password'
-                  onChange={(e) => setPwd(e.target.value)}
+                  // onChange={(e) => setPwd(e.target.value)}
+                  onChange={handlePwdChange}
                   value={pwd}
                   required
                   aria-invalid={validPwd ? 'false' : 'flex'}
@@ -221,6 +246,13 @@ const RegisterPage = () => {
                   onFocus={() => setPwdFocus(true)}
                   onBlur={() => setPwdFocus(false)}
                 />
+                <EyeIcon>
+                  {pwdType === 'password' ? (
+                    <VisibilityOff onClick={togglePwd} fontSize='small' />
+                  ) : (
+                    <Visibility onClick={togglePwd} fontSize='small' />
+                  )}
+                </EyeIcon>
               </InputPassword>
               <VerificationMsg
                 id='pwdnote'
@@ -236,16 +268,18 @@ const RegisterPage = () => {
                   characters: ! @ # $ %
                 </span>
               </VerificationMsg>
-              {/* <RegisterInputLabel htmlFor='confirm_pwd'>
+              <RegisterInputLabel htmlFor='confirm_pwd'>
                 Confirm Password
               </RegisterInputLabel>
 
               <InputPassword>
                 <Input
                   placeholder='Re-enter password'
-                  type='password'
+                  // type='password'
+                  type={matchPwdType}
                   id='confirm_pwd'
-                  onChange={(e) => setMatchPwd(e.target.value)}
+                  // onChange={(e) => setMatchPwd(e.target.value)}
+                  onChange={handleMatchPwdChange}
                   value={matchPwd}
                   required
                   aria-invalid={validMatch ? 'false' : 'true'}
@@ -253,6 +287,13 @@ const RegisterPage = () => {
                   onFocus={() => setMatchFocus(true)}
                   onBlur={() => setMatchFocus(false)}
                 />
+                <EyeIcon>
+                  {pwdType === 'password' ? (
+                    <VisibilityOff onClick={toggleMatchPwd} fontSize='small' />
+                  ) : (
+                    <Visibility onClick={toggleMatchPwd} fontSize='small' />
+                  )}
+                </EyeIcon>
               </InputPassword>
               <VerificationMsg
                 id='confirmnote'
@@ -263,15 +304,15 @@ const RegisterPage = () => {
               >
                 <ErrorOutlineIcon fontSize='small' style={{ color: 'red' }} />
                 <span>Must match the first password input field.</span>
-              </VerificationMsg> */}
+              </VerificationMsg>
             </RegisterInput>
 
             <ButtonLarge
-            // disabled={
-            //   !validEmail || !validUsername || !validPwd || !validMatch
-            //     ? true
-            //     : false
-            // }
+              disabled={
+                !validEmail || !validUsername || !validPwd || !validMatch
+                  ? true
+                  : false
+              }
             >
               Submit
             </ButtonLarge>

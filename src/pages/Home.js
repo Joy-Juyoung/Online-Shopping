@@ -9,7 +9,6 @@ import ProductsListPage from './ProductPage/ProductListPage';
 import RegisterPage from './RegisterPage/RegisterPage';
 import TestRegister from './RegisterPage/TestRegister';
 
-
 const Home = () => {
   return (
     <Container>
@@ -25,7 +24,7 @@ const Home = () => {
           exact={true}
         />
 
-        <Route path='/test' element={<TestRegister />} exact={true} />
+        {/* <Route path='/testRegister' element={<TestRegister />} exact={true} /> */}
         <Route path='/testHeader' element={<TestHeader />} exact={true} />
       </Routes>
     </Container>
