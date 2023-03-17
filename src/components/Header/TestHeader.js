@@ -2,16 +2,30 @@ import React, { useState, useRef, useEffect } from 'react';
 //import { Link } from 'react-router-dom';
 import axios from '../../api/axios';
 
+// import {
+//   HeaderContainer,
+//   HeaderWrapper,
+//   HeaderDown,
+//   DropdownContainer,
+//   DropdownButton,
+//   Menu,
+//   Ul,
+//   Li,
+// } from './HeaderElements';
+
 import {
-  HeaderContainer,
-  HeaderWrapper,
-  HeaderDown,
-  DropdownContainer,
-  DropdownButton,
-  Menu,
-  Ul,
-  Li,
-} from './HeaderElements';
+  TestHeaderContainer,
+  TestHeaderWrapper,
+  TestHeaderDown,
+  TestHeaderMenu,
+  TestHeaderMenuItem,
+  MeneItemTop,
+  DropMenu,
+  DropMenuItem,
+  MenuItemKinds
+
+
+} from './TestHeaderElements';
 
 const CATEGORY_URL = '/products/productAllParentsKinds';
 const TestHeader = () => {
@@ -34,33 +48,65 @@ const TestHeader = () => {
   }, []);
 
   return (
-    <div>
-      <div>
-        Test Header Page
-        <div>
-          <ul>
-            {categories.map((category) => {
-              <li key={category.pk}>{category.name}</li>;
-            })}
-          </ul>
-        </div>
-      </div>
-    </div>
+    // <div>
+    //   <div>
+    //     Test Header Page
+    //     <div>
+    //       <ul>
+    //         {categories.map((category) => {
+    //           return <li key={category.pk}>{category.name}</li>;
+    //         })}
+    //       </ul>
+    //     </div>
+    //   </div>
+    // </div>
+
+    <TestHeaderContainer>
+      <TestHeaderWrapper>
+        <TestHeaderDown>
+          <TestHeaderMenu>
+            <TestHeaderMenuItem>
+              <MeneItemTop>
+                Top
+              </MeneItemTop>
+              <DropMenu>
+                <DropMenuItem>
+                  <MenuItemKinds>
+                    test
+                  </MenuItemKinds>
+                </DropMenuItem>
+                <DropMenuItem>
+                  <MenuItemKinds>
+                    test
+                  </MenuItemKinds>
+                </DropMenuItem>
+                <DropMenuItem>
+                  <MenuItemKinds>
+                    test
+                  </MenuItemKinds>
+                </DropMenuItem>
+              </DropMenu>
+            </TestHeaderMenuItem>
+          </TestHeaderMenu>
+        </TestHeaderDown>
+      </TestHeaderWrapper>
+    </TestHeaderContainer>
+
     // <HeaderContainer>
     //   <HeaderWrapper>
-    //  <HeaderDown>
-    //   <DropdownContainer>
-    //     <DropdownButton>TOPS</DropdownButton>
-    //     <Menu>
-    //       <Ul>
-    //         <Li>Short Sleeves</Li>
-    //         <Li>Long Sleeves</Li>
-    //         <Li>Shorts & Blouses</Li>
-    //         <Li>Sweatshirts</Li>
-    //         <Li>Hoodies</Li>
-    //       </Ul>
-    //     </Menu>
-    //   </DropdownContainer>
+    //     <HeaderDown>
+    //       <DropdownContainer>
+    //         <DropdownButton>TOPS</DropdownButton>
+    //         <Menu>
+    //           <Ul>
+    //             <Li>Short Sleeves</Li>
+    //             <Li>Long Sleeves</Li>
+    //             <Li>Shorts & Blouses</Li>
+    //             <Li>Sweatshirts</Li>
+    //             <Li>Hoodies</Li>
+    //           </Ul>
+    //         </Menu>
+    //       </DropdownContainer>
 
     //      <DropdownContainer>
     //         <DropdownButton>BOTTOMS</DropdownButton>

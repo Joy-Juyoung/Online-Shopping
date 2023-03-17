@@ -17,12 +17,11 @@ from "./ProductDetailElements";
 import { ButtonLarge } from '../../components/ButtonElements';
 
 // const PRODUCTDETAILS_URL = '/products/${id}';
-// const PRODUCTDETAILS_URL = '/products/${id}';
 
 const ProductDetailPage = () => {
   const [itemsDetail, setItemsDetail] = useState([]);
   
-  const [id, setId] = useState('');
+  const [id, setId] = useState('7');
 
 
   const getItemsDetail = async () => {
