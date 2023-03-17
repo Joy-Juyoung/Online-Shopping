@@ -29,12 +29,12 @@ import {
   TopWrapper,
   FreeInfo,
   FreeInfoTitle,
+  HeaderWrap,
 } from './HeaderElements';
 import useDetectClose from './useDetectClose';
 
 const Header = () => {
-
-  const dropdownRef = useRef(null);  
+  const dropdownRef = useRef(null);
   const [topIsOpen, setMenuTopIsOpen] = useState(false);
   const [bottomIsOpen, setMenuBottomIsOpen] = useState(false);
   const [outerIsOpen, setMenuOuterIsOpen] = useState(false);
@@ -60,66 +60,68 @@ const Header = () => {
 
   return (
     <HeaderContainer>
-      <HeaderWrapper>
-        <HeaderUp>
-          <LeftSide>
-            {/* 인풋 드랍 다운 또는 버튼 드랍다운 중 결정해야함*/}
+      <HeaderWrap>
+        <HeaderWrapper>
+          <HeaderUp>
+            <LeftSide>
+              {/* 인풋 드랍 다운 또는 버튼 드랍다운 중 결정해야함*/}
 
-            <ModalBtn 
-              onClick={() => {
-                setModalOpen(true);}}> 
+              <ModalBtn
+                onClick={() => {
+                  setModalOpen(true);
+                }}
+              >
                 Search
-            </ModalBtn>
-            {modalOpen && <Modal setOpenModal={setModalOpen} />}
-            
-            {/* <ModalBtn onClick={openModal}> Search</ModalBtn>
+              </ModalBtn>
+              {modalOpen && <Modal setOpenModal={setModalOpen} />}
+
+              {/* <ModalBtn onClick={openModal}> Search</ModalBtn>
             
             <Modal showModal={showModal} setShowModal={setShowModal} /> */}
-            {/* <SearchIcon>
+              {/* <SearchIcon>
                         <SearchRoundedIcon fontSize='medium' color='disabled'/>
                     </SearchIcon> */}
-          </LeftSide>
-          {/* 로고 이미지로 할지 글자로 할지 정해야함 */}
-          <MiddleSide>
-            <MidLink to='/'>
-              <div>MUSINSA</div>
-            </MidLink>
-          </MiddleSide>
-          <RightSide>
-            {/* 위치 드랍 다운 선택 */}
-            <RightIcon>
-              <FlagIcon fontSize='medium' />
-            </RightIcon>
-            {/* 추후 각각 링크 변경*/}
-            <RightIcon>
-              <FaLink>
-                <FavoriteBorderIcon fontSize='medium' />
-              </FaLink>
-            </RightIcon>
-            <RightIcon>
-              <CartLink>
-                <AddShoppingCartIcon fontSize='medium' />
-              </CartLink>
-            </RightIcon>
-            <RightIcon>
-              <PermLink to='/login'>
-                <PermIdentityRoundedIcon fontSize='medium' />
-              </PermLink>
-            </RightIcon>
-          </RightSide>
-        </HeaderUp>
+            </LeftSide>
+            {/* 로고 이미지로 할지 글자로 할지 정해야함 */}
+            <MiddleSide>
+              <MidLink to='/'>
+                <div>MUSINSA</div>
+              </MidLink>
+            </MiddleSide>
+            <RightSide>
+              {/* 위치 드랍 다운 선택 */}
+              <RightIcon>
+                <FlagIcon fontSize='medium' />
+              </RightIcon>
+              {/* 추후 각각 링크 변경*/}
+              <RightIcon>
+                <FaLink>
+                  <FavoriteBorderIcon fontSize='medium' />
+                </FaLink>
+              </RightIcon>
+              <RightIcon>
+                <CartLink>
+                  <AddShoppingCartIcon fontSize='medium' />
+                </CartLink>
+              </RightIcon>
+              <RightIcon>
+                <PermLink to='/login'>
+                  <PermIdentityRoundedIcon fontSize='medium' />
+                </PermLink>
+              </RightIcon>
+            </RightSide>
+          </HeaderUp>
 
-        <HeaderDown>
-          {/* 드랍 다운 해야함*/}
-          <DropdownContainer ref={dropdownRef} >
-            <DropdownButton onMouseOver={() => setMenuTopIsOpen(true)} >
-
-              {/* 각각 링크 걸어야함 */}
+          <HeaderDown>
+            {/* <DropdownContainer ref={dropdownRef}>
+            <DropdownButton onMouseOver={() => setMenuTopIsOpen(true)}>
               TOPS
             </DropdownButton>
-            <Menu isDropped={topIsOpen} onMouseLeave={() => setMenuTopIsOpen(false)}>
+            <Menu
+              isDropped={topIsOpen}
+              onMouseLeave={() => setMenuTopIsOpen(false)}
+            >
               <Ul>
-                {/* 각각 링크 걸어야함 */}
                 <Li>Short Sleeves</Li>
                 <Li>Long Sleeves</Li>
                 <Li>Shorts & Blouses</Li>
@@ -129,16 +131,15 @@ const Header = () => {
             </Menu>
           </DropdownContainer>
 
-
           <DropdownContainer ref={dropdownRef}>
-            <DropdownButton onMouseOver={() => setMenuBottomIsOpen(true)} >
-
-              {/* 각각 링크 걸어야함 */}
+            <DropdownButton onMouseOver={() => setMenuBottomIsOpen(true)}>
               BOTTOMS
             </DropdownButton>
-            <Menu isDropped={bottomIsOpen} onMouseLeave={() => setMenuBottomIsOpen(false)}>
+            <Menu
+              isDropped={bottomIsOpen}
+              onMouseLeave={() => setMenuBottomIsOpen(false)}
+            >
               <Ul>
-                {/* 각각 링크 걸어야함 */}
                 <Li>Denim</Li>
                 <Li>Joggers</Li>
                 <Li>Jeans</Li>
@@ -149,14 +150,14 @@ const Header = () => {
           </DropdownContainer>
 
           <DropdownContainer ref={dropdownRef}>
-            <DropdownButton onMouseOver={() => setMenuOuterIsOpen(true)} >
-
-              {/* 각각 링크 걸어야함 */}
+            <DropdownButton onMouseOver={() => setMenuOuterIsOpen(true)}>
               OUTERS
             </DropdownButton>
-            <Menu isDropped={outerIsOpen}onMouseLeave={() => setMenuOuterIsOpen(false)}>
+            <Menu
+              isDropped={outerIsOpen}
+              onMouseLeave={() => setMenuOuterIsOpen(false)}
+            >
               <Ul>
-                {/* 각각 링크 걸어야함 */}
                 <Li>Jackets</Li>
                 <Li>Cardigans</Li>
                 <Li>Coats</Li>
@@ -164,17 +165,15 @@ const Header = () => {
             </Menu>
           </DropdownContainer>
 
-
           <DropdownContainer ref={dropdownRef}>
-            <DropdownButton onMouseOver={() => setMenuShoesIsOpen(true)} >
-
-
-              {/* 각각 링크 걸어야함 */}
+            <DropdownButton onMouseOver={() => setMenuShoesIsOpen(true)}>
               SHOES
             </DropdownButton>
-            <Menu isDropped={shoesIsOpen} onMouseLeave={() => setMenuShoesIsOpen(false)}>
+            <Menu
+              isDropped={shoesIsOpen}
+              onMouseLeave={() => setMenuShoesIsOpen(false)}
+            >
               <Ul>
-                {/* 각각 링크 걸어야함 */}
                 <Li>Boots</Li>
                 <Li>Sneakers</Li>
                 <Li>Sandals</Li>
@@ -182,31 +181,31 @@ const Header = () => {
             </Menu>
           </DropdownContainer>
 
-
-          <DropdownContainer ref={dropdownRef} >
+          <DropdownContainer ref={dropdownRef}>
             <DropdownButton onMouseOver={() => setMenuAccessoriesIsOpen(true)}>
-
-              {/* 각각 링크 걸어야함 */}
               ACCESSORIES
             </DropdownButton>
-            <Menu isDropped={accessoriesIsOpen} onMouseLeave={() => setMenuAccessoriesIsOpen(false)} >
+            <Menu
+              isDropped={accessoriesIsOpen}
+              onMouseLeave={() => setMenuAccessoriesIsOpen(false)}
+            >
               <Ul>
-                {/* 각각 링크 걸어야함 */}
                 <Li>Cap & Hat</Li>
                 <Li>Rings</Li>
                 <Li>Watches</Li>
               </Ul>
             </Menu>
-          </DropdownContainer>
-        </HeaderDown>
-      </HeaderWrapper>
-      <TopWrapper>
+          </DropdownContainer>*/}
+          </HeaderDown>
+        </HeaderWrapper>
+        <TopWrapper>
           <FreeInfo>
             <FreeInfoTitle>
               <p>FREE SHIPPING on all orders $200+</p>
             </FreeInfoTitle>
           </FreeInfo>
         </TopWrapper>
+      </HeaderWrap>
     </HeaderContainer>
   );
 };
