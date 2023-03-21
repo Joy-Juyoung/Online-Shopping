@@ -30,6 +30,8 @@ import FlagIcon from '@mui/icons-material/Flag';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import PermIdentityRoundedIcon from '@mui/icons-material/PermIdentityRounded';
+import TestModal from './TestModal';
+
 // import {
 //   DropMenu,
 //   DropMenuParents,
@@ -57,6 +59,29 @@ const TestHeader = () => {
     getCategory();
   }, []);
 
+
+  // const modalRef = useRef();
+  // const [isOpen, setOpen] = useState(false);
+  // const handleClick = (e) => {
+  //   if(isOpen && !modalRef.current.contains(e.target)) 
+  //     setOpen(true);
+  // };
+
+  // useEffect(() => {
+  //   window.addEventListener('click', handleClick);
+  //   return () => {
+  //     window.removeEventListener('click', handleClick);
+  //   };
+  // },[])
+
+
+  // const [isOpen, setOpen] = useState(false);
+  // const handleClick =(ref, () => {
+  //   setOpen(true);
+  // });
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <>
       {/* <HeaderContainer> */}
@@ -64,7 +89,16 @@ const TestHeader = () => {
         <HeaderWrapper>
           <HeaderUp>
             <LeftSide>
-              <ModalBtn>Search</ModalBtn>
+              {/* <ModalBtn onClick={handleClick}>Search</ModalBtn>
+              {isOpen && <TestModal setOpen={setOpen}/>} */}
+
+              {/* <ModalBtn onClick={handleClick}>Search</ModalBtn>
+              {isOpen && <TestModal ref={modalRef}/>} */}
+
+              <ModalBtn onClick={() => setIsModalOpen(true)}>Search</ModalBtn>
+              {isModalOpen && <TestModal onClose={() => setIsModalOpen(false)} />} 
+
+              
             </LeftSide>
 
             <MiddleSide>
@@ -78,12 +112,12 @@ const TestHeader = () => {
               </RightIcon>
 
               <RightIcon>
-                <FaLink>
+                <FaLink to='/wishlist'>
                   <FavoriteBorderIcon fontSize='medium' />
                 </FaLink>
               </RightIcon>
               <RightIcon>
-                <CartLink>
+                <CartLink to='/carts'>
                   <AddShoppingCartIcon fontSize='medium' />
                 </CartLink>
               </RightIcon>
@@ -100,8 +134,9 @@ const TestHeader = () => {
                 return (
                   <DropMenuList key={category.pk}>
                     <DropMenuParents>
-                      <DropdownButton>{category.name}</DropdownButton>
-                      <DropMenuChild>
+                      {/* <DropdownButton>{category.name}</DropdownButton> */}
+                      <DropdownButton to='/products'>{category.name}</DropdownButton>
+                      <DropMenuChild >
                         {category.productKinds.map((child) => {
                           return (
                             <DropMenuItem key={child.pk}>

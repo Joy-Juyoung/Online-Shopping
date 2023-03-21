@@ -8,6 +8,8 @@ import ProductDetailPage from './ProductPage/ProductDetailPage';
 import ProductsListPage from './ProductPage/ProductListPage';
 import RegisterPage from './RegisterPage/RegisterPage';
 import TestRegister from './RegisterPage/TestRegister';
+import WishlistPage from './WishlistPage/WishlistPage';
+import CartPage from './CartPage/CartPage';
 
 const Home = () => {
   return (
@@ -26,6 +28,8 @@ const Home = () => {
 
         {/* <Route path='/testRegister' element={<TestRegister />} exact={true} /> */}
         <Route path='/testHeader' element={<TestHeader />} exact={true} />
+        <Route path='/wishlist' element={<WishlistPage />} exact={true} />
+        <Route path='/carts' element={<CartPage />} exact={true} />
       </Routes>
     </Container>
   );

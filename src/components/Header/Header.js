@@ -95,12 +95,12 @@ const Header = () => {
               </RightIcon>
               {/* 추후 각각 링크 변경*/}
               <RightIcon>
-                <FaLink>
+                <FaLink to='/wishlist'>
                   <FavoriteBorderIcon fontSize='medium' />
                 </FaLink>
               </RightIcon>
               <RightIcon>
-                <CartLink>
+                <CartLink to='/carts'>
                   <AddShoppingCartIcon fontSize='medium' />
                 </CartLink>
               </RightIcon>
