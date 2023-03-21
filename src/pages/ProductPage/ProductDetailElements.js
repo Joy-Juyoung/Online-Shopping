@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled  from 'styled-components';
 
 
@@ -65,20 +66,46 @@ export const DetailRightInfoBottom = styled.div`
     position: relative;
     /* bottom: inherit; */
 `;
-export const ButtonLarge = styled.button`
+
+export const LikeBtnWrapper = styled.div`
+    width: 62px;
+    margin-right: 8px;
+    justify-content: flex-end;
+    position: relative;
+    display: flex;
+    border-radius: 6px;
+    border: 1px solid #c1c4c9;
+    align-items: center;
+`;
+
+export const LikeBtn = styled.button`
+
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    background: none;
+    border: none;
+`;
+
+export const ButtonLarges = styled(Link)`
+  text-decoration: none;
+  color: black;
   /* width: ${({ width }) => width}; */
   width: 100%;
-  height: 48px;
+  height: 50px;
   border-radius: 6px;
   background: ${({ lightBg }) => (lightBg ? '#fff' : '#0A0F18')};
   color: ${({ darkFont }) => (darkFont ? '#0A0F18' : '#fff')};
   font-weight: ${({ fontStrong }) => (fontStrong ? 'bold' : 'normal')};
   padding: 0;
-  font-size: 16px;
+  font-size: 30px;
   outline: none;
   border: ${({ borderColor }) =>
     borderColor ? '1px solid #0a0f18' : '1px solid #a3a9b3'};
   text-align: center;
+  justify-content: center;
   cursor: pointer;
   margin: 0 0 10px;
 

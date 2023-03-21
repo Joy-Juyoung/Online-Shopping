@@ -12,11 +12,17 @@ import {
   DetailPrice,
   DetailCoupon,
   DetailRightInfoBottom,
+  LikeBtnWrapper,
+  LikeBtn,
+  ButtonLarges
   }
 from "./ProductDetailElements";
-import { ButtonLarge } from '../../components/ButtonElements';
+
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 // const PRODUCTDETAILS_URL = '/products/${id}';
+
+// const PRODUCTLIKE_URL = '/wishlists/';
 
 const ProductDetailPage = () => {
   const [itemsDetail, setItemsDetail] = useState([]);
@@ -39,6 +45,19 @@ const ProductDetailPage = () => {
   useEffect(() => {
     getItemsDetail();
   }, []);
+
+
+  // const [itemLike, setItemLike] = useState(0);
+  // const [itemIsClicked, setItemIsClicked] = useState[false];
+
+  // const handleClick = () => {
+  //   if (itemIsClicked) {
+  //     setItemLike(itemLike - 1 );
+  //   } else {
+  //     setItemLike(itemLike + 1 );
+  //   }
+  //   setItemIsClicked(!itemIsClicked);
+  // }
 
  return (
     <DetailContainer>
@@ -79,10 +98,18 @@ const ProductDetailPage = () => {
           </DetailRightInfoTop>
 
           <DetailRightInfoBottom>
-            LikeBtn
-            <ButtonLarge>
+
+            <LikeBtnWrapper>
+              <LikeBtn >
+                 <FavoriteBorderIcon fontSize='medium' color='disabled' />
+                {/* <span>{itemLike}</span> */}
+              </LikeBtn>
+
+            </LikeBtnWrapper>
+
+            <ButtonLarges to='/carts'>
               Add to Cart
-            </ButtonLarge>
+            </ButtonLarges>
 
           </DetailRightInfoBottom>
           
