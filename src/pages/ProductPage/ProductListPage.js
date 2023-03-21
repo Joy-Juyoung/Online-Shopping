@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../../api/axios';
 import {
+  ProductsEach,
   ProductsList,
   ProductsListWrap,
   ProdutsListContainer,
@@ -31,11 +32,11 @@ const ProductsListPage = () => {
         <ProductsList>
           {items.map((item) => (
             // <ProductsCard key={item.pk} product={item} />
-            <div key={item.pk}>
-              {item.name}
+            <ProductsEach key={item.pk}>
               <img src={item.photos[0].picture} alt='' />
-              {/* <ProductsCard key={item.pk} product={item} /> */}
-            </div>
+              <p>{item.name}</p>
+              <span>${item.price}</span>
+            </ProductsEach>
           ))}
         </ProductsList>
       </ProductsListWrap>

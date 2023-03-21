@@ -14,6 +14,7 @@ export const HeaderWrap = styled.div`
   top: 0;
   background: #fff;
   z-index: 100;
+  padding: 0 20px;
 `;
 
 export const HeaderWrapper = styled.div`
@@ -141,8 +142,8 @@ export const DropMenuParents = styled.div`
   &:hover {
     ul {
       display: block;
-      /* border-top: 2px solid; */
       margin-right: 20px;
+      /* border-top: 2px solid; */
     }
   }
 `;
