@@ -147,8 +147,9 @@ export const DropMenuParents = styled.div`
     }
   }
 `;
-
-export const DropdownButton = styled.button`
+export const DropdownButton = styled(Link)`
+  text-decoration: none;
+  color: black;
   font-size: 16px;
   border: none;
   outline: none;
@@ -162,6 +163,21 @@ export const DropdownButton = styled.button`
     border-bottom: 2px solid;
   }
 `;
+
+// export const DropdownButton = styled.button`
+//   font-size: 16px;
+//   border: none;
+//   outline: none;
+//   background: none;
+//   font-weight: 600;
+//   cursor: pointer;
+//   border-bottom: 2px solid transparent;
+//   padding-bottom: 10px;
+
+//   &:hover {
+//     border-bottom: 2px solid;
+//   }
+// `;
 
 // parents에 hover후, child를 볼 때, 하단바의 색이 유지되게 하는방법?
 
