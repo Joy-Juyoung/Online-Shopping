@@ -18,10 +18,9 @@ import {
 import axios from '../../api/axios';
 import { Link } from 'react-router-dom';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+// import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 
-const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const USERNAME_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
@@ -30,10 +29,6 @@ const REGISTER_URL = '/users/';
 const RegisterPage = () => {
   const userRef = useRef();
   const errRef = useRef();
-
-  const [email, setEmail] = useState('');
-  const [validEmail, setValidEmail] = useState(false);
-  const [emailFocus, setEmailFocus] = useState(false);
 
   const [username, setUsername] = useState('');
   const [validUsername, setValidUsername] = useState(false);
@@ -80,10 +75,6 @@ const RegisterPage = () => {
   }, []);
 
   useEffect(() => {
-    setValidEmail(EMAIL_REGEX.test(email));
-  }, [email]);
-
-  useEffect(() => {
     setValidUsername(USERNAME_REGEX.test(username));
   }, [username]);
 
@@ -94,21 +85,18 @@ const RegisterPage = () => {
 
   useEffect(() => {
     setErrMsg('');
-  }, [email, username, pwd, matchPwd]);
+  }, [username, pwd, matchPwd]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(email);
     console.log(username);
     console.log(pwd);
     console.log(matchPwd);
 
-    const v1 = EMAIL_REGEX.test(email);
-    const v2 = USERNAME_REGEX.test(username);
-    const v3 = PWD_REGEX.test(pwd);
-    if (!v1 || !v2 || !v3) {
-      // if (!v2 || !v3) {
+    const v1 = USERNAME_REGEX.test(username);
+    const v2 = PWD_REGEX.test(pwd);
+    if (!v1 || !v2) {
       setErrMsg('Invalid Entry');
       return;
     }
@@ -117,7 +105,6 @@ const RegisterPage = () => {
         REGISTER_URL,
         {
           username: username,
-          email: email,
           password: pwd,
           type: 'user',
         },
@@ -130,7 +117,6 @@ const RegisterPage = () => {
       console.log('register', response?.data);
       setSuccess(true);
 
-      setEmail('');
       setUsername('');
       setPwd('');
       setMatchPwd('');
@@ -168,40 +154,12 @@ const RegisterPage = () => {
           <h1>Create Account</h1>
           <RegisterForm onSubmit={handleSubmit}>
             <RegisterInput>
-              <RegisterInputLabel htmlFor='email'>
-                Email address
-              </RegisterInputLabel>
-              <Input
-                // type='email'
-                ref={userRef}
-                type='text'
-                id='email'
-                autoComplete='off'
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
-                required
-                aria-invalid={validEmail ? 'false' : 'true'}
-                aria-describedby='uidnote'
-                onFocus={() => setEmailFocus(true)}
-                onBlur={() => setEmailFocus(false)}
-                placeholder='Enter your Email address.'
-              />
-              <VerificationMsg
-                id='uidnote'
-                style={{
-                  display: validEmail || !email ? 'none' : 'flex',
-                  marginBottom: '20px',
-                }}
-              >
-                <ErrorOutlineIcon fontSize='small' style={{ color: 'red' }} />
-                <span>example@email.com</span>
-              </VerificationMsg>
               <RegisterInputLabel htmlFor='username'>
                 Username
               </RegisterInputLabel>
 
               <Input
-                // ref={userRef}
+                ref={userRef}
                 type='text'
                 id='username'
                 autoComplete='off'
@@ -309,9 +267,7 @@ const RegisterPage = () => {
 
             <ButtonLarge
               disabled={
-                !validEmail || !validUsername || !validPwd || !validMatch
-                  ? true
-                  : false
+                !validUsername || !validPwd || !validMatch ? true : false
               }
             >
               Submit
