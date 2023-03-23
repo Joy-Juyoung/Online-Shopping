@@ -16,12 +16,11 @@ import UserAccountPage from './UserAccountPage/UserAccountPage';
 import WishlistPage from './WishlistPage/WishlistPage';
 import CartPage from './CartPage/CartPage';
 
-
 const Home = () => {
   return (
     <Container>
       <Routes>
-        <Route path='/' element={<HeroPage />} exact={true} />
+        {/* <Route path='/' element={<HeroPage />} exact={true} /> */}
         <Route path='/login' element={<LoginPage />} exact={true} />
         <Route path='/register' element={<RegisterPage />} exact={true} />
         <Route path='/userAccount' element={<UserAccountPage />} exact={true} />
@@ -33,7 +32,7 @@ const Home = () => {
           exact={true}
         />
 
-        {/* <Route path='/' element={<TestHome />} exact={true} /> */}
+        <Route path='/' element={<TestHome />} exact={true} />
         <Route path='/testLogin' element={<TestLogin />} exact={true} />
         <Route path='/testRegister' element={<TestRegister />} exact={true} />
         <Route path='/testHeader' element={<TestHeader />} exact={true} />

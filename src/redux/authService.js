@@ -17,9 +17,9 @@ const register = async (username, password, type) => {
     }
   );
 
-  if (response.data) {
-    localStorage.setItem('user', JSON.stringify(response.data));
-  }
+  // if (response.data) {
+  //   localStorage.setItem('user', JSON.stringify(response.data));
+  // }
 
   return response.data;
 };
@@ -35,33 +35,50 @@ const login = async (username, password) => {
     }
   );
 
-  if (response.data) {
-    localStorage.setItem('user', JSON.stringify(response.data));
-  }
+  // if (response.data) {
+  //   localStorage.setItem('user', JSON.stringify(response.data));
+  // }
 
   return response.data;
 };
 
 // Logout user
-const logout = () => {
-  localStorage.removeItem('user');
-};
-
-// Get me
-const getMe = async () => {
-  const response = await axios.get(API_URL + 'me', {
-    headers: { 'Content-Type': 'application/json' },
-    withCredentials: true,
-  });
+const logout = async (username) => {
+  const response = await axios.post(
+    API_URL + 'log-out',
+    { username },
+    {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    }
+  );
+  // localStorage.removeItem('user');
+  // // if (response.data) {
+  // //   localStorage.setItem('user', JSON.stringify(response.data));
+  // // }
 
   return response.data;
 };
+
+// // Get me
+// const getMe = async (username) => {
+//   const response = await axios.get(
+//     API_URL + 'me',
+//     { username },
+//     {
+//       headers: { 'Content-Type': 'application/json' },
+//       withCredentials: true,
+//     }
+//   );
+
+//   return response.data;
+// };
 
 const authService = {
   register,
   logout,
   login,
-  getMe,
+  // getMe,
 };
 
 export default authService;
