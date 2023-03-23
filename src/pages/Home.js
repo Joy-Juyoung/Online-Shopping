@@ -10,6 +10,8 @@ import RegisterPage from './RegisterPage/RegisterPage';
 import TestRegister from './RegisterPage/TestRegister';
 import WishlistPage from './WishlistPage/WishlistPage';
 import CartPage from './CartPage/CartPage';
+import TestProductKindsView from './ProductPage/TestProductKindsView';
+
 
 const Home = () => {
   return (
@@ -25,7 +27,7 @@ const Home = () => {
           element={<ProductDetailPage />}
           exact={true}
         />
-
+        <Route path='/products/productAllChildKinds/:id' element={<TestProductKindsView />} exact={true} />
         {/* <Route path='/testRegister' element={<TestRegister />} exact={true} /> */}
         <Route path='/testHeader' element={<TestHeader />} exact={true} />
         <Route path='/wishlist' element={<WishlistPage />} exact={true} />

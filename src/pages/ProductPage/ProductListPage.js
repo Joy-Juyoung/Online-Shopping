@@ -4,7 +4,7 @@ import {
   ProductsEach,
   ProductsList,
   ProductsListWrap,
-  ProdutsListContainer,
+  ProductsListContainer,
 } from './ProductListElements';
 import ProductsCard from './ProductsCard';
 
@@ -26,7 +26,7 @@ const ProductsListPage = () => {
   }, []);
 
   return (
-    <ProdutsListContainer>
+    <ProductsListContainer>
       <ProductsListWrap>
         <h1>All Products</h1>
         <ProductsList>
@@ -40,7 +40,7 @@ const ProductsListPage = () => {
           ))}
         </ProductsList>
       </ProductsListWrap>
-    </ProdutsListContainer>
+    </ProductsListContainer>
   );
 };
 
