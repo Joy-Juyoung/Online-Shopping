@@ -18,9 +18,10 @@ import {
   ProdutsListContainer,
   ToggleLike,
 } from './ProductListElements';
-// import ProductsCard from './ProductsCard';
+import ProductsCard from './ProductsCard';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Link } from 'react-router-dom';
 
 const PRODUCTS_URL = '/products';
 const ProductsListPage = () => {
@@ -88,28 +89,30 @@ const ProductsListPage = () => {
             </ListTop>
             <ListMid>
               {items.map((item) => {
-                // <ProductsCard key={item.pk} product={item} />
+                // return <ProductsCard key={item.pk} item={item} />;
                 return (
                   <ProductsEach key={item.pk}>
-                    <img src={item.photos[0].picture} alt='' />
+                    <Link to={`/products/${item.pk}`}>
+                      <img src={item.photos[0].picture} alt='' />
 
-                    {/* pk별 각각 클릭될때, 하나의 상태만 변하도록 수정 */}
-                    <ToggleLike>
-                      {item.is_liked ? (
-                        <FavoriteIcon />
-                      ) : (
-                        <FavoriteBorderIcon />
-                      )}
-                    </ToggleLike>
-                    <ProductEachDetails>
-                      <ProductTitle>{item.name}</ProductTitle>
-                      <ProductDesc>{item.kind.name}</ProductDesc>
-                      <ProductPrice>${item.price}</ProductPrice>
-                      <ProductLike>
-                        <FavoriteIcon fontSize='small' />
-                        total Likes count
-                      </ProductLike>
-                    </ProductEachDetails>
+                      {/* pk별 각각 클릭될때, 하나의 상태만 변하도록 수정 */}
+                      <ToggleLike>
+                        {item.is_liked ? (
+                          <FavoriteIcon />
+                        ) : (
+                          <FavoriteBorderIcon />
+                        )}
+                      </ToggleLike>
+                      <ProductEachDetails>
+                        <ProductTitle>{item.name}</ProductTitle>
+                        <ProductDesc>{item.kind.name}</ProductDesc>
+                        <ProductPrice>${item.price}</ProductPrice>
+                        <ProductLike>
+                          <FavoriteIcon fontSize='small' />
+                          total Likes count
+                        </ProductLike>
+                      </ProductEachDetails>
+                    </Link>
                   </ProductsEach>
                 );
               })}

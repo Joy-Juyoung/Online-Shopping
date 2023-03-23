@@ -8,6 +8,7 @@ import LoginPage from './LoginPage/LoginPage';
 import TestLogin from './LoginPage/TestLogin';
 import ProductDetailPage from './ProductPage/ProductDetailPage';
 import ProductsListPage from './ProductPage/ProductListPage';
+import TestItem from './ProductPage/Test';
 import RegisterPage from './RegisterPage/RegisterPage';
 import TestRegister from './RegisterPage/TestRegister';
 
@@ -15,7 +16,6 @@ import UserAccountPage from './UserAccountPage/UserAccountPage';
 
 import WishlistPage from './WishlistPage/WishlistPage';
 import CartPage from './CartPage/CartPage';
-
 
 const Home = () => {
   return (
@@ -34,8 +34,9 @@ const Home = () => {
         />
 
         {/* <Route path='/' element={<TestHome />} exact={true} /> */}
-        <Route path='/testLogin' element={<TestLogin />} exact={true} />
-        <Route path='/testRegister' element={<TestRegister />} exact={true} />
+        {/* <Route path='/testLogin' element={<TestLogin />} exact={true} /> */}
+        {/* <Route path='/testRegister' element={<TestRegister />} exact={true} /> */}
+        <Route path='/products/:id' element={<TestItem />} exact={true} />
         <Route path='/testHeader' element={<TestHeader />} exact={true} />
         <Route path='/wishlist' element={<WishlistPage />} exact={true} />
         <Route path='/carts' element={<CartPage />} exact={true} />

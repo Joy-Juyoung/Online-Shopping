@@ -66,7 +66,8 @@ export const FavIcon = styled.div``;
 
 export const ProductEachDetails = styled.div`
   /* text-align: left; */
-  /* margin: 10px 0; */
+  /* margin-bottom: 10px; */
+  /* height: 20%; */
 `;
 
 export const ProductTitle = styled.div`
@@ -90,4 +91,5 @@ export const ProductLike = styled.span`
   align-items: center;
   /* justify-content: center; */
   margin: 10px 0;
+  /* margin-bottom: 10px; */
 `;

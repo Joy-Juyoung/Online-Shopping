@@ -1,131 +1,77 @@
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { FaUser } from 'react-icons/fa';
-import { register, reset } from '../../redux/authSlice';
-import Spinner from '../../components/Loading';
+// // import { useState, useEffect } from 'react';
+// // import { useSelector, useDispatch } from 'react-redux';
+// // import { useNavigate } from 'react-router-dom';
+// import React, { Fragment, useEffect } from 'react';
+// import { Link } from 'react-router-dom';
+// import { useForm } from 'react-hook-form';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { signupUser, userSelector, clearState } from '../../redux/UserSlice';
+// import { useHistory } from 'react-router-dom';
+// import { toast } from 'react-toastify';
+// // import { FaUser } from 'react-icons/fa';
+// // import { register, reset } from '../../redux/auth/authSlice';
+// // import Spinner from '../../components/Loading';
 
-const TestRegister = () => {
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    password2: '',
-  });
+// const TestRegister = () => {
+//   const dispatch = useDispatch();
+//   const { register, errors, handleSubmit } = useForm();
+//   const history = useHistory();
 
-  const { username, email, password, password2 } = formData;
+//   const { isFetching, isSuccess, isError, errorMessage } = useSelector(
+//     userSelector
+//   );
+//   const onSubmit = (data) => {
+//     dispatch(signupUser(data));
+//   };
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+//   useEffect(() => {
+//     return () => {
+//       dispatch(clearState());
+//     };
+//   }, []);
 
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.auth
-  );
+//   useEffect(() => {
+//     if (isSuccess) {
+//       dispatch(clearState());
+//       history.push('/');
+//     }
 
-  useEffect(() => {
-    if (isError) {
-      toast.error(message);
-    }
+//     if (isError) {
+//       toast.error(errorMessage);
+//       dispatch(clearState());
+//     }
+//   }, [isSuccess, isError]);
 
-    if (isSuccess || user) {
-      navigate('/');
-    }
-
-    dispatch(reset());
-  }, [user, isError, isSuccess, message, navigate, dispatch]);
-
-  const onChange = (e) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-
-    if (password !== password2) {
-      toast.error('Passwords do not match');
-    } else {
-      const userData = {
-        username,
-        email,
-        password,
-        type: 'user',
-      };
-
-      dispatch(register(userData));
-    }
-  };
-
-  if (isLoading) {
-    return <Spinner />;
-  }
-
-  return (
-    <>
-      <section className='heading'>
-        <h1>
-          <FaUser /> Register
-        </h1>
-        <p>Please create an account</p>
-      </section>
-
-      <section className='form'>
-        <form onSubmit={onSubmit}>
-          <div className='form-group'>
-            <input
-              type='text'
-              className='form-control'
-              id='username'
-              name='username'
-              value={username}
-              placeholder='Enter your username'
-              onChange={onChange}
-            />
-          </div>
-          <div className='form-group'>
-            <input
-              type='email'
-              className='form-control'
-              id='email'
-              name='email'
-              value={email}
-              placeholder='Enter your email'
-              onChange={onChange}
-            />
-          </div>
-          <div className='form-group'>
-            <input
-              type='password'
-              className='form-control'
-              id='password'
-              name='password'
-              value={password}
-              placeholder='Enter password'
-              onChange={onChange}
-            />
-          </div>
-          <div className='form-group'>
-            <input
-              type='password'
-              className='form-control'
-              id='password2'
-              name='password2'
-              value={password2}
-              placeholder='Confirm password'
-              onChange={onChange}
-            />
-          </div>
-          <div className='form-group'>
-            <button type='submit' className='btn btn-block'>
-              Submit
-            </button>
-          </div>
-        </form>
-      </section>
-    </>
-  );
-};
-export default TestRegister;
+//   return (
+//     <Fragment>
+//       <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+//         <div class="sm:mx-auto sm:w-full sm:max-w-md">
+//           <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+//             Sign Up to your account
+//           </h2>
+//         </div>
+//         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+//           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+//             <form
+//               className="space-y-6"
+//               onSubmit={handleSubmit(onSubmit)}
+//               method="POST"
+//             >
+//              {*/ Form Comes Here  */}
+//             </form>
+//             <div class="mt-6">
+//               <div class="relative">
+//                 <div class="relative flex justify-center text-sm">
+//                   <span class="px-2 bg-white text-gray-500">
+//                     Or <Link to="login"> Login</Link>
+//                   </span>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </Fragment>
+//   );
+// };
+// export default TestRegister;

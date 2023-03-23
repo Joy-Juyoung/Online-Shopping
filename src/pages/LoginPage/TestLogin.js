@@ -1,104 +1,107 @@
-import { useState, useEffect } from 'react';
-import { FaSignInAlt } from 'react-icons/fa';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { login, reset } from '../../redux/authSlice';
-import Spinner from '../../components/Loading';
+// // import { useState, useEffect } from 'react';
+// // import { FaSignInAlt } from 'react-icons/fa';
+// // import { useSelector, useDispatch } from 'react-redux';
+// // import { useNavigate } from 'react-router-dom';
+// // import { toast } from 'react-toastify';
+// // import { login, reset, getMe } from '../../redux/auth/authSlice';
+// // import Spinner from '../../components/Loading';
+// // import axios from '../../api/axios';
+// import React, { useState, useEffect } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { Navigate, useNavigate } from 'react-router-dom';
+// import { login } from '../../redux/auth/authSlice';
+// import { clearMessage } from '../../redux/auth/messageSlice';
 
-// login 하면 user가 있으면 getMe
-const TestLogin = () => {
-  const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-  });
+// // login 하면 user가 있으면 getMe
+// const TestLogin = () => {
+//   let navigate = useNavigate();
 
-  const { username, password } = formData;
+//   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+//   const { isLoggedIn } = useSelector((state) => state.auth);
+//   const { message } = useSelector((state) => state.message);
 
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.auth
-  );
+//   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (isError) {
-      toast.error(message);
-    }
+//   useEffect(() => {
+//     dispatch(clearMessage());
+//   }, [dispatch]);
 
-    if (isSuccess || user) {
-      navigate('/');
-    }
+//   const initialValues = {
+//     username: '',
+//     password: '',
+//   };
 
-    dispatch(reset());
-  }, [user, isError, isSuccess, message, navigate, dispatch]);
+//   // const validationSchema = Yup.object().shape({
+//   //   username: Yup.string().required("This field is required!"),
+//   //   password: Yup.string().required("This field is required!"),
+//   // });
 
-  const onChange = (e) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
-  };
+//   const handleLogin = () => {
+//     // const { username, password } = formValue;
+//     setLoading(true);
+//     const userData = {
+//       username,
+//       password,
+//       type: 'user',
+//     };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+//     dispatch(login({ username, password }))
+//       .unwrap()
+//       .then(() => {
+//         navigate('/profile');
+//         window.location.reload();
+//       })
+//       .catch(() => {
+//         setLoading(false);
+//       });
+//   };
 
-    const userData = {
-      username,
-      password,
-    };
+//   if (isLoggedIn) {
+//     return <Navigate to='/profile' />;
+//   }
 
-    dispatch(login(userData));
-  };
+//   return (
+//     <>
+//       <section className='heading'>
+//         <h1>Login</h1>
+//         <p>Login and start setting goals</p>
+//       </section>
 
-  if (isLoading) {
-    return <Spinner />;
-  }
+//       <section className='form'>
+//         <form onSubmit={onSubmit}>
+//           <div className='form-group'>
+//             <input
+//               type='text'
+//               className='form-control'
+//               id='username'
+//               name='username'
+//               value={username}
+//               placeholder='Enter your username'
+//               onChange={onChange}
+//             />
+//           </div>
+//           <div className='form-group'>
+//             <input
+//               type='password'
+//               className='form-control'
+//               id='password'
+//               name='password'
+//               value={password}
+//               placeholder='Enter password'
+//               onChange={onChange}
+//             />
+//           </div>
 
-  return (
-    <>
-      <section className='heading'>
-        <h1>
-          <FaSignInAlt /> Login
-        </h1>
-        <p>Login and start setting goals</p>
-      </section>
+//           <div className='form-group'>
+//             <button type='submit' className='btn btn-block'>
+//               Submit
+//             </button>
+//           </div>
+//         </form>
+//       </section>
+//     </>
+//   );
+// };
 
-      <section className='form'>
-        <form onSubmit={onSubmit}>
-          <div className='form-group'>
-            <input
-              type='text'
-              className='form-control'
-              id='username'
-              name='username'
-              value={username}
-              placeholder='Enter your username'
-              onChange={onChange}
-            />
-          </div>
-          <div className='form-group'>
-            <input
-              type='password'
-              className='form-control'
-              id='password'
-              name='password'
-              value={password}
-              placeholder='Enter password'
-              onChange={onChange}
-            />
-          </div>
-
-          <div className='form-group'>
-            <button type='submit' className='btn btn-block'>
-              Submit
-            </button>
-          </div>
-        </form>
-      </section>
-    </>
-  );
-};
-
-export default TestLogin;
+// export default TestLogin;
