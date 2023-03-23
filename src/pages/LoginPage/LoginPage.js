@@ -22,6 +22,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import axios from '../../api/axios';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 // 다른 경로 로그인하는 방법 추가
 // Validation 조건 충족 에러 넣기
@@ -127,11 +128,15 @@ const LoginPage = () => {
     }
   };
 
+  const isLoggIn = useSelector((state) => state.auth.isLoggIn);
+
   return (
     <PesnalContainer>
-      {success ? (
+      {isLoggIn ? (
         <PesnalWrapper>
-          <h1>Success!</h1>
+          <h1>Welcom Username</h1>
+
+          <button>Logout</button>
         </PesnalWrapper>
       ) : (
         <PesnalWrapper>
