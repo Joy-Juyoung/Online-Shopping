@@ -104,7 +104,7 @@ const TestHeader = () => {
 
             <MiddleSide>
               <MidLink to='/'>
-                <div>MUSINSA</div>
+                <div>BlanketCLoset</div>
               </MidLink>
             </MiddleSide>
             <RightSide>

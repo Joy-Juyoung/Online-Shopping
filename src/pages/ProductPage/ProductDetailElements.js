@@ -89,23 +89,20 @@ export const LikeBtn = styled.button`
     border: none;
 `;
 
-export const ButtonLarges = styled(Link)`
-  text-decoration: none;
-  color: black;
-  /* width: ${({ width }) => width}; */
-  width: 100%;
-  height: 50px;
+export const ButtonLarges = styled.button`
+ /* width: ${({ width }) => width}; */
+ width: 100%;
+  height: 48px;
   border-radius: 6px;
   background: ${({ lightBg }) => (lightBg ? '#fff' : '#0A0F18')};
   color: ${({ darkFont }) => (darkFont ? '#0A0F18' : '#fff')};
   font-weight: ${({ fontStrong }) => (fontStrong ? 'bold' : 'normal')};
   padding: 0;
-  font-size: 30px;
+  font-size: 16px;
   outline: none;
   border: ${({ borderColor }) =>
     borderColor ? '1px solid #0a0f18' : '1px solid #a3a9b3'};
   text-align: center;
-  justify-content: center;
   cursor: pointer;
   margin: 0 0 10px;
 
@@ -115,3 +112,26 @@ export const ButtonLarges = styled(Link)`
     box-shadow: 0px 0px 4px 1px #0a0f18;
   } */
 `;
+
+export const OffCanvas = styled.div`
+
+`;
+
+export const OffcanvasHeader = styled.div`
+
+`;
+
+export const OffcanvasBody = styled.div`
+
+
+`;
+
+export const OffcanvasTitle = styled.div`
+
+
+`;
+
+export const CloseButton= styled.div`
+
+`;
+

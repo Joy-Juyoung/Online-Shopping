@@ -14,7 +14,12 @@ import {
   DetailRightInfoBottom,
   LikeBtnWrapper,
   LikeBtn,
-  ButtonLarges
+  ButtonLarges,
+  OffCanvas,
+  OffcanvasHeader,
+  OffcanvasTitle,
+  CloseButton,
+  OffcanvasBody
   }
 from "./ProductDetailElements";
 
@@ -88,8 +93,7 @@ const ProductDetailPage = () => {
               </LikeBtn>
 
             </LikeBtnWrapper>
-
-            <ButtonLarges to='/carts'>
+            <ButtonLarges>
               Add to Cart
             </ButtonLarges>
           </DetailRightInfoBottom>

@@ -1,20 +1,19 @@
 import { useState, useEffect } from 'react';
+import { FaSignInAlt } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { FaUser } from 'react-icons/fa';
-import { register, reset } from '../../redux/authSlice';
+import { login, reset } from '../../redux/authSlice';
 import Spinner from '../../components/Loading';
 
-const TestRegister = () => {
+// login 하면 user가 있으면 getMe
+const TestLogin = () => {
   const [formData, setFormData] = useState({
     username: '',
-    email: '',
     password: '',
-    password2: '',
   });
 
-  const { username, email, password, password2 } = formData;
+  const { username, password } = formData;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -45,18 +44,12 @@ const TestRegister = () => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    if (password !== password2) {
-      toast.error('Passwords do not match');
-    } else {
-      const userData = {
-        username,
-        email,
-        password,
-        type: 'user',
-      };
+    const userData = {
+      username,
+      password,
+    };
 
-      dispatch(register(userData));
-    }
+    dispatch(login(userData));
   };
 
   if (isLoading) {
@@ -67,9 +60,9 @@ const TestRegister = () => {
     <>
       <section className='heading'>
         <h1>
-          <FaUser /> Register
+          <FaSignInAlt /> Login
         </h1>
-        <p>Please create an account</p>
+        <p>Login and start setting goals</p>
       </section>
 
       <section className='form'>
@@ -87,17 +80,6 @@ const TestRegister = () => {
           </div>
           <div className='form-group'>
             <input
-              type='email'
-              className='form-control'
-              id='email'
-              name='email'
-              value={email}
-              placeholder='Enter your email'
-              onChange={onChange}
-            />
-          </div>
-          <div className='form-group'>
-            <input
               type='password'
               className='form-control'
               id='password'
@@ -107,17 +89,7 @@ const TestRegister = () => {
               onChange={onChange}
             />
           </div>
-          <div className='form-group'>
-            <input
-              type='password'
-              className='form-control'
-              id='password2'
-              name='password2'
-              value={password2}
-              placeholder='Confirm password'
-              onChange={onChange}
-            />
-          </div>
+
           <div className='form-group'>
             <button type='submit' className='btn btn-block'>
               Submit
@@ -128,4 +100,5 @@ const TestRegister = () => {
     </>
   );
 };
-export default TestRegister;
+
+export default TestLogin;
