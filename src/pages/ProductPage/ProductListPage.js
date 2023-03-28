@@ -12,6 +12,7 @@ import {
   ProductPrice,
   ProductsEach,
   ProductsList,
+  ProductsListWrap,
   ProductsListWrapper,
   ProductsWrap,
   ProductTitle,

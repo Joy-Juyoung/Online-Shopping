@@ -31,6 +31,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import PermIdentityRoundedIcon from '@mui/icons-material/PermIdentityRounded';
 import TestModal from './TestModal';
+import { Link } from 'react-router-dom';
 
 // import {
 //   DropMenu,
@@ -137,10 +138,10 @@ const TestHeader = () => {
                       {/* <DropdownButton>{category.name}</DropdownButton> */}
                       <DropdownButton to='/products'>{category.name}</DropdownButton>
                       <DropMenuChild >
-                        {category.productKinds.map((child) => {
+                        {category.productKinds?.map((child) => {
                           return (
                             <DropMenuItem key={child.pk}>
-                              <span>{child.name}</span>
+                              <Link to={`/products/productAllChildKinds/${child.pk}`}>{child.name}</Link>
                             </DropMenuItem>
                           );
                         })}
