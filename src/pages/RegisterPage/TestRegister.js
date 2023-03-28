@@ -9,7 +9,6 @@ import Spinner from '../../components/Loading';
 const TestRegister = () => {
   const [formData, setFormData] = useState({
     username: '',
-    email: '',
     password: '',
     password2: '',
   });

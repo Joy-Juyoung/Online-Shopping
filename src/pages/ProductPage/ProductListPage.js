@@ -25,7 +25,8 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 const PRODUCTS_URL = '/products';
 const ProductsListPage = () => {
   const [items, setItems] = useState([]);
-  const [liked, setLiked] = useState(false);
+  const [addLiked, setAddLiked] = useState();
+  const [wishList, setWishList] = useState([]);
   // const [clicked, setClicked] = useState(false);
 
   const sort = [
@@ -42,23 +43,49 @@ const ProductsListPage = () => {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    console.log('ProductList', itemsList?.data);
+    console.log('ProductList', itemsList?.data.length);
     setItems(itemsList?.data);
   };
 
-  useEffect(() => {
-    getItems();
-  }, []);
+  // const getWishList = async () => {
+  //   const LikedList = await axios.get('/wishlists/', {
+  //     headers: { 'Content-Type': 'application/json' },
+  //     withCredentials: true,
+  //   });
 
-  // const toggleLiked = () => {
-  //   if (!liked) {
-  //     setLiked(true);
-  //   }
-  //   setLiked(false);
+  //   console.log('LikedList length', LikedList?.data.products.length);
+  //   setWishList(LikedList?.data?.products);
   // };
 
-  const handleOptionChange = (e) => {
-    console.log(e.target.value);
+  useEffect(() => {
+    getItems();
+    // getWishList();
+  }, [addLiked]);
+
+  const handleLiked = (pk) => {
+    items.forEach((item) => {
+      if (item.pk === pk) {
+        item.is_liked = !item.isLiked;
+        // const putLiked = async () => {
+        //   const addLike = await
+        const addLike = axios.put(
+          '/wishlists/',
+          {
+            product_pk: item.pk,
+          },
+          {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+          }
+        );
+        setAddLiked(addLike);
+        console.log('addLike', addLike);
+      }
+    });
+    console.log('clicked', items);
+    setItems([...items]);
+
+    // putLiked(items);
   };
 
   return (
@@ -73,11 +100,7 @@ const ProductsListPage = () => {
             <ListTop>
               <span style={{ fontSize: '13px' }}>Total {items.length} </span>
               <span>
-                <select
-                  onChange={handleOptionChange}
-                  name='fruits'
-                  id='fruit-select'
-                >
+                <select>
                   {sort.map((option, index) => (
                     <option key={index} value={option.value}>
                       {option.text}
@@ -92,9 +115,7 @@ const ProductsListPage = () => {
                 return (
                   <ProductsEach key={item.pk}>
                     <img src={item.photos[0].picture} alt='' />
-
-                    {/* pk별 각각 클릭될때, 하나의 상태만 변하도록 수정 */}
-                    <ToggleLike>
+                    <ToggleLike onClick={() => handleLiked(item.pk)}>
                       {item.is_liked ? (
                         <FavoriteIcon />
                       ) : (
@@ -107,7 +128,8 @@ const ProductsListPage = () => {
                       <ProductPrice>${item.price}</ProductPrice>
                       <ProductLike>
                         <FavoriteIcon fontSize='small' />
-                        total Likes count
+                        {/* {wishList.length} */}
+                        Each Liked total count
                       </ProductLike>
                     </ProductEachDetails>
                   </ProductsEach>
