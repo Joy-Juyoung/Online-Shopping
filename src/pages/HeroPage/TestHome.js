@@ -1,27 +1,69 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-// import GoalForm from '../components/GoalForm'
-// import GoalItem from '../components/GoalItem'
 import Spinner from '../../components/Loading';
-// import { getGoals, reset } from '../features/goals/goalSlice'
 import { FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa';
-// import { Link, useNavigate } from 'react-router-dom';
+// import { getMe } from '../../redux/meSlice';
 import { logout, reset } from '../../redux/authSlice';
+import axios from '../../api/axios';
 
 const TestHome = () => {
+  const [meData, setMeData] = useState('');
+
+  const getMe = async () => {
+    // try {
+    const me = await axios.get('/users/me', {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+
+    setMeData(me?.data);
+    // } catch (err) {
+    //   if (!err?.response) {
+    //     console.log('No Server Response');
+    //   } else if (err.response?.status === 409) {
+    //     console.log('Username Taken');
+    //   } else {
+    //     console.log('REGISTRATION FAILD');
+    //   }
+    // errRef.current.focus();
+    // }
+  };
+
+  useEffect(() => {
+    getMe();
+  }, []);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  // const { user, isLoading, isError, message } = useSelector(
+  //   (state) => state.auth
+  // );
   const { user, isLoading, isError, message } = useSelector(
     (state) => state.auth
   );
+  // const { me, isLoading, isError, message } = useSelector((state) => state.me);
 
-  const onLogout = () => {
-    dispatch(logout());
-    dispatch(reset());
-    navigate('/');
-  };
+  // const doLogout = async () => {
+  //   // try {
+  //   const doOut = await axios.post(
+  //     '/users/log-out',
+  //     {
+  //       username: meData.username,
+  //     },
+  //     {
+  //       headers: { 'Content-Type': 'application/json' },
+  //       withCredentials: true,
+  //    
+  //   );
+
+  //   console.log('doOut', doOut?.data);
+  //   console.log('user', user);
+  //   setMeData('');
+
+  //   navigate('/');
+  // };
 
   useEffect(() => {
     if (isError) {
@@ -31,13 +73,26 @@ const TestHome = () => {
     if (!user) {
       navigate('/');
     }
+
+    return () => {
+      dispatch(reset());
+    };
   }, [user, navigate, isError, message, dispatch]);
+
+  console.log('user', user);
+  console.log('me', meData);
+  // console.log('meData', meData);
 
   if (isLoading) {
     return <Spinner />;
   }
 
-  console.log('user', user);
+  const onLogout = () => {
+    dispatch(logout(meData.username));
+    dispatch(reset());
+    navigate('/');
+    // setMeData('');
+  };
 
   return (
     <>
@@ -45,7 +100,7 @@ const TestHome = () => {
         <ul>
           {user ? (
             <>
-              <h1>Welcome {user && user.username}</h1>
+              <h1>Welcome {meData.username || (user && user.username)}</h1>
               <li>
                 <button className='btn' onClick={onLogout}>
                   <FaSignOutAlt /> Logout
