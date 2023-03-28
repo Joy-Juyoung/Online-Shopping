@@ -9,12 +9,11 @@ import Spinner from '../../components/Loading';
 const TestRegister = () => {
   const [formData, setFormData] = useState({
     username: '',
-    email: '',
     password: '',
     password2: '',
   });
 
-  const { username, email, password, password2 } = formData;
+  const { username, password, password2 } = formData;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -50,7 +49,6 @@ const TestRegister = () => {
     } else {
       const userData = {
         username,
-        email,
         password,
         type: 'user',
       };
@@ -82,17 +80,6 @@ const TestRegister = () => {
               name='username'
               value={username}
               placeholder='Enter your username'
-              onChange={onChange}
-            />
-          </div>
-          <div className='form-group'>
-            <input
-              type='email'
-              className='form-control'
-              id='email'
-              name='email'
-              value={email}
-              placeholder='Enter your email'
               onChange={onChange}
             />
           </div>
