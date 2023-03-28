@@ -30,7 +30,7 @@ const Home = () => {
         <Route path='/products' element={<ProductsListPage />} exact={true} />
         {/* 일단 하드코딩하고, 뒤에 /${id}는 나중에 추가 */}
         <Route
-          path='/productDetail'
+          path='/products/:id'
           element={<ProductDetailPage />}
           exact={true}
         />

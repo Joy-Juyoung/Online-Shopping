@@ -24,44 +24,39 @@ import {
 from "./ProductDetailElements";
 
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { useParams } from 'react-router-dom';
+import SidebarMenu from './SidebarMenu';
 
 // const PRODUCTDETAILS_URL = '/products/${id}';
 
 
 const ProductDetailPage = () => {
-  const [itemsDetail, setItemsDetail] = useState([]);
   
-  const [id, setId] = useState('7');
-
-  const getItemsDetail = async () => {
-    // const itemInfo = await axios.get(PRODUCTDETAILS_URL,{
-    //   headers: { 'Content-Type': 'application/json' },
-    //   withCredentials: true,
-    // });
-    // console.log('itemInfo', itemInfo?.data);
-    // setItemsDetail(itemInfo?.data);
-
-    const itemInfo = await axios.get(`/products/${id}`, 
-    {
-      id,
-    },{
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true,
-    });
-    console.log('itemInfo', itemInfo?.data);
-    setItemsDetail(itemInfo?.data);
-  };
-
+  const [itemsDetail, setItemsDetail] = useState([]); //useState([]);
+  const { id } = useParams();
+  const getProduct = async () => {
+      const {data} = await axios.get(`/products/${id}`,{
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        }
+        );
+        
+      console.log(data)
+      setItemsDetail(data)
+      }
   useEffect(() => {
-    getItemsDetail();
-  }, []);
+      getProduct();
+  },[id])
+  console.log("id", id);
+
+  const [isOpen, setIsOpen] = useState(false);
 
 
  return (
     <DetailContainer>
       <DetailWrapper>
         <DetailLeftInfo>
-          Product Image
+          <img src={itemsDetail.photos?.[0].picture} alt='' />
         </DetailLeftInfo>
         <DetailRightInfo>
           <DetailRightInfoTop>
@@ -73,9 +68,8 @@ const ProductDetailPage = () => {
                 {itemsDetail.detail}
               </DetailTitle>
               <DetailPrice>
-              {itemsDetail.price}
-                {/* Product Price */}
-              </DetailPrice>
+                ${itemsDetail.price}
+                </DetailPrice>
               {/* coupon*/}
               <DetailCoupon>
                 Product Coupon
@@ -91,11 +85,14 @@ const ProductDetailPage = () => {
                  <FavoriteBorderIcon fontSize='medium' color='disabled' />
                 {/* <span>{itemLike}</span> */}
               </LikeBtn>
-
             </LikeBtnWrapper>
-            <ButtonLarges>
+             {/* <ButtonLarges>
+              Add to Cart
+            </ButtonLarges> */}
+            <ButtonLarges onClick={() => setIsOpen(true)}>
               Add to Cart
             </ButtonLarges>
+            {isOpen && <SidebarMenu onClose={() => setIsOpen(false)}/>}
           </DetailRightInfoBottom>
          </DetailRightInfo>
 

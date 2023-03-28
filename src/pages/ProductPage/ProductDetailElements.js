@@ -22,6 +22,10 @@ export const DetailLeftInfo = styled.div`
     width: 450px;
     margin-right: 40px;
     position: relative;
+
+    img {
+        width: 450px;
+    }
 `;
 
 export const DetailRightInfo = styled.div`
@@ -39,7 +43,8 @@ export const DetailName = styled.div`
     margin-bottom: 24px;
     align-items: center;
     margin: 10px 0 20px;
-    font-size: 16px;
+    font-size: 22px;
+    font-weight: bolder;
 `;
 export const DetailProductName = styled.div`
 
@@ -47,11 +52,13 @@ export const DetailProductName = styled.div`
 
 export const DetailTitle= styled.p`
     margin-bottom: 16px;
-    font-size: 22px;
+    font-size: 18px;
+    font-weight: bold;
     padding-top: 12px;
 `;
 export const DetailPrice = styled.div`
     align-items: center;
+    font-size: 25px;
 `;
 export const DetailCoupon = styled.div`
     padding: 14px 20px;
@@ -104,7 +111,7 @@ export const ButtonLarges = styled.button`
     borderColor ? '1px solid #0a0f18' : '1px solid #a3a9b3'};
   text-align: center;
   cursor: pointer;
-  margin: 0 0 10px;
+  /* margin: 0 0 10px; */
 
   /* &:hover {
     background: #fff;
