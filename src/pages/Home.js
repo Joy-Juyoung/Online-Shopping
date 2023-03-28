@@ -18,12 +18,11 @@ import CartPage from './CartPage/CartPage';
 import TestProductKindsView from './ProductPage/TestProductKindsView';
 
 
-
 const Home = () => {
   return (
     <Container>
       <Routes>
-        <Route path='/' element={<HeroPage />} exact={true} />
+        {/* <Route path='/' element={<HeroPage />} exact={true} /> */}
         <Route path='/login' element={<LoginPage />} exact={true} />
         <Route path='/register' element={<RegisterPage />} exact={true} />
         <Route path='/userAccount' element={<UserAccountPage />} exact={true} />
@@ -37,6 +36,7 @@ const Home = () => {
         <Route path='/products/productAllChildKinds/:id' element={<TestProductKindsView />} exact={true} />
         {/* <Route path='/testRegister' element={<TestRegister />} exact={true} /> */}
         {/* <Route path='/' element={<TestHome />} exact={true} /> */}
+        <Route path='/' element={<TestHome />} exact={true} />
         <Route path='/testLogin' element={<TestLogin />} exact={true} />
         <Route path='/testRegister' element={<TestRegister />} exact={true} />
         <Route path='/testHeader' element={<TestHeader />} exact={true} />

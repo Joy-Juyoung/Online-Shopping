@@ -140,6 +140,7 @@ const LoginPage = () => {
         </PesnalWrapper>
       ) : (
         <PesnalWrapper>
+          <h1>Sign In</h1>
           <ErrorMsg
             ref={errRef}
             style={{ display: errMsg ? 'block' : 'none' }}
@@ -148,7 +149,6 @@ const LoginPage = () => {
             <ErrorOutlineIcon style={{ color: 'red' }} />
             <div>{errMsg}</div>
           </ErrorMsg>
-          <h1>Sign In</h1>
           <form onSubmit={handleSubmit}>
             <InputWrap>
               <Input
