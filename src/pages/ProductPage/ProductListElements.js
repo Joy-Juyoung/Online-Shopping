@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const ProdutsListContainer = styled.div`
+export const ProductsListContainer = styled.div`
   width: 100%;
 `;
 
