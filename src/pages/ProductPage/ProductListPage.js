@@ -12,6 +12,7 @@ import {
   ProductPrice,
   ProductsEach,
   ProductsList,
+  ProductsListContainer,
   ProductsListWrap,
   ProductsListWrapper,
   ProductsWrap,
@@ -90,7 +91,7 @@ const ProductsListPage = () => {
   };
 
   return (
-    <ProdutsListContainer>
+    <ProductsListContainer>
       <ProductsWrap>
         <h1>All Products</h1>
         <ProductsListWrapper>
@@ -140,7 +141,7 @@ const ProductsListPage = () => {
           </ProductsList>
         </ProductsListWrapper>
       </ProductsWrap>
-    </ProdutsListContainer>
+    </ProductsListContainer>
   );
 };
 
