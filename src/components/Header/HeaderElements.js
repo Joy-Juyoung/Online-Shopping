@@ -207,7 +207,7 @@ export const DropMenuItem = styled.li`
 
 export const TopWrapper = styled.div`
   width: 100vw;
-  margin: 0 auto;
+  margin: 10px auto;
   /* background: #0a0f18; */
   background: #0a0f18;
   color: #fff;
