@@ -40,7 +40,7 @@ import TestModal from './TestModal';
 // } from './TestHeaderElements';
 
 const CATEGORY_URL = '/products/productAllParentsKinds';
-const TestHeader = () => {
+const TestHeader = ({ meData }) => {
   const [categories, setCategories] = useState([]);
 
   const getCategory = async () => {
@@ -52,18 +52,17 @@ const TestHeader = () => {
     // console.log('categoryData', categoryData?.data);
     setCategories(categoryData?.data);
   };
-
-  console.log('category', categories);
+  console.log('Header Me', meData);
+  // console.log('category', categories);
 
   useEffect(() => {
     getCategory();
   }, []);
 
-
   // const modalRef = useRef();
   // const [isOpen, setOpen] = useState(false);
   // const handleClick = (e) => {
-  //   if(isOpen && !modalRef.current.contains(e.target)) 
+  //   if(isOpen && !modalRef.current.contains(e.target))
   //     setOpen(true);
   // };
 
@@ -73,7 +72,6 @@ const TestHeader = () => {
   //     window.removeEventListener('click', handleClick);
   //   };
   // },[])
-
 
   // const [isOpen, setOpen] = useState(false);
   // const handleClick =(ref, () => {
@@ -96,9 +94,9 @@ const TestHeader = () => {
               {isOpen && <TestModal ref={modalRef}/>} */}
 
               <ModalBtn onClick={() => setIsModalOpen(true)}>Search</ModalBtn>
-              {isModalOpen && <TestModal onClose={() => setIsModalOpen(false)} />} 
-
-              
+              {isModalOpen && (
+                <TestModal onClose={() => setIsModalOpen(false)} />
+              )}
             </LeftSide>
 
             <MiddleSide>
@@ -135,8 +133,10 @@ const TestHeader = () => {
                   <DropMenuList key={category.pk}>
                     <DropMenuParents>
                       {/* <DropdownButton>{category.name}</DropdownButton> */}
-                      <DropdownButton to='/products'>{category.name}</DropdownButton>
-                      <DropMenuChild >
+                      <DropdownButton to='/products'>
+                        {category.name}
+                      </DropdownButton>
+                      <DropMenuChild>
                         {category.productKinds.map((child) => {
                           return (
                             <DropMenuItem key={child.pk}>
