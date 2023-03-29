@@ -74,6 +74,7 @@ const Header = ({ meData }) => {
     setLogout(loggedOut?.data);
     setMe('');
     navigate('/');
+    window.location.reload();
   };
 
   return (

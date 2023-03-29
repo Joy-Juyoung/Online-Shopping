@@ -113,6 +113,7 @@ const LoginPage = () => {
       setPwd(pwd);
       setLoginSuccess(true);
       navigate('/');
+      window.location.reload();
     }
   };
   // console.log('username', username);

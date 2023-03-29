@@ -25,8 +25,6 @@ import S5_Coupon from './UserAccountPage/S5_Coupon';
 
 import TestProductKindsView from './ProductPage/TestProductKindsView';
 
-
-
 const Home = ({ meData }) => {
   return (
     <Container>
@@ -67,7 +65,7 @@ const Home = ({ meData }) => {
           element={<S2_OrderHistory meData={meData} />}
           exact={true}
         />
-      {/*<Route
+        {/*<Route
           path='/whishlist'
           element={<S3_Wishlist meData={meData} />}
           exact={true}
@@ -95,17 +93,19 @@ const Home = ({ meData }) => {
           exact={true}
         />
 
-
-        <Route path='/products/productAllChildKinds/:id' element={<TestProductKindsView />} exact={true} />
+        <Route
+          path='/products/productAllChildKinds/:id'
+          element={<TestProductKindsView />}
+          exact={true}
+        />
         {/* <Route path='/' element={<TestHome />} exact={true} /> */}
-        <Route path='/' element={<TestHome />} exact={true} />
-        <Route path='/testLogin' element={<TestLogin />} exact={true} />
-         {/*<Route path='/testRegister' element={<TestRegister />} exact={true} /> */}
+        {/* <Route path='/' element={<TestHome />} exact={true} /> */}
+        {/* <Route path='/testLogin' element={<TestLogin />} exact={true} /> */}
+        {/*<Route path='/testRegister' element={<TestRegister />} exact={true} /> */}
 
         <Route path='/testHeader' element={<TestHeader />} exact={true} />
         <Route path='/wishlist' element={<WishlistPage />} exact={true} />
         <Route path='/carts' element={<CartPage />} exact={true} />
-
       </Routes>
     </Container>
   );
