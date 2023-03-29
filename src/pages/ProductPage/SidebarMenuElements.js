@@ -40,12 +40,44 @@ export const SidebarMenuClose = styled.button`
     }
 `;
 
-export const OptionsSelect = styled.input`
+export const SidebarMenuMid = styled.div`
+    padding-top: 15px;
+    padding-bottom: 30px;
+
+    select {
+                width: 95%;
+                height: 48px;
+                align-items: center;
+                border-radius:10px;
+                margin-left: 10px;
+            }
 
 `;
 
+
+// export const OptionsSelect = styled.select`
+//     width: 100%;
+//     height: 48px;
+//     align-items: center;
+//     border-radius:10px;
+  
+
+    
+// `;
+
+export const SidebarMenuBottom = styled.div`
+    padding-top: 30px;
+    border-top: 1px solid lightgray;
+
+    p{
+        margin-left: 10px;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+`;
+
 export const ButtonLarges = styled.button`
-    width: 100%;
+    width: 95%;
     height: 48px;
     border-radius: 6px;
     background: ${({ lightBg }) => (lightBg ? '#fff' : '#0A0F18')};
@@ -58,4 +90,5 @@ export const ButtonLarges = styled.button`
     borderColor ? '1px solid #0a0f18' : '1px solid #a3a9b3'};
     text-align: center;
     cursor: pointer;
+    margin-left: 10px;
   `;

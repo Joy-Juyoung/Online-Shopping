@@ -1,10 +1,12 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { 
             ButtonLarges, 
             OptionsSelect, 
+            SidebarMenuBottom, 
             SidebarMenuClose, 
             SidebarMenuContainer, 
             SidebarMenuKinds, 
+            SidebarMenuMid, 
             SidebarMenuTop, 
             SidebarMenuWrapper 
         } from './SidebarMenuElements'
@@ -26,17 +28,32 @@ function SidebarMenu({ onClose }) {
       };
     }, [onClose]);
 
+    const [selectOptions, setSelectOptions] = useState('');
+
   return (
-    <SidebarMenuContainer ref={ref}>
+    <SidebarMenuContainer >
         <SidebarMenuWrapper>
             <SidebarMenuKinds>
-                <SidebarMenuTop>
+                <SidebarMenuTop ref={ref}>
                     <SidebarMenuClose onClick={onClose}>
                         <p>x</p>
                     </SidebarMenuClose>
                 </SidebarMenuTop>
-                <OptionsSelect/>
-                <ButtonLarges>ADD TO BAG</ButtonLarges>
+                <SidebarMenuMid>
+                    <select 
+                        // value={selectOptions}
+                        onChange={ e => setSelectOptions(e.target.value)}
+                        placeholder='Select Items Options'
+                    >
+                        <option value="L">Large</option>
+                        <option value="M">Medium</option>
+                        <option value="S">Small</option>
+                    </select>
+                </SidebarMenuMid>
+                <SidebarMenuBottom>
+                    <p>Total :{selectOptions}</p>
+                    <ButtonLarges>ADD TO BAG</ButtonLarges>
+                </SidebarMenuBottom>
             </SidebarMenuKinds>
         </SidebarMenuWrapper>
     </SidebarMenuContainer>
