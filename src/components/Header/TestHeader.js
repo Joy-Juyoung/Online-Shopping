@@ -141,7 +141,10 @@ const TestHeader = () => {
                         {category.productKinds?.map((child) => {
                           return (
                             <DropMenuItem key={child.pk}>
-                              <Link to={`/products/productAllChildKinds/${child.pk}`}>{child.name}</Link>
+                              <Link style={{ color:'black', textDecoration: 'none' }} 
+                                    to={`/products/productAllChildKinds/${child.pk}`}>
+                                    {child.name}
+                              </Link>
                             </DropMenuItem>
                           );
                         })}

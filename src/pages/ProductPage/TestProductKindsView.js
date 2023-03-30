@@ -23,7 +23,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 // const TestProduct_URL = '/products/productAllChildKinds/${id}';
 const TestProductKindsView = () => {
 
-    const [itemKinds, setItemKinds] = useState(""); //useState([]);
+    const [itemKinds, setItemKinds] = useState([]); //useState([]);
     const { id } = useParams();
     const getKindsProduct = async () => {
       const {data} = await axios.get(`/products/productAllChildKinds/${id}`,{

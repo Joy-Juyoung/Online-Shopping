@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { useParams } from 'react-router-dom';
+import axios from '../../api/axios';
 import { 
             ButtonLarges, 
             OptionsSelect, 
@@ -11,7 +13,9 @@ import {
             SidebarMenuWrapper 
         } from './SidebarMenuElements'
 
-function SidebarMenu({ onClose }) {
+        
+
+const SidebarMenu = ({ onClose }) => {
     const ref = useRef();
     useEffect(() => {
       const checkIfClickedOutside = (e) => {
@@ -28,7 +32,33 @@ function SidebarMenu({ onClose }) {
       };
     }, [onClose]);
 
-    const [selectOptions, setSelectOptions] = useState('');
+    const [selectOptions, setSelectOptions] = useState('none');
+    const OptionHandleChange = (e) => {
+        setSelectOptions(e.target.value)
+    }
+    const options = [
+        { label: 'Select Color or Size', value: 'none'},
+        { label: 'Large', value: 'L' },
+        { label: 'Medium', value: 'M' },
+        { label: 'Small', value: 'S' },
+      ];
+    //   const [selectOptions, setSelectOptions] = useState(''); //useState([]);
+    //   const { id } = useParams();
+    //   const getSelectOptions = async () => {
+    //       const {data} = await axios.get(`/products/${id}`,{
+    //           headers: { 'Content-Type': 'application/json' },
+    //           withCredentials: true,
+    //         }
+    //         );
+            
+    //       console.log(data)
+    //       setSelectOptions(data)
+    //       }
+    //   useEffect(() => {
+    //       getSelectOptions();
+    //   },[id])
+    //   console.log("id", id);
+
 
   return (
     <SidebarMenuContainer >
@@ -40,15 +70,25 @@ function SidebarMenu({ onClose }) {
                     </SidebarMenuClose>
                 </SidebarMenuTop>
                 <SidebarMenuMid>
+
                     <select 
-                        // value={selectOptions}
-                        onChange={ e => setSelectOptions(e.target.value)}
-                        placeholder='Select Items Options'
-                    >
-                        <option value="L">Large</option>
-                        <option value="M">Medium</option>
-                        <option value="S">Small</option>
+                        value={selectOptions}
+                        defaultValue={'none'}
+                        onChange={OptionHandleChange}
+                    >    
+                        {options.map((option) => (
+                            <option value={option.value}>{option.label}</option>
+                        ))}     
                     </select>
+                    {/* <select 
+                        value={selectOptions}
+                        defaultValue={'none'}
+                        onChange={OptionHandleChange}
+                    >    
+                        {options.map((option) => (
+                            <option value={option.value}>{option.label}</option>
+                        ))}     
+                    </select> */}
                 </SidebarMenuMid>
                 <SidebarMenuBottom>
                     <p>Total :{selectOptions}</p>

@@ -11,6 +11,7 @@ export const SidebarMenuWrapper = styled.div`
     height: 100vh;
     background: #fff;
     z-index: 100;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 `;
 export const SidebarMenuKinds = styled.div`
     /* position: fixed;
