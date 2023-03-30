@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { redirect } from 'react-router-dom';
+// import { redirect } from 'react-router-dom';
 import { ButtonLarge } from '../../components/ButtonElements';
 import { Input } from '../../components/InputElements';
 import {
@@ -23,6 +23,7 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import axios from '../../api/axios';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 // 다른 경로 로그인하는 방법 추가
 // Validation 조건 충족 에러 넣기
@@ -36,6 +37,7 @@ const LOGIN_URL = '/users/log-in';
 const LoginPage = () => {
   const userRef = useRef();
   const errRef = useRef();
+  const navigate = useNavigate();
 
   const [username, setUsername] = useState('');
   const [validUsername, setValidUsername] = useState(false);
@@ -47,7 +49,7 @@ const LoginPage = () => {
   const [pwdFocus, setPwdFocus] = useState(false);
 
   const [errMsg, setErrMsg] = useState('');
-  const [success, setSuccess] = useState(false);
+  const [loginSuccess, setLoginSuccess] = useState(false);
 
   const handlePwdChange = (evnt) => {
     setPwd(evnt.target.value);
@@ -101,22 +103,7 @@ const LoginPage = () => {
         withCredentials: true,
       }
     );
-    console.log('loginData', loginData?.data);
-    // } catch (err) {
-    //   if (!err?.loginData) {
-    //     setErrMsg('No Server Response');
-    //   } else if (err.loginData?.status === 409) {
-    //     setErrMsg('Username Taken');
-    //   } else {
-    //     setErrMsg('LOGIN FAILD');
-    //   }
-    //   errRef.current.focus();
-    //   setSuccess(true);
-    //   redirect('/login');
-
-    //   setUsername(username);
-    //   setPwd(pwd);
-    // }
+    // console.log('loginData', loginData?.data);
 
     if (loginData.data.error) {
       errRef.current.focus();
@@ -124,128 +111,130 @@ const LoginPage = () => {
     } else {
       setUsername(username);
       setPwd(pwd);
-      setSuccess(true);
+      setLoginSuccess(true);
+      navigate('/');
+      window.location.reload();
     }
   };
-
-  const isLoggIn = useSelector((state) => state.auth.isLoggIn);
+  // console.log('username', username);
+  // const isLoggIn = useSelector((state) => state.auth.isLoggIn);
 
   return (
     <PesnalContainer>
-      {isLoggIn ? (
+      {/* {isLoggIn ? (
         <PesnalWrapper>
           <h1>Welcom Username</h1>
 
           <button>Logout</button>
         </PesnalWrapper>
-      ) : (
-        <PesnalWrapper>
-          <h1>Sign In</h1>
-          <ErrorMsg
-            ref={errRef}
-            style={{ display: errMsg ? 'block' : 'none' }}
-            aria-live='assertive'
-          >
-            <ErrorOutlineIcon style={{ color: 'red' }} />
-            <div>{errMsg}</div>
-          </ErrorMsg>
-          <form onSubmit={handleSubmit}>
-            <InputWrap>
-              <Input
-                ref={userRef}
-                type='text'
-                id='username'
-                autoComplete='off'
-                onChange={(e) => setUsername(e.target.value)}
-                value={username}
-                required
-                aria-invalid={validUsername ? 'false' : 'true'}
-                aria-describedby='uidnote'
-                onFocus={() => setUsernameFocus(true)}
-                onBlur={() => setUsernameFocus(false)}
-                placeholder='Enter username.'
-              />
-              <VerificationMsg
-                id='uidnote'
-                style={{
-                  display: validUsername || !username ? 'none' : 'flex',
-                  marginBottom: '20px',
-                }}
-              >
-                <ErrorOutlineIcon fontSize='small' style={{ color: 'red' }} />
-                <span>
-                  4 to 24 characters.Must begin with a letter. Letters, numbers,
-                  underscores, hyphens allowed.
-                </span>
-              </VerificationMsg>
-              <InputPwd>
-                <Input
-                  placeholder='Enter pwd.'
-                  type={pwdType}
-                  onChange={handlePwdChange}
-                  value={pwd}
-                  name='pwd'
-                  required
-                  aria-invalid={validPwd ? 'false' : 'flex'}
-                  aria-describedby='pwdnote'
-                  onFocus={() => setPwdFocus(true)}
-                  onBlur={() => setPwdFocus(false)}
-                />
-                <EyeIcon>
-                  {pwdType === 'password' ? (
-                    <VisibilityOff onClick={togglePwd} fontSize='small' />
-                  ) : (
-                    <Visibility onClick={togglePwd} fontSize='small' />
-                  )}
-                </EyeIcon>
-              </InputPwd>
-              <VerificationMsg
-                id='pwdnote'
-                style={{
-                  display: validPwd || !pwd ? 'none' : 'flex',
-                  marginBottom: '20px',
-                }}
-              >
-                <ErrorOutlineIcon fontSize='small' style={{ color: 'red' }} />
-                <span>
-                  8 to 24 characters. Must include uppercase and lowercase
-                  letters, a number and a special character. Allowed special
-                  characters: ! @ # $ %
-                </span>
-              </VerificationMsg>
-            </InputWrap>
-            <ButtonLarge
-              borderColor={true}
-              fontStrong={true}
-              disabled={!validUsername || !validPwd ? true : false}
+      ) : ( */}
+      <PesnalWrapper>
+        <h1>Sign In</h1>
+        <ErrorMsg
+          ref={errRef}
+          style={{ display: errMsg ? 'block' : 'none' }}
+          aria-live='assertive'
+        >
+          <ErrorOutlineIcon style={{ color: 'red' }} />
+          <div>{errMsg}</div>
+        </ErrorMsg>
+        <form onSubmit={handleSubmit}>
+          <InputWrap>
+            <Input
+              ref={userRef}
+              type='text'
+              id='username'
+              autoComplete='off'
+              onChange={(e) => setUsername(e.target.value)}
+              value={username}
+              required
+              aria-invalid={validUsername ? 'false' : 'true'}
+              aria-describedby='uidnote'
+              onFocus={() => setUsernameFocus(true)}
+              onBlur={() => setUsernameFocus(false)}
+              placeholder='Enter username.'
+            />
+            <VerificationMsg
+              id='uidnote'
+              style={{
+                display: validUsername || !username ? 'none' : 'flex',
+                marginBottom: '20px',
+              }}
             >
-              Sign In
-            </ButtonLarge>
-            <LoginCheck>
-              <div>
-                <input type='checkbox' />
-                Keep me signed in
-              </div>
-              <div>Forgot Your pwd?</div>
-            </LoginCheck>
-          </form>
+              <ErrorOutlineIcon fontSize='small' style={{ color: 'red' }} />
+              <span>
+                4 to 24 characters.Must begin with a letter. Letters, numbers,
+                underscores, hyphens allowed.
+              </span>
+            </VerificationMsg>
+            <InputPwd>
+              <Input
+                placeholder='Enter pwd.'
+                type={pwdType}
+                onChange={handlePwdChange}
+                value={pwd}
+                name='pwd'
+                required
+                aria-invalid={validPwd ? 'false' : 'flex'}
+                aria-describedby='pwdnote'
+                onFocus={() => setPwdFocus(true)}
+                onBlur={() => setPwdFocus(false)}
+              />
+              <EyeIcon>
+                {pwdType === 'password' ? (
+                  <VisibilityOff onClick={togglePwd} fontSize='small' />
+                ) : (
+                  <Visibility onClick={togglePwd} fontSize='small' />
+                )}
+              </EyeIcon>
+            </InputPwd>
+            <VerificationMsg
+              id='pwdnote'
+              style={{
+                display: validPwd || !pwd ? 'none' : 'flex',
+                marginBottom: '20px',
+              }}
+            >
+              <ErrorOutlineIcon fontSize='small' style={{ color: 'red' }} />
+              <span>
+                8 to 24 characters. Must include uppercase and lowercase
+                letters, a number and a special character. Allowed special
+                characters: ! @ # $ %
+              </span>
+            </VerificationMsg>
+          </InputWrap>
+          <ButtonLarge
+            borderColor={true}
+            fontStrong={true}
+            disabled={!validUsername || !validPwd ? true : false}
+          >
+            Sign In
+          </ButtonLarge>
+          <LoginCheck>
+            <div>
+              <input type='checkbox' />
+              Keep me signed in
+            </div>
+            <div>Forgot Your pwd?</div>
+          </LoginCheck>
+        </form>
 
-          <LoginOptions>
-            <LoginOptionsLegend>OR</LoginOptionsLegend>
-            <ButtonLarge lightBg={true} darkFont={true}>
-              Countinue with Google
-            </ButtonLarge>
-            <ButtonLarge lightBg={true} darkFont={true}>
-              Countinue with Apple
-            </ButtonLarge>
-            <ButtonLarge lightBg={true} darkFont={true}>
-              Countinue with Facebook
-            </ButtonLarge>
-          </LoginOptions>
+        <LoginOptions>
+          <LoginOptionsLegend>OR</LoginOptionsLegend>
+          <ButtonLarge lightBg={true} darkFont={true}>
+            Countinue with Google
+          </ButtonLarge>
+          <ButtonLarge lightBg={true} darkFont={true}>
+            Countinue with Apple
+          </ButtonLarge>
+          <ButtonLarge lightBg={true} darkFont={true}>
+            Countinue with Facebook
+          </ButtonLarge>
+        </LoginOptions>
 
-          <RegisterLink to='/register'>Register</RegisterLink>
-        </PesnalWrapper>
-      )}
+        <RegisterLink to='/register'>Register</RegisterLink>
+      </PesnalWrapper>
+      {/* )} */}
     </PesnalContainer>
   );
 };

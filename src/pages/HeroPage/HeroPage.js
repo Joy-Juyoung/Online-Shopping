@@ -41,46 +41,45 @@ import {
   FourLeftInfoUp,
   FourLeftInfoDown,
   ParagraghFourTitle,
-  ParagraghFourBody ,
+  ParagraghFourBody,
   SectionFourthRightInfo,
-  FourthImg
-
+  FourthImg,
 } from './HeroElements';
 import FirstImage from '../../asset/firstimage.png';
 import SecondImage from '../../asset/couple.png';
 import ThirdImage from '../../asset/fashion.png';
 import FourthImage from '../../asset/newjeans.png';
 import Header from '../../components/Header/Header.js';
-
+import { useState } from 'react';
+import axios from '../../api/axios';
+import { useEffect } from 'react';
 
 const HeroPage = () => {
   return (
     <MainContainer>
       <MainWrapper>
-
         <MidWrapper>
           <MidInfo>
             <SectionOne>
               <SectionOneLeftInfo>
                 {/* 추후 링크로 변경  */}
-              <a 
-                href='https://www.youtube.com/musinsatv/'>
-                <FirstImg src={FirstImage} />
-              </a>
+                <a href='https://www.youtube.com/musinsatv/'>
+                  <FirstImg src={FirstImage} />
+                </a>
               </SectionOneLeftInfo>
 
               <SectionOneRightInfo>
                 <OneRightInfoUp>
-                  <a 
-                    href='https://www.youtube.com/musinsatv/'>
+                  <a href='https://www.youtube.com/musinsatv/'>
                     <ParagraphOne>
                       <ParagraghTitle>
                         NEW IN : SPRING SUMMER 2023
                       </ParagraghTitle>
                       <ParagraghBody>
-                        Leave your heavy outer behind, it's time for lighter layers and
-                        brighter colors. Get a head start on your spring wardrobe with
-                        12 brand new styles from trending K-brands.
+                        Leave your heavy outer behind, it's time for lighter
+                        layers and brighter colors. Get a head start on your
+                        spring wardrobe with 12 brand new styles from trending
+                        K-brands.
                       </ParagraghBody>
                     </ParagraphOne>
                   </a>
@@ -95,26 +94,23 @@ const HeroPage = () => {
               <SectionTwoWrapper>
                 <SectionTwoLeftInfo>
                   <TwoLeftInfoUp>
-                      <a 
-                        href='https://www.youtube.com/musinsatv/'>
-                          <ParagraghTwoTitle>
-                            FOCUS: SWEATSHIRTS
-                          </ParagraghTwoTitle>
-                          <ParagraghTwoBody>
-                            Sweatshirts are perfect for the weather. Meet sweatshirts at MUSINSA up to 60% discount rates.
-                          </ParagraghTwoBody>
-                      </a>
-                    </TwoLeftInfoUp>
-                    <TwoLeftInfoDown>
-                      <ButtonSmall>Shop Now</ButtonSmall>
-                    </TwoLeftInfoDown>
+                    <a href='https://www.youtube.com/musinsatv/'>
+                      <ParagraghTwoTitle>FOCUS: SWEATSHIRTS</ParagraghTwoTitle>
+                      <ParagraghTwoBody>
+                        Sweatshirts are perfect for the weather. Meet
+                        sweatshirts at MUSINSA up to 60% discount rates.
+                      </ParagraghTwoBody>
+                    </a>
+                  </TwoLeftInfoUp>
+                  <TwoLeftInfoDown>
+                    <ButtonSmall>Shop Now</ButtonSmall>
+                  </TwoLeftInfoDown>
                 </SectionTwoLeftInfo>
 
                 <SectionTwoRightInfo>
                   {/* 추후 링크로 변경  */}
-                  <a 
-                  href='https://www.youtube.com/musinsatv/'>
-                  <SecondImg src={SecondImage} />
+                  <a href='https://www.youtube.com/musinsatv/'>
+                    <SecondImg src={SecondImage} />
                   </a>
                 </SectionTwoRightInfo>
               </SectionTwoWrapper>
@@ -123,27 +119,26 @@ const HeroPage = () => {
             <SectionThree>
               <SectionThreeWrapper>
                 <SectionThreeRightInfo>
-                    <ThreeRightInfoUp>
-                        <a 
-                          href='https://www.youtube.com/musinsatv/'>
-                            <ParagraghThreeTitle>
-                              Milan Fashion Week Highlights
-                            </ParagraghThreeTitle>
-                            <ParagraghThreeBody>
-                              SPOTTED: The hottest street fashion highlights, just in from Milan Fashion Week.
-                            </ParagraghThreeBody>
-                        </a>
-                      </ThreeRightInfoUp>
-                      <ThreeRightInfoDown>
-                        <ButtonSmall>Shop Now</ButtonSmall>
-                      </ThreeRightInfoDown>
+                  <ThreeRightInfoUp>
+                    <a href='https://www.youtube.com/musinsatv/'>
+                      <ParagraghThreeTitle>
+                        Milan Fashion Week Highlights
+                      </ParagraghThreeTitle>
+                      <ParagraghThreeBody>
+                        SPOTTED: The hottest street fashion highlights, just in
+                        from Milan Fashion Week.
+                      </ParagraghThreeBody>
+                    </a>
+                  </ThreeRightInfoUp>
+                  <ThreeRightInfoDown>
+                    <ButtonSmall>Shop Now</ButtonSmall>
+                  </ThreeRightInfoDown>
                 </SectionThreeRightInfo>
                 <SectionThreeLeftInfo>
-                    {/* 추후 링크로 변경  */}
-                    <a 
-                    href='https://www.youtube.com/musinsatv/'>
+                  {/* 추후 링크로 변경  */}
+                  <a href='https://www.youtube.com/musinsatv/'>
                     <ThirdImg src={ThirdImage} />
-                    </a>
+                  </a>
                 </SectionThreeLeftInfo>
               </SectionThreeWrapper>
             </SectionThree>
@@ -152,26 +147,26 @@ const HeroPage = () => {
               <SectionFourWrapper>
                 <SectionFourLeftInfo>
                   <FourLeftInfoUp>
-                      <a 
-                        href='https://www.youtube.com/musinsatv/'>
-                          <ParagraghFourTitle>
-                            OMG! NewJeans checked in at MUSINSA!
-                          </ParagraghFourTitle>
-                          <ParagraghFourBody >
-                            NewJeans show off their Gen Z version of office-wear. Take notes on how the rookie group styled themselves for their special day at the office!
-                          </ParagraghFourBody>
-                      </a>
-                    </FourLeftInfoUp>
-                    <FourLeftInfoDown>
-                      <ButtonSmall>Shop Now</ButtonSmall>
-                    </FourLeftInfoDown>
+                    <a href='https://www.youtube.com/musinsatv/'>
+                      <ParagraghFourTitle>
+                        OMG! NewJeans checked in at MUSINSA!
+                      </ParagraghFourTitle>
+                      <ParagraghFourBody>
+                        NewJeans show off their Gen Z version of office-wear.
+                        Take notes on how the rookie group styled themselves for
+                        their special day at the office!
+                      </ParagraghFourBody>
+                    </a>
+                  </FourLeftInfoUp>
+                  <FourLeftInfoDown>
+                    <ButtonSmall>Shop Now</ButtonSmall>
+                  </FourLeftInfoDown>
                 </SectionFourLeftInfo>
 
                 <SectionFourthRightInfo>
                   {/* 추후 링크로 변경  */}
-                  <a 
-                  href='https://www.youtube.com/musinsatv/'>
-                  <FourthImg src={FourthImage} />
+                  <a href='https://www.youtube.com/musinsatv/'>
+                    <FourthImg src={FourthImage} />
                   </a>
                 </SectionFourthRightInfo>
               </SectionFourWrapper>

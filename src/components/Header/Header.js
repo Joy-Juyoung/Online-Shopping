@@ -1,99 +1,111 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 //import { Link } from 'react-router-dom';
-import FlagIcon from '@mui/icons-material/Flag';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import PermIdentityRoundedIcon from '@mui/icons-material/PermIdentityRounded';
-//import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import { Modal } from './Modal';
+import axios from '../../api/axios';
 import {
+  CartLink,
+  FaLink,
   HeaderContainer,
-  HeaderWrapper,
   HeaderUp,
+  HeaderWrapper,
   LeftSide,
-  ModalBtn,
-  SearchIcon,
   MiddleSide,
   MidLink,
-  RightSide,
-  RightIcon,
-  FaLink,
-  CartLink,
+  ModalBtn,
   PermLink,
+  RightIcon,
+  RightSide,
+  DropMenu,
+  DropMenuParents,
+  DropMenuChild,
+  DropMenuItem,
   HeaderDown,
-  DropdownContainer,
   DropdownButton,
-  Menu,
-  Ul,
-  Li,
+  DropMenuList,
   TopWrapper,
   FreeInfo,
   FreeInfoTitle,
   HeaderWrap,
 } from './HeaderElements';
-import useDetectClose from './useDetectClose';
+import FlagIcon from '@mui/icons-material/Flag';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import PermIdentityRoundedIcon from '@mui/icons-material/PermIdentityRounded';
+import LogoutIcon from '@mui/icons-material/Logout';
+import TestModal from './TestModal';
+import { useNavigate } from 'react-router-dom';
 
-const Header = () => {
-  const dropdownRef = useRef(null);
-  const [topIsOpen, setMenuTopIsOpen] = useState(false);
-  const [bottomIsOpen, setMenuBottomIsOpen] = useState(false);
-  const [outerIsOpen, setMenuOuterIsOpen] = useState(false);
-  const [shoesIsOpen, setMenuShoesIsOpen] = useState(false);
-  const [accessoriesIsOpen, setMenuAccessoriesIsOpen] = useState(false);
+const CATEGORY_URL = '/products/productAllParentsKinds';
+const Header = ({ meData }) => {
+  const [categories, setCategories] = useState([]);
+  const [me = meData, setMe] = useState();
+  const [logout, setLogout] = useState();
+  const navigate = useNavigate();
 
-  const closeHoverMenu = () => {
-    setMenuTopIsOpen(false);
-    setMenuBottomIsOpen(false);
-    setMenuOuterIsOpen(false);
-    setMenuShoesIsOpen(false);
-    setMenuAccessoriesIsOpen(false);
+  console.log('Header Me', me);
+
+  const getCategory = async () => {
+    const categoryData = await axios.get(CATEGORY_URL, {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+    // console.log('Header Load Me', meData);
+    setCategories(categoryData?.data);
   };
 
-  useDetectClose(dropdownRef, closeHoverMenu);
+  useEffect(() => {
+    getCategory();
+    // setMe(meData);
+  }, [me]);
 
-  // const [showModal, setShowModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // const openModal = () => {
-  //   setShowModal((showModal) => !showModal);
-  // };
-  const [modalOpen, setModalOpen] = useState(false);
+  const handleLogout = async () => {
+    const loggedOut = await axios.post(
+      '/users/log-out',
+      {
+        username: me.username,
+      },
+      {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      }
+    );
+    console.log('Header logout Me', loggedOut?.data);
+    setLogout(loggedOut?.data);
+    setMe('');
+    navigate('/');
+    window.location.reload();
+  };
 
   return (
-    <HeaderContainer>
+    <>
+      {/* <HeaderContainer> */}
       <HeaderWrap>
         <HeaderWrapper>
           <HeaderUp>
             <LeftSide>
-              {/* 인풋 드랍 다운 또는 버튼 드랍다운 중 결정해야함*/}
+              {/* <ModalBtn onClick={handleClick}>Search</ModalBtn>
+              {isOpen && <TestModal setOpen={setOpen}/>} */}
 
-              <ModalBtn
-                onClick={() => {
-                  setModalOpen(true);
-                }}
-              >
-                Search
-              </ModalBtn>
-              {modalOpen && <Modal setOpenModal={setModalOpen} />}
+              {/* <ModalBtn onClick={handleClick}>Search</ModalBtn>
+              {isOpen && <TestModal ref={modalRef}/>} */}
 
-              {/* <ModalBtn onClick={openModal}> Search</ModalBtn>
-            
-            <Modal showModal={showModal} setShowModal={setShowModal} /> */}
-              {/* <SearchIcon>
-                        <SearchRoundedIcon fontSize='medium' color='disabled'/>
-                    </SearchIcon> */}
+              <ModalBtn onClick={() => setIsModalOpen(true)}>Search</ModalBtn>
+              {isModalOpen && (
+                <TestModal onClose={() => setIsModalOpen(false)} />
+              )}
             </LeftSide>
-            {/* 로고 이미지로 할지 글자로 할지 정해야함 */}
+
             <MiddleSide>
               <MidLink to='/'>
                 <div>MUSINSA</div>
               </MidLink>
             </MiddleSide>
             <RightSide>
-              {/* 위치 드랍 다운 선택 */}
               <RightIcon>
                 <FlagIcon fontSize='medium' />
               </RightIcon>
-              {/* 추후 각각 링크 변경*/}
+
               <RightIcon>
                 <FaLink to='/wishlist'>
                   <FavoriteBorderIcon fontSize='medium' />
@@ -104,109 +116,63 @@ const Header = () => {
                   <AddShoppingCartIcon fontSize='medium' />
                 </CartLink>
               </RightIcon>
-              <RightIcon>
-                <PermLink to='/login'>
-                  <PermIdentityRoundedIcon fontSize='medium' />
-                </PermLink>
-              </RightIcon>
+
+              {!me && logout !== null ? (
+                <RightIcon>
+                  <PermLink to='/login'>
+                    <PermIdentityRoundedIcon fontSize='medium' />
+                  </PermLink>
+                </RightIcon>
+              ) : (
+                <>
+                  <RightIcon>
+                    <PermLink to='/userAccount'>
+                      <PermIdentityRoundedIcon fontSize='medium' />
+                    </PermLink>
+                  </RightIcon>
+                  <RightIcon>
+                    <PermLink>
+                      <LogoutIcon fontSize='medium' onClick={handleLogout} />
+                    </PermLink>
+                  </RightIcon>
+                </>
+              )}
             </RightSide>
           </HeaderUp>
-
           <HeaderDown>
-            {/* <DropdownContainer ref={dropdownRef}>
-            <DropdownButton onMouseOver={() => setMenuTopIsOpen(true)}>
-              TOPS
-            </DropdownButton>
-            <Menu
-              isDropped={topIsOpen}
-              onMouseLeave={() => setMenuTopIsOpen(false)}
-            >
-              <Ul>
-                <Li>Short Sleeves</Li>
-                <Li>Long Sleeves</Li>
-                <Li>Shorts & Blouses</Li>
-                <Li>Sweatshirts</Li>
-                <Li>Hoodies</Li>
-              </Ul>
-            </Menu>
-          </DropdownContainer>
-
-          <DropdownContainer ref={dropdownRef}>
-            <DropdownButton onMouseOver={() => setMenuBottomIsOpen(true)}>
-              BOTTOMS
-            </DropdownButton>
-            <Menu
-              isDropped={bottomIsOpen}
-              onMouseLeave={() => setMenuBottomIsOpen(false)}
-            >
-              <Ul>
-                <Li>Denim</Li>
-                <Li>Joggers</Li>
-                <Li>Jeans</Li>
-                <Li>Shorts</Li>
-                <Li>Jumpsuits</Li>
-              </Ul>
-            </Menu>
-          </DropdownContainer>
-
-          <DropdownContainer ref={dropdownRef}>
-            <DropdownButton onMouseOver={() => setMenuOuterIsOpen(true)}>
-              OUTERS
-            </DropdownButton>
-            <Menu
-              isDropped={outerIsOpen}
-              onMouseLeave={() => setMenuOuterIsOpen(false)}
-            >
-              <Ul>
-                <Li>Jackets</Li>
-                <Li>Cardigans</Li>
-                <Li>Coats</Li>
-              </Ul>
-            </Menu>
-          </DropdownContainer>
-
-          <DropdownContainer ref={dropdownRef}>
-            <DropdownButton onMouseOver={() => setMenuShoesIsOpen(true)}>
-              SHOES
-            </DropdownButton>
-            <Menu
-              isDropped={shoesIsOpen}
-              onMouseLeave={() => setMenuShoesIsOpen(false)}
-            >
-              <Ul>
-                <Li>Boots</Li>
-                <Li>Sneakers</Li>
-                <Li>Sandals</Li>
-              </Ul>
-            </Menu>
-          </DropdownContainer>
-
-          <DropdownContainer ref={dropdownRef}>
-            <DropdownButton onMouseOver={() => setMenuAccessoriesIsOpen(true)}>
-              ACCESSORIES
-            </DropdownButton>
-            <Menu
-              isDropped={accessoriesIsOpen}
-              onMouseLeave={() => setMenuAccessoriesIsOpen(false)}
-            >
-              <Ul>
-                <Li>Cap & Hat</Li>
-                <Li>Rings</Li>
-                <Li>Watches</Li>
-              </Ul>
-            </Menu>
-          </DropdownContainer>*/}
+            <DropMenu>
+              {categories.map((category) => {
+                return (
+                  <DropMenuList key={category.pk}>
+                    <DropMenuParents>
+                      {/* <DropdownButton>{category.name}</DropdownButton> */}
+                      <DropdownButton to='/products'>
+                        {category.name}
+                      </DropdownButton>
+                      <DropMenuChild>
+                        {category.productKinds.map((child) => {
+                          return (
+                            <DropMenuItem key={child.pk}>
+                              <span>{child.name}</span>
+                            </DropMenuItem>
+                          );
+                        })}
+                      </DropMenuChild>
+                    </DropMenuParents>
+                  </DropMenuList>
+                );
+              })}
+            </DropMenu>
           </HeaderDown>
         </HeaderWrapper>
-        <TopWrapper>
-          <FreeInfo>
-            <FreeInfoTitle>
-              <p>FREE SHIPPING on all orders $200+</p>
-            </FreeInfoTitle>
-          </FreeInfo>
-        </TopWrapper>
       </HeaderWrap>
-    </HeaderContainer>
+      <TopWrapper>
+        <FreeInfo>
+          <FreeInfoTitle>FREE SHIPPING on all orders $200+</FreeInfoTitle>
+        </FreeInfo>
+      </TopWrapper>
+      {/* </HeaderContainer> */}
+    </>
   );
 };
 
