@@ -96,7 +96,7 @@ const ProductAllParentsKinds = () => {
                                   <ProductPrice>${all.price}</ProductPrice>
                                   <ProductLike>
                                     <FavoriteIcon fontSize='small' />
-                                    total Likes count
+                                    Total Likes count
                                   </ProductLike>
                                 </ProductEachDetails>
                               </ProductsEach>
