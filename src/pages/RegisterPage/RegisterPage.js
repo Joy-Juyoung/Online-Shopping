@@ -63,11 +63,11 @@ const RegisterPage = () => {
     setMatchPwd(evnt.target.value);
   };
   const toggleMatchPwd = () => {
-    if (pwdType === 'password') {
+    if (pwdType === 'password2') {
       setMatchPwdType('text');
       return;
     }
-    setMatchPwdType('password');
+    setMatchPwdType('password2');
   };
 
   useEffect(() => {
@@ -246,7 +246,7 @@ const RegisterPage = () => {
                   onBlur={() => setMatchFocus(false)}
                 />
                 <EyeIcon>
-                  {pwdType === 'password' ? (
+                  {pwdType === 'password2' ? (
                     <VisibilityOff onClick={toggleMatchPwd} fontSize='small' />
                   ) : (
                     <Visibility onClick={toggleMatchPwd} fontSize='small' />
