@@ -88,11 +88,11 @@ const Home = ({ meData }) => {
         />
 
         <Route
-          path='/productDetail'
+          path='/products/:id'
           element={<ProductDetailPage />}
           exact={true}
         />
-
+        
         <Route
           path='/products/productAllChildKinds/:id'
           element={<TestProductKindsView />}

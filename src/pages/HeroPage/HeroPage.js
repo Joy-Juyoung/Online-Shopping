@@ -85,7 +85,7 @@ const HeroPage = () => {
                   </a>
                 </OneRightInfoUp>
                 <OneRightInfoDown>
-                  <ButtonSmall>Shop Now</ButtonSmall>
+                  <ButtonSmall to='/products'>Shop Now</ButtonSmall>
                 </OneRightInfoDown>
               </SectionOneRightInfo>
             </SectionOne>

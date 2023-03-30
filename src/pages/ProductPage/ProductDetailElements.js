@@ -22,6 +22,10 @@ export const DetailLeftInfo = styled.div`
     width: 450px;
     margin-right: 40px;
     position: relative;
+
+    img {
+        width: 450px;
+    }
 `;
 
 export const DetailRightInfo = styled.div`
@@ -39,7 +43,8 @@ export const DetailName = styled.div`
     margin-bottom: 24px;
     align-items: center;
     margin: 10px 0 20px;
-    font-size: 16px;
+    font-size: 22px;
+    font-weight: bolder;
 `;
 export const DetailProductName = styled.div`
 
@@ -47,11 +52,13 @@ export const DetailProductName = styled.div`
 
 export const DetailTitle= styled.p`
     margin-bottom: 16px;
-    font-size: 22px;
+    font-size: 18px;
+    font-weight: bold;
     padding-top: 12px;
 `;
 export const DetailPrice = styled.div`
     align-items: center;
+    font-size: 25px;
 `;
 export const DetailCoupon = styled.div`
     padding: 14px 20px;
@@ -89,25 +96,22 @@ export const LikeBtn = styled.button`
     border: none;
 `;
 
-export const ButtonLarges = styled(Link)`
-  text-decoration: none;
-  color: black;
-  /* width: ${({ width }) => width}; */
-  width: 100%;
-  height: 50px;
+export const ButtonLarges = styled.button`
+ /* width: ${({ width }) => width}; */
+ width: 100%;
+  height: 48px;
   border-radius: 6px;
   background: ${({ lightBg }) => (lightBg ? '#fff' : '#0A0F18')};
   color: ${({ darkFont }) => (darkFont ? '#0A0F18' : '#fff')};
   font-weight: ${({ fontStrong }) => (fontStrong ? 'bold' : 'normal')};
   padding: 0;
-  font-size: 30px;
+  font-size: 16px;
   outline: none;
   border: ${({ borderColor }) =>
     borderColor ? '1px solid #0a0f18' : '1px solid #a3a9b3'};
   text-align: center;
-  justify-content: center;
   cursor: pointer;
-  margin: 0 0 10px;
+  /* margin: 0 0 10px; */
 
   /* &:hover {
     background: #fff;
@@ -115,3 +119,26 @@ export const ButtonLarges = styled(Link)`
     box-shadow: 0px 0px 4px 1px #0a0f18;
   } */
 `;
+
+export const OffCanvas = styled.div`
+
+`;
+
+export const OffcanvasHeader = styled.div`
+
+`;
+
+export const OffcanvasBody = styled.div`
+
+
+`;
+
+export const OffcanvasTitle = styled.div`
+
+
+`;
+
+export const CloseButton= styled.div`
+
+`;
+
