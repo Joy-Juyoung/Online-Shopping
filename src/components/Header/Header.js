@@ -25,6 +25,8 @@ import {
   FreeInfo,
   FreeInfoTitle,
   HeaderWrap,
+  DropAccount,
+  LinkAccount,
 } from './HeaderElements';
 import FlagIcon from '@mui/icons-material/Flag';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -32,14 +34,19 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import PermIdentityRoundedIcon from '@mui/icons-material/PermIdentityRounded';
 import LogoutIcon from '@mui/icons-material/Logout';
 import TestModal from './TestModal';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Loading from '../../components/Loading';
 
 const CATEGORY_URL = '/products/productAllParentsKinds';
 const Header = ({ meData }) => {
+  const accountRef = useRef();
+
   const [categories, setCategories] = useState([]);
   const [me = meData, setMe] = useState();
   const [logout, setLogout] = useState();
   const navigate = useNavigate();
+  const [clickAccount, setClickAccount] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   console.log('Header Me', me);
 
@@ -60,6 +67,7 @@ const Header = ({ meData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleLogout = async () => {
+    setLoading(true);
     const loggedOut = await axios.post(
       '/users/log-out',
       {
@@ -75,7 +83,23 @@ const Header = ({ meData }) => {
     setMe('');
     navigate('/');
     window.location.reload();
+    setLoading(false);
   };
+
+  const handleAccount = () => {
+    setClickAccount(!clickAccount);
+  };
+
+  const handleDropOut = () => {
+    setClickAccount(false);
+  };
+
+  if (loading)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
 
   return (
     <>
@@ -84,12 +108,6 @@ const Header = ({ meData }) => {
         <HeaderWrapper>
           <HeaderUp>
             <LeftSide>
-              {/* <ModalBtn onClick={handleClick}>Search</ModalBtn>
-              {isOpen && <TestModal setOpen={setOpen}/>} */}
-
-              {/* <ModalBtn onClick={handleClick}>Search</ModalBtn>
-              {isOpen && <TestModal ref={modalRef}/>} */}
-
               <ModalBtn onClick={() => setIsModalOpen(true)}>Search</ModalBtn>
               {isModalOpen && (
                 <TestModal onClose={() => setIsModalOpen(false)} />
@@ -126,9 +144,46 @@ const Header = ({ meData }) => {
               ) : (
                 <>
                   <RightIcon>
-                    <PermLink to='/userAccount'>
-                      <PermIdentityRoundedIcon fontSize='medium' />
-                    </PermLink>
+                    {!clickAccount ? (
+                      <PermLink>
+                        <PermIdentityRoundedIcon
+                          fontSize='medium'
+                          onClick={handleAccount}
+                        />
+                      </PermLink>
+                    ) : (
+                      <>
+                        <PermLink>
+                          <PermIdentityRoundedIcon
+                            fontSize='medium'
+                            onClick={handleAccount}
+                          />
+                        </PermLink>
+
+                        <DropAccount ref={accountRef}>
+                          <ul>
+                            <LinkAccount
+                              to='/userAccount'
+                              onClick={handleDropOut}
+                            >
+                              <li>My Profile</li>
+                            </LinkAccount>
+                            <LinkAccount to='/testPage' onClick={handleDropOut}>
+                              <li>My Orders</li>
+                            </LinkAccount>
+                            <LinkAccount to='/testPage' onClick={handleDropOut}>
+                              <li>My Addresses</li>
+                            </LinkAccount>
+                            <LinkAccount to='/testPage' onClick={handleDropOut}>
+                              <li>My Balances</li>
+                            </LinkAccount>
+                            <LinkAccount to='/testPage' onClick={handleDropOut}>
+                              <li>My Coupons</li>
+                            </LinkAccount>
+                          </ul>
+                        </DropAccount>
+                      </>
+                    )}
                   </RightIcon>
                   <RightIcon>
                     <PermLink>
@@ -150,10 +205,18 @@ const Header = ({ meData }) => {
                         {category.name}
                       </DropdownButton>
                       <DropMenuChild>
-                        {category.productKinds.map((child) => {
+                        {category.productKinds?.map((child) => {
                           return (
                             <DropMenuItem key={child.pk}>
-                              <span>{child.name}</span>
+                              <Link
+                                style={{
+                                  color: 'black',
+                                  textDecoration: 'none',
+                                }}
+                                to={`/products/productAllChildKinds/${child.pk}`}
+                              >
+                                {child.name}
+                              </Link>
                             </DropMenuItem>
                           );
                         })}

@@ -24,10 +24,17 @@ import axios from '../../api/axios';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../../components/Loading';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+// import { GoogleLogin } from 'react-google-login';
 
 // 다른 경로 로그인하는 방법 추가
 // Validation 조건 충족 에러 넣기
 // Keep~ Forgot~ 이거 나중에 활성화해보기
+
+// const GOOGLE_CLIENT_ID =
+//   '232888623547-a7ji95besadd8bfain3pemtdovstl9ij.apps.googleusercontent.com';
 
 const USERNAME_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -50,6 +57,7 @@ const LoginPage = () => {
 
   const [errMsg, setErrMsg] = useState('');
   const [loginSuccess, setLoginSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handlePwdChange = (evnt) => {
     setPwd(evnt.target.value);
@@ -64,6 +72,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     userRef.current.focus();
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
 
   useEffect(() => {
@@ -92,6 +101,7 @@ const LoginPage = () => {
     }
 
     // try {
+    setLoading(true);
     const loginData = await axios.post(
       LOGIN_URL,
       {
@@ -103,22 +113,42 @@ const LoginPage = () => {
         withCredentials: true,
       }
     );
-    // console.log('loginData', loginData?.data);
+    console.log('loginData', loginData?.data);
+    // setUsername(username);
+    // setPwd(pwd);
+    // setLoginSuccess(true);
+    // navigate('/');
+    // window.location.reload();
 
+    // } catch (error) {
+    // setLoading(false);
+    //   console.log('error', error);
+    //   errRef.current.focus();
+    //   setErrMsg('LOGIN FAILD');
+    // }
     if (loginData.data.error) {
+      setLoading(false);
+      setErrMsg(
+        'Login faild! Please recheck the username and password and try again'
+      );
       errRef.current.focus();
-      setErrMsg('LOGIN FAILD');
     } else {
       setUsername(username);
       setPwd(pwd);
       setLoginSuccess(true);
       navigate('/');
       window.location.reload();
+      setLoading(false);
     }
   };
   // console.log('username', username);
   // const isLoggIn = useSelector((state) => state.auth.isLoggIn);
-
+  if (loading)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   return (
     <PesnalContainer>
       {/* {isLoggIn ? (
@@ -135,7 +165,7 @@ const LoginPage = () => {
           style={{ display: errMsg ? 'block' : 'none' }}
           aria-live='assertive'
         >
-          <ErrorOutlineIcon style={{ color: 'red' }} />
+          {/* <ErrorOutlineIcon style={{ color: 'red' }} /> */}
           <div>{errMsg}</div>
         </ErrorMsg>
         <form onSubmit={handleSubmit}>
@@ -223,6 +253,15 @@ const LoginPage = () => {
           <LoginOptionsLegend>OR</LoginOptionsLegend>
           <ButtonLarge lightBg={true} darkFont={true}>
             Countinue with Google
+            {/* <GoogleLogin
+              clientId={GOOGLE_CLIENT_ID}
+              buttonText='Login'
+              // onSuccess={onSuccess}
+              // onFailure={onFailure}
+              cookiePolicy={'single_host_origin'}
+              style={{ marginTop: '100px' }}
+              isSignedIn={true}
+            /> */}
           </ButtonLarge>
           <ButtonLarge lightBg={true} darkFont={true}>
             Countinue with Apple
@@ -232,7 +271,7 @@ const LoginPage = () => {
           </ButtonLarge>
         </LoginOptions>
 
-        <RegisterLink to='/register'>Register</RegisterLink>
+        <RegisterLink to='/register'>Go to Sign up</RegisterLink>
       </PesnalWrapper>
       {/* )} */}
     </PesnalContainer>

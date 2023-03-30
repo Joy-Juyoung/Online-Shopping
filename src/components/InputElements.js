@@ -10,7 +10,10 @@ export const Input = styled.input`
   font-size: 16px;
   outline: none;
   cursor: text;
-  border: 1px solid #a3a9b3;
+  /* border: 1px solid #a3a9b3; */
+  border: ${({ borderNone }) => (borderNone ? 'none' : '1px solid #a3a9b3')};
+  border-bottom: ${({ borderBottom }) =>
+    borderBottom ? '1px solid #a3a9b3' : ''};
   margin: 0 0 10px;
   padding: 0 8px;
 

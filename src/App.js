@@ -7,9 +7,11 @@ import Header from './components/Header/Header';
 import TestHeader from './components/Header/TestHeader';
 import { useEffect, useState } from 'react';
 import axios from './api/axios';
+// import Loading from './components/Loading';
 
 function App() {
   const [meData, setMeData] = useState();
+  // const [loading, setLoading] = useState(true);
 
   const getMe = async () => {
     const me = await axios.get('/users/me', {
@@ -23,6 +25,16 @@ function App() {
   useEffect(() => {
     getMe();
   }, []);
+
+  // useEffect(() => {
+  //   const loadData = async () => {
+  //     await new Promise((r) => setTimeout(r, 2000));
+
+  //     setLoading((loading) => !loading);
+  //   };
+
+  //   loadData();
+  // }, []);
 
   return (
     <Router>

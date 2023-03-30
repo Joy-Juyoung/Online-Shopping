@@ -24,15 +24,16 @@ export const InputWrap = styled.div`
 
 export const ErrorMsg = styled.div`
   text-align: center;
-  margin: 20px 0;
-  padding: 10px 0;
-  border: 1px solid #f2cece;
-  border-radius: 10px;
-  background: #f2cece;
-  /* color: red; */
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 20px 0;
+  padding: 15px;
+  border: 1px solid #a8003a;
+  /* border-radius: 10px; */
+  background: #fff6f6;
+  color: #a8003a;
+  font-weight: 600;
 `;
 
 export const VerificationMsg = styled.div`
