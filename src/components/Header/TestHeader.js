@@ -133,17 +133,14 @@ const TestHeader = ({ meData }) => {
                 return (
                   <DropMenuList key={category.pk}>
                     <DropMenuParents>
-                      {/* <DropdownButton>{category.name}</DropdownButton> */}
-
-                      <DropdownButton to='/products'>{category.name}</DropdownButton>
+                        <DropdownButton to={`/products/productAllParentsKinds/${category.pk}`}>{category.name}</DropdownButton>
+                        {/* <DropdownButton to='/products'>{category.name}</DropdownButton> */}
                       <DropMenuChild >
-                        {category.productKinds?.map((child) => {
-
+                          {category.productKinds?.map((child) => {
                           return (
                             <DropMenuItem key={child.pk}>
                               <Link style={{ color:'black', textDecoration: 'none' }} 
-                                    to={`/products/productAllChildKinds/${child.pk}`}>
-                                    {child.name}
+                                    to={`/products/productAllChildKinds/${child.pk}`}>{child.name}
                               </Link>
                             </DropMenuItem>
                           );

@@ -17,7 +17,6 @@ import {
   ProductsListWrapper,
   ProductsWrap,
   ProductTitle,
-  ProductsListContainer,
   ToggleLike,
 
 } from './ProductListElements';

@@ -38,7 +38,7 @@ const TestProductKindsView = () => {
     useEffect(() => {
         getKindsProduct();
     },[id])
-    console.log("id", id);
+    console.log("itemKinds", itemKinds);
 
     const sort = [
         // { value: '', text: '--Choose an option--' },
@@ -61,8 +61,8 @@ const TestProductKindsView = () => {
             {/* <span>Categories Filter section</span> */}
           </ProductCategories>
           <ProductsList>
-            <ListTop>
-              <span style={{ fontSize: '13px' }}>Total {itemKinds.length} </span>
+          <ListTop>
+              <span style={{ fontSize: '13px' }}>Total {itemKinds.products?.length} </span> 
               <span>
                 <select
                   onChange={handleOptionChange}

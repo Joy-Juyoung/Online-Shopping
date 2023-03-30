@@ -22,7 +22,7 @@ import S2_OrderHistory from './UserAccountPage/S2_OrderHistory';
 import S3_Wishlist from './UserAccountPage/S3_Wishlist';
 import S4_Balance from './UserAccountPage/S4_Balance';
 import S5_Coupon from './UserAccountPage/S5_Coupon';
-
+import ProductAllParentsKinds from './ProductPage/ProductAllParentsKinds';
 import TestProductKindsView from './ProductPage/TestProductKindsView';
 
 const Home = ({ meData }) => {
@@ -92,12 +92,8 @@ const Home = ({ meData }) => {
           element={<ProductDetailPage />}
           exact={true}
         />
+        <Route path='/products/productAllParentsKinds/:id' element={<ProductAllParentsKinds />} exact={true} />
         <Route path='/products/productAllChildKinds/:id' element={<TestProductKindsView />} exact={true} />
-        {/* <Route path='/testRegister' element={<TestRegister />} exact={true} /> */}
-        {/* <Route path='/' element={<TestHome />} exact={true} /> */}
-        {/* <Route path='/testLogin' element={<TestLogin />} exact={true} /> */}
-        {/*<Route path='/testRegister' element={<TestRegister />} exact={true} /> */}
-
         <Route path='/testHeader' element={<TestHeader />} exact={true} />
         <Route path='/wishlist' element={<WishlistPage />} exact={true} />
         <Route path='/carts' element={<CartPage />} exact={true} />
