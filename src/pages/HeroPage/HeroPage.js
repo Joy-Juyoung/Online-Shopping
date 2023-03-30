@@ -50,11 +50,27 @@ import SecondImage from '../../asset/couple.png';
 import ThirdImage from '../../asset/fashion.png';
 import FourthImage from '../../asset/newjeans.png';
 import Header from '../../components/Header/Header.js';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from '../../api/axios';
-import { useEffect } from 'react';
+// import Loading from '../../components/Loading';
 
 const HeroPage = () => {
+  // const [loading, setLoading] = useState(true);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   const loadData = async () => {
+  //     await new Promise((r) => setTimeout(r, 1000));
+  //     setLoading(false);
+  //   };
+  //   loadData();
+  // }, []);
+
+  // if (loading)
+  //   return (
+  //     <div>
+  //       <Loading />
+  //     </div>
+  //   );
   return (
     <MainContainer>
       <MainWrapper>

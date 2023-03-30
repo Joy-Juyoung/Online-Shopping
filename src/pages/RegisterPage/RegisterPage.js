@@ -1,12 +1,13 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Input } from '../../components/InputElements';
-import { ButtonLarge } from '../../components/ButtonElements';
+import { ButtonHover, ButtonLarge } from '../../components/ButtonElements';
 import {
   ErrorMsg,
   GobackLogin,
   RegisterForm,
   RegisterInput,
   RegisterInputLabel,
+  RegisterSuccessMsg,
   VerificationMsg,
 } from './RegisterElements';
 import {
@@ -18,8 +19,9 @@ import {
 import axios from '../../api/axios';
 import { Link } from 'react-router-dom';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-// import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
+import Loading from '../../components/Loading';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 const USERNAME_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -29,6 +31,7 @@ const REGISTER_URL = '/users/';
 const RegisterPage = () => {
   const userRef = useRef();
   const errRef = useRef();
+  const [loading, setLoading] = useState(false);
 
   const [username, setUsername] = useState('');
   const [validUsername, setValidUsername] = useState(false);
@@ -63,15 +66,16 @@ const RegisterPage = () => {
     setMatchPwd(evnt.target.value);
   };
   const toggleMatchPwd = () => {
-    if (pwdType === 'password2') {
+    if (matchPwdType === 'password') {
       setMatchPwdType('text');
       return;
     }
-    setMatchPwdType('password2');
+    setMatchPwdType('password');
   };
 
   useEffect(() => {
     userRef.current.focus();
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
 
   useEffect(() => {
@@ -100,46 +104,75 @@ const RegisterPage = () => {
       setErrMsg('Invalid Entry');
       return;
     }
-    try {
-      const response = await axios.post(
-        REGISTER_URL,
-        {
-          username: username,
-          password: pwd,
-          type: 'user',
-        },
-        {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        }
-      );
+    // try {
+    setLoading(true);
+    const response = await axios.post(
+      REGISTER_URL,
+      {
+        username: username,
+        password: pwd,
+        type: 'user',
+      },
+      {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      }
+    );
 
-      console.log('register', response?.data);
+    console.log('register', response?.data);
+
+    if (response?.data.error) {
+      setLoading(false);
+      setErrMsg('REGISTRATION FAILD');
+      errRef.current.focus();
+    } else {
       setSuccess(true);
-
       setUsername('');
       setPwd('');
       setMatchPwd('');
-    } catch (err) {
-      if (!err?.response) {
-        setErrMsg('No Server Response');
-      } else if (err.response?.status === 409) {
-        setErrMsg('Username Taken');
-      } else {
-        setErrMsg('REGISTRATION FAILD');
-      }
-      errRef.current.focus();
+      setLoading(false);
     }
+    //   setSuccess(true);
+    //   setUsername('');
+    //   setPwd('');
+    //   setMatchPwd('');
+    //   setLoading(false);
+    // } catch (err) {
+    //   setLoading(false);
+    //   if (!err?.response) {
+    //     setErrMsg('No Server Response');
+    //   } else if (err.response?.status === 409) {
+    //     setErrMsg('Username Taken');
+    //   } else {
+    //     setErrMsg('REGISTRATION FAILD');
+    //   }
+    //   errRef.current.focus();
+    // }
   };
 
+  if (loading)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   return (
     <PesnalContainer>
       {success ? (
         <PesnalWrapper>
-          <h1>Success!</h1>
-          <Link to='/login'>
-            <ButtonLarge>Go to Sign In</ButtonLarge>
-          </Link>
+          <RegisterSuccessMsg>
+            <div>
+              <CheckCircleOutlineIcon color='success' sx={{ fontSize: 100 }} />
+            </div>
+            <h1>REGISTERATION SUCCESSFUL!</h1>
+            <p>Congratulations, your account has been successfully created</p>
+            <Link to='/login'>
+              {/* <ButtonHover> Go to Sign In</ButtonHover> */}
+              <ButtonLarge borderColor={true} fontStrong={true}>
+                Go to Sign In
+              </ButtonLarge>
+            </Link>
+          </RegisterSuccessMsg>
         </PesnalWrapper>
       ) : (
         <PesnalWrapper>
@@ -192,10 +225,8 @@ const RegisterPage = () => {
               <InputPassword>
                 <Input
                   placeholder='Enter password'
-                  // type='password'
                   type={pwdType}
                   id='password'
-                  // onChange={(e) => setPwd(e.target.value)}
                   onChange={handlePwdChange}
                   value={pwd}
                   required
@@ -226,17 +257,15 @@ const RegisterPage = () => {
                   characters: ! @ # $ %
                 </span>
               </VerificationMsg>
-              <RegisterInputLabel htmlFor='confirm_pwd'>
+              <RegisterInputLabel htmlFor='password2'>
                 Confirm Password
               </RegisterInputLabel>
 
               <InputPassword>
                 <Input
                   placeholder='Re-enter password'
-                  // type='password'
                   type={matchPwdType}
-                  id='confirm_pwd'
-                  // onChange={(e) => setMatchPwd(e.target.value)}
+                  id='password2'
                   onChange={handleMatchPwdChange}
                   value={matchPwd}
                   required
@@ -246,7 +275,7 @@ const RegisterPage = () => {
                   onBlur={() => setMatchFocus(false)}
                 />
                 <EyeIcon>
-                  {pwdType === 'password2' ? (
+                  {matchPwdType === 'password' ? (
                     <VisibilityOff onClick={toggleMatchPwd} fontSize='small' />
                   ) : (
                     <Visibility onClick={toggleMatchPwd} fontSize='small' />
