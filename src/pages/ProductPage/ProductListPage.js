@@ -53,6 +53,7 @@ const ProductsListPage = () => {
       setLoading(false);
     };
     loadData();
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
 
   const getItems = async () => {
@@ -127,11 +128,21 @@ const ProductsListPage = () => {
               {items.map((item) => {
                 // <ProductsCard key={item.pk} product={item} />
                 return (
-                  <ProductsEach to={`/products/${item.pk}`} key={item.pk}>
+                  <ProductsEach
+                    to={`/products/${item.pk}`}
+                    key={item.pk}
+                    // onCLick={(e) => e.preventDefault()}
+                  >
                     <img src={item.photos[0].picture} alt='' />
                     {/* <img  src={item.photos[0].picture} alt='' /> */}
                     {/* pk별 각각 클릭될때, 하나의 상태만 변하도록 수정 */}
-                    <ToggleLike>
+                    {/* e.stopPropagation(); */}
+                    <ToggleLike
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleLiked(item.pk);
+                      }}
+                    >
                       {item.is_liked ? (
                         <FavoriteIcon />
                       ) : (
