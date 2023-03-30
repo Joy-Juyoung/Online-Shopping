@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const ProductsListContainer = styled.div`
@@ -33,7 +34,9 @@ export const ListMid = styled.div`
   grid-gap: 10px;
 `;
 
-export const ProductsEach = styled.div`
+export const ProductsEach = styled(Link)`
+  color: black;
+  text-decoration: none;
   display: flex;
   flex-direction: column;
   /* align-items: center; */

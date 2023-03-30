@@ -102,7 +102,7 @@ const TestHeader = ({ meData }) => {
 
             <MiddleSide>
               <MidLink to='/'>
-                <div>MUSINSA</div>
+                <div>BlanketCLoset</div>
               </MidLink>
             </MiddleSide>
             <RightSide>
@@ -141,7 +141,10 @@ const TestHeader = ({ meData }) => {
 
                           return (
                             <DropMenuItem key={child.pk}>
-                              <Link to={`/products/productAllChildKinds/${child.pk}`}>{child.name}</Link>
+                              <Link style={{ color:'black', textDecoration: 'none' }} 
+                                    to={`/products/productAllChildKinds/${child.pk}`}>
+                                    {child.name}
+                              </Link>
                             </DropMenuItem>
                           );
                         })}

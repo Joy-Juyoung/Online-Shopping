@@ -17,7 +17,10 @@ const TestModal = ({ onClose }) => {
     const ref = useRef();
     useEffect(() => {
       const checkIfClickedOutside = (e) => {
-        if (ref.current && !ref.current.contains(e.target)) {
+        // if (ref.current && !ref.current.contains(e.target)) {
+        //   onClose();
+        // }
+        if (ref.current.contains(e.target)) {
           onClose();
         }
       };
@@ -34,7 +37,7 @@ const TestModal = ({ onClose }) => {
 //     };
 
   return (
-    <TestModalContainer >
+    <TestModalContainer ref={ref}>
         <TestModalWrapper />
             <TestModalBlock > 
                 <TestModalCloseBtn onClick={onClose}>

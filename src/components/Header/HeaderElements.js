@@ -197,9 +197,11 @@ export const DropMenuItem = styled.li`
   width: 200px;
   padding: 20px 15px;
   cursor: pointer;
+  
 
   &:hover {
-    background-color: #eee;
+    background-color: #eee;    
+
   }
 `;
 

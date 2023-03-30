@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const MainContainer = styled.div`
@@ -342,3 +343,4 @@ export const FourthImg = styled.img`
   line-height: 0;
   vertical-align: top;
 `;
+
