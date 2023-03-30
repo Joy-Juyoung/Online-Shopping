@@ -14,12 +14,15 @@ function App() {
   // const [loading, setLoading] = useState(true);
 
   const getMe = async () => {
-    const me = await axios.get('/users/me', {
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true,
-    });
-
-    setMeData(me?.data);
+    try {
+      const me = await axios.get('/users/me', {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      });
+      setMeData(me?.data);
+    } catch (err) {
+      return null;
+    }
   };
 
   useEffect(() => {

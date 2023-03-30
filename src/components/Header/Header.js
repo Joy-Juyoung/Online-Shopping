@@ -37,14 +37,24 @@ import TestModal from './TestModal';
 import { Link, useNavigate } from 'react-router-dom';
 import Loading from '../../components/Loading';
 
+// const events = [
+//   'load',
+//   'mousemove',
+//   'mousedown',
+//   'click',
+//   'scroll',
+//   'keypress',
+// ];
+
 const CATEGORY_URL = '/products/productAllParentsKinds';
 const Header = ({ meData }) => {
+  // let timer;
   const accountRef = useRef();
+  const navigate = useNavigate();
 
   const [categories, setCategories] = useState([]);
   const [me = meData, setMe] = useState();
   const [logout, setLogout] = useState();
-  const navigate = useNavigate();
   const [clickAccount, setClickAccount] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -93,6 +103,33 @@ const Header = ({ meData }) => {
   const handleDropOut = () => {
     setClickAccount(false);
   };
+
+  // const handleLogoutTimer = () => {
+  //   timer = setTimeout(() => {
+  //     // setLoading(true);
+  //     resetTimer();
+
+  //     Object.values(events).forEach((item) => {
+  //       window.removeEventListener(item, resetTimer);
+  //     });
+  //     // logs out
+  //     handleLogout();
+  //     setLoading(false);
+  //   }, 10); // 10000ms = 10secs. You can change the time.
+  // };
+
+  // const resetTimer = () => {
+  //   if (timer) clearTimeout(timer);
+  // };
+
+  // useEffect(() => {
+  //   Object.values(events).forEach((item) => {
+  //     window.addEventListener(item, () => {
+  //       resetTimer();
+  //       handleLogoutTimer();
+  //     });
+  //   });
+  // }, [timer]);
 
   if (loading)
     return (
