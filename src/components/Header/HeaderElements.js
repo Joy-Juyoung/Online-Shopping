@@ -64,12 +64,14 @@ export const MiddleSide = styled.div`
 export const MidLink = styled(Link)`
   text-decoration: none;
   color: black;
-  font-size: 35px;
+  font-size: 24px;
   font-family: 'Roboto', sans-serif;
   cursor: pointer;
   & :hover {
     color: gray;
   }
+
+
 `;
 
 export const RightSide = styled.div`
@@ -118,7 +120,7 @@ export const PermLink = styled(Link)`
 export const HeaderDown = styled.div`
   width: 100%;
   padding: 0;
-  margin: 30px 0 0;
+  margin: 30px 0 10px 0;
   /* border-bottom: 1px solid lightgrey; */
 `;
 
@@ -138,7 +140,7 @@ export const DropMenuList = styled.li`
 
 export const DropMenuParents = styled.div`
   margin-right: 80px;
-
+  /* padding-bottom: 5px */
   &:hover {
     ul {
       display: block;
@@ -150,7 +152,7 @@ export const DropMenuParents = styled.div`
 export const DropdownButton = styled(Link)`
   text-decoration: none;
   color: black;
-  font-size: 22px;
+  font-size: 16px;
   border: none;
   outline: none;
   background: none;
@@ -158,6 +160,7 @@ export const DropdownButton = styled(Link)`
   cursor: pointer;
   border-bottom: 2px solid transparent;
   padding-bottom: 10px;
+
 
   &:hover {
     border-bottom: 2px solid;
@@ -185,7 +188,7 @@ export const DropMenuChild = styled.ul`
   list-style-type: none;
   padding: 0;
   margin: 0;
-
+  /* padding-bottom: 10px; */
   display: none;
   position: absolute;
   background-color: #fff;
@@ -194,10 +197,10 @@ export const DropMenuChild = styled.ul`
 `;
 
 export const DropMenuItem = styled.li`
-  width: 200px;
+  width: 300px;
   padding: 20px 15px;
   cursor: pointer;
-  
+  font-size: 14px;
 
   &:hover {
     background-color: #eee;    
@@ -217,12 +220,16 @@ export const TopWrapper = styled.div`
 `;
 
 export const FreeInfo = styled.div`
+  display: flex;
   padding: 3px 12px;
   background: #0a0f18;
   color: #fff;
+  min-height: 34px;
+  align-items:center;
+  justify-content: center;
 `;
 
-export const FreeInfoTitle = styled.div`
+export const FreeInfoTitle = styled.p`
   text-align: center;
   font-size: 13px;
 `;

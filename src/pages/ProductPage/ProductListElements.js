@@ -27,6 +27,15 @@ export const ListTop = styled.div`
   justify-content: space-between;
   margin: 10px 0;
 `;
+export const ListMidWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* grid-template-columns: repeat(4, minmax(min-content, max-content));
+  grid-gap: 10px; */
+   h2{
+    margin: 10px 0;
+   }
+`;
 
 export const ListMid = styled.div`
   display: grid;

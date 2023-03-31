@@ -29,14 +29,13 @@ const TestProductKindsView = () => {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-
-    console.log(data);
+   console.log(data);
     setItemKinds(data);
   };
   useEffect(() => {
     getKindsProduct();
   }, [id]);
-  console.log('id', id);
+  console.log("itemKinds", itemKinds);
 
   const sort = [
     // { value: '', text: '--Choose an option--' },
@@ -63,6 +62,7 @@ const TestProductKindsView = () => {
               <span style={{ fontSize: '13px' }}>
                 Total {itemKinds.length}{' '}
               </span>
+
               <span>
                 <select
                   onChange={handleOptionChange}

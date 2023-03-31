@@ -1,6 +1,16 @@
 import React, { useEffect, useRef } from 'react'
 import { 
-    TestModalBlock,
+  ModalBody,
+  ModalBodyHeader,
+  ModalBodyParagraph,
+  ModalBodyPList,
+  ModalBodyWrap,
+  ModalCloseBtn,
+  ModalContainerSkin,
+  ModalHeader,
+        ModalHeaderInput,
+        ModalHeaderSearch,
+        TestModalBlock,
         TestModalCloseBtn, 
         TestModalContainer, 
         TestModalContent, 
@@ -9,6 +19,7 @@ import {
         TestModalWrapper
          }
 from './TestModalElements';
+import CloseIcon from '@mui/icons-material/Close';
 import SearchIcon from '@mui/icons-material/Search';
 
 
@@ -17,7 +28,7 @@ const TestModal = ({ onClose }) => {
     const ref = useRef();
     useEffect(() => {
       const checkIfClickedOutside = (e) => {
-        // if (ref.current && !ref.current.contains(e.target)) {
+        // if (!ref.current && ref.current.contains(e.target)) {
         //   onClose();
         // }
         if (ref.current.contains(e.target)) {
@@ -37,30 +48,63 @@ const TestModal = ({ onClose }) => {
 //     };
 
   return (
-    <TestModalContainer ref={ref}>
-        <TestModalWrapper />
-            <TestModalBlock > 
-                <TestModalCloseBtn onClick={onClose}>
-                    x
-                </TestModalCloseBtn>
-                    {/* <TestModalCloseBtn onClick={closeModal}>
-                            x
-                    </TestModalCloseBtn> */}
-                    
-                <TestModalSearch placeholder='Search'>
-                {/* <SearchIcon color="disabled"/> */}
-                </TestModalSearch>
-                <TestModalContent>
-                    Popular
-                </TestModalContent>
-                
-                {/* <TestModalContent>
-                <h1>Popular</h1>
-                <p>shorts</p>
-                <p>shoes</p>
-                </TestModalContent> */}
-            </TestModalBlock>
-    </TestModalContainer>
+    // outside clicked closed 해야함
+    <ModalContainerSkin >
+      <TestModalContainer >
+        <TestModalWrapper >
+          <ModalHeader >
+            <ModalHeaderSearch>
+              <span><SearchIcon color='disabled' fontSize='medium'/></span>
+              <ModalHeaderInput placeholder='Seach' />
+            </ModalHeaderSearch>
+            <ModalCloseBtn  onClick={onClose}>
+              <CloseIcon fontSize='large'/>
+            </ModalCloseBtn>
+          </ModalHeader>
+
+          <ModalBody>
+            <ModalBodyWrap>
+              <ModalBodyHeader>
+                <h3>Popular</h3>
+              </ModalBodyHeader>
+              <ModalBodyParagraph>
+                <ModalBodyPList>
+                  <p>Top</p>
+                  </ModalBodyPList>
+                <ModalBodyPList>
+                  <p>Button</p>
+                </ModalBodyPList>
+                <ModalBodyPList>
+                  <p>Outer</p>
+                </ModalBodyPList>
+                <ModalBodyPList>
+                  <p>Shoes</p>
+                </ModalBodyPList>
+                <ModalBodyPList>
+                  <p>Accessories</p>
+                </ModalBodyPList>
+                <ModalBodyPList>
+                  <p>육회</p>
+                </ModalBodyPList>
+                <ModalBodyPList>
+                  <p>해물찜</p>
+                </ModalBodyPList>
+                <ModalBodyPList>
+                  <p>누룽지탕</p>
+                </ModalBodyPList>
+                <ModalBodyPList>
+                  <p>문어숙회</p>
+                </ModalBodyPList>
+                <ModalBodyPList>
+                  <p>나도줘</p>
+                </ModalBodyPList>   
+              </ModalBodyParagraph>
+            </ModalBodyWrap>
+          </ModalBody>
+        </TestModalWrapper>
+      </TestModalContainer>
+    </ModalContainerSkin>
+
   )
 }
 

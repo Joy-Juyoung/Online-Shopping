@@ -92,9 +92,9 @@ const ProductsListPage = () => {
         console.log('clicked', item.is_liked);
       }
     });
+    // putLiked(items);
     // setItems([...items]);
     setItems(items);
-  };
   console.log('get', items);
 
   if (loading)
