@@ -12,21 +12,54 @@ const LodingContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  background: #fff;
+  overflow: hidden;
 `;
 
 const LodingWrap = styled.div`
-  width: 64px;
-  height: 64px;
-  border: 8px solid;
-  border-color: #000 transparent #555 transparent;
-  border-radius: 50%;
-  animation: spin 1.2s linear infinite;
+  width: 300px;
+  height: 300px;
+  margin: auto;
+
+  div {
+    width: calc(100% - 15px);
+    height: calc(100% - 15px);
+    border: 2px solid #fff;
+    border-top: 2px solid crimson;
+    border-radius: 50%;
+    animation: rotate 10s linear infinite alternate-reverse;
+  }
+  @keyframes rotate {
+    50% {
+      transform: rotate(80deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 `;
 
 const Loading = () => {
   return (
     <LodingContainer>
-      <LodingWrap></LodingWrap>
+      <LodingWrap>
+        <div>
+          <div>
+            <div>
+              <div>
+                <div>
+                  <div>
+                    <div>
+                      <div></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </LodingWrap>
     </LodingContainer>
   );
 };

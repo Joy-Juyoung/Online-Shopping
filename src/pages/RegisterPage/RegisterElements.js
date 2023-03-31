@@ -44,41 +44,29 @@ export const GobackLogin = styled.div`
     margin-right: 10px;
   }
 `;
+export const RegisterSuccessMsg = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+  margin: 50px auto;
 
-// export const Agreements = styled.div`
-//   margin: 20px 0 30px;
-//   display: felx;
-//   align-items: center;
-//   flex-direction: column;
-//   justify-content: center;
-// `;
+  div {
+    text-align: center;
+    width: 100%;
+  }
 
-// export const AgreementsWrap = styled.div``;
-
-// export const AgreeAll = styled.div`
-//   display: felx;
-//   align-items: center;
-//   margin-bottom: 10px;
-// `;
-
-// export const AgreeAllCheckbox = styled.input`
-//   width: 20px;
-//   cursor: pointer;
-// `;
-
-// export const AgreeEach = styled.div`
-//   display: felx;
-//   align-items: center;
-//   margin-bottom: 5px;
-
-//   & button {
-//     outline: none;
-//     border: none;
-//     background: none;
-//     cursor: pointer;
-//   }
-// `;
-
-// export const AgreeContents = styled.div`
-//   margin-left: 10px;
-// `;
+  h1 {
+    font-size: 25px;
+    margin: 20px 0;
+  }
+  p {
+    text-align: center;
+    margin: 20px 0 30px;
+    padding: 15px;
+    border: 1px solid #009605;
+    background: #dff0d7;
+    color: #009605;
+    font-weight: 600;
+  }
+`;

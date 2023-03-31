@@ -71,6 +71,7 @@ export const ProductEachPhoto = styled.div`
 export const ToggleLike = styled.div`
   margin: -35px 10px 10px 0;
   text-align: right;
+  z-index: 100;
   /* font-size: 20px; */
 `;
 

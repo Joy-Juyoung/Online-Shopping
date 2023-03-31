@@ -216,7 +216,7 @@ export const TopWrapper = styled.div`
   /* background: #0a0f18; */
   background: #0a0f18;
   color: #fff;
-  z-index: -100;
+  /* z-index: -100; */
 `;
 
 export const FreeInfo = styled.div`
@@ -232,4 +232,42 @@ export const FreeInfo = styled.div`
 export const FreeInfoTitle = styled.p`
   text-align: center;
   font-size: 13px;
+`;
+
+// ---------------
+export const DropAccount = styled.div`
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 250px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.4);
+  /* color: #0a0f18 !important; */
+  z-index: 2;
+  font-size: 13px;
+
+  ul {
+    list-style: none;
+    /* padding: 10px; */
+    /* padding: 10px 0; */
+    margin: 0;
+    background: #fff;
+  }
+  li {
+    padding: 10px 15px;
+
+    &:hover {
+      cursor: pointer;
+      color: #0a0f18;
+      background: lightgray;
+    }
+  }
+`;
+
+export const LinkAccount = styled(Link)`
+  text-decoration: none;
+
+  &:visited {
+    text-decoration: none;
+  }
 `;

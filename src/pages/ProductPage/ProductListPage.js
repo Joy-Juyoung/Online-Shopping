@@ -17,19 +17,25 @@ import {
   ProductsListWrapper,
   ProductsWrap,
   ProductTitle,
-  ProdutsListContainer,
   ToggleLike,
 } from './ProductListElements';
 // import ProductsCard from './ProductsCard';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import Loading from '../../components/Loading';
+
+// if user me 가 없다면, 로그인x라면 liked가 작동x
+// 하지만 이게 작동 되야함.....?
+//  비회원은 로컬에 저장하고 위시리스트를 볼 수 있음
+// 그리고, 구매하려면 이때는 로그인을 해야함
 
 const PRODUCTS_URL = '/products';
 const ProductsListPage = () => {
   const [items, setItems] = useState([]);
   const [addLiked, setAddLiked] = useState();
-  const [wishList, setWishList] = useState([]);
+  // const [wishList, setWishList] = useState([]);
   // const [clicked, setClicked] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const sort = [
     // { value: '', text: '--Choose an option--' },
@@ -40,36 +46,38 @@ const ProductsListPage = () => {
     { value: 'LowToHigh', text: 'Price: low to high' },
   ];
 
+  useEffect(() => {
+    setLoading(true);
+    const loadData = async () => {
+      await new Promise((r) => setTimeout(r, 1000));
+      setLoading(false);
+    };
+    loadData();
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }, []);
+
   const getItems = async () => {
-    const itemsList = await axios.get(PRODUCTS_URL, {
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true,
-    });
-    console.log('ProductList', itemsList?.data.length);
-    setItems(itemsList?.data);
+    try {
+      const itemsList = await axios.get(PRODUCTS_URL, {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      });
+      console.log('ProductList', itemsList?.data.length);
+      setItems(itemsList?.data);
+    } catch (error) {
+      alert(error);
+    }
   };
-
-  // const getWishList = async () => {
-  //   const LikedList = await axios.get('/wishlists/', {
-  //     headers: { 'Content-Type': 'application/json' },
-  //     withCredentials: true,
-  //   });
-
-  //   console.log('LikedList length', LikedList?.data.products.length);
-  //   setWishList(LikedList?.data?.products);
-  // };
 
   useEffect(() => {
     getItems();
-    // getWishList();
   }, [addLiked]);
 
   const handleLiked = (pk) => {
     items.forEach((item) => {
       if (item.pk === pk) {
         item.is_liked = !item.isLiked;
-        // const putLiked = async () => {
-        //   const addLike = await
+
         const addLike = axios.put(
           '/wishlists/',
           {
@@ -81,16 +89,20 @@ const ProductsListPage = () => {
           }
         );
         setAddLiked(addLike);
-        console.log('addLike', addLike);
+        console.log('clicked', item.is_liked);
       }
     });
-    console.log('clicked', items);
-    setItems([...items]);
-    window.location.reload();
-
     // putLiked(items);
-  };
+    // setItems([...items]);
+    setItems(items);
+  console.log('get', items);
 
+  if (loading)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   return (
     <ProductsListContainer>
       <ProductsWrap>
@@ -116,9 +128,21 @@ const ProductsListPage = () => {
               {items.map((item) => {
                 // <ProductsCard key={item.pk} product={item} />
                 return (
-                  <ProductsEach key={item.pk}>
+                  <ProductsEach
+                    to={`/products/${item.pk}`}
+                    key={item.pk}
+                    // onCLick={(e) => e.preventDefault()}
+                  >
                     <img src={item.photos[0].picture} alt='' />
-                    <ToggleLike onClick={() => handleLiked(item.pk)}>
+                    {/* <img  src={item.photos[0].picture} alt='' /> */}
+                    {/* pk별 각각 클릭될때, 하나의 상태만 변하도록 수정 */}
+                    {/* e.stopPropagation(); */}
+                    <ToggleLike
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleLiked(item.pk);
+                      }}
+                    >
                       {item.is_liked ? (
                         <FavoriteIcon />
                       ) : (

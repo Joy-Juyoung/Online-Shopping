@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../../api/axios';
-import { 
+import {
   DetailContainer,
   DetailWrapper,
   DetailLeftInfo,
@@ -19,9 +19,8 @@ import {
   OffcanvasHeader,
   OffcanvasTitle,
   CloseButton,
-  OffcanvasBody
-  }
-from "./ProductDetailElements";
+  OffcanvasBody,
+} from './ProductDetailElements';
 
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useParams } from 'react-router-dom';
@@ -29,30 +28,27 @@ import SidebarMenu from './SidebarMenu';
 
 // const PRODUCTDETAILS_URL = '/products/${id}';
 
-
 const ProductDetailPage = () => {
-  
   const [itemsDetail, setItemsDetail] = useState([]); //useState([]);
   const { id } = useParams();
   const getProduct = async () => {
-      const {data} = await axios.get(`/products/${id}`,{
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        }
-        );
-        
-      console.log(data)
-      setItemsDetail(data)
-      }
+    const { data } = await axios.get(`/products/${id}`, {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+
+    console.log(data);
+    setItemsDetail(data);
+  };
   useEffect(() => {
-      getProduct();
-  },[id])
-  console.log("id", id);
+    getProduct();
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }, [id]);
+  console.log('id', id);
 
   const [isOpen, setIsOpen] = useState(false);
 
-
- return (
+  return (
     <DetailContainer>
       <DetailWrapper>
         <DetailLeftInfo>
@@ -60,42 +56,31 @@ const ProductDetailPage = () => {
         </DetailLeftInfo>
         <DetailRightInfo>
           <DetailRightInfoTop>
-          <DetailName>
-            {itemsDetail.name}
-          </DetailName>
+            <DetailName>{itemsDetail.name}</DetailName>
             <DetailProductName>
-               <DetailTitle>
-                {itemsDetail.detail}
-              </DetailTitle>
-              <DetailPrice>
-                ${itemsDetail.price}
-                </DetailPrice>
+              <DetailTitle>{itemsDetail.detail}</DetailTitle>
+              <DetailPrice>${itemsDetail.price}</DetailPrice>
               {/* coupon*/}
-              <DetailCoupon>
-                Product Coupon
-              </DetailCoupon>
+              <DetailCoupon>Product Coupon</DetailCoupon>
             </DetailProductName>
-            
           </DetailRightInfoTop>
 
           <DetailRightInfoBottom>
-
             <LikeBtnWrapper>
-              <LikeBtn >
-                 <FavoriteBorderIcon fontSize='medium' color='disabled' />
+              <LikeBtn>
+                <FavoriteBorderIcon fontSize='medium' color='disabled' />
                 {/* <span>{itemLike}</span> */}
               </LikeBtn>
             </LikeBtnWrapper>
-             {/* <ButtonLarges>
+            {/* <ButtonLarges>
               Add to Cart
             </ButtonLarges> */}
             <ButtonLarges onClick={() => setIsOpen(true)}>
               Add to Cart
             </ButtonLarges>
-            {isOpen && <SidebarMenu onClose={() => setIsOpen(false)}/>}
+            {isOpen && <SidebarMenu onClose={() => setIsOpen(false)} />}
           </DetailRightInfoBottom>
-         </DetailRightInfo>
-
+        </DetailRightInfo>
       </DetailWrapper>
     </DetailContainer>
   );

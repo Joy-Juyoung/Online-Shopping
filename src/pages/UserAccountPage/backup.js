@@ -25,11 +25,6 @@
 // import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 // import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 // import { Link } from 'react-router-dom';
-// import S1_Profile from './S1_Profile';
-// import S2_Order from './S2_OrderHistory';
-// import S3_Wishlist from './S3_Wishlist';
-// import S4_Balance from './S4_Balance';
-// import S5_Coupon from './S5_Coupon';
 
 // const UserAccountPage = ({ meData }) => {
 //   console.log('account me', meData);
@@ -41,43 +36,10 @@
 //   // };
 
 //   const [isDrop, setIsDrop] = useState(false);
-//   const [isClick, setIsClick] = useState(false);
-//   const [menuNum, setMenuNum] = useState('s1');
-//   const [s1, setS1] = useState(false);
-//   const [s2, setS2] = useState(false);
-//   const [s3, setS3] = useState(false);
-//   const [s4, setS4] = useState(false);
-//   const [s5, setS5] = useState(false);
 
 //   const clickMore = () => {
 //     setIsDrop(!isDrop);
 //   };
-
-//   const clickMenu_S1 = () => {
-//     setS1(!s1);
-//   };
-//   const clickMenu_S2 = () => {
-//     setS1(!s2);
-//   };
-//   const clickMenu_S3 = () => {
-//     setS1(!s3);
-//   };
-//   const clickMenu_S4 = () => {
-//     setS1(!s4);
-//   };
-//   const clickMenu_S5 = () => {
-//     setS1(!s5);
-//   };
-
-//   // const [sideItems, setSideItems] = useState([]);
-//   const sideItems = [
-//     { title: 'My Profile', route: '/userAccount' },
-//     { title: 'My Order Status', route: '/orderStatus' },
-//     { title: 'My Order History', route: '/orderHistory' },
-//     { title: 'My Wishlist', route: '/wishlist' },
-//     { title: 'My Balance', route: '/balance' },
-//     { title: 'My Coupon', route: '/coupon' },
-//   ];
 
 //   return (
 //     <AccountContainer>
@@ -87,7 +49,7 @@
 //           <SideMenu>
 //             <SideMenuList>
 //               <Link to='/userAccount'>
-//                 <span onClick={clickMenu_S1}>My Profile</span>
+//                 <span>My Profile</span>
 //               </Link>
 //             </SideMenuList>
 //             <SideMenuList onClick={clickMore}>
@@ -106,12 +68,12 @@
 //                     <MenuSub>
 //                       <MenuSubList>
 //                         <Link to='/orderStatus'>
-//                           <span onClick={clickMenu_S2}>Order Status</span>
+//                           <span>Order Status</span>
 //                         </Link>
 //                       </MenuSubList>
 //                       <MenuSubList>
 //                         <Link to='/orderHistory'>
-//                           <span onClick={clickMenu_S2}>Order History</span>
+//                           <span>Order History</span>
 //                         </Link>
 //                       </MenuSubList>
 //                     </MenuSub>
@@ -121,32 +83,85 @@
 //             </SideMenuList>
 //             <SideMenuList>
 //               <Link to='/whishlist'>
-//                 <span onClick={clickMenu_S3}>My Wishlist</span>
+//                 <span>My Wishlist</span>
 //               </Link>
 //             </SideMenuList>
 
 //             <SideMenuList>
 //               <Link to='/balance'>
-//                 <span onClick={clickMenu_S4}>My Balance</span>
+//                 <span>My Balance</span>
 //               </Link>
 //             </SideMenuList>
 //             <SideMenuList>
 //               <Link to='/coupon'>
-//                 <span onClick={clickMenu_S5}>My Coupons</span>
+//                 <span>My Coupons</span>
 //               </Link>
 //             </SideMenuList>
 //           </SideMenu>
 //         </SideSection>
 //         <MainSection>
-//           {s1 && (
-//             <MainSection>
-//               <S1_Profile meData={meData} />
-//             </MainSection>
-//           )}
-//           {s2 && <S2_Order meData={meData} />}
-//           {s3 && <S3_Wishlist meData={meData} />}
-//           {s4 && <S4_Balance meData={meData} />}
-//           {s5 && <S5_Coupon meData={meData} />}
+//           <MainHeader>
+//             <h2>MY PROFILE</h2>
+//           </MainHeader>
+//           <form>
+//             <MainInfo>
+//               <MainInfoTop>
+//                 <MainLeft>
+//                   <ConfigProvider colors={['red', 'grey', 'green', 'yellow']}>
+//                     <Avatar name={meData.username} round={true} size={200} />
+//                   </ConfigProvider>
+//                   {/* <input type='file' /> */}
+//                   {/* <ButtonSmall>Edit</ButtonSmall> */}
+//                 </MainLeft>
+//                 <MainRight>
+//                   <label htmlFor='username'>
+//                     username
+//                     <Input
+//                       type='text'
+//                       // placeholder={meData.username}
+//                       value={meData.username}
+//                       id='username'
+//                       disabled
+//                     />
+//                   </label>
+//                   <label htmlFor='email'>
+//                     email
+//                     <Input
+//                       type='text'
+//                       value={meData.email}
+//                       id='email'
+//                       disabled
+//                     />
+//                   </label>
+//                   <label htmlFor='name'>
+//                     name
+//                     <Input type='text' value={meData.name} id='name' disabled />
+//                   </label>
+//                 </MainRight>
+//               </MainInfoTop>
+//               <MainInfoBottom>
+//                 <label htmlFor='phone'>
+//                   phone
+//                   <Input type='text' value='phone' id='phone' disabled />
+//                 </label>
+//                 <label htmlFor='address1'>
+//                   address1
+//                   <Input type='text' value='address1' id='address1' disabled />
+//                 </label>
+//                 <label htmlFor='address2'>
+//                   address2
+//                   <Input type='text' value='address2' id='address2' disabled />
+//                 </label>
+//               </MainInfoBottom>
+
+//               <DelBtn>
+//                 {/* onClick={handleDeleteAccount} */}
+//                 <ButtonLarge style={{ width: '80%' }}>
+//                   Delete Account
+//                 </ButtonLarge>
+//               </DelBtn>
+//             </MainInfo>
+//           </form>
 //         </MainSection>
 //       </AccountWrap>
 //     </AccountContainer>
