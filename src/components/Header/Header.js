@@ -32,7 +32,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import PermIdentityRoundedIcon from '@mui/icons-material/PermIdentityRounded';
 import LogoutIcon from '@mui/icons-material/Logout';
 import TestModal from './TestModal';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const CATEGORY_URL = '/products/productAllParentsKinds';
 const Header = ({ meData }) => {
@@ -98,7 +98,7 @@ const Header = ({ meData }) => {
 
             <MiddleSide>
               <MidLink to='/'>
-                <div>MUSINSA</div>
+                <div>BlanketCLoset</div>
               </MidLink>
             </MiddleSide>
             <RightSide>
@@ -144,16 +144,18 @@ const Header = ({ meData }) => {
               {categories.map((category) => {
                 return (
                   <DropMenuList key={category.pk}>
-                    <DropMenuParents>
-                      {/* <DropdownButton>{category.name}</DropdownButton> */}
-                      <DropdownButton to='/products'>
+                    <DropMenuParents>      
+                      <DropdownButton 
+                        to={`/products/productAllParentsKinds/${category.pk}`}>
                         {category.name}
-                      </DropdownButton>
+                      </DropdownButton>                    
                       <DropMenuChild>
                         {category.productKinds.map((child) => {
                           return (
                             <DropMenuItem key={child.pk}>
-                              <span>{child.name}</span>
+                              <Link style={{ color:'black', textDecoration: 'none' }} 
+                                    to={`/products/productAllChildKinds/${child.pk}`}>{child.name}
+                              </Link>
                             </DropMenuItem>
                           );
                         })}

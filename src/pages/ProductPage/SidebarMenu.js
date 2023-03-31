@@ -12,7 +12,7 @@ import {
             SidebarMenuTop, 
             SidebarMenuWrapper 
         } from './SidebarMenuElements'
-
+import CloseIcon from '@mui/icons-material/Close';
         
 
 const SidebarMenu = ({ onClose }) => {
@@ -32,32 +32,32 @@ const SidebarMenu = ({ onClose }) => {
       };
     }, [onClose]);
 
-    const [selectOptions, setSelectOptions] = useState('none');
+    const [selectOptions, setSelectOptions] = useState();
     const OptionHandleChange = (e) => {
         setSelectOptions(e.target.value)
     }
-    const options = [
-        { label: 'Select Color or Size', value: 'none'},
-        { label: 'Large', value: 'L' },
-        { label: 'Medium', value: 'M' },
-        { label: 'Small', value: 'S' },
-      ];
-    //   const [selectOptions, setSelectOptions] = useState(''); //useState([]);
-    //   const { id } = useParams();
-    //   const getSelectOptions = async () => {
-    //       const {data} = await axios.get(`/products/${id}`,{
-    //           headers: { 'Content-Type': 'application/json' },
-    //           withCredentials: true,
-    //         }
-    //         );
-            
-    //       console.log(data)
-    //       setSelectOptions(data)
-    //       }
-    //   useEffect(() => {
-    //       getSelectOptions();
-    //   },[id])
-    //   console.log("id", id);
+    // const options = [
+    //     { label: 'Select Color or Size', value: 'none'},
+    //     { label: 'Large', value: 'L' },
+    //     { label: 'Medium', value: 'M' },
+    //     { label: 'Small', value: 'S' },
+    //   ];
+    //   const [selectOptions, setSelectOptions] = useState('');
+      const { id } = useParams();
+      const getSelectOptions = async () => {
+          const sideOption = await axios.get(`/products/${id}`,{
+              headers: { 'Content-Type': 'application/json' },
+              withCredentials: true,
+            }
+            );            
+          console.log("sideOption", sideOption.data)
+          setSelectOptions(sideOption.data)
+          }
+      useEffect(() => {
+          getSelectOptions();
+      },[id])
+
+      console.log("id", id);
 
 
   return (
@@ -66,18 +66,14 @@ const SidebarMenu = ({ onClose }) => {
             <SidebarMenuKinds>
                 <SidebarMenuTop ref={ref}>
                     <SidebarMenuClose onClick={onClose}>
-                        <p>x</p>
+                        <CloseIcon fontSize='medium'/>
                     </SidebarMenuClose>
                 </SidebarMenuTop>
                 <SidebarMenuMid>
-
-                    <select 
-                        value={selectOptions}
-                        defaultValue={'none'}
-                        onChange={OptionHandleChange}
-                    >    
-                        {options.map((option) => (
-                            <option value={option.value}>{option.label}</option>
+                    <select onChange={OptionHandleChange}>    
+                        <option value='none'>Select color or size</option>
+                        {selectOptions?.productOptions?.map((option) => (
+                            <option key={option.pk} value={option.name}>{option.description}</option>
                         ))}     
                     </select>
                     {/* <select 
@@ -91,7 +87,7 @@ const SidebarMenu = ({ onClose }) => {
                     </select> */}
                 </SidebarMenuMid>
                 <SidebarMenuBottom>
-                    <p>Total :{selectOptions}</p>
+                    <p>Total :</p>
                     <ButtonLarges>ADD TO BAG</ButtonLarges>
                 </SidebarMenuBottom>
             </SidebarMenuKinds>

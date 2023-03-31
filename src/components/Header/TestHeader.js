@@ -33,13 +33,6 @@ import PermIdentityRoundedIcon from '@mui/icons-material/PermIdentityRounded';
 import TestModal from './TestModal';
 import { Link } from 'react-router-dom';
 
-// import {
-//   DropMenu,
-//   DropMenuParents,
-//   DropMenuChild,
-//   DropMenuItem,
-// } from './TestHeaderElements';
-
 const CATEGORY_URL = '/products/productAllParentsKinds';
 const TestHeader = ({ meData }) => {
   const [categories, setCategories] = useState([]);
@@ -60,24 +53,6 @@ const TestHeader = ({ meData }) => {
     getCategory();
   }, []);
 
-  // const modalRef = useRef();
-  // const [isOpen, setOpen] = useState(false);
-  // const handleClick = (e) => {
-  //   if(isOpen && !modalRef.current.contains(e.target))
-  //     setOpen(true);
-  // };
-
-  // useEffect(() => {
-  //   window.addEventListener('click', handleClick);
-  //   return () => {
-  //     window.removeEventListener('click', handleClick);
-  //   };
-  // },[])
-
-  // const [isOpen, setOpen] = useState(false);
-  // const handleClick =(ref, () => {
-  //   setOpen(true);
-  // });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -102,7 +77,7 @@ const TestHeader = ({ meData }) => {
 
             <MiddleSide>
               <MidLink to='/'>
-                <div>BlanketCLoset</div>
+                <h1>BlanketCLoset</h1>
               </MidLink>
             </MiddleSide>
             <RightSide>
@@ -135,7 +110,7 @@ const TestHeader = ({ meData }) => {
                     <DropMenuParents>
                         <DropdownButton to={`/products/productAllParentsKinds/${category.pk}`}>{category.name}</DropdownButton>
                         {/* <DropdownButton to='/products'>{category.name}</DropdownButton> */}
-                      <DropMenuChild >
+                      <DropMenuChild>
                           {category.productKinds?.map((child) => {
                           return (
                             <DropMenuItem key={child.pk}>

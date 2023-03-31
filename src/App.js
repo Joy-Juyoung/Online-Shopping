@@ -26,9 +26,9 @@ function App() {
 
   return (
     <Router>
-      {/* <Header meData={meData} /> */}
+      <Header meData={meData} />
 
-      <TestHeader meData={meData}/>
+      {/* <TestHeader meData={meData}/> */}
       <Home meData={meData} />
       <Footer />
     </Router>
