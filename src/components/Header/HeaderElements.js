@@ -40,13 +40,44 @@ export const LeftSide = styled.div`
   /* justify-content: start; */
 `;
 
-export const ModalBtn = styled.button`
-  width: 200px;
-  height: 35px;
-  border: none;
+export const ModalBtnWrap = styled.div`
+  position: relative;
   display: flex;
-  cursor: pointer;
-  background-color: #f5f5f5;
+  z-index: 10;  
+  height: auto;
+`;
+
+export const ModalBtn = styled.button`
+    width: 338px;
+    height: 38px;
+    border-radius: 6px;
+    position: relative;
+    font-size: 16px;
+    appearance: none;
+    border: 0px;
+    background: none;
+    cursor: pointer;
+`;
+
+export const ModalBtnDetail = styled.div`
+  display: flex;
+  align-items: center;
+  height: 38px;
+  width: 338px;
+  padding: 0px 8px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background: rgb(242, 244, 247);
+
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 8px;
+    color: rgb(152, 162, 179);
+    font-weight: 400;
+    font-size: 16px;
+    white-space: nowrap;
+  }
 `;
 
 export const SearchIcon = styled.div`

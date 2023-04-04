@@ -27,6 +27,8 @@ import {
   HeaderWrap,
   DropAccount,
   LinkAccount,
+  ModalBtnWrap,
+  ModalBtnDetail,
 } from './HeaderElements';
 import FlagIcon from '@mui/icons-material/Flag';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -36,7 +38,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import TestModal from './TestModal';
 import { Link, useNavigate } from 'react-router-dom';
 import Loading from '../../components/Loading';
-
+import SearchIcon from '@mui/icons-material/Search';
 
 const CATEGORY_URL = '/products/productAllParentsKinds';
 const Header = ({ meData }) => {
@@ -109,7 +111,14 @@ const Header = ({ meData }) => {
         <HeaderWrapper>
           <HeaderUp>
             <LeftSide>
-              <ModalBtn onClick={() => setIsModalOpen(true)}>Search</ModalBtn>
+              <ModalBtnWrap>
+              <ModalBtn onClick={() => setIsModalOpen(true)}>
+                <ModalBtnDetail>
+                  <SearchIcon color='disabled' fontSize='medium'/>
+                  <span>Search</span>
+                </ModalBtnDetail>
+              </ModalBtn>
+              </ModalBtnWrap>
               {isModalOpen && (
                 <TestModal onClose={() => setIsModalOpen(false)} />
               )}

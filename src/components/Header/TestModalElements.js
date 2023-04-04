@@ -67,9 +67,7 @@ export const ModalHeaderSearch = styled.div`
         top: 50%;
         left: 8px;
         display: flex;
-        -webkit-box-align: center;
         align-items: center;
-        -webkit-box-pack: center;
         justify-content: center;
         transition: left 0.2s ease-in-out 0s;
         transform: translateY(-50%);
@@ -99,9 +97,7 @@ export const ModalCloseBtn = styled.button`
     height: 38px;
     margin: 0px;
     display: flex;
-    -webkit-box-align: center;
     align-items: center;
-    -webkit-box-pack: center;
     justify-content: center;
     border: 0px;
     background: none;
