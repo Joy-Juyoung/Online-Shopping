@@ -18,12 +18,12 @@ import WishlistPage from './WishlistPage/WishlistPage';
 import CartPage from './CartPage/CartPage';
 
 
-import S1_Profile from './UserAccountPage/S1_Profile';
-import S2_OrderStatus from './UserAccountPage/S2_OrderStatus';
-import S2_OrderHistory from './UserAccountPage/S2_OrderHistory';
-import S3_Wishlist from './UserAccountPage/S3_Wishlist';
-import S4_Balance from './UserAccountPage/S4_Balance';
-import S5_Coupon from './UserAccountPage/S5_Coupon';
+// import S1_Profile from './UserAccountPage/S1_Profile';
+// import S2_OrderStatus from './UserAccountPage/S2_OrderStatus';
+// import S2_OrderHistory from './UserAccountPage/S2_OrderHistory';
+// import S3_Wishlist from './UserAccountPage/S3_Wishlist';
+// import S4_Balance from './UserAccountPage/S4_Balance';
+// import S5_Coupon from './UserAccountPage/S5_Coupon';
 import ProductAllParentsKinds from './ProductPage/ProductAllParentsKinds';
 import TestProductKindsView from './ProductPage/TestProductKindsView';
 

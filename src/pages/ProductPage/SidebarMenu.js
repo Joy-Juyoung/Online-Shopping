@@ -3,12 +3,14 @@ import { useParams } from 'react-router-dom';
 import axios from '../../api/axios';
 import { 
             ButtonLarges, 
+            MenuTotalSummary, 
             OptionsSelect, 
             SidebarMenuBottom, 
             SidebarMenuClose, 
             SidebarMenuContainer, 
             SidebarMenuKinds, 
             SidebarMenuMid, 
+            SidebarMenuMidWrap, 
             SidebarMenuTop, 
             SidebarMenuWrapper 
         } from './SidebarMenuElements'
@@ -33,16 +35,12 @@ const SidebarMenu = ({ onClose }) => {
     }, [onClose]);
 
     const [selectOptions, setSelectOptions] = useState();
+    // const optionLists = selectOptions.map((lists) => {
+    //     return <option value={lists}>{lists}</option>
+    // })
     const OptionHandleChange = (e) => {
         setSelectOptions(e.target.value)
     }
-    // const options = [
-    //     { label: 'Select Color or Size', value: 'none'},
-    //     { label: 'Large', value: 'L' },
-    //     { label: 'Medium', value: 'M' },
-    //     { label: 'Small', value: 'S' },
-    //   ];
-    //   const [selectOptions, setSelectOptions] = useState('');
       const { id } = useParams();
       const getSelectOptions = async () => {
           const sideOption = await axios.get(`/products/${id}`,{
@@ -64,30 +62,26 @@ const SidebarMenu = ({ onClose }) => {
     <SidebarMenuContainer >
         <SidebarMenuWrapper>
             <SidebarMenuKinds>
-                <SidebarMenuTop ref={ref}>
+                <SidebarMenuTop>
                     <SidebarMenuClose onClick={onClose}>
                         <CloseIcon fontSize='medium'/>
                     </SidebarMenuClose>
                 </SidebarMenuTop>
                 <SidebarMenuMid>
                     <select onChange={OptionHandleChange}>    
-                        <option value='none'>Select color or size</option>
+                        <option value="none" disabled selected hidden >Select color or size</option>
                         {selectOptions?.productOptions?.map((option) => (
                             <option key={option.pk} value={option.name}>{option.description}</option>
                         ))}     
                     </select>
-                    {/* <select 
-                        value={selectOptions}
-                        defaultValue={'none'}
-                        onChange={OptionHandleChange}
-                    >    
-                        {options.map((option) => (
-                            <option value={option.value}>{option.label}</option>
-                        ))}     
-                    </select> */}
+                    <SidebarMenuMidWrap/>
+                    {/* <select value={selectOptions} onChange={OptionHandleChange}>{optionLists}</select>  */}
                 </SidebarMenuMid>
                 <SidebarMenuBottom>
-                    <p>Total :</p>
+                    <MenuTotalSummary>
+                      <p>Total 0</p>
+                      <p>$0</p>
+                    </MenuTotalSummary>
                     <ButtonLarges>ADD TO BAG</ButtonLarges>
                 </SidebarMenuBottom>
             </SidebarMenuKinds>
