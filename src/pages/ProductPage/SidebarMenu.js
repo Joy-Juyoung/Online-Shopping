@@ -12,7 +12,8 @@ import {
             SidebarMenuMid, 
             SidebarMenuMidWrap, 
             SidebarMenuTop, 
-            SidebarMenuWrapper 
+            SidebarMenuWrapper, 
+            SidebarSelect
         } from './SidebarMenuElements'
 import CloseIcon from '@mui/icons-material/Close';
         
@@ -21,12 +22,12 @@ const SidebarMenu = ({ onClose }) => {
     const ref = useRef();
     useEffect(() => {
       const checkIfClickedOutside = (e) => {
-        // if (ref.current && !ref.current.contains(e.target)) {
-        //   onClose();
-        // }
-        if (ref.current.contains(e.target)) {
+        if (ref.current && !ref.current.contains(e.target)) {
           onClose();
         }
+        // if (ref.current.contains(e.target)) {
+        //   onClose();
+        // }
       };
       document.addEventListener("click", checkIfClickedOutside);
       return () => {
@@ -63,23 +64,23 @@ const SidebarMenu = ({ onClose }) => {
         <SidebarMenuWrapper>
             <SidebarMenuKinds>
                 <SidebarMenuTop>
-                    <SidebarMenuClose onClick={onClose}>
+                    <SidebarMenuClose onClick={onClose} >
                         <CloseIcon fontSize='medium'/>
                     </SidebarMenuClose>
                 </SidebarMenuTop>
                 <SidebarMenuMid>
-                    <select onChange={OptionHandleChange}>    
-                        <option value="none" disabled selected hidden >Select color or size</option>
+                    <SidebarSelect onChange={OptionHandleChange} >    
+                        <option value="none" >Select color or size</option>
                         {selectOptions?.productOptions?.map((option) => (
                             <option key={option.pk} value={option.name}>{option.description}</option>
                         ))}     
-                    </select>
+                    </SidebarSelect>
                     <SidebarMenuMidWrap/>
                     {/* <select value={selectOptions} onChange={OptionHandleChange}>{optionLists}</select>  */}
                 </SidebarMenuMid>
                 <SidebarMenuBottom>
                     <MenuTotalSummary>
-                      <p>Total 0</p>
+                      <p>Total </p>
                       <p>$0</p>
                     </MenuTotalSummary>
                     <ButtonLarges>ADD TO BAG</ButtonLarges>

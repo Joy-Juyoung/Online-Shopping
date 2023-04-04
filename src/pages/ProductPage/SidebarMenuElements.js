@@ -8,7 +8,7 @@ export const SidebarMenuWrapper = styled.div`
     top: 0;
     right: 0;
     width: 375px;
-    height: auto;
+    height: 100vh;
     background: #fff;
     z-index: 100;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
@@ -42,21 +42,33 @@ export const SidebarMenuClose = styled.button`
 export const SidebarMenuMid = styled.div`
     min-height: 48px;
     margin: 0 20px;
-    
-    select {
-                width: 95%;
-                height: 48px;
+           
+
+`;
+
+export const SidebarSelect = styled.select`
+    width: 95%;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-size: 16px;
+    margin-left: 10px;
+    border: 1px solid #c1c4c9;
+
+
+    option {
                 align-items: center;
                 justify-content: center;
                 border-radius: 6px;
                 font-size: 16px;
                 margin-left: 10px;
                 border: 1px solid #c1c4c9;
-                /* color: #a3a9b3; */
-            }
-            
+            }   
 
 `;
+
+
 export const SidebarMenuMidWrap = styled.div`
     margin-top: 16px;
     padding-bottom: 16px;
