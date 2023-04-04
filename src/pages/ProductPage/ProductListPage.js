@@ -90,12 +90,13 @@ const ProductsListPage = () => {
         );
         setAddLiked(addLike);
         console.log('clicked', item.is_liked);
-      }
-    });
+        }
+      });
     // putLiked(items);
     // setItems([...items]);
     setItems(items);
-  console.log('get', items);
+    console.log('get', items);
+  };
 
   if (loading)
     return (
@@ -168,6 +169,6 @@ const ProductsListPage = () => {
       </ProductsWrap>
     </ProductsListContainer>
   );
-};
 
+};
 export default ProductsListPage;
