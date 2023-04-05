@@ -1,3 +1,10 @@
+
+//import React from 'react';
+//import { useEffect } from 'react';
+//import { useState } from 'react';
+//import { useParams } from 'react-router-dom';
+//import axios from '../../api/axios';
+
 import React from 'react'
 import {  CartBodyWrap, 
           CartContainer, 
@@ -53,8 +60,37 @@ import SNEAKERS from '../../asset/SNEAKERS.png';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 
+
 function CartPage() {
+  const [itemCart, setItemsCart] = useState([]);
+
+  const getItemsCart = async () => {
+    const cartInfo = await axios.get('/carts/', {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+    console.log('CartInfo', cartInfo?.data);
+    setItemsCart(cartInfo?.data);
+  };
+
+  useEffect(() => {
+    getItemsCart();
+  }, []);
+
   return (
+
+   // <>
+     //    <div>CartPage</div>
+     //    {itemCart.map((i) => {
+     //      return (
+      //       <ul key={i.pk}>
+      //         <li>{i.pk}</li>
+       //      </ul>
+      //     );
+      //   })}
+     //  </>
+    // );
+
     <CartContainer>
       <CartWrapper>
         <h2>SHOPPING BAG</h2>
@@ -175,6 +211,7 @@ function CartPage() {
       </CartWrapper>
     </CartContainer>
   )
+
 }
 
 export default CartPage;

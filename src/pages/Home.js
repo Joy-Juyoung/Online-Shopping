@@ -64,6 +64,18 @@ const Home = ({ meData }) => {
           exact={true}
         />
 
+
+        <Route
+          path='/products/productAllChildKinds/:id'
+          element={<TestProductKindsView />}
+          exact={true}
+        />
+        {/* <Route path='/' element={<TestHome />} exact={true} /> */}
+        {/* <Route path='/' element={<TestHome />} exact={true} /> */}
+        {/* <Route path='/testLogin' element={<TestLogin />} exact={true} /> */}
+        {/*<Route path='/testRegister' element={<TestRegister />} exact={true} /> */}
+
+
         <Route path='/products/productAllParentsKinds/:id' element={<ProductAllParentsKinds />} exact={true} />
         <Route path='/products/productAllChildKinds/:id' element={<TestProductKindsView />} exact={true} />
         <Route path='/testHeader' element={<TestHeader />} exact={true} />

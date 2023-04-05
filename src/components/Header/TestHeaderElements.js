@@ -33,11 +33,15 @@ export const DropMenuChild = styled.ul`
 
 export const DropMenuItem = styled.li`
   width: 100%;
-  text-decoration:none ;
-  
-  &:hover, {
+
+  text-decoration: none;
+  &:hover {
+////=======
+ // text-decoration:none ;
+ // 
+ // &:hover, {
+//>>>>>>> shop-main
     background-color: #eee;
-  
   }
 `;
 
