@@ -95,6 +95,15 @@ export const SelectWrap = styled.div`
   background-color: #fff;
   background-image: linear-gradient(to top, #f9f9f9, #fff 33%); */
 `;
+export const ListMidWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* grid-template-columns: repeat(4, minmax(min-content, max-content));
+  grid-gap: 10px; */
+   h2{
+    margin: 10px 0;
+   }
+`;
 
 export const ListMid = styled.div`
   /* margin: 0 40px; */

@@ -94,13 +94,14 @@ const ProductsListPage = ({ meData }) => {
           }
         );
         setAddLiked(addLike);
+
         console.log('clicked', addLike);
       }
     });
     // setItems([...items]);
     setItems(tempItems);
+
   };
-  console.log('get', items);
 
   if (loading)
     return (
@@ -166,6 +167,6 @@ const ProductsListPage = ({ meData }) => {
       </ProductsWrap>
     </ProductsListContainer>
   );
-};
 
+};
 export default ProductsListPage;

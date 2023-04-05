@@ -29,32 +29,50 @@ export const SidebarMenuTop = styled.div`
 
 export const SidebarMenuClose = styled.button`
     position: absolute;
-    width: 56px;
-    height: 56px;       
-    appearance: none;
+    top: 9px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
     border: 0px;
     background: none;
     cursor: pointer;
-    
-    p {
-        font-size: 40px;
-    }
+
 `;
 
 export const SidebarMenuMid = styled.div`
-    padding-top: 15px;
-    padding-bottom: 30px;
-
-    select {
-                width: 95%;
-                height: 48px;
-                align-items: center;
-                border-radius:10px;
-                margin-left: 10px;
-            }
+    min-height: 48px;
+    margin: 0 20px;
+           
 
 `;
 
+export const SidebarSelect = styled.select`
+    width: 95%;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-size: 16px;
+    margin-left: 10px;
+    border: 1px solid #c1c4c9;
+
+
+    option {
+                align-items: center;
+                justify-content: center;
+                border-radius: 6px;
+                font-size: 16px;
+                margin-left: 10px;
+                border: 1px solid #c1c4c9;
+            }   
+
+`;
+
+
+export const SidebarMenuMidWrap = styled.div`
+    margin-top: 16px;
+    padding-bottom: 16px;
+`;
 
 // export const OptionsSelect = styled.select`
 //     width: 100%;
@@ -67,8 +85,8 @@ export const SidebarMenuMid = styled.div`
 // `;
 
 export const SidebarMenuBottom = styled.div`
-    padding-top: 30px;
-    border-top: 1px solid lightgray;
+    padding: 16px 20px 20px;
+    border-top: 1px solid #e7e9ec;
 
     p{
         margin-left: 10px;
@@ -77,8 +95,15 @@ export const SidebarMenuBottom = styled.div`
     }
 `;
 
+export const MenuTotalSummary = styled.div`
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 16px;
+`;
+
+
 export const ButtonLarges = styled.button`
-    width: 95%;
+    width: 100%;
     height: 48px;
     border-radius: 6px;
     background: ${({ lightBg }) => (lightBg ? '#fff' : '#0A0F18')};

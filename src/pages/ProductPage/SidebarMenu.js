@@ -3,28 +3,31 @@ import { useParams } from 'react-router-dom';
 import axios from '../../api/axios';
 import { 
             ButtonLarges, 
+            MenuTotalSummary, 
             OptionsSelect, 
             SidebarMenuBottom, 
             SidebarMenuClose, 
             SidebarMenuContainer, 
             SidebarMenuKinds, 
             SidebarMenuMid, 
+            SidebarMenuMidWrap, 
             SidebarMenuTop, 
-            SidebarMenuWrapper 
+            SidebarMenuWrapper, 
+            SidebarSelect
         } from './SidebarMenuElements'
-
+import CloseIcon from '@mui/icons-material/Close';
         
 
 const SidebarMenu = ({ onClose }) => {
     const ref = useRef();
     useEffect(() => {
       const checkIfClickedOutside = (e) => {
-        // if (ref.current && !ref.current.contains(e.target)) {
-        //   onClose();
-        // }
-        if (ref.current.contains(e.target)) {
+        if (ref.current && !ref.current.contains(e.target)) {
           onClose();
         }
+        // if (ref.current.contains(e.target)) {
+        //   onClose();
+        // }
       };
       document.addEventListener("click", checkIfClickedOutside);
       return () => {
@@ -32,66 +35,54 @@ const SidebarMenu = ({ onClose }) => {
       };
     }, [onClose]);
 
-    const [selectOptions, setSelectOptions] = useState('none');
+    const [selectOptions, setSelectOptions] = useState();
+    // const optionLists = selectOptions.map((lists) => {
+    //     return <option value={lists}>{lists}</option>
+    // })
     const OptionHandleChange = (e) => {
         setSelectOptions(e.target.value)
     }
-    const options = [
-        { label: 'Select Color or Size', value: 'none'},
-        { label: 'Large', value: 'L' },
-        { label: 'Medium', value: 'M' },
-        { label: 'Small', value: 'S' },
-      ];
-    //   const [selectOptions, setSelectOptions] = useState(''); //useState([]);
-    //   const { id } = useParams();
-    //   const getSelectOptions = async () => {
-    //       const {data} = await axios.get(`/products/${id}`,{
-    //           headers: { 'Content-Type': 'application/json' },
-    //           withCredentials: true,
-    //         }
-    //         );
-            
-    //       console.log(data)
-    //       setSelectOptions(data)
-    //       }
-    //   useEffect(() => {
-    //       getSelectOptions();
-    //   },[id])
-    //   console.log("id", id);
+      const { id } = useParams();
+      const getSelectOptions = async () => {
+          const sideOption = await axios.get(`/products/${id}`,{
+              headers: { 'Content-Type': 'application/json' },
+              withCredentials: true,
+            }
+            );            
+          console.log("sideOption", sideOption.data)
+          setSelectOptions(sideOption.data)
+          }
+      useEffect(() => {
+          getSelectOptions();
+      },[id])
+
+      console.log("id", id);
 
 
   return (
     <SidebarMenuContainer >
         <SidebarMenuWrapper>
             <SidebarMenuKinds>
-                <SidebarMenuTop ref={ref}>
-                    <SidebarMenuClose onClick={onClose}>
-                        <p>x</p>
+                <SidebarMenuTop>
+                    <SidebarMenuClose onClick={onClose} >
+                        <CloseIcon fontSize='medium'/>
                     </SidebarMenuClose>
                 </SidebarMenuTop>
                 <SidebarMenuMid>
-
-                    <select 
-                        value={selectOptions}
-                        defaultValue={'none'}
-                        onChange={OptionHandleChange}
-                    >    
-                        {options.map((option) => (
-                            <option value={option.value}>{option.label}</option>
+                    <SidebarSelect onChange={OptionHandleChange} >    
+                        <option value="none" >Select color or size</option>
+                        {selectOptions?.productOptions?.map((option) => (
+                            <option key={option.pk} value={option.name}>{option.description}</option>
                         ))}     
-                    </select>
-                    {/* <select 
-                        value={selectOptions}
-                        defaultValue={'none'}
-                        onChange={OptionHandleChange}
-                    >    
-                        {options.map((option) => (
-                            <option value={option.value}>{option.label}</option>
-                        ))}     
-                    </select> */}
+                    </SidebarSelect>
+                    <SidebarMenuMidWrap/>
+                    {/* <select value={selectOptions} onChange={OptionHandleChange}>{optionLists}</select>  */}
                 </SidebarMenuMid>
                 <SidebarMenuBottom>
-                    <p>Total :{selectOptions}</p>
+                    <MenuTotalSummary>
+                      <p>Total </p>
+                      <p>$0</p>
+                    </MenuTotalSummary>
                     <ButtonLarges>ADD TO BAG</ButtonLarges>
                 </SidebarMenuBottom>
             </SidebarMenuKinds>

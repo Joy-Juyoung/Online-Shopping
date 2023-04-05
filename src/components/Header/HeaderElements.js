@@ -41,13 +41,44 @@ export const LeftSide = styled.div`
   /* justify-content: start; */
 `;
 
-export const ModalBtn = styled.button`
-  width: 200px;
-  height: 35px;
-  border: none;
+export const ModalBtnWrap = styled.div`
+  position: relative;
   display: flex;
-  cursor: pointer;
-  background-color: #f5f5f5;
+  z-index: 10;  
+  height: auto;
+`;
+
+export const ModalBtn = styled.button`
+    width: 338px;
+    height: 38px;
+    border-radius: 6px;
+    position: relative;
+    font-size: 16px;
+    appearance: none;
+    border: 0px;
+    background: none;
+    cursor: pointer;
+`;
+
+export const ModalBtnDetail = styled.div`
+  display: flex;
+  align-items: center;
+  height: 38px;
+  width: 338px;
+  padding: 0px 8px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background: rgb(242, 244, 247);
+
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 8px;
+    color: rgb(152, 162, 179);
+    font-weight: 400;
+    font-size: 16px;
+    white-space: nowrap;
+  }
 `;
 
 export const SearchIcon = styled.div`
@@ -65,12 +96,14 @@ export const MiddleSide = styled.div`
 export const MidLink = styled(Link)`
   text-decoration: none;
   color: black;
-  font-size: 35px;
+  font-size: 24px;
   font-family: 'Roboto', sans-serif;
   cursor: pointer;
   & :hover {
     color: gray;
   }
+
+
 `;
 
 export const RightSide = styled.div`
@@ -118,9 +151,11 @@ export const PermLink = styled(Link)`
 
 export const HeaderDown = styled.div`
   width: 100%;
+
   padding: 20px 0 10px;
   /* margin: 10px 0; */
   /* background: #fff; */
+
   /* border-bottom: 1px solid lightgrey; */
   /* position: relative; */
 `;
@@ -149,9 +184,11 @@ export const DropMenu = styled.ul`
 
 export const DropMenuList = styled.li`
   /* display: inline-block; */
+
   /* position: relative; */
   display: inline-block;
   z-index: 3;
+
 
   &:hover {
     ul {
@@ -168,6 +205,8 @@ export const DropMenuParents = styled.div`
 
 export const DropdownButton = styled(Link)`
   text-decoration: none;
+
+
   background: none;
   border: none;
   color: black;
@@ -175,6 +214,7 @@ export const DropdownButton = styled(Link)`
   font-weight: 600;
   cursor: pointer;
   padding-bottom: 8px;
+
 
   &:hover {
     margin: 10px auto;
@@ -201,6 +241,7 @@ export const DropMenuChild = styled.ul`
 
   padding: 0;
 
+
   /* width: 1250px; */
   margin: 0 auto;
   box-shadow: 0 10px 4px 0px rgba(0, 0, 0, 0.4);
@@ -214,6 +255,7 @@ export const DropMenuItem = styled.li`
   margin: 0 auto;
   padding: 20px 15px;
   cursor: pointer;
+
 
   &:hover {
     background-color: #eee;
@@ -232,12 +274,16 @@ export const TopWrapper = styled.div`
 `;
 
 export const FreeInfo = styled.div`
+  display: flex;
   padding: 3px 12px;
   background: #0a0f18;
   color: #fff;
+  min-height: 34px;
+  align-items:center;
+  justify-content: center;
 `;
 
-export const FreeInfoTitle = styled.div`
+export const FreeInfoTitle = styled.p`
   text-align: center;
   font-size: 13px;
 `;

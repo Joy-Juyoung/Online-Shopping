@@ -27,6 +27,7 @@ import {
   HeaderWrap,
   DropAccount,
   LinkAccount,
+
   DropUl,
   DropLi,
   NoUserModal,
@@ -40,6 +41,10 @@ import {
   DropAccountTopCover,
   DropMenuWrap,
   DropChildWrap,
+
+  ModalBtnWrap,
+  ModalBtnDetail,
+
 } from './HeaderElements';
 import FlagIcon from '@mui/icons-material/Flag';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -49,20 +54,16 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import TestModal from './TestModal';
 import { Link, useNavigate } from 'react-router-dom';
 import Loading from '../../components/Loading';
+
 import PopupAddress from '../PopupAddress';
 import CloseIcon from '@mui/icons-material/Close';
 import { ButtonSmall, ButtonUtils } from '../ButtonElements';
 import Modal from '../Modal';
 import Avatar, { ConfigProvider } from 'react-avatar';
 
-// const events = [
-//   'load',
-//   'mousemove',
-//   'mousedown',
-//   'click',
-//   'scroll',
-//   'keypress',
-// ];
+
+import SearchIcon from '@mui/icons-material/Search';
+
 
 const CATEGORY_URL = '/products/productAllParentsKinds';
 const Header = ({ meData }) => {
@@ -152,7 +153,14 @@ const Header = ({ meData }) => {
         <HeaderWrapper>
           <HeaderUp>
             <LeftSide>
-              <ModalBtn onClick={() => setIsModalOpen(true)}>Search</ModalBtn>
+              <ModalBtnWrap>
+              <ModalBtn onClick={() => setIsModalOpen(true)}>
+                <ModalBtnDetail>
+                  <SearchIcon color='disabled' fontSize='medium'/>
+                  <span>Search</span>
+                </ModalBtnDetail>
+              </ModalBtn>
+              </ModalBtnWrap>
               {isModalOpen && (
                 <TestModal onClose={() => setIsModalOpen(false)} />
               )}
@@ -160,7 +168,7 @@ const Header = ({ meData }) => {
 
             <MiddleSide>
               <MidLink to='/'>
-                <div>MUSINSA</div>
+                <div>BlanketCLoset</div>
               </MidLink>
             </MiddleSide>
             <RightSide>
@@ -352,10 +360,11 @@ const Header = ({ meData }) => {
               {categories.map((category) => {
                 return (
                   <DropMenuList key={category.pk}>
-                    <DropMenuParents>
-                      {/* <DropdownButton>{category.name}</DropdownButton> */}
-                      <DropdownButton to='/products'>
+                    <DropMenuParents>      
+                      <DropdownButton 
+                        to={`/products/productAllParentsKinds/${category.pk}`}>
                         {category.name}
+
                       </DropdownButton>
                       {!clickAccount && (
                         <DropChildWrap>
@@ -378,6 +387,26 @@ const Header = ({ meData }) => {
                           </DropMenuChild>
                         </DropChildWrap>
                       )}
+
+                     // </DropdownButton>                    
+                      //  <DropMenuChild>
+                        //  {category.productKinds?.map((child) => {
+                         //   return (
+                          //    <DropMenuItem key={child.pk}>
+                           //     <Link
+                            //      style={{
+                              //      color: 'black',
+                             //       textDecoration: 'none',
+                              //    }}
+                             //     to={`/products/productAllChildKinds/${child.pk}`}
+                              //  >
+                             //     {child.name}
+                             //   </Link>
+                           //   </DropMenuItem>
+                         //   );
+                       //   })}
+                     //   </DropMenuChild>
+
                     </DropMenuParents>
                   </DropMenuList>
                 );
