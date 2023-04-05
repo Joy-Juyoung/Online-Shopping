@@ -41,6 +41,10 @@ export const ButtonSmall = styled.button`
   /* text-align: center; */
   cursor: pointer;
   text-decoration: none;
+
+  &:hover {
+    font-weight: 600;
+  }
 `;
 
 export const ButtonHover = styled.button`
@@ -64,5 +68,17 @@ export const ButtonHover = styled.button`
     background: #fff;
     color: #0a0f18;
     box-shadow: 0px 0px 4px 1px #0a0f18;
+  }
+`;
+
+export const ButtonUtils = styled.button`
+  cursor: pointer;
+  /* margin-left: -50px; */
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+
+  &:hover {
+    font-weight: 600;
   }
 `;

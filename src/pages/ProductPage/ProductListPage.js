@@ -17,6 +17,8 @@ import {
   ProductsListWrapper,
   ProductsWrap,
   ProductTitle,
+  ProductUnLike,
+  SelectWrap,
   ToggleLike,
 } from './ProductListElements';
 // import ProductsCard from './ProductsCard';
@@ -30,18 +32,17 @@ import Loading from '../../components/Loading';
 // 그리고, 구매하려면 이때는 로그인을 해야함
 
 const PRODUCTS_URL = '/products';
-const ProductsListPage = () => {
+const ProductsListPage = ({ meData }) => {
   const [items, setItems] = useState([]);
+  // true false -> Put 눌러졌을때 상태바꾸기
   const [addLiked, setAddLiked] = useState();
-  // const [wishList, setWishList] = useState([]);
-  // const [clicked, setClicked] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  // const [currentPage, setCurrentPage] = useState(1);
+
   const sort = [
-    // { value: '', text: '--Choose an option--' },
     { value: 'Newest', text: 'Newest first' },
     { value: 'Popular', text: 'Most Popular' },
-    // { value: 'Ratings', text: 'Ratings' },
     { value: 'HighToLow', text: 'Price: high to low' },
     { value: 'LowToHigh', text: 'Price: low to high' },
   ];
@@ -57,6 +58,7 @@ const ProductsListPage = () => {
   }, []);
 
   const getItems = async () => {
+    // setLoading(true);
     try {
       const itemsList = await axios.get(PRODUCTS_URL, {
         headers: { 'Content-Type': 'application/json' },
@@ -64,6 +66,7 @@ const ProductsListPage = () => {
       });
       console.log('ProductList', itemsList?.data.length);
       setItems(itemsList?.data);
+      // setLoading(false);
     } catch (error) {
       alert(error);
     }
@@ -74,7 +77,9 @@ const ProductsListPage = () => {
   }, [addLiked]);
 
   const handleLiked = (pk) => {
-    items.forEach((item) => {
+    setLoading(false);
+    var tempItems = items;
+    tempItems.forEach((item) => {
       if (item.pk === pk) {
         item.is_liked = !item.isLiked;
 
@@ -89,11 +94,11 @@ const ProductsListPage = () => {
           }
         );
         setAddLiked(addLike);
-        console.log('clicked', item.is_liked);
+        console.log('clicked', addLike);
       }
     });
     // setItems([...items]);
-    setItems(items);
+    setItems(tempItems);
   };
   console.log('get', items);
 
@@ -114,7 +119,7 @@ const ProductsListPage = () => {
           <ProductsList>
             <ListTop>
               <span style={{ fontSize: '13px' }}>Total {items.length} </span>
-              <span>
+              <SelectWrap>
                 <select>
                   {sort.map((option, index) => (
                     <option key={index} value={option.value}>
@@ -122,42 +127,35 @@ const ProductsListPage = () => {
                     </option>
                   ))}
                 </select>
-              </span>
+              </SelectWrap>
             </ListTop>
             <ListMid>
               {items.map((item) => {
                 // <ProductsCard key={item.pk} product={item} />
                 return (
-                  <ProductsEach
-                    to={`/products/${item.pk}`}
-                    key={item.pk}
-                    // onCLick={(e) => e.preventDefault()}
-                  >
-                    <img src={item.photos[0].picture} alt='' />
-                    {/* <img  src={item.photos[0].picture} alt='' /> */}
-                    {/* pk별 각각 클릭될때, 하나의 상태만 변하도록 수정 */}
-                    {/* e.stopPropagation(); */}
-                    <ToggleLike
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleLiked(item.pk);
-                      }}
-                    >
-                      {item.is_liked ? (
-                        <FavoriteIcon />
-                      ) : (
-                        <FavoriteBorderIcon />
-                      )}
-                    </ToggleLike>
+                  <ProductsEach to={`/products/${item.pk}`} key={item.pk}>
+                    <ProductEachPhoto src={item.photos[0].picture} alt='' />
+
+                    {meData && (
+                      <ToggleLike
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleLiked(item.pk);
+                        }}
+                      >
+                        <ProductLike>
+                          {item.is_liked ? (
+                            <FavoriteIcon sx={{ color: '#e20000' }} />
+                          ) : (
+                            <FavoriteIcon color='disabled' />
+                          )}
+                        </ProductLike>
+                      </ToggleLike>
+                    )}
                     <ProductEachDetails>
                       <ProductTitle>{item.name}</ProductTitle>
-                      <ProductDesc>{item.kind.name}</ProductDesc>
+                      <ProductDesc>{item.detail}</ProductDesc>
                       <ProductPrice>${item.price}</ProductPrice>
-                      <ProductLike>
-                        <FavoriteIcon fontSize='small' />
-                        {/* {wishList.length} */}
-                        Each Liked total count
-                      </ProductLike>
                     </ProductEachDetails>
                   </ProductsEach>
                 );

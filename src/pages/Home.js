@@ -55,7 +55,7 @@ const Home = ({ meData }) => {
           element={<ProductDetailPage />}
           exact={true}
         />
-        
+
         <Route
           path='/products/productAllChildKinds/:id'
           element={<TestProductKindsView />}

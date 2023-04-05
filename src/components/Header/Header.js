@@ -27,6 +27,19 @@ import {
   HeaderWrap,
   DropAccount,
   LinkAccount,
+  DropUl,
+  DropLi,
+  NoUserModal,
+  CloseBtn,
+  NoUserContents,
+  NoUserTitle,
+  NoUserText,
+  NoUserBtn,
+  NoUserContainer,
+  DropAccountWrap,
+  DropAccountTopCover,
+  DropMenuWrap,
+  DropChildWrap,
 } from './HeaderElements';
 import FlagIcon from '@mui/icons-material/Flag';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -36,6 +49,11 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import TestModal from './TestModal';
 import { Link, useNavigate } from 'react-router-dom';
 import Loading from '../../components/Loading';
+import PopupAddress from '../PopupAddress';
+import CloseIcon from '@mui/icons-material/Close';
+import { ButtonSmall, ButtonUtils } from '../ButtonElements';
+import Modal from '../Modal';
+import Avatar, { ConfigProvider } from 'react-avatar';
 
 // const events = [
 //   'load',
@@ -57,6 +75,16 @@ const Header = ({ meData }) => {
   const [logout, setLogout] = useState();
   const [clickAccount, setClickAccount] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isOpenAddress, setIsOpenAddress] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // const [showNoUser, setShowNoUser] = useState(false);
+  // const [hideNoUser, setHideNoUser] = useState(false);
+  const [modalShown, toggleModal] = useState(false);
+
+  const toggleAddress = () => {
+    setIsOpenAddress(!isOpenAddress);
+  };
 
   console.log('Header Me', me);
 
@@ -73,8 +101,6 @@ const Header = ({ meData }) => {
     getCategory();
     // setMe(meData);
   }, [me]);
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleLogout = async () => {
     setLoading(true);
@@ -104,32 +130,13 @@ const Header = ({ meData }) => {
     setClickAccount(false);
   };
 
-  // const handleLogoutTimer = () => {
-  //   timer = setTimeout(() => {
-  //     // setLoading(true);
-  //     resetTimer();
-
-  //     Object.values(events).forEach((item) => {
-  //       window.removeEventListener(item, resetTimer);
-  //     });
-  //     // logs out
-  //     handleLogout();
-  //     setLoading(false);
-  //   }, 10); // 10000ms = 10secs. You can change the time.
+  // const noUserClick = () => {
+  //   setShowNoUser(true);
   // };
 
-  // const resetTimer = () => {
-  //   if (timer) clearTimeout(timer);
+  // const noUserClose = () => {
+  //   setShowNoUser(false);
   // };
-
-  // useEffect(() => {
-  //   Object.values(events).forEach((item) => {
-  //     window.addEventListener(item, () => {
-  //       resetTimer();
-  //       handleLogoutTimer();
-  //     });
-  //   });
-  // }, [timer]);
 
   if (loading)
     return (
@@ -161,25 +168,85 @@ const Header = ({ meData }) => {
                 <FlagIcon fontSize='medium' />
               </RightIcon>
 
-              <RightIcon>
-                <FaLink to='/wishlist'>
-                  <FavoriteBorderIcon fontSize='medium' />
-                </FaLink>
-              </RightIcon>
-              <RightIcon>
-                <CartLink to='/carts'>
-                  <AddShoppingCartIcon fontSize='medium' />
-                </CartLink>
-              </RightIcon>
-
               {!me && logout !== null ? (
-                <RightIcon>
-                  <PermLink to='/login'>
-                    <PermIdentityRoundedIcon fontSize='medium' />
-                  </PermLink>
-                </RightIcon>
+                <>
+                  <RightIcon>
+                    <FaLink>
+                      <FavoriteBorderIcon
+                        fontSize='medium'
+                        onClick={() => {
+                          toggleModal(!modalShown);
+                        }}
+                      />
+                    </FaLink>
+                  </RightIcon>
+                  <RightIcon>
+                    <CartLink>
+                      <AddShoppingCartIcon
+                        fontSize='medium'
+                        onClick={() => {
+                          toggleModal(!modalShown);
+                        }}
+                      />
+                    </CartLink>
+                  </RightIcon>
+                  <RightIcon>
+                    <PermLink to='/login'>
+                      <PermIdentityRoundedIcon fontSize='medium' />
+                    </PermLink>
+                  </RightIcon>
+                  <Modal
+                    shown={modalShown}
+                    close={() => {
+                      toggleModal(false);
+                    }}
+                  >
+                    <NoUserModal>
+                      <NoUserContainer>
+                        <NoUserContents>
+                          <NoUserTitle>Login Required</NoUserTitle>
+                          <NoUserText>
+                            In order to access this page, you need to login.
+                          </NoUserText>
+                          <NoUserText>
+                            Whould you like to login now or later?
+                          </NoUserText>
+                        </NoUserContents>
+                      </NoUserContainer>
+                    </NoUserModal>
+                    <NoUserBtn>
+                      <ButtonSmall
+                        onClick={() => {
+                          toggleModal(false);
+                        }}
+                      >
+                        Later
+                      </ButtonSmall>
+                      <Link to='/login' style={{ textDecoration: 'none' }}>
+                        <ButtonSmall
+                          style={{ background: '#0A0F18', color: '#fff' }}
+                          onClick={() => {
+                            toggleModal(false);
+                          }}
+                        >
+                          LOGIN NOW
+                        </ButtonSmall>
+                      </Link>
+                    </NoUserBtn>
+                  </Modal>
+                </>
               ) : (
                 <>
+                  <RightIcon>
+                    <FaLink to='/wishlist'>
+                      <FavoriteBorderIcon fontSize='medium' />
+                    </FaLink>
+                  </RightIcon>
+                  <RightIcon>
+                    <CartLink to='/carts'>
+                      <AddShoppingCartIcon fontSize='medium' />
+                    </CartLink>
+                  </RightIcon>
                   <RightIcon>
                     {!clickAccount ? (
                       <PermLink>
@@ -198,27 +265,75 @@ const Header = ({ meData }) => {
                         </PermLink>
 
                         <DropAccount ref={accountRef}>
-                          <ul>
-                            <LinkAccount
-                              to='/userAccount'
-                              onClick={handleDropOut}
-                            >
-                              <li>My Profile</li>
-                            </LinkAccount>
-                            <LinkAccount to='/testPage' onClick={handleDropOut}>
-                              <li>My Orders</li>
-                            </LinkAccount>
-                            <LinkAccount to='/testPage' onClick={handleDropOut}>
-                              <li>My Addresses</li>
-                            </LinkAccount>
-                            <LinkAccount to='/testPage' onClick={handleDropOut}>
-                              <li>My Balances</li>
-                            </LinkAccount>
-                            <LinkAccount to='/testPage' onClick={handleDropOut}>
-                              <li>My Coupons</li>
-                            </LinkAccount>
-                          </ul>
+                          <DropAccountWrap>
+                            <DropUl>
+                              <LinkAccount
+                                to='/userAccount'
+                                onClick={handleDropOut}
+                              >
+                                <DropLi>
+                                  <ConfigProvider
+                                    colors={['red', 'grey', 'green']}
+                                  >
+                                    <Avatar
+                                      name={me.username}
+                                      round={true}
+                                      size={30}
+                                    />
+                                  </ConfigProvider>
+                                  <span
+                                    style={{
+                                      marginLeft: '10px',
+                                      fontWeight: '600',
+                                      fontSize: '15px',
+                                    }}
+                                  >
+                                    {me.username}
+                                  </span>
+                                </DropLi>
+                                <DropLi>My Profile</DropLi>
+                              </LinkAccount>
+                              <LinkAccount
+                                to='/testPage'
+                                onClick={handleDropOut}
+                              >
+                                <DropLi>My Orders</DropLi>
+                              </LinkAccount>
+
+                              <LinkAccount onClick={toggleAddress}>
+                                <DropLi>My Addresses</DropLi>
+                              </LinkAccount>
+                              {/* {isOpenAddress && (
+                                <PopupAddress
+                                  handleClose={toggleAddress}
+                                  style={{ background: 'none' }}
+                                  meData={meData}
+                                  onClick={handleDropOut}
+                                />
+                              )} */}
+                              <LinkAccount
+                                to='/testPage'
+                                onClick={handleDropOut}
+                              >
+                                <DropLi>My Balances</DropLi>
+                              </LinkAccount>
+                              <LinkAccount
+                                to='/testPage'
+                                onClick={handleDropOut}
+                              >
+                                <DropLi>My Coupons</DropLi>
+                              </LinkAccount>
+                            </DropUl>
+                          </DropAccountWrap>
                         </DropAccount>
+                        {/* {isOpenAddress && (
+                          <PopupAddress
+                            handleClose={toggleAddress}
+                            style={{ background: 'none' }}
+                            meData={meData}
+                            onClick={handleDropOut}
+                          />
+                        )} */}
                       </>
                     )}
                   </RightIcon>
@@ -232,6 +347,7 @@ const Header = ({ meData }) => {
             </RightSide>
           </HeaderUp>
           <HeaderDown>
+            {/* <DropMenuWrap></DropMenuWrap> */}
             <DropMenu>
               {categories.map((category) => {
                 return (
@@ -241,23 +357,27 @@ const Header = ({ meData }) => {
                       <DropdownButton to='/products'>
                         {category.name}
                       </DropdownButton>
-                      <DropMenuChild>
-                        {category.productKinds?.map((child) => {
-                          return (
-                            <DropMenuItem key={child.pk}>
-                              <Link
-                                style={{
-                                  color: 'black',
-                                  textDecoration: 'none',
-                                }}
-                                to={`/products/productAllChildKinds/${child.pk}`}
-                              >
-                                {child.name}
-                              </Link>
-                            </DropMenuItem>
-                          );
-                        })}
-                      </DropMenuChild>
+                      {!clickAccount && (
+                        <DropChildWrap>
+                          <DropMenuChild>
+                            {category.productKinds?.map((child) => {
+                              return (
+                                <DropMenuItem key={child.pk}>
+                                  <Link
+                                    style={{
+                                      color: 'black',
+                                      textDecoration: 'none',
+                                    }}
+                                    to={`/products/productAllChildKinds/${child.pk}`}
+                                  >
+                                    {child.name}
+                                  </Link>
+                                </DropMenuItem>
+                              );
+                            })}
+                          </DropMenuChild>
+                        </DropChildWrap>
+                      )}
                     </DropMenuParents>
                   </DropMenuList>
                 );

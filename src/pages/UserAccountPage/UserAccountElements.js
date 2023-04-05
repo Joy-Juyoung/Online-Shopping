@@ -37,6 +37,14 @@ export const InputEdit = styled.div`
   }
 `;
 
+export const ShippingInfo = styled.div`
+  margin: 40px 0;
+  padding: 10px;
+  border-radius: 5px;
+  background: gray;
+  color: #fff;
+`;
+
 export const DelBtn = styled.div`
   display: flex;
   align-items: center;
@@ -53,4 +61,9 @@ export const DelBtn = styled.div`
       font-weight: 600;
     }
   }
+`;
+
+export const EditBtn = styled.div`
+  background: lightgray;
+  cursor: pointer;
 `;
