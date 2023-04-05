@@ -44,20 +44,20 @@ export const LeftSide = styled.div`
 export const ModalBtnWrap = styled.div`
   position: relative;
   display: flex;
-  z-index: 10;  
+  z-index: 10;
   height: auto;
 `;
 
 export const ModalBtn = styled.button`
-    width: 338px;
-    height: 38px;
-    border-radius: 6px;
-    position: relative;
-    font-size: 16px;
-    appearance: none;
-    border: 0px;
-    background: none;
-    cursor: pointer;
+  width: 338px;
+  height: 38px;
+  border-radius: 6px;
+  position: relative;
+  font-size: 16px;
+  appearance: none;
+  border: 0px;
+  background: none;
+  cursor: pointer;
 `;
 
 export const ModalBtnDetail = styled.div`
@@ -102,8 +102,6 @@ export const MidLink = styled(Link)`
   & :hover {
     color: gray;
   }
-
-
 `;
 
 export const RightSide = styled.div`
@@ -189,12 +187,11 @@ export const DropMenuList = styled.li`
   display: inline-block;
   z-index: 3;
 
-
   &:hover {
     ul {
       display: block;
       /* display: inline-block; */
-      /* border-top: 1px solid lightgrey; */
+      border-top: 1px solid lightgrey;
     }
   }
 `;
@@ -206,7 +203,6 @@ export const DropMenuParents = styled.div`
 export const DropdownButton = styled(Link)`
   text-decoration: none;
 
-
   background: none;
   border: none;
   color: black;
@@ -214,7 +210,6 @@ export const DropdownButton = styled(Link)`
   font-weight: 600;
   cursor: pointer;
   padding-bottom: 8px;
-
 
   &:hover {
     margin: 10px auto;
@@ -224,13 +219,13 @@ export const DropdownButton = styled(Link)`
 
 export const DropChildWrap = styled.div`
   position: fixed;
-  top: 110px;
+  top: 102px;
   right: 0;
   left: 0;
   background-color: #fff;
 
   margin: 10px auto;
-  border-top: 1px solid lightgrey;
+  /* border-top: 1px solid lightgrey; */
 `;
 
 // parents에 hover후, child를 볼 때, 하단바의 색이 유지되게 하는방법?
@@ -240,7 +235,6 @@ export const DropMenuChild = styled.ul`
   display: none;
 
   padding: 0;
-
 
   /* width: 1250px; */
   margin: 0 auto;
@@ -255,7 +249,6 @@ export const DropMenuItem = styled.li`
   margin: 0 auto;
   padding: 20px 15px;
   cursor: pointer;
-
 
   &:hover {
     background-color: #eee;
@@ -279,7 +272,7 @@ export const FreeInfo = styled.div`
   background: #0a0f18;
   color: #fff;
   min-height: 34px;
-  align-items:center;
+  align-items: center;
   justify-content: center;
 `;
 

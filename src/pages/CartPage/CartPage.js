@@ -1,65 +1,64 @@
-
 //import React from 'react';
-//import { useEffect } from 'react';
-//import { useState } from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
 //import { useParams } from 'react-router-dom';
-//import axios from '../../api/axios';
+import axios from '../../api/axios';
 
-import React from 'react'
-import {  CartBodyWrap, 
-          CartContainer, 
-          CartLeftCheckBar, 
-          CartLeftInfo, 
-          CartProductLists, 
-          CartRightBottom, 
-          CartRightInfo, 
-          CartRightMidOne, 
-          CartRightMidTwo, 
-          CartRightTop, 
-          CartSummary, 
-          CartSummaryInfo, 
-          CartWrapper, 
-          CheckBarWrap, 
-          CheckBox, 
-          CheckOutBtn, 
-          CouponBtn, 
-          CouponInfo, 
-          CouponInput, 
-          CouponInputWrap, 
-          DeleteBtn, 
-          DetailDescrition, 
-          DetailName, 
-          DetailOption, 
-          ExtraInfo, 
-          FreeShippingInfo, 
-          ItemIncreaseBtn, 
-          ItemDecreaseBtn, 
-          ItemDetailOne, 
-          ItemDetailThree, 
-          ItemDetailTwo, 
-          ItemNumberInput, 
-          ItemPriceInfo, 
-          ItemShippingFee, 
-          ItemTotalPrice, 
-          ListsCheckBox, 
-          ListsDeleteBtn, 
-          ListsDetails, 
-          ListsImgLink, 
-          ListsItemDetails, 
-          ListsItemImg, 
-          OrderCheckBox, 
-          PromoInfo,
-          QuestionMark,
-          SummaryWrap,
-          ItemDetailTwoWrap
-        } from './CartElements';
+import React from 'react';
+import {
+  CartBodyWrap,
+  CartContainer,
+  CartLeftCheckBar,
+  CartLeftInfo,
+  CartProductLists,
+  CartRightBottom,
+  CartRightInfo,
+  CartRightMidOne,
+  CartRightMidTwo,
+  CartRightTop,
+  CartSummary,
+  CartSummaryInfo,
+  CartWrapper,
+  CheckBarWrap,
+  CheckBox,
+  CheckOutBtn,
+  CouponBtn,
+  CouponInfo,
+  CouponInput,
+  CouponInputWrap,
+  DeleteBtn,
+  DetailDescrition,
+  DetailName,
+  DetailOption,
+  ExtraInfo,
+  FreeShippingInfo,
+  ItemIncreaseBtn,
+  ItemDecreaseBtn,
+  ItemDetailOne,
+  ItemDetailThree,
+  ItemDetailTwo,
+  ItemNumberInput,
+  ItemPriceInfo,
+  ItemShippingFee,
+  ItemTotalPrice,
+  ListsCheckBox,
+  ListsDeleteBtn,
+  ListsDetails,
+  ListsImgLink,
+  ListsItemDetails,
+  ListsItemImg,
+  OrderCheckBox,
+  PromoInfo,
+  QuestionMark,
+  SummaryWrap,
+  ItemDetailTwoWrap,
+} from './CartElements';
 
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import CloseIcon from '@mui/icons-material/Close';
 import SNEAKERS from '../../asset/SNEAKERS.png';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
-
 
 function CartPage() {
   const [itemCart, setItemsCart] = useState([]);
@@ -78,17 +77,16 @@ function CartPage() {
   }, []);
 
   return (
-
-   // <>
-     //    <div>CartPage</div>
-     //    {itemCart.map((i) => {
-     //      return (
-      //       <ul key={i.pk}>
-      //         <li>{i.pk}</li>
-       //      </ul>
-      //     );
-      //   })}
-     //  </>
+    // <>
+    //    <div>CartPage</div>
+    //    {itemCart.map((i) => {
+    //      return (
+    //       <ul key={i.pk}>
+    //         <li>{i.pk}</li>
+    //      </ul>
+    //     );
+    //   })}
+    //  </>
     // );
 
     <CartContainer>
@@ -99,9 +97,7 @@ function CartPage() {
             <CartLeftCheckBar>
               <CheckBarWrap>
                 <OrderCheckBox>
-                  <input 
-                    type="checkbox"
-                  />
+                  <input type='checkbox' />
                   <label>All</label>
                 </OrderCheckBox>
                 <DeleteBtn>Delete</DeleteBtn>
@@ -110,9 +106,7 @@ function CartPage() {
             <CartProductLists>
               <ListsDetails>
                 <ListsCheckBox>
-                  <input 
-                      type="checkbox"
-                    />
+                  <input type='checkbox' />
                   {/* <label/> */}
                 </ListsCheckBox>
                 <ListsItemImg>
@@ -130,11 +124,10 @@ function CartPage() {
                   </ItemDetailOne>
                   <ItemDetailTwo>
                     <ItemDetailTwoWrap>
-
                       <ItemDecreaseBtn>
-                        <RemoveIcon fontSize='small' color='action'/>
+                        <RemoveIcon fontSize='small' color='action' />
                       </ItemDecreaseBtn>
-                      <ItemNumberInput value={1}/>
+                      <ItemNumberInput value={1} />
                       <ItemIncreaseBtn>
                         <AddIcon fontSize='small' color='action' />
                       </ItemIncreaseBtn>
@@ -145,23 +138,22 @@ function CartPage() {
                   </ItemDetailThree>
                 </ListsItemDetails>
                 <ListsDeleteBtn>
-                  <CloseIcon fontSize='small'/>
+                  <CloseIcon fontSize='small' />
                 </ListsDeleteBtn>
               </ListsDetails>
             </CartProductLists>
           </CartLeftInfo>
           <CartRightInfo>
-            
             <CartRightTop>
               <h3>Promo Code</h3>
               <PromoInfo>
                 <QuestionMark>
-                  <HelpOutlineIcon fontSize='small' color='action'/>
+                  <HelpOutlineIcon fontSize='small' color='action' />
                 </QuestionMark>
               </PromoInfo>
               <CouponInfo>
                 <CouponInputWrap>
-                  <CouponInput placeholder='Please enter your promo code'/>
+                  <CouponInput placeholder='Please enter your promo code' />
                   <CouponBtn>Apply</CouponBtn>
                 </CouponInputWrap>
               </CouponInfo>
@@ -188,19 +180,18 @@ function CartPage() {
                   Total
                   <span>$154</span>
                 </ItemTotalPrice>
-                  <ExtraInfo>
-                    <li>* Additional duties and taxes may apply at checkout.</li>
-                  </ExtraInfo>
+                <ExtraInfo>
+                  <li>* Additional duties and taxes may apply at checkout.</li>
+                </ExtraInfo>
               </CartSummaryInfo>
             </CartRightMidOne>
 
             <CartRightMidTwo>
               <FreeShippingInfo>
-                  Add $
-                  <span>61 </span> 
-                  more to enjoy 
-                  <strong> FREE SHIPPING</strong>
-                </FreeShippingInfo>
+                Add $<span>61 </span>
+                more to enjoy
+                <strong> FREE SHIPPING</strong>
+              </FreeShippingInfo>
             </CartRightMidTwo>
 
             <CartRightBottom>
@@ -210,8 +201,7 @@ function CartPage() {
         </CartBodyWrap>
       </CartWrapper>
     </CartContainer>
-  )
-
+  );
 }
 
 export default CartPage;

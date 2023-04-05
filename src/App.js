@@ -29,16 +29,6 @@ function App() {
     getMe();
   }, []);
 
-  // useEffect(() => {
-  //   const loadData = async () => {
-  //     await new Promise((r) => setTimeout(r, 2000));
-
-  //     setLoading((loading) => !loading);
-  //   };
-
-  //   loadData();
-  // }, []);
-
   return (
     <Router>
       <Header meData={meData} />
