@@ -27,7 +27,6 @@ import {
   HeaderWrap,
   DropAccount,
   LinkAccount,
-
   DropUl,
   DropLi,
   NoUserModal,
@@ -41,10 +40,8 @@ import {
   DropAccountTopCover,
   DropMenuWrap,
   DropChildWrap,
-
   ModalBtnWrap,
   ModalBtnDetail,
-
 } from './HeaderElements';
 import FlagIcon from '@mui/icons-material/Flag';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -61,9 +58,7 @@ import { ButtonSmall, ButtonUtils } from '../ButtonElements';
 import Modal from '../Modal';
 import Avatar, { ConfigProvider } from 'react-avatar';
 
-
 import SearchIcon from '@mui/icons-material/Search';
-
 
 const CATEGORY_URL = '/products/productAllParentsKinds';
 const Header = ({ meData }) => {
@@ -154,12 +149,12 @@ const Header = ({ meData }) => {
           <HeaderUp>
             <LeftSide>
               <ModalBtnWrap>
-              <ModalBtn onClick={() => setIsModalOpen(true)}>
-                <ModalBtnDetail>
-                  <SearchIcon color='disabled' fontSize='medium'/>
-                  <span>Search</span>
-                </ModalBtnDetail>
-              </ModalBtn>
+                <ModalBtn onClick={() => setIsModalOpen(true)}>
+                  <ModalBtnDetail>
+                    <SearchIcon color='disabled' fontSize='medium' />
+                    <span>Search</span>
+                  </ModalBtnDetail>
+                </ModalBtn>
               </ModalBtnWrap>
               {isModalOpen && (
                 <TestModal onClose={() => setIsModalOpen(false)} />
@@ -360,11 +355,11 @@ const Header = ({ meData }) => {
               {categories.map((category) => {
                 return (
                   <DropMenuList key={category.pk}>
-                    <DropMenuParents>      
-                      <DropdownButton 
-                        to={`/products/productAllParentsKinds/${category.pk}`}>
+                    <DropMenuParents>
+                      <DropdownButton
+                        to={`/products/productAllParentsKinds/${category.pk}`}
+                      >
                         {category.name}
-
                       </DropdownButton>
                       {!clickAccount && (
                         <DropChildWrap>
@@ -387,26 +382,6 @@ const Header = ({ meData }) => {
                           </DropMenuChild>
                         </DropChildWrap>
                       )}
-
-                     // </DropdownButton>                    
-                      //  <DropMenuChild>
-                        //  {category.productKinds?.map((child) => {
-                         //   return (
-                          //    <DropMenuItem key={child.pk}>
-                           //     <Link
-                            //      style={{
-                              //      color: 'black',
-                             //       textDecoration: 'none',
-                              //    }}
-                             //     to={`/products/productAllChildKinds/${child.pk}`}
-                              //  >
-                             //     {child.name}
-                             //   </Link>
-                           //   </DropMenuItem>
-                         //   );
-                       //   })}
-                     //   </DropMenuChild>
-
                     </DropMenuParents>
                   </DropMenuList>
                 );

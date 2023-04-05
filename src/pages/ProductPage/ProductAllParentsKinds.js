@@ -16,46 +16,44 @@ import {
   ProductDesc,
   ProductPrice,
   ProductLike,
-  ListMidWrap
+  ListMidWrap,
 } from './ProductListElements';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 // const TestProduct_URL = '/products/productAllChildKinds/${id}';
 const ProductAllParentsKinds = () => {
+  const [itemAllKinds, setItemAllKinds] = useState([]); //useState([]);
+  const { id } = useParams();
+  const getAllKindsProduct = async () => {
+    const { data } = await axios.get(`/products/productAllParentsKinds/${id}`, {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
 
-    const [itemAllKinds, setItemAllKinds] = useState([]); //useState([]);
-    const { id } = useParams();
-    const getAllKindsProduct = async () => {
-      const {data} = await axios.get(`/products/productAllParentsKinds/${id}`,{
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        }
-        );
-        
-      console.log(data)
-      setItemAllKinds(data)
-      }
-    useEffect(() => {
-        getAllKindsProduct();
-    },[id])
-    console.log("itemAllKinds", itemAllKinds);
+    console.log(data);
+    setItemAllKinds(data);
+  };
+  useEffect(() => {
+    getAllKindsProduct();
+  }, [id]);
+  console.log('itemAllKinds', itemAllKinds);
 
-    const sort = [
-        // { value: '', text: '--Choose an option--' },
-      { value: 'Newest', text: 'Newest first' },
-      { value: 'Popular', text: 'Most Popular' },
-        // { value: 'Ratings', text: 'Ratings' },
-      { value: 'HighToLow', text: 'Price: high to low' },
-      { value: 'LowToHigh', text: 'Price: low to high' },
-    ];
-      
-    const handleOptionChange = (e) => {
-      console.log(e.target.value);
-      };
+  const sort = [
+    // { value: '', text: '--Choose an option--' },
+    { value: 'Newest', text: 'Newest first' },
+    { value: 'Popular', text: 'Most Popular' },
+    // { value: 'Ratings', text: 'Ratings' },
+    { value: 'HighToLow', text: 'Price: high to low' },
+    { value: 'LowToHigh', text: 'Price: low to high' },
+  ];
+
+  const handleOptionChange = (e) => {
+    console.log(e.target.value);
+  };
   return (
     <ProductsListContainer>
       <ProductsWrap>
-      <h1>{itemAllKinds.name}</h1>
+        <h1>{itemAllKinds.name}</h1>
         <ProductsListWrapper>
           <ProductCategories>
             {/* <span>Categories Filter section</span> */}
@@ -63,7 +61,9 @@ const ProductAllParentsKinds = () => {
           <ProductsList>
             <ListTop>
               {/* 광우에게 물어보기 length */}
-              <span style={{ fontSize: '13px' }}>Total {itemAllKinds.length} </span>
+              <span style={{ fontSize: '13px' }}>
+                Total {itemAllKinds.length}{' '}
+              </span>
               <span>
                 <select
                   onChange={handleOptionChange}
@@ -78,38 +78,38 @@ const ProductAllParentsKinds = () => {
                 </select>
               </span>
             </ListTop>
-              {itemAllKinds.productKinds?.map((item) => {
-                return (
-                    <ListMidWrap key={item.pk}>
-                      <h2>{item.name}</h2>
-                    <ListMid >
-                      {item.products?.map((all) => {
-                        return (
-                                <ProductsEach  to={`/products/${all.pk}`} key={all.pk}>
-                                  <img src={all.photos[0].picture} alt='' />
-                                  <ToggleLike>
-                                    {all.is_liked ? (
-                                      <FavoriteIcon />
-                                    ) : (
-                                      <FavoriteBorderIcon />
-                                    )}
-                                  </ToggleLike>
-                                  <ProductEachDetails>
-                                    <ProductTitle>{all.name}</ProductTitle>
-                                    <ProductDesc>{all.detail}</ProductDesc>
-                                    <ProductPrice>${all.price}</ProductPrice>
-                                    <ProductLike>
+            {itemAllKinds.productKinds?.map((item) => {
+              return (
+                <ListMidWrap key={item.pk}>
+                  <h2>{item.name}</h2>
+                  <ListMid>
+                    {item.products?.map((all) => {
+                      return (
+                        <ProductsEach to={`/products/${all.pk}`} key={all.pk}>
+                          <img src={all.photos[0].picture} alt='' />
+                          <ToggleLike>
+                            {all.is_liked ? (
+                              <FavoriteIcon />
+                            ) : (
+                              <FavoriteBorderIcon />
+                            )}
+                          </ToggleLike>
+                          <ProductEachDetails>
+                            <ProductTitle>{all.name}</ProductTitle>
+                            <ProductDesc>{all.detail}</ProductDesc>
+                            <ProductPrice>${all.price}</ProductPrice>
+                            {/* <ProductLike>
                                       <FavoriteIcon fontSize='small' />
                                       Total Likes count
-                                    </ProductLike>
-                                  </ProductEachDetails>
-                                </ProductsEach>
-                              );
-                        })}
-                    </ListMid>
+                                    </ProductLike> */}
+                          </ProductEachDetails>
+                        </ProductsEach>
+                      );
+                    })}
+                  </ListMid>
                 </ListMidWrap>
-                  );
-                })}
+              );
+            })}
           </ProductsList>
         </ProductsListWrapper>
       </ProductsWrap>

@@ -29,13 +29,13 @@ const TestProductKindsView = () => {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-   console.log(data);
+    console.log(data);
     setItemKinds(data);
   };
   useEffect(() => {
     getKindsProduct();
   }, [id]);
-  console.log("itemKinds", itemKinds);
+  console.log('itemKinds', itemKinds);
 
   const sort = [
     // { value: '', text: '--Choose an option--' },
@@ -96,10 +96,10 @@ const TestProductKindsView = () => {
                       <ProductTitle>{item.name}</ProductTitle>
                       <ProductDesc>{item.detail}</ProductDesc>
                       <ProductPrice>${item.price}</ProductPrice>
-                      <ProductLike>
+                      {/* <ProductLike>
                         <FavoriteIcon fontSize='small' />
                         total Likes count
-                      </ProductLike>
+                      </ProductLike> */}
                     </ProductEachDetails>
                   </ProductsEach>
                 );
