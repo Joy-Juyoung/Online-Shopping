@@ -19,6 +19,8 @@ import CartPage from './CartPage/CartPage';
 
 import ProductAllParentsKinds from './ProductPage/ProductAllParentsKinds';
 import TestProductKindsView from './ProductPage/TestProductKindsView';
+import HelpCenterPage from './HelpCenterPage/HelpCenter';
+
 
 const Home = ({ meData }) => {
   return (
@@ -80,6 +82,8 @@ const Home = ({ meData }) => {
         <Route path='/testHeader' element={<TestHeader />} exact={true} />
         <Route path='/wishlist' element={<WishlistPage />} exact={true} />
         <Route path='/carts' element={<CartPage />} exact={true} />
+
+      <Route path='/helpcenter' element={<HelpCenterPage />} exact={true} />
       </Routes>
     </Container>
   );

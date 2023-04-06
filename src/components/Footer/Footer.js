@@ -63,7 +63,7 @@ const Footer = () => {
         <FooterLineTwo>
           <HelpBtn>
             <a 
-              href='https://help-global.musinsa.com/hc/en-us'>
+              href='/helpcenter'>
               Help Center          
             </a>
             <HelpIcon>

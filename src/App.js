@@ -7,6 +7,7 @@ import Header from './components/Header/Header';
 import TestHeader from './components/Header/TestHeader';
 import { useEffect, useState } from 'react';
 import axios from './api/axios';
+import HelpCenter from './pages/HelpCenterPage/HelpCenter';
 // import Loading from './components/Loading';
 
 function App() {
@@ -32,11 +33,11 @@ function App() {
   return (
     <Router>
       <Header meData={meData} />
-
-      {/* <TestHeader meData={meData}/> */}
       <Home meData={meData} />
       <Footer />
+      <HelpCenter/>
     </Router>
+    
   );
 }
 
