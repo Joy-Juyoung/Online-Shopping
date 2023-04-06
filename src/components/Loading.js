@@ -13,7 +13,7 @@ const LodingContainer = styled.div`
   justify-content: center;
   align-items: center;
 
-  background: #fff;
+  /* background: #fff; */
   overflow: hidden;
 `;
 

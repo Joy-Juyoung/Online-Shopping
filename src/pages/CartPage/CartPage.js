@@ -47,6 +47,7 @@ import {  CartBodyWrap,
           ItemDetailTwoWrap
         } from './CartElements';
 
+
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import CloseIcon from '@mui/icons-material/Close';
 import SNEAKERS from '../../asset/SNEAKERS.png';
@@ -72,10 +73,21 @@ const CartPage = () => {
   useEffect(() => {
     getAllCart();
   },[])
-  
   console.log("carts", carts);
 
   return (
+    // <>
+    //    <div>CartPage</div>
+    //    {itemCart.map((i) => {
+    //      return (
+    //       <ul key={i.pk}>
+    //         <li>{i.pk}</li>
+    //      </ul>
+    //     );
+    //   })}
+    //  </>
+    // );
+
     <CartContainer>
       <CartWrapper>
         <h2>SHOPPING BAG</h2>
@@ -84,9 +96,7 @@ const CartPage = () => {
             <CartLeftCheckBar>
               <CheckBarWrap>
                 <OrderCheckBox>
-                  <input 
-                    type="checkbox"
-                  />
+                  <input type='checkbox' />
                   <label>All</label>
                 </OrderCheckBox>
                 <DeleteBtn>Delete</DeleteBtn>
@@ -140,17 +150,16 @@ const CartPage = () => {
             </CartProductLists>
           </CartLeftInfo>
           <CartRightInfo>
-            
             <CartRightTop>
               <h3>Promo Code</h3>
               <PromoInfo>
                 <QuestionMark>
-                  <HelpOutlineIcon fontSize='small' color='action'/>
+                  <HelpOutlineIcon fontSize='small' color='action' />
                 </QuestionMark>
               </PromoInfo>
               <CouponInfo>
                 <CouponInputWrap>
-                  <CouponInput placeholder='Please enter your promo code'/>
+                  <CouponInput placeholder='Please enter your promo code' />
                   <CouponBtn>Apply</CouponBtn>
                 </CouponInputWrap>
               </CouponInfo>
@@ -177,19 +186,18 @@ const CartPage = () => {
                   Total
                   <span>$154</span>
                 </ItemTotalPrice>
-                  <ExtraInfo>
-                    <li>* Additional duties and taxes may apply at checkout.</li>
-                  </ExtraInfo>
+                <ExtraInfo>
+                  <li>* Additional duties and taxes may apply at checkout.</li>
+                </ExtraInfo>
               </CartSummaryInfo>
             </CartRightMidOne>
 
             <CartRightMidTwo>
               <FreeShippingInfo>
-                  Add $
-                  <span>61 </span> 
-                  more to enjoy 
-                  <strong> FREE SHIPPING</strong>
-                </FreeShippingInfo>
+                Add $<span>61 </span>
+                more to enjoy
+                <strong> FREE SHIPPING</strong>
+              </FreeShippingInfo>
             </CartRightMidTwo>
 
             <CartRightBottom>
@@ -199,7 +207,7 @@ const CartPage = () => {
         </CartBodyWrap>
       </CartWrapper>
     </CartContainer>
-  )
+  );
 }
 
 export default CartPage;
