@@ -154,7 +154,7 @@ export const DetailName = styled(Link)`
     cursor: pointer;
 `;
 
-export const DetailDescrition = styled(Link)`
+export const DetailDescription = styled(Link)`
     color: #0a0f18;
     text-decoration: none;
     cursor: pointer;

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {  CartBodyWrap, 
           CartContainer, 
           CartLeftCheckBar, 
@@ -20,7 +20,7 @@ import {  CartBodyWrap,
           CouponInput, 
           CouponInputWrap, 
           DeleteBtn, 
-          DetailDescrition, 
+          DetailDescription, 
           DetailName, 
           DetailOption, 
           ExtraInfo, 
@@ -52,8 +52,29 @@ import CloseIcon from '@mui/icons-material/Close';
 import SNEAKERS from '../../asset/SNEAKERS.png';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
+import axios from '../../api/axios';
 
-function CartPage() {
+
+const CARTS_URL = '/carts';
+
+const CartPage = () => {
+  const [carts, setCarts] = useState([]);
+  const getAllCart = async () => {
+    const cartList = await axios.get(CARTS_URL,{
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      }
+      );
+      
+    console.log('cartList', cartList.data);
+    setCarts(cartList?.data);
+    }
+  useEffect(() => {
+    getAllCart();
+  },[])
+  
+  console.log("carts", carts);
+
   return (
     <CartContainer>
       <CartWrapper>
@@ -72,46 +93,50 @@ function CartPage() {
               </CheckBarWrap>
             </CartLeftCheckBar>
             <CartProductLists>
-              <ListsDetails>
-                <ListsCheckBox>
-                  <input 
-                      type="checkbox"
-                    />
-                  {/* <label/> */}
-                </ListsCheckBox>
-                <ListsItemImg>
-                  <ListsImgLink to={``}>
-                    <img src={SNEAKERS}></img>
-                  </ListsImgLink>
-                </ListsItemImg>
-                <ListsItemDetails>
-                  <ItemDetailOne>
-                    <DetailName to={``}>Sneakers</DetailName>
-                    <DetailDescrition to={``}>Red Sneakers</DetailDescrition>
-                    <DetailOption>
-                      <span>1</span>
-                    </DetailOption>
-                  </ItemDetailOne>
-                  <ItemDetailTwo>
-                    <ItemDetailTwoWrap>
+              {carts?.map((cart) =>{
+                return (
+                  <ListsDetails key={cart.pk}>
+                    <ListsCheckBox>
+                      <input 
+                          type="checkbox"
+                          />
+                      {/* <label/> */}
+                    </ListsCheckBox>
+                    <ListsItemImg>
+                    <ListsImgLink to={``}>
+                      <img src={cart.product.photos[0].picture} alt=''/>
+                    </ListsImgLink>
+                    </ListsItemImg>
+                    <ListsItemDetails>
+                      <ItemDetailOne>
+                        <DetailName to={``}>{cart.product.name}</DetailName>
+                        <DetailDescription to={``}>{cart.product.detail}</DetailDescription>
+                        <DetailOption>
+                          <span>1</span>
+                        </DetailOption>
+                      </ItemDetailOne>
+                      <ItemDetailTwo>
+                        <ItemDetailTwoWrap>
 
-                      <ItemDecreaseBtn>
-                        <RemoveIcon fontSize='small' color='action'/>
-                      </ItemDecreaseBtn>
-                      <ItemNumberInput value={1}/>
-                      <ItemIncreaseBtn>
-                        <AddIcon fontSize='small' color='action' />
-                      </ItemIncreaseBtn>
-                    </ItemDetailTwoWrap>
-                  </ItemDetailTwo>
-                  <ItemDetailThree>
-                    <strong>$139</strong>
-                  </ItemDetailThree>
-                </ListsItemDetails>
-                <ListsDeleteBtn>
-                  <CloseIcon fontSize='small'/>
-                </ListsDeleteBtn>
-              </ListsDetails>
+                          <ItemDecreaseBtn>
+                            <RemoveIcon fontSize='small' color='action'/>
+                          </ItemDecreaseBtn>
+                          <ItemNumberInput />
+                          <ItemIncreaseBtn>
+                            <AddIcon fontSize='small' color='action' />
+                          </ItemIncreaseBtn>
+                        </ItemDetailTwoWrap>
+                      </ItemDetailTwo>
+                      <ItemDetailThree>
+                        <strong>{cart.product.price}</strong>
+                      </ItemDetailThree>
+                    </ListsItemDetails>
+                    <ListsDeleteBtn>
+                      <CloseIcon fontSize='small'/>
+                    </ListsDeleteBtn>
+                  </ListsDetails>
+                )
+              })}
             </CartProductLists>
           </CartLeftInfo>
           <CartRightInfo>
@@ -135,7 +160,7 @@ function CartPage() {
               <CartSummary>
                 Order Summary
                 <SummaryWrap>
-                  <span>1</span>
+                  <span>{carts.length}</span>
                   <span>Item</span>
                 </SummaryWrap>
               </CartSummary>
