@@ -31,8 +31,11 @@ import {
 
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useParams } from 'react-router-dom';
-import SidebarMenu from './SidebarMenu';
+
+import AddToCart from './AddToCart';
+
 import Loading from '../../components/Loading';
+
 
 // const PRODUCTDETAILS_URL = '/products/${id}';
 
@@ -140,7 +143,7 @@ const ProductDetailPage = ({ meData }) => {
             <ButtonLarges onClick={() => setIsOpen(true)}>
               Add to Cart
             </ButtonLarges>
-            {isOpen && <SidebarMenu onClose={() => setIsOpen(false)} />}
+            {isOpen && <AddToCart onClose={() => setIsOpen(false)} />}
           </DetailRightInfoBottom>
         </DetailRightInfo>
       </DetailWrapperOne>

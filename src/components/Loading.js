@@ -27,6 +27,8 @@ const LodingWrap = styled.div`
     height: calc(100% - 15px);
     border: 2px solid #fff;
     border-top: 2px solid crimson;
+    border-bottom: 2px solid crimson;
+    /* border: 2px solid crimson; */
     border-radius: 50%;
     animation: rotate 10s linear infinite alternate-reverse;
   }

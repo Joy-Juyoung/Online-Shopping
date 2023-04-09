@@ -22,20 +22,29 @@ export const AccountInputLabel = styled.label`
 
 export const InputEdit = styled.div`
   display: flex;
+  /* flex-direction: column; */
   align-items: center;
+  justify-content: center;
+  margin-top: 5px;
 
   button {
     cursor: pointer;
+
+    align-items: center;
     margin-left: -50px;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
 
     &:hover {
       font-weight: 600;
     }
   }
 `;
+
+// export const DisplayInput = styled.div``;
+
+// export const EditBtn = styled.div`
+//   background: lightgray;
+//   cursor: pointer;
+// `;
 
 export const ShippingInfo = styled.div`
   margin: 40px 0;
@@ -61,9 +70,4 @@ export const DelBtn = styled.div`
       font-weight: 600;
     }
   }
-`;
-
-export const EditBtn = styled.div`
-  background: lightgray;
-  cursor: pointer;
 `;

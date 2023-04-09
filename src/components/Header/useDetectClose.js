@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 const useDetectClose = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const ref = useRef(null);
+  const ref = useRef();
 
   const removeHandler = () => {
     setIsOpen(!isOpen);

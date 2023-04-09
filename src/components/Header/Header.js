@@ -4,7 +4,6 @@ import axios from '../../api/axios';
 import {
   CartLink,
   FaLink,
-  HeaderContainer,
   HeaderUp,
   HeaderWrapper,
   LeftSide,
@@ -25,20 +24,12 @@ import {
   FreeInfo,
   FreeInfoTitle,
   HeaderWrap,
-  DropAccount,
-  LinkAccount,
-  DropUl,
-  DropLi,
   NoUserModal,
-  CloseBtn,
   NoUserContents,
   NoUserTitle,
   NoUserText,
   NoUserBtn,
   NoUserContainer,
-  DropAccountWrap,
-  DropAccountTopCover,
-  DropMenuWrap,
   DropChildWrap,
   ModalBtnWrap,
   ModalBtnDetail,
@@ -48,22 +39,20 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import PermIdentityRoundedIcon from '@mui/icons-material/PermIdentityRounded';
 import LogoutIcon from '@mui/icons-material/Logout';
-import TestModal from './TestModal';
+import Search from './Search';
 import { Link, useNavigate } from 'react-router-dom';
 import Loading from '../../components/Loading';
+import DropUser from './DropUser';
 
-import PopupAddress from '../PopupAddress';
-import CloseIcon from '@mui/icons-material/Close';
 import { ButtonSmall, ButtonUtils } from '../ButtonElements';
 import Modal from '../Modal';
 import Avatar, { ConfigProvider } from 'react-avatar';
 
+// import CloseIcon from '@mui/icons-material/Close';
 import SearchIcon from '@mui/icons-material/Search';
 
 const CATEGORY_URL = '/products/productAllParentsKinds';
 const Header = ({ meData }) => {
-  // let timer;
-  const accountRef = useRef();
   const navigate = useNavigate();
 
   const [categories, setCategories] = useState([]);
@@ -71,16 +60,11 @@ const Header = ({ meData }) => {
   const [logout, setLogout] = useState();
   const [clickAccount, setClickAccount] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [isOpenAddress, setIsOpenAddress] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // const [showNoUser, setShowNoUser] = useState(false);
-  // const [hideNoUser, setHideNoUser] = useState(false);
   const [modalShown, toggleModal] = useState(false);
 
-  const toggleAddress = () => {
-    setIsOpenAddress(!isOpenAddress);
-  };
+  const ref = useRef();
+  const searchRef = useRef();
 
   console.log('Header Me', me);
 
@@ -126,13 +110,25 @@ const Header = ({ meData }) => {
     setClickAccount(false);
   };
 
-  // const noUserClick = () => {
-  //   setShowNoUser(true);
-  // };
-
-  // const noUserClose = () => {
-  //   setShowNoUser(false);
-  // };
+  // detect click outside to close
+  useEffect(() => {
+    const checkIfClickedOutside = (e) => {
+      if (clickAccount && ref.current && !ref.current.contains(e.target)) {
+        setClickAccount(false);
+      }
+      if (
+        isModalOpen &&
+        searchRef.current &&
+        !searchRef.current.contains(e.target)
+      ) {
+        setIsModalOpen(false);
+      }
+    };
+    document.addEventListener('click', checkIfClickedOutside);
+    return () => {
+      document.removeEventListener('click', checkIfClickedOutside);
+    };
+  }, [clickAccount, isModalOpen]);
 
   if (loading)
     return (
@@ -143,12 +139,11 @@ const Header = ({ meData }) => {
 
   return (
     <>
-      {/* <HeaderContainer> */}
       <HeaderWrap>
         <HeaderWrapper>
           <HeaderUp>
             <LeftSide>
-              <ModalBtnWrap>
+              <ModalBtnWrap ref={searchRef}>
                 <ModalBtn onClick={() => setIsModalOpen(true)}>
                   <ModalBtnDetail>
                     <SearchIcon color='disabled' fontSize='medium' />
@@ -156,9 +151,7 @@ const Header = ({ meData }) => {
                   </ModalBtnDetail>
                 </ModalBtn>
               </ModalBtnWrap>
-              {isModalOpen && (
-                <TestModal onClose={() => setIsModalOpen(false)} />
-              )}
+              {isModalOpen && <Search onClose={() => setIsModalOpen(false)} />}
             </LeftSide>
 
             <MiddleSide>
@@ -251,92 +244,16 @@ const Header = ({ meData }) => {
                     </CartLink>
                   </RightIcon>
                   <RightIcon>
-                    {!clickAccount ? (
-                      <PermLink>
-                        <PermIdentityRoundedIcon
-                          fontSize='medium'
-                          onClick={handleAccount}
-                        />
-                      </PermLink>
-                    ) : (
+                    {!isModalOpen && (
                       <>
-                        <PermLink>
+                        <PermLink style={{ zIndex: '3' }}>
                           <PermIdentityRoundedIcon
                             fontSize='medium'
                             onClick={handleAccount}
+                            ref={ref}
                           />
                         </PermLink>
-
-                        <DropAccount ref={accountRef}>
-                          <DropAccountWrap>
-                            <DropUl>
-                              <LinkAccount
-                                to='/userAccount'
-                                onClick={handleDropOut}
-                              >
-                                <DropLi>
-                                  <ConfigProvider
-                                    colors={['red', 'grey', 'green']}
-                                  >
-                                    <Avatar
-                                      name={me.username}
-                                      round={true}
-                                      size={30}
-                                    />
-                                  </ConfigProvider>
-                                  <span
-                                    style={{
-                                      marginLeft: '10px',
-                                      fontWeight: '600',
-                                      fontSize: '15px',
-                                    }}
-                                  >
-                                    {me.username}
-                                  </span>
-                                </DropLi>
-                                <DropLi>My Profile</DropLi>
-                              </LinkAccount>
-                              <LinkAccount
-                                to='/testPage'
-                                onClick={handleDropOut}
-                              >
-                                <DropLi>My Orders</DropLi>
-                              </LinkAccount>
-
-                              <LinkAccount onClick={toggleAddress}>
-                                <DropLi>My Addresses</DropLi>
-                              </LinkAccount>
-                              {/* {isOpenAddress && (
-                                <PopupAddress
-                                  handleClose={toggleAddress}
-                                  style={{ background: 'none' }}
-                                  meData={meData}
-                                  onClick={handleDropOut}
-                                />
-                              )} */}
-                              <LinkAccount
-                                to='/testPage'
-                                onClick={handleDropOut}
-                              >
-                                <DropLi>My Balances</DropLi>
-                              </LinkAccount>
-                              <LinkAccount
-                                to='/testPage'
-                                onClick={handleDropOut}
-                              >
-                                <DropLi>My Coupons</DropLi>
-                              </LinkAccount>
-                            </DropUl>
-                          </DropAccountWrap>
-                        </DropAccount>
-                        {/* {isOpenAddress && (
-                          <PopupAddress
-                            handleClose={toggleAddress}
-                            style={{ background: 'none' }}
-                            meData={meData}
-                            onClick={handleDropOut}
-                          />
-                        )} */}
+                        {clickAccount && <DropUser meData={meData} />}
                       </>
                     )}
                   </RightIcon>
@@ -350,38 +267,36 @@ const Header = ({ meData }) => {
             </RightSide>
           </HeaderUp>
           <HeaderDown>
-            {/* <DropMenuWrap></DropMenuWrap> */}
             <DropMenu>
               {categories.map((category) => {
                 return (
                   <DropMenuList key={category.pk}>
+                    {/* <DropMenuWrap></DropMenuWrap> */}
                     <DropMenuParents>
                       <DropdownButton
                         to={`/products/productAllParentsKinds/${category.pk}`}
                       >
                         {category.name}
                       </DropdownButton>
-                      {!clickAccount && (
-                        <DropChildWrap>
-                          <DropMenuChild>
-                            {category.productKinds?.map((child) => {
-                              return (
-                                <DropMenuItem key={child.pk}>
-                                  <Link
-                                    style={{
-                                      color: 'black',
-                                      textDecoration: 'none',
-                                    }}
-                                    to={`/products/productAllChildKinds/${child.pk}`}
-                                  >
-                                    {child.name}
-                                  </Link>
-                                </DropMenuItem>
-                              );
-                            })}
-                          </DropMenuChild>
-                        </DropChildWrap>
-                      )}
+                      <DropChildWrap>
+                        <DropMenuChild>
+                          {category.productKinds?.map((child) => {
+                            return (
+                              <DropMenuItem key={child.pk}>
+                                <Link
+                                  style={{
+                                    color: 'black',
+                                    textDecoration: 'none',
+                                  }}
+                                  to={`/products/productAllChildKinds/${child.pk}`}
+                                >
+                                  {child.name}
+                                </Link>
+                              </DropMenuItem>
+                            );
+                          })}
+                        </DropMenuChild>
+                      </DropChildWrap>
                     </DropMenuParents>
                   </DropMenuList>
                 );
@@ -395,7 +310,6 @@ const Header = ({ meData }) => {
           <FreeInfoTitle>FREE SHIPPING on all orders $200+</FreeInfoTitle>
         </FreeInfo>
       </TopWrapper>
-      {/* </HeaderContainer> */}
     </>
   );
 };

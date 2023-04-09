@@ -21,8 +21,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import axios from '../../api/axios';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+
 import { useNavigate } from 'react-router-dom';
 import Loading from '../../components/Loading';
 // import { ToastContainer, toast } from 'react-toastify';
@@ -182,7 +181,7 @@ const LoginPage = () => {
               aria-describedby='uidnote'
               onFocus={() => setUsernameFocus(true)}
               onBlur={() => setUsernameFocus(false)}
-              placeholder='Enter username.'
+              placeholder='Enter user id.'
             />
             <VerificationMsg
               id='uidnote'
