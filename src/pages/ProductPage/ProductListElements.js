@@ -3,26 +3,56 @@ import styled from 'styled-components';
 
 export const ProductsListContainer = styled.div`
   width: 100%;
+
+  h1 {
+    margin: 40px 0 0;
+  }
 `;
 
 export const ProductsWrap = styled.div`
   margin: 0 auto;
-
-  h1 {
-    margin: 40px 0;
-  }
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
 `;
+
+export const SideFilterWrapper = styled.div`
+  margin: 0 auto;
+  flex: 1;
+`;
+
+export const SideClearWrap = styled.div``;
+
+export const SideCategoriesWrap = styled.div``;
+
+export const SidePriceWrap = styled.div``;
 
 export const ProductsListWrapper = styled.div`
   margin: 0 auto;
+  flex: 4;
 `;
 
-export const ProductCategories = styled.div``;
+export const CategoriesWrap = styled.div`
+  margin: 20px 0;
+  display: flex;
+`;
+
+export const Categories = styled.div`
+  display: flex;
+  margin-right: 10px;
+  font-size: 12px;
+  padding: 7px;
+  border-radius: 5px;
+  background: #f2f4f7;
+  cursor: pointer;
+
+  &:hover {
+    font-weight: 500;
+  }
+`;
 
 export const ProductsList = styled.div`
-  /* margin: 0 auto; */
-  /* width: 80%; */
-  margin: 20px;
+  /* margin: 20px; */
 `;
 
 export const ListTop = styled.div`
@@ -32,91 +62,33 @@ export const ListTop = styled.div`
   margin: 10px auto;
 `;
 
-export const SelectWrap = styled.div`
-  display: grid;
-  grid-template-areas: 'select';
-  align-items: center;
-  position: relative;
+export const TotalCount = styled.div``;
 
-  select {
-    /* appearance: none; */
-    background-color: transparent;
-    /* border: 1px solid blue; */
-    border-radius: 5px;
-    padding: 0.2em 0.5em;
-    margin: 0;
-    width: 100%;
-    /* font-family: inherit; */
-    /* font-size: inherit; */
-    cursor: inherit;
-    line-height: inherit;
-
-    z-index: 1;
-
-    &:focus {
-      border: 2px solid blue;
-      option {
-        &:checked {
-          /* box-shadow: 0 0 10px 100px #000 inset; */
-          /* background-color: yellow !important; */
-        }
-      }
-    }
-
-    &::-ms-expand {
-      display: none;
-    }
-
-    option {
-      &:hover {
-        box-shadow: 0 0 10px 100px #000 inset;
-        /* background-color: yellow !important; */
-      }
-    }
-  }
-
-  select,
-  &::after {
-    grid-area: select;
-  }
-
-  /* min-width: 15ch;
-  max-width: 30ch; */
-
-  /* border: 1px solid var(--select-border); */
-  /* border: 2px solid blue; */
-  /* border-radius: 0.25em; */
-  /* padding: 0.25em 0.5em; */
-
-  /* font-size: 1.25rem;
-  cursor: pointer;
-  line-height: 1.1;
-
-  background-color: #fff;
-  background-image: linear-gradient(to top, #f9f9f9, #fff 33%); */
+export const TotalCountWrap = styled.div`
+  /* margin: 20px 0; */
 `;
+
+export const SelectWrap = styled.div``;
+
 export const ListMidWrap = styled.div`
   display: flex;
   flex-direction: column;
-  /* grid-template-columns: repeat(4, minmax(min-content, max-content));
-  grid-gap: 10px; */
-   h2{
-    margin: 10px 0;
-   }
+
+  h2 {
+    /* margin: 40px 0; */
+    width: 100%;
+    border-top: 1px dotted gray;
+    /* border-bottom: 1px dotted gray; */
+    font-size: 18px;
+    padding: 5px 0;
+  }
 `;
 
 export const ListMid = styled.div`
-  /* margin: 0 40px; */
-  /* width: 80%; */
-  /* width: 250px; */
   display: grid;
   justify-content: center;
-  /* align-items: center; */
-  /* grid-template-columns: repeat(4, 200px); */
-  /* grid-template-columns: repeat(4, minmax(min-content, max-content)); */
   grid-template-columns: repeat(4, 1fr);
-  grid-gap: 10px;
-  /* object-fit: cover; */
+  grid-gap: 20px;
 `;
 
 export const ProductsEach = styled(Link)`
@@ -126,12 +98,11 @@ export const ProductsEach = styled(Link)`
   flex-direction: column;
   justify-content: center;
   cursor: pointer;
+  margin: 0 0 50px;
 `;
 
 export const ProductEachPhoto = styled.img`
   object-fit: cover;
-  /* object-fit: fill; */
-  /* object-fit: contain; */
   width: 100%;
   height: 300px;
 `;
@@ -140,7 +111,6 @@ export const ToggleLike = styled.div`
   margin: -35px 10px 10px 0;
   text-align: right;
   z-index: 2;
-  /* font-size: 20px; */
 `;
 
 export const ProductEachDetails = styled.div`

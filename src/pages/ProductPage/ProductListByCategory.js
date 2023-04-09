@@ -18,11 +18,12 @@ import {
   ProductPrice,
   ProductLike,
   ListMidWrap,
+  CategoriesWrap,
 } from './ProductListElements';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 // const TestProduct_URL = '/products/productAllChildKinds/${id}';
-const TestProductKindsView = () => {
+const ProductListByCategory = () => {
   const [itemKinds, setItemKinds] = useState([]); //useState([]);
   const { id } = useParams();
   const getKindsProduct = async () => {
@@ -55,14 +56,12 @@ const TestProductKindsView = () => {
       <ProductsWrap>
         <h1>{itemKinds.name}</h1>
         <ProductsListWrapper>
-          <ProductCategories>
+          <CategoriesWrap>
             {/* <span>Categories Filter section</span> */}
-          </ProductCategories>
+          </CategoriesWrap>
           <ProductsList>
             <ListTop>
-              <span style={{ fontSize: '13px' }}>
-                Total {itemKinds.length}{' '}
-              </span>
+              <span style={{ fontSize: '13px' }}>Total {itemKinds.length}</span>
 
               <span>
                 <select
@@ -129,4 +128,4 @@ const TestProductKindsView = () => {
   );
 };
 
-export default TestProductKindsView;
+export default ProductListByCategory;

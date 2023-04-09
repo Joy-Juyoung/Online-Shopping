@@ -1,15 +1,8 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-export const HeaderContainer = styled.div`
-  /* color: #0a0f18;
-  margin: 0 auto;
-  padding: 0;
-  z-index: 100;
-  background: #fff; */
-`;
-
 export const HeaderWrap = styled.div`
+  /* max-width: 1250px; */
   position: sticky;
   top: 0;
   background: #fff;
@@ -152,16 +145,15 @@ export const HeaderDown = styled.div`
   padding: 20px 0 10px;
 `;
 
-export const DropMenuWrap = styled.div`
-  /* &:hover {
-  position: fixed;
+export const DropMenuWrap = styled.span`
+  /* position: fixed;
   top: 120px;
   bottom: 0;
   left: 0;
   right: 0;
+  height: 100vh;
   background-color: rgba(0, 0, 0, 0.4);
-  z-index: 2;
-  } */
+  z-index: 1; */
 `;
 
 export const DropMenu = styled.ul`
@@ -175,11 +167,28 @@ export const DropMenu = styled.ul`
 export const DropMenuList = styled.li`
   display: inline-block;
   z-index: 3;
+  /* transition: 0.3s; */
 
   &:hover {
     ul {
       display: block;
       border-top: 1px solid lightgrey;
+      /* transition: 0.3s; */
+      /* z-index: 2; */
+      /* animation: rotateMenu 200ms ease-in-out forwards;
+      transform-origin: top center;
+
+      @keyframes rotateMenu {
+        0% {
+          transform: rotateX(-90deg);
+        }
+        70% {
+          transform: rotateX(20deg);
+        }
+        100% {
+          transform: rotateX(0deg);
+        }
+      } */
     }
   }
 `;
@@ -198,6 +207,7 @@ export const DropdownButton = styled(Link)`
   font-weight: 600;
   cursor: pointer;
   padding-bottom: 8px;
+  /* z-index: 2; */
 
   &:hover {
     margin: 10px auto;
@@ -219,7 +229,7 @@ export const DropMenuChild = styled.ul`
   display: none;
   padding: 0;
   margin: 0 auto;
-  box-shadow: 0 10px 4px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 500px 2px 500px rgba(0, 0, 0, 0.4);
   font-size: 14px;
 `;
 
@@ -237,7 +247,7 @@ export const DropMenuItem = styled.li`
 // ---------------------------------
 
 export const TopWrapper = styled.div`
-  width: 100vw;
+  width: 100%;
   margin: 0 auto;
   background: #0a0f18;
   color: #fff;
@@ -256,88 +266,6 @@ export const FreeInfo = styled.div`
 export const FreeInfoTitle = styled.p`
   text-align: center;
   font-size: 13px;
-`;
-
-// ---------------
-export const DropAccountContainer = styled.div`
-  margin: 0 auto;
-`;
-
-export const DropAccountCoverTop = styled.div`
-  position: fixed;
-  top: 0;
-  /* bottom: 0; */
-  left: 0;
-  right: 0;
-  height: 115px;
-  background-color: transparent;
-  z-index: 2;
-`;
-
-export const DropAccountCoverMain = styled.div`
-  position: fixed;
-  top: 112px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  /* background-color: blue; */
-  background-color: rgba(0, 0, 0, 0.4);
-  z-index: 2;
-`;
-
-export const DropAccountWrap = styled.div`
-  max-width: 1250px;
-  margin: 0 auto;
-  display: flex;
-
-  justify-content: flex-end;
-`;
-
-export const DropUl = styled.ul`
-  position: fixed;
-  top: 60px;
-  width: 220px;
-  border: 1px solid rgba(0, 0, 0, 0.04);
-  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.4);
-  z-index: 3;
-  font-size: 13px;
-
-  animation: rotateMenu 400ms ease-in-out forwards;
-  transform-origin: top center;
-
-  @keyframes rotateMenu {
-    0% {
-      transform: rotateX(-90deg);
-    }
-    70% {
-      transform: rotateX(20deg);
-    }
-    100% {
-      transform: rotateX(0deg);
-    }
-  }
-  list-style: none;
-  margin: 0;
-  background: #fff;
-`;
-
-export const DropLi = styled.li`
-  padding: 10px 15px;
-
-  &:hover {
-    cursor: pointer;
-    color: #0a0f18;
-    background: lightgray;
-  }
-`;
-
-export const LinkAccount = styled(Link)`
-  text-decoration: none;
-  color: black;
-
-  &:visited {
-    text-decoration: none;
-  }
 `;
 
 // -------

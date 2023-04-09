@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
-import TestHeader from './components/Header/TestHeader';
+// import TestHeader from './components/Header/TestHeader';
 import { useEffect, useState } from 'react';
 import axios from './api/axios';
 import HelpCenter from './pages/HelpCenterPage/HelpCenter';
@@ -35,8 +35,6 @@ function App() {
         <Header meData={meData} />
         <Home meData={meData} />
         <Footer />
-
-        {/* <HelpCenter /> */}
       </Router>
     </>
   );

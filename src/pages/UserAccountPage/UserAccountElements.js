@@ -29,10 +29,7 @@ export const InputEdit = styled.div`
 
   button {
     cursor: pointer;
-    /* margin-left: -50px;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px; */
+
     align-items: center;
     margin-left: -50px;
 

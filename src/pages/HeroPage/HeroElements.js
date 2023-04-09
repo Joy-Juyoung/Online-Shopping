@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const MainContainer = styled.div`
+  max-width: 1250px;
   min-height: 100%;
-  /* max-width: 1250px; */
   font-size: 14px;
   line-height: 1.5;
   color: rgb(10, 15, 24);

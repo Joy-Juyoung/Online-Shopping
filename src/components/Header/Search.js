@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react'
-import { 
+import React, { useEffect, useRef } from 'react';
+import {
   ModalBody,
   ModalBodyHeader,
   ModalBodyParagraph,
@@ -8,57 +8,54 @@ import {
   ModalCloseBtn,
   ModalContainerSkin,
   ModalHeader,
-        ModalHeaderInput,
-        ModalHeaderSearch,
-        TestModalBlock,
-        TestModalCloseBtn, 
-        TestModalContainer, 
-        TestModalContent, 
-        TestModalSearch,
-        TestModalTop,
-        TestModalWrapper
-         }
-from './TestModalElements';
+  ModalHeaderInput,
+  ModalHeaderSearch,
+  TestModalBlock,
+  TestModalCloseBtn,
+  TestModalContainer,
+  TestModalContent,
+  TestModalSearch,
+  TestModalTop,
+  TestModalWrapper,
+} from './SearchElements';
 import CloseIcon from '@mui/icons-material/Close';
 import SearchIcon from '@mui/icons-material/Search';
 
+const Search = ({ onClose, ref }) => {
+  // const ref = useRef();
+  useEffect(() => {
+    const checkIfClickedOutside = (e) => {
+      // if (!ref.current && ref.current.contains(e.target)) {
+      //   onClose();
+      // }
+      // if (ref.current.contains(e.target)) {
+      //   onClose();
+      // }
+    };
+    document.addEventListener('click', checkIfClickedOutside);
+    return () => {
+      document.removeEventListener('click', checkIfClickedOutside);
+    };
+  }, [onClose]);
 
-
-const TestModal = ({ onClose }) => {
-    const ref = useRef();
-    useEffect(() => {
-      const checkIfClickedOutside = (e) => {
-        // if (!ref.current && ref.current.contains(e.target)) {
-        //   onClose();
-        // }
-        if (ref.current.contains(e.target)) {
-          onClose();
-        }
-      };
-      document.addEventListener("click", checkIfClickedOutside);
-      return () => {
-        document.removeEventListener("click", checkIfClickedOutside);
-      };
-    }, [onClose]);
-  
-
-// const TestModal = ({setOpen}) => {
-//     const closeModal = () => {
-//         setOpen(false);
-//     };
+  // const TestModal = ({setOpen}) => {
+  //     const closeModal = () => {
+  //         setOpen(false);
+  //     };
 
   return (
-    // outside clicked closed 해야함
-    <ModalContainerSkin >
-      <TestModalContainer >
-        <TestModalWrapper >
-          <ModalHeader >
+    <ModalContainerSkin>
+      <TestModalContainer>
+        <TestModalWrapper>
+          <ModalHeader>
             <ModalHeaderSearch>
-              <span><SearchIcon color='disabled' fontSize='medium'/></span>
+              <span>
+                <SearchIcon color='disabled' fontSize='medium' />
+              </span>
               <ModalHeaderInput placeholder='Seach' />
             </ModalHeaderSearch>
-            <ModalCloseBtn  onClick={onClose}>
-              <CloseIcon fontSize='large'/>
+            <ModalCloseBtn onClick={onClose}>
+              <CloseIcon fontSize='large' />
             </ModalCloseBtn>
           </ModalHeader>
 
@@ -70,7 +67,7 @@ const TestModal = ({ onClose }) => {
               <ModalBodyParagraph>
                 <ModalBodyPList>
                   <p>Top</p>
-                  </ModalBodyPList>
+                </ModalBodyPList>
                 <ModalBodyPList>
                   <p>Button</p>
                 </ModalBodyPList>
@@ -97,15 +94,14 @@ const TestModal = ({ onClose }) => {
                 </ModalBodyPList>
                 <ModalBodyPList>
                   <p>나도줘</p>
-                </ModalBodyPList>   
+                </ModalBodyPList>
               </ModalBodyParagraph>
             </ModalBodyWrap>
           </ModalBody>
         </TestModalWrapper>
       </TestModalContainer>
     </ModalContainerSkin>
+  );
+};
 
-  )
-}
-
-export default TestModal;
+export default Search;

@@ -102,9 +102,6 @@ const WishlistPage = ({ meData }) => {
       <ProductsWrap>
         <h1>Wishlists</h1>
         <ProductsListWrapper>
-          <ProductCategories>
-            {/* <span>Categories Filter section</span> */}
-          </ProductCategories>
           <ProductsList>
             <ListTop>
               <span style={{ fontSize: '13px' }}>

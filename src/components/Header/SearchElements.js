@@ -1,22 +1,19 @@
 import styled from 'styled-components';
 
 export const ModalContainerSkin = styled.div`
-  position: absolute;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   height: 100vh;
-  width: 100%;
-  padding: 0px;
-  margin: 0px;
-  top: 0px;
-  right: 0px;
-  left: 0px;
-  background: rgba(91, 88, 88, 0.8);
+  background-color: rgba(0, 0, 0, 0.4);
   z-index: 2;
-  display: block;
 `;
 
 export const TestModalContainer = styled.div`
   position: absolute;
-  padding: 0px;
+  padding: 10px;
   margin: 0px;
   right: 0px;
   left: 0px;
@@ -24,6 +21,7 @@ export const TestModalContainer = styled.div`
   max-height: 650px;
   min-height: 170px;
   background-color: rgb(255, 255, 255);
+  z-index: 5;
   /* box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16); */
 `;
 export const TestModalWrapper = styled.div`

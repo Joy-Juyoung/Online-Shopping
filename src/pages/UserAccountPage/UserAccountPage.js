@@ -34,15 +34,8 @@ import axios from '../../api/axios';
 const UserAccountPage = ({ meData }) => {
   const [loading, setLoading] = useState(false);
 
-  console.log('meData', meData);
+  // console.log('meData', meData);
 
-  // const [meAccunt = meData, setMeAccunt] = useState();
-  // const handleDeleteAccount = () => {
-  //   // alert('Do you want to delete this account?');
-  //   console.log('Make delete confirm modal');
-
-  // };
-  // const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
@@ -52,7 +45,6 @@ const UserAccountPage = ({ meData }) => {
 
   useEffect(() => {
     setLoading(true);
-    // setChangeUserInfo(meData);
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     const loadData = async () => {
       await new Promise((r) => setTimeout(r, 1000));
@@ -63,7 +55,6 @@ const UserAccountPage = ({ meData }) => {
 
   useEffect(() => {
     setChangeUserInfo(meData);
-
     setName(meData?.name);
   }, [meData]);
 
@@ -72,7 +63,6 @@ const UserAccountPage = ({ meData }) => {
     var tempChangeUserInfo = changeUserInfo;
 
     if (e.target.id === 'name') {
-      // tempChangeUserInfo.name = e.target.value;
       setName(e.target.value);
     }
     setChangeUserInfo(tempChangeUserInfo);
@@ -84,9 +74,6 @@ const UserAccountPage = ({ meData }) => {
     if (!isEdit) {
       handleEdit();
     } else {
-      // try {
-      // setLoading(true);
-      // window.location.reload();
       const meInfo = await axios.put(
         '/users/me',
         {
@@ -103,19 +90,13 @@ const UserAccountPage = ({ meData }) => {
       );
       setChangeUserInfo(meInfo?.data);
       console.log('changed Data', meInfo?.data);
-      // setEmail(email);
-      // setName(name);
-      // setAddress(address);
-      // setPhone(phone);
 
       setIsEdit(false);
       window.location.reload();
-      // setLoading(false);
     }
   };
 
   console.log('changed', changeUserInfo);
-  // console.log('name', changeUserInfo.name);
 
   const handleEdit = () => {
     if (!isEdit) {
