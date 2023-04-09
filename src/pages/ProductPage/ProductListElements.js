@@ -7,6 +7,15 @@ export const ProductsListContainer = styled.div`
   h1 {
     margin: 40px 0 0;
   }
+
+  a {
+    text-decoration: none;
+    color: #0a0f18;
+
+    &:visited {
+      text-decoration: none;
+    }
+  }
 `;
 
 export const ProductsWrap = styled.div`
@@ -71,17 +80,26 @@ export const TotalCountWrap = styled.div`
 export const SelectWrap = styled.div``;
 
 export const ListMidWrap = styled.div`
-  display: flex;
-  flex-direction: column;
+  /* display: flex; */
+  /* flex-direction: column; */
+`;
 
-  h2 {
-    /* margin: 40px 0; */
-    width: 100%;
-    border-top: 1px dotted gray;
-    /* border-bottom: 1px dotted gray; */
-    font-size: 18px;
-    padding: 5px 0;
-  }
+export const ListMidWrapper = styled.div`
+  /* a {
+    text-decoration: none;
+    color: #0a0f18;
+
+    &:visited {
+      text-decoration: none;
+    }
+  } */
+`;
+
+export const AllEachTitle = styled.h2`
+  width: 100%;
+  border-top: 1px dotted gray;
+  font-size: 18px;
+  padding: 5px 0;
 `;
 
 export const ListMid = styled.div`
@@ -99,6 +117,7 @@ export const ProductsEach = styled(Link)`
   justify-content: center;
   cursor: pointer;
   margin: 0 0 50px;
+  overflow: hidden;
 `;
 
 export const ProductEachPhoto = styled.img`
@@ -129,6 +148,8 @@ export const ProductTitle = styled.div`
 export const ProductDesc = styled.div`
   margin: 5px 0;
   width: 200px;
+  font-size: 14px;
+
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

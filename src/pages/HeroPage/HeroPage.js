@@ -75,14 +75,14 @@ const HeroPage = () => {
             <SectionOne>
               <SectionOneLeftInfo>
                 {/* 추후 링크로 변경  */}
-                <a href='https://www.youtube.com/musinsatv/'>
+                <a href=''>
                   <FirstImg src={FirstImage} />
                 </a>
               </SectionOneLeftInfo>
 
               <SectionOneRightInfo>
                 <OneRightInfoUp>
-                  <a href='https://www.youtube.com/musinsatv/'>
+                  <a href=''>
                     <ParagraphOne>
                       <ParagraghTitle>
                         NEW IN : SPRING SUMMER 2023
@@ -106,7 +106,7 @@ const HeroPage = () => {
               <SectionTwoWrapper>
                 <SectionTwoLeftInfo>
                   <TwoLeftInfoUp>
-                    <a href='https://www.youtube.com/musinsatv/'>
+                    <a href=''>
                       <ParagraghTwoTitle>FOCUS: SWEATSHIRTS</ParagraghTwoTitle>
                       <ParagraghTwoBody>
                         Sweatshirts are perfect for the weather. Meet
@@ -121,7 +121,7 @@ const HeroPage = () => {
 
                 <SectionTwoRightInfo>
                   {/* 추후 링크로 변경  */}
-                  <a href='https://www.youtube.com/musinsatv/'>
+                  <a href=''>
                     <SecondImg src={SecondImage} />
                   </a>
                 </SectionTwoRightInfo>
@@ -132,7 +132,7 @@ const HeroPage = () => {
               <SectionThreeWrapper>
                 <SectionThreeRightInfo>
                   <ThreeRightInfoUp>
-                    <a href='https://www.youtube.com/musinsatv/'>
+                    <a href=''>
                       <ParagraghThreeTitle>
                         Milan Fashion Week Highlights
                       </ParagraghThreeTitle>
@@ -148,7 +148,7 @@ const HeroPage = () => {
                 </SectionThreeRightInfo>
                 <SectionThreeLeftInfo>
                   {/* 추후 링크로 변경  */}
-                  <a href='https://www.youtube.com/musinsatv/'>
+                  <a href=''>
                     <ThirdImg src={ThirdImage} />
                   </a>
                 </SectionThreeLeftInfo>
@@ -159,7 +159,7 @@ const HeroPage = () => {
               <SectionFourWrapper>
                 <SectionFourLeftInfo>
                   <FourLeftInfoUp>
-                    <a href='https://www.youtube.com/musinsatv/'>
+                    <a href=''>
                       <ParagraghFourTitle>
                         OMG! NewJeans checked in at MUSINSA!
                       </ParagraghFourTitle>
@@ -177,7 +177,7 @@ const HeroPage = () => {
 
                 <SectionFourthRightInfo>
                   {/* 추후 링크로 변경  */}
-                  <a href='https://www.youtube.com/musinsatv/'>
+                  <a href=''>
                     <FourthImg src={FourthImage} />
                   </a>
                 </SectionFourthRightInfo>

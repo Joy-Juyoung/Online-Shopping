@@ -1,34 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../../api/axios';
 import {
+  AllEachTitle,
   Categories,
   CategoriesWrap,
   ListMid,
   ListMidWrap,
+  ListMidWrapper,
   ListTop,
-  ProductDesc,
-  ProductEachDetails,
-  ProductEachPhoto,
-  ProductLike,
-  ProductPrice,
-  ProductsEach,
   ProductsList,
   ProductsListContainer,
   ProductsListWrapper,
   ProductsWrap,
-  ProductTitle,
   SelectWrap,
   SideCategoriesWrap,
   SideClearWrap,
   SideFilterWrapper,
   SidePriceWrap,
-  ToggleLike,
   TotalCount,
   TotalCountWrap,
 } from './ProductListElements';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import Loading from '../../components/Loading';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import ProductsCard from './ProductCard';
 
 const sort = [
   { value: 'Newest', text: 'Newest first' },
@@ -41,19 +35,17 @@ const ProductsListPage = ({ meData }) => {
   const [addLiked, setAddLiked] = useState();
   const [loading, setLoading] = useState(false);
   const [itemAllKinds, setItemAllKinds] = useState([]);
+  const [kindEach, setKindEach] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
-    // window.location.reload();
     const loadData = async () => {
       await new Promise((r) => setTimeout(r, 1000));
-      // window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     };
     loadData();
   }, []);
 
   const getAllKindsProduct = async () => {
-    // setLoading(true);
     const { data } = await axios.get(`/products/productAllParentsKinds/${id}`, {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
@@ -62,6 +54,7 @@ const ProductsListPage = ({ meData }) => {
     // console.log(data);
     setItemAllKinds(data);
     console.log('itemAllKinds', itemAllKinds);
+    setKindEach(itemAllKinds.productKinds);
     setLoading(false);
   };
 
@@ -69,39 +62,38 @@ const ProductsListPage = ({ meData }) => {
     setLoading(true);
     getAllKindsProduct();
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-    // setLoading(false);
   }, [id]);
 
-  useEffect(() => {
-    getAllKindsProduct();
-  }, [addLiked]);
+  // useEffect(() => {
+  //   getAllKindsProduct();
+  // }, [addLiked]);
 
-  const handleLiked = (pk) => {
-    var tempItems = itemAllKinds.productKinds;
+  // const handleLiked = (pk) => {
+  //   var tempItems = itemAllKinds.productKinds;
 
-    tempItems.forEach((item) => {
-      item.products.forEach((each) => {
-        // console.log('each', each);
+  //   tempItems.forEach((item) => {
+  //     item.products.forEach((each) => {
+  //       // console.log('each', each);
 
-        if (each.pk === pk) {
-          each.is_liked = !each.isLiked;
+  //       if (each.pk === pk) {
+  //         each.is_liked = !each.isLiked;
 
-          const addLike = axios.put(
-            '/wishlists/',
-            {
-              product_pk: each.pk,
-            },
-            {
-              headers: { 'Content-Type': 'application/json' },
-              withCredentials: true,
-            }
-          );
-          setAddLiked(addLike);
-          // console.log('clicked', addLike);
-        }
-      });
-    });
-  };
+  //         const addLike = axios.put(
+  //           '/wishlists/',
+  //           {
+  //             product_pk: each.pk,
+  //           },
+  //           {
+  //             headers: { 'Content-Type': 'application/json' },
+  //             withCredentials: true,
+  //           }
+  //         );
+  //         setAddLiked(addLike);
+  //         // console.log('clicked', addLike);
+  //       }
+  //     });
+  //   });
+  // };
 
   // const handleOptionChange = (e) => {
   //   setSelectedCategory(e.target.value);
@@ -125,7 +117,14 @@ const ProductsListPage = ({ meData }) => {
         <ProductsListWrapper>
           <CategoriesWrap>
             {itemAllKinds?.productKinds?.map((kind) => {
-              return <Categories key={kind.pk}>{kind.name}</Categories>;
+              return (
+                <Link
+                  key={kind.pk}
+                  to={`/products/productAllChildKinds/${kind.pk}`}
+                >
+                  <Categories>{kind.name}</Categories>
+                </Link>
+              );
             })}
           </CategoriesWrap>
           <ProductsList>
@@ -133,9 +132,6 @@ const ProductsListPage = ({ meData }) => {
               <TotalCountWrap>
                 <TotalCount style={{ fontSize: '13px' }}>
                   Total {itemAllKinds?.productKinds?.length}
-                  {/* {itemAllKinds?.productKinds?.map((kind) => {
-                  return <p>{kind?.products?.length}</p>;
-                })} */}
                 </TotalCount>
               </TotalCountWrap>
               <SelectWrap>
@@ -156,42 +152,23 @@ const ProductsListPage = ({ meData }) => {
             <ListMidWrap>
               {itemAllKinds?.productKinds?.map((item) => {
                 return (
-                  <div key={item.pk}>
-                    <h2>{item.name}</h2>
+                  <ListMidWrapper key={item.pk}>
+                    <Link to={`/products/productAllChildKinds/${item.pk}`}>
+                      <AllEachTitle>{item.name}</AllEachTitle>
+                    </Link>
                     <ListMid>
                       {item.products?.map((all) => {
                         return (
-                          <ProductsEach to={`/products/${all.pk}`} key={all.pk}>
-                            <ProductEachPhoto
-                              src={all.photos[0].picture}
-                              alt=''
-                            />
-                            {meData && (
-                              <ToggleLike
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  handleLiked(all.pk);
-                                }}
-                              >
-                                <ProductLike>
-                                  {all.is_liked ? (
-                                    <FavoriteIcon sx={{ color: '#e20000' }} />
-                                  ) : (
-                                    <FavoriteIcon color='disabled' />
-                                  )}
-                                </ProductLike>
-                              </ToggleLike>
-                            )}
-                            <ProductEachDetails>
-                              <ProductTitle>{all.name}</ProductTitle>
-                              <ProductDesc>{all.detail}</ProductDesc>
-                              <ProductPrice>${all.price}</ProductPrice>
-                            </ProductEachDetails>
-                          </ProductsEach>
+                          <ProductsCard
+                            key={all.pk}
+                            all={all}
+                            kindEach={kindEach}
+                            meData={meData}
+                          />
                         );
                       })}
                     </ListMid>
-                  </div>
+                  </ListMidWrapper>
                 );
               })}
             </ListMidWrap>
