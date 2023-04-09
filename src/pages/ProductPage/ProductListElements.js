@@ -25,14 +25,41 @@ export const ProductsWrap = styled.div`
   /* align-items: center; */
 `;
 
-export const SideFilterWrapper = styled.div`
+export const SideFilterContainer = styled.div`
   margin: 0 auto;
+  padding: 0 40px 0 0;
   flex: 1;
 `;
 
-export const SideClearWrap = styled.div``;
+export const SideFilterWrapper = styled.div``;
 
-export const SideCategoriesWrap = styled.div``;
+export const SideFilterUl = styled.ul`
+  margin: 40px 0;
+`;
+
+export const SideFilterLl = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 20px;
+  padding: 0 0 20px 0;
+  border-bottom: 1px solid lightgray;
+
+  ul {
+    margin: 10px 0 0 10px;
+    font-weight: 400;
+    font-size: 15px;
+  }
+  li {
+    list-style: none;
+  }
+`;
+
+export const ListTitle = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 600;
+`;
 
 export const SidePriceWrap = styled.div``;
 
@@ -84,16 +111,7 @@ export const ListMidWrap = styled.div`
   /* flex-direction: column; */
 `;
 
-export const ListMidWrapper = styled.div`
-  /* a {
-    text-decoration: none;
-    color: #0a0f18;
-
-    &:visited {
-      text-decoration: none;
-    }
-  } */
-`;
+export const ListMidWrapper = styled.div``;
 
 export const AllEachTitle = styled.h2`
   width: 100%;
@@ -170,4 +188,12 @@ export const ProductLike = styled.button`
   &:active {
     transform: translateY(4px);
   }
+`;
+
+export const EmptyWhishlist = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40vh;
+  font-weight: 400;
 `;

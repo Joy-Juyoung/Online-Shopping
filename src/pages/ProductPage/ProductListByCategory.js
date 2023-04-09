@@ -23,6 +23,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Loading from '../../components/Loading';
 import ProductsCard from './ProductCard';
+import SideFilter from './SideFilter';
 // const TestProduct_URL = '/products/productAllChildKinds/${id}';
 
 const sort = [
@@ -74,11 +75,7 @@ const ProductListByCategory = ({ meData }) => {
     <ProductsListContainer>
       <h1>{itemKinds.name}</h1>
       <ProductsWrap>
-        <SideFilterWrapper>
-          <SideClearWrap></SideClearWrap>
-          <SideCategoriesWrap></SideCategoriesWrap>
-          <SidePriceWrap></SidePriceWrap>
-        </SideFilterWrapper>
+        <SideFilter />
         <ProductsListWrapper>
           <CategoriesWrap>
             {itemAllKinds?.productKinds?.map((kind) => {
