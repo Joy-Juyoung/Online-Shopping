@@ -54,12 +54,14 @@ import SNEAKERS from '../../asset/SNEAKERS.png';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import axios from '../../api/axios';
+import { useParams } from 'react-router';
 
 
 const CARTS_URL = '/carts';
 
 const CartPage = () => {
   const [carts, setCarts] = useState([]);
+  const ShippingFee = 15;
   const getAllCart = async () => {
     const cartList = await axios.get(CARTS_URL,{
         headers: { 'Content-Type': 'application/json' },
@@ -75,20 +77,45 @@ const CartPage = () => {
   },[])
   console.log("carts", carts);
 
-  return (
-    // <>
-    //    <div>CartPage</div>
-    //    {itemCart.map((i) => {
-    //      return (
-    //       <ul key={i.pk}>
-    //         <li>{i.pk}</li>
-    //      </ul>
-    //     );
-    //   })}
-    //  </>
-    // );
 
-    <CartContainer>
+
+  // const [counter, setCounter] = useState([]);
+  // const { id } = useParams();
+  // const putItemCart = async () => {
+  //   const cartItems = await axios.put(`/carts/${id}`,{
+  //       headers: { 'Content-Type': 'application/json' },
+  //       withCredentials: true,
+  //     }
+  //     );
+      
+  //   console.log('cartItems', cartItems.data);
+  //   setCounter(cartItems?.data);
+  //   }
+  // useEffect(() => {
+  //   putItemCart();
+  // },[id])
+
+  // console.log("carts", carts);
+
+  // const itemIncrease = (increase) => {
+  //   const addQty = counter.map((cart) =>{
+  //     if (increase === cart.pk && cart.number_of_product < 10000) {
+  //       return {...cart, number_of_product: cart.number_of_product + 1};
+  //     } else return cart;
+  //   });
+  //   setCarts(addQty);
+  // }
+  // const itemDecrease = (decrease) => {
+  //   const minusQty = counter.map((cart) =>{
+  //     if (decrease === cart.pk && counter.number_of_product > 1) {
+  //       return {...cart, number_of_product: cart.number_of_product - 1};
+  //     } else return cart;
+  //   });
+  //   setCarts(minusQty);
+  // }
+
+  return (
+     <CartContainer>
       <CartWrapper>
         <h2>SHOPPING BAG</h2>
         <CartBodyWrap>
@@ -122,23 +149,29 @@ const CartPage = () => {
                         <DetailName to={``}>{cart.product.name}</DetailName>
                         <DetailDescription to={``}>{cart.product.detail}</DetailDescription>
                         <DetailOption>
-                          <span>1</span>
+                          <span>{cart.product_option?.name}</span>
                         </DetailOption>
                       </ItemDetailOne>
                       <ItemDetailTwo>
                         <ItemDetailTwoWrap>
-
+                          {/* <ItemDecreaseBtn onClick={() => {itemDecrease(cart.pk)}}>
+                            <RemoveIcon fontSize='small' color='action'/>
+                          </ItemDecreaseBtn>
+                          <ItemNumberInput>{cart.number_of_product}</ItemNumberInput>
+                          <ItemIncreaseBtn onClick={() => {itemIncrease(cart.pk)}}>
+                            <AddIcon fontSize='small' color='action' />
+                          </ItemIncreaseBtn> */}
                           <ItemDecreaseBtn>
                             <RemoveIcon fontSize='small' color='action'/>
                           </ItemDecreaseBtn>
-                          <ItemNumberInput />
+                          <ItemNumberInput>{cart.number_of_product}</ItemNumberInput>
                           <ItemIncreaseBtn>
                             <AddIcon fontSize='small' color='action' />
                           </ItemIncreaseBtn>
                         </ItemDetailTwoWrap>
                       </ItemDetailTwo>
                       <ItemDetailThree>
-                        <strong>{cart.product.price}</strong>
+                        <strong>${cart.total_price}</strong>
                       </ItemDetailThree>
                     </ListsItemDetails>
                     <ListsDeleteBtn>
@@ -176,11 +209,11 @@ const CartPage = () => {
               <CartSummaryInfo>
                 <ItemPriceInfo>
                   Price
-                  <span>$139</span>
+                  <span>${139}</span>
                 </ItemPriceInfo>
                 <ItemShippingFee>
                   Shipping fee
-                  <span>$15</span>
+                  <span>${ShippingFee}</span>
                 </ItemShippingFee>
                 <ItemTotalPrice>
                   Total

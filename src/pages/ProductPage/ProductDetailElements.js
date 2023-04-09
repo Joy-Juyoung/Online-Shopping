@@ -12,7 +12,7 @@ export const DetailContainer = styled.div`
 `;
 
 
-export const DetailWrapper = styled.div`
+export const DetailWrapperOne = styled.section`
     display:flex ;
     justify-content: center;
     padding-top: 40px;
@@ -120,25 +120,96 @@ export const ButtonLarges = styled.button`
   } */
 `;
 
-export const OffCanvas = styled.div`
+export const DetailWrapperTwo = styled.section`
+    margin-top: 77px;
+    border: 0px;
+    scroll-margin-top: 300px;
+    position: relative;
+    background-color: rgb(255, 255, 255);
+`;
+
+export const DetailInfoWrap = styled.div`
+    padding: 0px;
+    margin: 0px;
+`;
+
+export const DetailInfoList = styled.ul`
+    padding: 0px;
+    overflow: hidden;
+    list-style: none;
+`;
+export const InfoListDetail = styled.li`
+    display: inline;
+`;
+
+export const InfoListDetailTwo = styled.li`
+    display: inline;
+    margin-left: 40px;
+    border: 0px;
+`;
+
+export const ListDetailBtn = styled.button`
+    flex-grow: 0;
+    justify-content: center;
+    height: 60px;
+    transform: rotate(0deg);
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    appearance: none;
+    border: 0px;
+    background: none;
+
+    span {
+            font-weight: 600;
+            font-size: 16px;
+            color: rgb(10, 15, 24);
+            line-height: 1.5;
+            text-align: left;
+        }
+`;
+
+export const DetailDescription = styled.div`
+    float: left;
+    width: 100%;
+    padding-bottom: 80px;
+    border-top: 2px solid rgb(231, 233, 236);
+    display: block;
+`;
+
+export const DescriptionList = styled.div`
+    padding: 80px 0px 0px;
+    max-height: none;
+    position: relative;
+    overflow: hidden;
+`;
+
+export const DescriptionListDetail = styled.div`
 
 `;
 
-export const OffcanvasHeader = styled.div`
+export const ListDetailBody = styled.dl`
+    padding-bottom: 16px;
+    display: block;
 
 `;
 
-export const OffcanvasBody = styled.div`
-
-
+export const DetailBodyOne = styled.dt`
+    position: relative;
+    padding-left: 10px;
+    color: rgb(10, 15, 24);
+    font-size: 16px;
+    /* display: inline; */
+    vertical-align: top;
 `;
 
-export const OffcanvasTitle = styled.div`
-
-
+export const DetailBodyTwo = styled.dt`
+    position: relative;
+    padding-left: 10px;
+    color: rgb(10, 15, 24);
+    font-size: 16px;
+    /* display: inline; */
+    vertical-align: top;
+    margin-top: 16px;
 `;
-
-export const CloseButton= styled.div`
-
-`;
-

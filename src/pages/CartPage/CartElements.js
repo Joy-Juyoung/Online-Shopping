@@ -207,7 +207,7 @@ export const ItemIncreaseBtn = styled.button`
     cursor: pointer;
 `;
 
-export const ItemNumberInput = styled.input`
+export const ItemNumberInput = styled.div`
     width: 100%;
     font-weight: 700;
     text-align: center;
