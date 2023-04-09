@@ -10,9 +10,11 @@ import {
   SelectWrap,
   TotalCount,
   TotalCountWrap,
+  EmptyWhishlist,
 } from '../ProductPage/ProductListElements';
 import Loading from '../../components/Loading';
 import ProductsCard from '../ProductPage/ProductCard';
+import { useNavigate } from 'react-router-dom';
 
 const sort = [
   { value: 'Newest', text: 'Newest first' },
@@ -28,6 +30,8 @@ const WishlistPage = ({ meData }) => {
   const [loading, setLoading] = useState(false);
   const [wishItems, setWishItems] = useState([]);
   const [errMsg, setErMsg] = useState('');
+  const [isEmpty, setIsEmpty] = useState(false);
+  const navigate = useNavigate();
 
   const getItems = async () => {
     try {
@@ -38,10 +42,17 @@ const WishlistPage = ({ meData }) => {
       console.log('wishListInfo', wishListInfo?.data?.products);
       setWishItems(wishListInfo?.data?.products);
       setLoading(false);
+
+      // if (wishItems.detail === 'No wishlist') {
+      //   setLoading(false);
+      //   setIsEmpty(!isEmpty);
+      // }
     } catch (err) {
       if (err.response?.status === 400) {
-        console.log('400 error');
-        setErMsg('Error 400: No Data in Server Response');
+        // console.log('400 error');
+
+        setLoading(false);
+        setIsEmpty(!isEmpty);
       } else {
         console.log('Error page or empty page');
         setErMsg('Error page or empty page');
@@ -66,43 +77,51 @@ const WishlistPage = ({ meData }) => {
     <ProductsListContainer>
       <h1>Wishlists</h1>
       <ProductsWrap>
-        <ProductsList>
-          <ListTop>
-            <TotalCountWrap>
-              <TotalCount style={{ fontSize: '13px' }}>
-                Total {wishItems?.length}
-              </TotalCount>
-            </TotalCountWrap>
-            <SelectWrap>
-              <select
-                // onChange={handleOptionChange}
-                name='category-list'
-                id='category-list'
-              >
-                {sort.map((option, index) => (
-                  <option key={index} value={option.value}>
-                    {option.text}
-                  </option>
-                ))}
-              </select>
-            </SelectWrap>
-          </ListTop>
+        {isEmpty ? (
+          <ProductsList>
+            <EmptyWhishlist>
+              <div>Click ♡ to add to your wish list.</div>
+            </EmptyWhishlist>
+          </ProductsList>
+        ) : (
+          <ProductsList>
+            <ListTop>
+              <TotalCountWrap>
+                <TotalCount style={{ fontSize: '13px' }}>
+                  Total {wishItems?.length}
+                </TotalCount>
+              </TotalCountWrap>
+              <SelectWrap>
+                <select
+                  // onChange={handleOptionChange}
+                  name='category-list'
+                  id='category-list'
+                >
+                  {sort.map((option, index) => (
+                    <option key={index} value={option.value}>
+                      {option.text}
+                    </option>
+                  ))}
+                </select>
+              </SelectWrap>
+            </ListTop>
 
-          <ListMidWrap>
-            <ListMid>
-              {wishItems?.map((all) => {
-                return (
-                  <ProductsCard
-                    key={all.pk}
-                    all={all}
-                    // kindEach={kindEach}
-                    meData={meData}
-                  />
-                );
-              })}
-            </ListMid>
-          </ListMidWrap>
-        </ProductsList>
+            <ListMidWrap>
+              <ListMid>
+                {wishItems?.map((all) => {
+                  return (
+                    <ProductsCard
+                      key={all.pk}
+                      all={all}
+                      // kindEach={kindEach}
+                      meData={meData}
+                    />
+                  );
+                })}
+              </ListMid>
+            </ListMidWrap>
+          </ProductsList>
+        )}
       </ProductsWrap>
     </ProductsListContainer>
   );

@@ -23,6 +23,7 @@ import {
 import Loading from '../../components/Loading';
 import { Link, useParams } from 'react-router-dom';
 import ProductsCard from './ProductCard';
+import SideFilter from './SideFilter';
 
 const sort = [
   { value: 'Newest', text: 'Newest first' },
@@ -109,11 +110,7 @@ const ProductsListPage = ({ meData }) => {
     <ProductsListContainer>
       <h1>All {itemAllKinds.name}</h1>
       <ProductsWrap>
-        <SideFilterWrapper>
-          <SideClearWrap></SideClearWrap>
-          <SideCategoriesWrap></SideCategoriesWrap>
-          <SidePriceWrap></SidePriceWrap>
-        </SideFilterWrapper>
+        <SideFilter />
         <ProductsListWrapper>
           <CategoriesWrap>
             {itemAllKinds?.productKinds?.map((kind) => {
