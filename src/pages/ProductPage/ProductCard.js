@@ -71,7 +71,7 @@ const ProductsCard = ({ all, meData, kindEach }) => {
       )}
 
       <ProductEachDetails>
-        <ProductTitle>{all?.name}</ProductTitle>
+        <ProductTitle>{all?.name.toUpperCase()}</ProductTitle>
         <ProductDesc>{all?.detail}</ProductDesc>
         <ProductPrice>${all?.price}</ProductPrice>
       </ProductEachDetails>

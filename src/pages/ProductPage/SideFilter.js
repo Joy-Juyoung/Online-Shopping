@@ -16,11 +16,11 @@ const side = [
     id: 1,
     title: 'Category',
     submenu: [
-      { subTitle: 'Tops' },
-      { subTitle: 'Bottoms' },
-      { subTitle: 'Outers' },
-      { subTitle: 'Shoes' },
-      { subTitle: 'Accessories' },
+      { id: 1, subTitle: 'Tops' },
+      { id: 2, subTitle: 'Bottoms' },
+      { id: 3, subTitle: 'Outers' },
+      { id: 4, subTitle: 'Shoes' },
+      { id: 5, subTitle: 'Accessories' },
     ],
   },
   {
@@ -56,11 +56,11 @@ const SideFilter = () => {
         <SideFilterUl>
           {side?.map((menu) => {
             return (
-              <SideFilterLl key={menu.id} style={{ display: 'flex' }}>
+              <SideFilterLl key={menu?.id} style={{ display: 'flex' }}>
                 {isDrop ? (
                   <>
                     <ListTitle>
-                      <div>{menu.title}</div>
+                      <div>{menu?.title.toUpperCase()}</div>
                       <div
                         onClick={(e) => {
                           e.preventDefault();
@@ -74,7 +74,7 @@ const SideFilter = () => {
                 ) : (
                   <>
                     <ListTitle>
-                      <div>{menu.title}</div>
+                      <div>{menu?.title.toUpperCase()}</div>
                       <div>
                         <ExpandLessIcon
                           onClick={(e) => {
@@ -84,7 +84,7 @@ const SideFilter = () => {
                         />
                       </div>
                     </ListTitle>
-                    {menu.submenu.map((sub) => {
+                    {menu?.submenu?.map((sub) => {
                       return (
                         <ul key={sub.id}>
                           <li>{sub.subTitle}</li>
