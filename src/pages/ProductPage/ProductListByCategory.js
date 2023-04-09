@@ -1,73 +1,105 @@
-import { Axios } from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios from '../../api/axios';
 import {
-  ProductsEach,
   ProductsList,
   ListMid,
   ProductsListContainer,
   ProductsListWrapper,
   ProductsWrap,
   ListTop,
-  ProductCategories,
-  ToggleLike,
-  ProductEachDetails,
-  ProductTitle,
-  ProductDesc,
-  ProductPrice,
-  ProductLike,
   ListMidWrap,
   CategoriesWrap,
+  SideFilterWrapper,
+  SideClearWrap,
+  SideCategoriesWrap,
+  SidePriceWrap,
+  Categories,
+  TotalCountWrap,
+  TotalCount,
+  SelectWrap,
 } from './ProductListElements';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import Loading from '../../components/Loading';
+import ProductsCard from './ProductCard';
 // const TestProduct_URL = '/products/productAllChildKinds/${id}';
-const ProductListByCategory = () => {
-  const [itemKinds, setItemKinds] = useState([]); //useState([]);
+
+const sort = [
+  { value: 'Newest', text: 'Newest first' },
+  { value: 'Popular', text: 'Most Popular' },
+  { value: 'HighToLow', text: 'Price: high to low' },
+  { value: 'LowToHigh', text: 'Price: low to high' },
+];
+
+const ProductListByCategory = ({ meData }) => {
+  const [loading, setLoading] = useState(false);
+  const [itemKinds, setItemKinds] = useState([]);
+  const [itemAllKinds, setItemAllKinds] = useState([]);
   const { id } = useParams();
+
+  useEffect(() => {
+    const loadData = async () => {
+      await new Promise((r) => setTimeout(r, 1000));
+    };
+    loadData();
+  }, []);
+
   const getKindsProduct = async () => {
     const { data } = await axios.get(`/products/productAllChildKinds/${id}`, {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    console.log(data);
     setItemKinds(data);
+    console.log('itemKinds', data);
+    setLoading(false);
   };
+
   useEffect(() => {
+    setLoading(true);
     getKindsProduct();
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, [id]);
-  console.log('itemKinds', itemKinds);
 
-  const sort = [
-    // { value: '', text: '--Choose an option--' },
-    { value: 'Newest', text: 'Newest first' },
-    { value: 'Popular', text: 'Most Popular' },
-    // { value: 'Ratings', text: 'Ratings' },
-    { value: 'HighToLow', text: 'Price: high to low' },
-    { value: 'LowToHigh', text: 'Price: low to high' },
-  ];
+  // console.log('itemKinds', itemKinds);
 
-  const handleOptionChange = (e) => {
-    console.log(e.target.value);
-  };
+  if (loading)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+
   return (
     <ProductsListContainer>
+      <h1>{itemKinds.name}</h1>
       <ProductsWrap>
-        <h1>{itemKinds.name}</h1>
+        <SideFilterWrapper>
+          <SideClearWrap></SideClearWrap>
+          <SideCategoriesWrap></SideCategoriesWrap>
+          <SidePriceWrap></SidePriceWrap>
+        </SideFilterWrapper>
         <ProductsListWrapper>
           <CategoriesWrap>
-            {/* <span>Categories Filter section</span> */}
+            {itemAllKinds?.productKinds?.map((kind) => {
+              return <Categories key={kind.pk}>{kind.name}</Categories>;
+            })}
           </CategoriesWrap>
           <ProductsList>
             <ListTop>
-              <span style={{ fontSize: '13px' }}>Total {itemKinds.length}</span>
-
-              <span>
+              <TotalCountWrap>
+                <TotalCount style={{ fontSize: '13px' }}>
+                  Total {itemKinds?.products?.length}
+                  {/* {itemKinds?.products?.map((kind) => {
+                  return <p>{kind?.products?.length}</p>;
+                })} */}
+                </TotalCount>
+              </TotalCountWrap>
+              <SelectWrap>
                 <select
-                  onChange={handleOptionChange}
-                  name='fruits'
-                  id='fruit-select'
+                  // onChange={handleOptionChange}
+                  name='category-list'
+                  id='category-list'
                 >
                   {sort.map((option, index) => (
                     <option key={index} value={option.value}>
@@ -75,56 +107,27 @@ const ProductListByCategory = () => {
                     </option>
                   ))}
                 </select>
-              </span>
+              </SelectWrap>
             </ListTop>
-            {itemKinds.products?.map((item) => {
-              return (
-                <ListMidWrap key={item.pk}>
-                  <ListMid>
-                    {/* <ProductsCard key={item.pk} product={item} /> */}
-                    <ProductsEach to={`/products/${item.pk}`} key={item.pk}>
-                      <img src={item.photos[0].picture} alt='' />
 
-                      {/* pk별 각각 클릭될때, 하나의 상태만 변하도록 수정 */}
-                      <ToggleLike>
-                        {item.is_liked ? (
-                          <FavoriteIcon />
-                        ) : (
-                          <FavoriteBorderIcon />
-                        )}
-                      </ToggleLike>
-                      <ProductEachDetails>
-                        <ProductTitle>{item.name}</ProductTitle>
-                        <ProductDesc>{item.detail}</ProductDesc>
-                        <ProductPrice>${item.price}</ProductPrice>
-                        {/* <ProductLike>
-                        <FavoriteIcon fontSize='small' />
-                        total Likes count
-                      </ProductLike> */}
-                      </ProductEachDetails>
-                    </ProductsEach>
-                  </ListMid>
-                </ListMidWrap>
-              );
-            })}
+            <ListMidWrap>
+              <ListMid>
+                {itemKinds?.products?.map((all) => {
+                  return (
+                    <ProductsCard
+                      key={all.pk}
+                      all={all}
+                      // kindEach={kindEach}
+                      meData={meData}
+                    />
+                  );
+                })}
+              </ListMid>
+            </ListMidWrap>
           </ProductsList>
         </ProductsListWrapper>
       </ProductsWrap>
     </ProductsListContainer>
-    // <ProductsListContainer>
-    //   <ListMid>
-    //     <h1>{itemKinds.name}</h1>
-    //         <ProductsList>
-    //         {itemKinds.products?.map((item) => (
-    //             <ProductsEach key={item.pk}>
-    //             <img src={item.photos[0].picture} alt='' />
-    //             <p>{item.name}</p>
-    //             <span>${item.price}</span>
-    //         </ProductsEach>
-    //       ))}
-    //     </ProductsList>
-    //   </ListMid>
-    // </ProductsListContainer>
   );
 };
 

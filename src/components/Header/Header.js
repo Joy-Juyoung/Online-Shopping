@@ -106,9 +106,9 @@ const Header = ({ meData }) => {
     setClickAccount(!clickAccount);
   };
 
-  const handleDropOut = () => {
-    setClickAccount(false);
-  };
+  // const handleDropOut = () => {
+  //   setClickAccount(false);
+  // };
 
   // detect click outside to close
   useEffect(() => {
