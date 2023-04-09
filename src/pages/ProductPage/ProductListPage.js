@@ -109,21 +109,21 @@ const ProductsListPage = ({ meData }) => {
   return (
     <ProductsListContainer>
       <h1>All {itemAllKinds.name}</h1>
+      <CategoriesWrap>
+        {itemAllKinds?.productKinds?.map((kind) => {
+          return (
+            <Link
+              key={kind.pk}
+              to={`/products/productAllChildKinds/${kind.pk}`}
+            >
+              <Categories>{kind.name}</Categories>
+            </Link>
+          );
+        })}
+      </CategoriesWrap>
       <ProductsWrap>
         <SideFilter />
         <ProductsListWrapper>
-          <CategoriesWrap>
-            {itemAllKinds?.productKinds?.map((kind) => {
-              return (
-                <Link
-                  key={kind.pk}
-                  to={`/products/productAllChildKinds/${kind.pk}`}
-                >
-                  <Categories>{kind.name}</Categories>
-                </Link>
-              );
-            })}
-          </CategoriesWrap>
           <ProductsList>
             <ListTop>
               <TotalCountWrap>
@@ -151,7 +151,7 @@ const ProductsListPage = ({ meData }) => {
                 return (
                   <ListMidWrapper key={item.pk}>
                     <Link to={`/products/productAllChildKinds/${item.pk}`}>
-                      <AllEachTitle>{item.name}</AllEachTitle>
+                      <AllEachTitle>{item.name.toUpperCase()}</AllEachTitle>
                     </Link>
                     <ListMid>
                       {item.products?.map((all) => {

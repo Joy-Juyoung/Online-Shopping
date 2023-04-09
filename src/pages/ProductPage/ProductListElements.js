@@ -47,10 +47,11 @@ export const SideFilterLl = styled.div`
   ul {
     margin: 10px 0 0 10px;
     font-weight: 400;
-    font-size: 15px;
+    font-size: 14px;
   }
   li {
     list-style: none;
+    margin: 5px 0;
   }
 `;
 

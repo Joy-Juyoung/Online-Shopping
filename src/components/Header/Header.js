@@ -130,6 +130,15 @@ const Header = ({ meData }) => {
     };
   }, [clickAccount, isModalOpen]);
 
+  const hoverHandler = (e) => {
+    console.log('onMouseEnter');
+    e.target.style.borderBottom = '3px solid grey';
+  };
+  const outHandler = (e) => {
+    console.log('onMouseLeave');
+    e.target.style.borderBottom = 'none';
+  };
+
   if (loading)
     return (
       <div>
@@ -276,23 +285,23 @@ const Header = ({ meData }) => {
                       <DropdownButton
                         to={`/products/productAllParentsKinds/${category.pk}`}
                       >
-                        {category.name}
+                        <span>{category.name.toUpperCase()}</span>
                       </DropdownButton>
                       <DropChildWrap>
                         <DropMenuChild>
                           {category.productKinds?.map((child) => {
                             return (
-                              <DropMenuItem key={child.pk}>
-                                <Link
-                                  style={{
-                                    color: 'black',
-                                    textDecoration: 'none',
-                                  }}
-                                  to={`/products/productAllChildKinds/${child.pk}`}
-                                >
+                              <Link
+                                style={{
+                                  color: 'black',
+                                  textDecoration: 'none',
+                                }}
+                                to={`/products/productAllChildKinds/${child.pk}`}
+                              >
+                                <DropMenuItem key={child.pk}>
                                   {child.name}
-                                </Link>
-                              </DropMenuItem>
+                                </DropMenuItem>
+                              </Link>
                             );
                           })}
                         </DropMenuChild>

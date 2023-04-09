@@ -172,23 +172,12 @@ export const DropMenuList = styled.li`
   &:hover {
     ul {
       display: block;
-      border-top: 1px solid lightgrey;
-      /* transition: 0.3s; */
-      /* z-index: 2; */
-      /* animation: rotateMenu 200ms ease-in-out forwards;
-      transform-origin: top center;
+    }
 
-      @keyframes rotateMenu {
-        0% {
-          transform: rotateX(-90deg);
-        }
-        70% {
-          transform: rotateX(20deg);
-        }
-        100% {
-          transform: rotateX(0deg);
-        }
-      } */
+    span {
+      border-bottom: 2px solid #0a0f18;
+      padding-bottom: 7px;
+      z-index: 5;
     }
   }
 `;
@@ -199,25 +188,18 @@ export const DropMenuParents = styled.div`
 
 export const DropdownButton = styled(Link)`
   text-decoration: none;
-
   background: none;
   border: none;
   color: black;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  padding-bottom: 8px;
-  /* z-index: 2; */
-
-  &:hover {
-    margin: 10px auto;
-    border-bottom: 3px solid black;
-  }
+  padding-bottom: 10px;
 `;
 
 export const DropChildWrap = styled.div`
   position: fixed;
-  top: 102px;
+  top: 98px;
   right: 0;
   left: 0;
   background-color: #fff;
