@@ -1,8 +1,5 @@
-import styled  from 'styled-components';
+import styled from 'styled-components';
 import CloseIcon from '@mui/icons-material/Close';
-
-
-
 
 export const ModalContainer = styled.div`
   max-width: 1280px;
@@ -12,9 +9,8 @@ export const ModalContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 101;
+  z-index: 2;
   /* opacity:0.5 ; */
-
 `;
 
 export const ModalWrapper = styled.div`
@@ -24,11 +20,10 @@ export const ModalWrapper = styled.div`
   /* display: flex;
   flex-direction: column; */
   /* padding: 25px; */
-  z-index: 102;
+  z-index: 2;
 `;
 export const ModalTopWrapper = styled.div`
   /* display: flex; */
-  
 `;
 // export const SearchIptWrapper = styled.div`
 //   /* display: flex;
@@ -37,8 +32,6 @@ export const ModalTopWrapper = styled.div`
 
 export const SearchModalIpt = styled.input`
   margin-right: 50px;
-
-  
 `;
 
 // export const CloseButtonWrapper = styled.div`
@@ -51,7 +44,6 @@ export const CloseModalButton = styled(CloseIcon)`
   border: none;
   font-size: 25px;
   cursor: pointer;
-
 `;
 export const ModalContent = styled.div`
   /* display: flex;
@@ -59,7 +51,6 @@ export const ModalContent = styled.div`
   /* justify-content: center;
   align-items: center;  */
   /* line-height: 1.8; */
-  
 
   /* p {
     margin-bottom: 1rem;
@@ -83,7 +74,7 @@ export const ModalContent = styled.div`
 //   color: #000; */
 //   /* display: flex; */
 //   /* position: relative;
-//   z-index: 999; 
+//   z-index: 999;
 //   border-radius: 10px; */
 // `;
 
@@ -106,7 +97,6 @@ export const ModalContent = styled.div`
 //   /* justify-content: center;
 //   align-items: center;  */
 //   /* line-height: 1.8; */
-  
 
 //   /* p {
 //     margin-bottom: 1rem;
@@ -122,4 +112,3 @@ export const ModalContent = styled.div`
 //   height: 32px;
 //   padding: 0; */
 // `;
-

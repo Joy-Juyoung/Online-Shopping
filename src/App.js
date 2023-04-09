@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
@@ -12,7 +12,6 @@ import HelpCenter from './pages/HelpCenterPage/HelpCenter';
 
 function App() {
   const [meData, setMeData] = useState();
-  // const [loading, setLoading] = useState(true);
 
   const getMe = async () => {
     try {
@@ -31,13 +30,15 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <Header meData={meData} />
-      <Home meData={meData} />
-      <Footer />
-      <HelpCenter/>
-    </Router>
-    
+    <>
+      <Router>
+        <Header meData={meData} />
+        <Home meData={meData} />
+        <Footer />
+
+        {/* <HelpCenter /> */}
+      </Router>
+    </>
   );
 }
 

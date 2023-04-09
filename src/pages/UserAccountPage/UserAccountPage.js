@@ -34,93 +34,88 @@ import axios from '../../api/axios';
 const UserAccountPage = ({ meData }) => {
   const [loading, setLoading] = useState(false);
 
-  console.log('account me', meData);
+  console.log('meData', meData);
+
   // const [meAccunt = meData, setMeAccunt] = useState();
   // const handleDeleteAccount = () => {
   //   // alert('Do you want to delete this account?');
   //   console.log('Make delete confirm modal');
 
   // };
-  const [username, setUsername] = useState('');
+  // const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
-  const [changeUserInfo, setChangeUserInfo] = useState();
+  const [changeUserInfo, setChangeUserInfo] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
-
-  // const putUser = async () => {
-  //   try {
-  //     const meInfo = await axios.put('/users/me', {
-  //       headers: { 'Content-Type': 'application/json' },
-  //       withCredentials: true,
-  //     });
-  //     console.log('changeUserInfo', meInfo?.data);
-  //     setChangeUserInfo(meInfo?.data);
-  //     // setLoading(false);
-  //   } catch (error) {
-  //     alert(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-
-  // }, [username, name, email, address, phone]);
-
-  // const handleNameChange = (evnt) => {
-  //   setName(evnt.target.value);
-  // };
 
   useEffect(() => {
     setLoading(true);
+    // setChangeUserInfo(meData);
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     const loadData = async () => {
       await new Promise((r) => setTimeout(r, 1000));
       setLoading(false);
     };
     loadData();
-    setChangeUserInfo(meData);
   }, []);
+
+  useEffect(() => {
+    setChangeUserInfo(meData);
+
+    setName(meData?.name);
+  }, [meData]);
+
+  const handleInputChange = (e) => {
+    console.log('name', e.target.value);
+    var tempChangeUserInfo = changeUserInfo;
+
+    if (e.target.id === 'name') {
+      // tempChangeUserInfo.name = e.target.value;
+      setName(e.target.value);
+    }
+    setChangeUserInfo(tempChangeUserInfo);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log('name', name);
-    // try {
-    setLoading(true);
-    const meInfo = await axios.put(
-      '/users/me',
-      {
-        // username: username,
-        email: email,
-        name: name,
-        address: address,
-        phone_number: phone,
-      },
-      {
-        headers: { 'Content-Type': 'application/json' },
-        withCredentials: true,
-      }
-    );
-
-    console.log('changeUserInfo', meInfo?.data);
-    setChangeUserInfo(meInfo?.data);
-
-    if (meInfo?.data.error) {
-      setLoading(false);
-      console.log('EDIT FAILD');
-      // errRef.current.focus();
+    if (!isEdit) {
+      handleEdit();
     } else {
-      // setSuccess(true);
-      // setUsername(username);
-      setEmail(email);
-      setName(name);
-      setAddress(address);
-      setPhone(phone);
+      // try {
+      // setLoading(true);
+      // window.location.reload();
+      const meInfo = await axios.put(
+        '/users/me',
+        {
+          username: meData.username,
+          email: email,
+          name: name,
+          address: address,
+          phone_number: phone,
+        },
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        }
+      );
+      setChangeUserInfo(meInfo?.data);
+      console.log('changed Data', meInfo?.data);
+      // setEmail(email);
+      // setName(name);
+      // setAddress(address);
+      // setPhone(phone);
 
-      setLoading(false);
+      setIsEdit(false);
+      window.location.reload();
+      // setLoading(false);
     }
   };
+
+  console.log('changed', changeUserInfo);
+  // console.log('name', changeUserInfo.name);
 
   const handleEdit = () => {
     if (!isEdit) {
@@ -144,19 +139,23 @@ const UserAccountPage = ({ meData }) => {
           <AccountInput>
             <MainAvatar>
               <ConfigProvider colors={['red', 'grey', 'green']}>
-                <Avatar name={meData.username} round={true} size={200} />
+                <Avatar
+                  name={changeUserInfo?.username}
+                  round={true}
+                  size={200}
+                />
               </ConfigProvider>
             </MainAvatar>
 
             <AccountInputLabel htmlFor='username'>
               {/* User Id */}
-              Username
+              User ID
             </AccountInputLabel>
             <Input
               borderNone={true}
               borderBottom={true}
               type='text'
-              value={meData.username}
+              value={changeUserInfo?.username}
               id='username'
               disabled
             />
@@ -166,7 +165,7 @@ const UserAccountPage = ({ meData }) => {
               borderNone={true}
               borderBottom={true}
               type='text'
-              value={meData.email}
+              value={changeUserInfo?.email || ''}
               id='email'
               disabled
             />
@@ -177,32 +176,24 @@ const UserAccountPage = ({ meData }) => {
                   borderNone={true}
                   borderBottom={true}
                   type='text'
+                  // value={changeUserInfo?.name || ''}
                   value={name}
                   id='name'
+                  // onChange={handleNameChange}
                   disabled
                 />
-                <EditBtn style={{ marginLeft: '-50px' }} onClick={handleEdit}>
-                  Edit
-                </EditBtn>
+                <ButtonUtils style={{ marginLeft: '-50px' }}>Edit</ButtonUtils>
               </InputEdit>
             ) : (
               <InputEdit>
                 <Input
-                  // borderNone={true}
-                  // borderBottom={true}
                   type='text'
+                  // value={changeUserInfo?.name || ''}
                   value={name}
                   id='name'
-                  // disabled
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={handleInputChange}
                 />
-                <EditBtn
-                  style={{ marginLeft: '-50px' }}
-                  // type='submit'
-                  onClick={handleEdit}
-                >
-                  Save
-                </EditBtn>
+                <ButtonUtils style={{ marginLeft: '-50px' }}>Save</ButtonUtils>
               </InputEdit>
             )}
 
@@ -214,7 +205,7 @@ const UserAccountPage = ({ meData }) => {
                 borderNone={true}
                 borderBottom={true}
                 type='text'
-                value={meData.address}
+                value={changeUserInfo?.address || ''}
                 id='address'
                 disabled
               />
@@ -231,7 +222,7 @@ const UserAccountPage = ({ meData }) => {
                 borderNone={true}
                 borderBottom={true}
                 type='text'
-                value={meData.phone_numbe}
+                value={changeUserInfo?.phone || ''}
                 id='phone_numbe'
                 disabled
               />

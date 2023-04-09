@@ -2,15 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { ButtonSmall } from './ButtonElements';
-import './Modal.css';
-// import {
-//   NoUserBtn,
-//   NoUserContainer,
-//   NoUserContents,
-//   NoUserModal,
-//   NoUserText,
-//   NoUserTitle,
-// } from './Header/HeaderElements';
 
 const ModalBackDrop = styled.div`
   position: fixed;

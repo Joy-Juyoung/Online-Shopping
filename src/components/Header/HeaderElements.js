@@ -13,7 +13,7 @@ export const HeaderWrap = styled.div`
   position: sticky;
   top: 0;
   background: #fff;
-  z-index: 100;
+  z-index: 3;
   padding: 0 20px;
 `;
 
@@ -44,7 +44,7 @@ export const LeftSide = styled.div`
 export const ModalBtnWrap = styled.div`
   position: relative;
   display: flex;
-  z-index: 10;
+  z-index: 2;
   height: auto;
 `;
 
@@ -149,13 +149,7 @@ export const PermLink = styled(Link)`
 
 export const HeaderDown = styled.div`
   width: 100%;
-
   padding: 20px 0 10px;
-  /* margin: 10px 0; */
-  /* background: #fff; */
-
-  /* border-bottom: 1px solid lightgrey; */
-  /* position: relative; */
 `;
 
 export const DropMenuWrap = styled.div`
@@ -175,22 +169,16 @@ export const DropMenu = styled.ul`
   padding: 0;
   margin: 0;
   display: inline;
-  /* display: flex; */
   align-items: center;
-  /* justify-content: flex-start; */
 `;
 
 export const DropMenuList = styled.li`
-  /* display: inline-block; */
-
-  /* position: relative; */
   display: inline-block;
   z-index: 3;
 
   &:hover {
     ul {
       display: block;
-      /* display: inline-block; */
       border-top: 1px solid lightgrey;
     }
   }
@@ -223,28 +211,19 @@ export const DropChildWrap = styled.div`
   right: 0;
   left: 0;
   background-color: #fff;
-
   margin: 10px auto;
-  /* border-top: 1px solid lightgrey; */
 `;
-
-// parents에 hover후, child를 볼 때, 하단바의 색이 유지되게 하는방법?
 
 export const DropMenuChild = styled.ul`
   list-style-type: none;
   display: none;
-
   padding: 0;
-
-  /* width: 1250px; */
   margin: 0 auto;
   box-shadow: 0 10px 4px 0px rgba(0, 0, 0, 0.4);
+  font-size: 14px;
 `;
 
 export const DropMenuItem = styled.li`
-  /* width: 200px; */
-  /* margin: 0 auto; */
-
   width: 1250px;
   margin: 0 auto;
   padding: 20px 15px;
@@ -260,10 +239,8 @@ export const DropMenuItem = styled.li`
 export const TopWrapper = styled.div`
   width: 100vw;
   margin: 0 auto;
-  /* background: #0a0f18; */
   background: #0a0f18;
   color: #fff;
-  /* z-index: -100; */
 `;
 
 export const FreeInfo = styled.div`
@@ -282,27 +259,47 @@ export const FreeInfoTitle = styled.p`
 `;
 
 // ---------------
-export const DropAccount = styled.div`
+export const DropAccountContainer = styled.div`
+  margin: 0 auto;
+`;
+
+export const DropAccountCoverTop = styled.div`
   position: fixed;
-  top: 127px;
+  top: 0;
+  /* bottom: 0; */
+  left: 0;
+  right: 0;
+  height: 115px;
+  background-color: transparent;
+  z-index: 2;
+`;
+
+export const DropAccountCoverMain = styled.div`
+  position: fixed;
+  top: 112px;
   bottom: 0;
   left: 0;
   right: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /* background-color: blue; */
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 2;
 `;
 
 export const DropAccountWrap = styled.div`
+  max-width: 1250px;
+  margin: 0 auto;
+  display: flex;
+
+  justify-content: flex-end;
+`;
+
+export const DropUl = styled.ul`
   position: fixed;
-  top: 70px;
-  right: 0;
-  width: 250px;
+  top: 60px;
+  width: 220px;
   border: 1px solid rgba(0, 0, 0, 0.04);
   box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.4);
-  z-index: 2;
+  z-index: 3;
   font-size: 13px;
 
   animation: rotateMenu 400ms ease-in-out forwards;
@@ -319,9 +316,6 @@ export const DropAccountWrap = styled.div`
       transform: rotateX(0deg);
     }
   }
-`;
-
-export const DropUl = styled.ul`
   list-style: none;
   margin: 0;
   background: #fff;

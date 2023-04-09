@@ -1,7 +1,6 @@
-import React, { Children, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from '../../api/axios';
 import {
-  FavIcon,
   ListMid,
   ListTop,
   ProductCategories,
@@ -13,16 +12,14 @@ import {
   ProductsEach,
   ProductsList,
   ProductsListContainer,
-  ProductsListWrap,
   ProductsListWrapper,
   ProductsWrap,
   ProductTitle,
-  ProductUnLike,
   ToggleLike,
 } from '../ProductPage/ProductListElements';
 // import ProductsCard from './ProductsCard';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
 import Loading from '../../components/Loading';
 
 const WishlistPage = ({ meData }) => {

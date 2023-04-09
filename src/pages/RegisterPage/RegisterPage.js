@@ -132,22 +132,6 @@ const RegisterPage = () => {
       setMatchPwd('');
       setLoading(false);
     }
-    //   setSuccess(true);
-    //   setUsername('');
-    //   setPwd('');
-    //   setMatchPwd('');
-    //   setLoading(false);
-    // } catch (err) {
-    //   setLoading(false);
-    //   if (!err?.response) {
-    //     setErrMsg('No Server Response');
-    //   } else if (err.response?.status === 409) {
-    //     setErrMsg('Username Taken');
-    //   } else {
-    //     setErrMsg('REGISTRATION FAILD');
-    //   }
-    //   errRef.current.focus();
-    // }
   };
 
   if (loading)
@@ -188,7 +172,7 @@ const RegisterPage = () => {
           <RegisterForm onSubmit={handleSubmit}>
             <RegisterInput>
               <RegisterInputLabel htmlFor='username'>
-                Username
+                User ID
               </RegisterInputLabel>
 
               <Input

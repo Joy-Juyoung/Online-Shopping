@@ -11,7 +11,6 @@ export const MainContainer = styled.div`
 
 export const MainWrapper = styled.div``;
 
-
 export const MidWrapper = styled.div``;
 
 export const MidInfo = styled.div`
@@ -71,7 +70,7 @@ export const OneRightInfoUp = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  z-index: 20;
+  z-index: 1;
   transform: translate(0px);
   background-color: rgb(255, 255, 255);
 
@@ -343,4 +342,3 @@ export const FourthImg = styled.img`
   line-height: 0;
   vertical-align: top;
 `;
-

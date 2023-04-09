@@ -60,7 +60,6 @@ const ProductAllParentsKinds = () => {
           </ProductCategories>
           <ProductsList>
             <ListTop>
-              {/* 광우에게 물어보기 length */}
               <span style={{ fontSize: '13px' }}>
                 Total {itemAllKinds.length}{' '}
               </span>

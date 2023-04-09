@@ -42,6 +42,10 @@ import {
   DropChildWrap,
   ModalBtnWrap,
   ModalBtnDetail,
+  DropAccountContainer,
+  DropAccountCover,
+  DropAccountCoverTop,
+  DropAccountCoverMain,
 } from './HeaderElements';
 import FlagIcon from '@mui/icons-material/Flag';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -260,53 +264,55 @@ const Header = ({ meData }) => {
                       </PermLink>
                     ) : (
                       <>
-                        <PermLink>
+                        <PermLink style={{ zIndex: '3' }}>
                           <PermIdentityRoundedIcon
                             fontSize='medium'
                             onClick={handleAccount}
                           />
                         </PermLink>
 
-                        <DropAccount ref={accountRef}>
-                          <DropAccountWrap>
-                            <DropUl>
-                              <LinkAccount
-                                to='/userAccount'
-                                onClick={handleDropOut}
-                              >
-                                <DropLi>
-                                  <ConfigProvider
-                                    colors={['red', 'grey', 'green']}
-                                  >
-                                    <Avatar
-                                      name={me.username}
-                                      round={true}
-                                      size={30}
-                                    />
-                                  </ConfigProvider>
-                                  <span
-                                    style={{
-                                      marginLeft: '10px',
-                                      fontWeight: '600',
-                                      fontSize: '15px',
-                                    }}
-                                  >
-                                    {me.username}
-                                  </span>
-                                </DropLi>
-                                <DropLi>My Profile</DropLi>
-                              </LinkAccount>
-                              <LinkAccount
-                                to='/testPage'
-                                onClick={handleDropOut}
-                              >
-                                <DropLi>My Orders</DropLi>
-                              </LinkAccount>
+                        <DropAccountContainer ref={accountRef}>
+                          <DropAccountCoverTop></DropAccountCoverTop>
+                          <DropAccountCoverMain>
+                            <DropAccountWrap>
+                              <DropUl>
+                                <LinkAccount
+                                  to='/userAccount'
+                                  onClick={handleDropOut}
+                                >
+                                  <DropLi>
+                                    <ConfigProvider
+                                      colors={['red', 'grey', 'green']}
+                                    >
+                                      <Avatar
+                                        name={me.username}
+                                        round={true}
+                                        size={30}
+                                      />
+                                    </ConfigProvider>
+                                    <span
+                                      style={{
+                                        marginLeft: '10px',
+                                        fontWeight: '600',
+                                        fontSize: '15px',
+                                      }}
+                                    >
+                                      {me.username}
+                                    </span>
+                                  </DropLi>
+                                  <DropLi>My Profile</DropLi>
+                                </LinkAccount>
+                                <LinkAccount
+                                  to='/testPage'
+                                  onClick={handleDropOut}
+                                >
+                                  <DropLi>My Orders</DropLi>
+                                </LinkAccount>
 
-                              <LinkAccount onClick={toggleAddress}>
-                                <DropLi>My Addresses</DropLi>
-                              </LinkAccount>
-                              {/* {isOpenAddress && (
+                                <LinkAccount onClick={toggleAddress}>
+                                  <DropLi>My Addresses</DropLi>
+                                </LinkAccount>
+                                {/* {isOpenAddress && (
                                 <PopupAddress
                                   handleClose={toggleAddress}
                                   style={{ background: 'none' }}
@@ -314,21 +320,22 @@ const Header = ({ meData }) => {
                                   onClick={handleDropOut}
                                 />
                               )} */}
-                              <LinkAccount
-                                to='/testPage'
-                                onClick={handleDropOut}
-                              >
-                                <DropLi>My Balances</DropLi>
-                              </LinkAccount>
-                              <LinkAccount
-                                to='/testPage'
-                                onClick={handleDropOut}
-                              >
-                                <DropLi>My Coupons</DropLi>
-                              </LinkAccount>
-                            </DropUl>
-                          </DropAccountWrap>
-                        </DropAccount>
+                                <LinkAccount
+                                  to='/testPage'
+                                  onClick={handleDropOut}
+                                >
+                                  <DropLi>My Balances</DropLi>
+                                </LinkAccount>
+                                <LinkAccount
+                                  to='/testPage'
+                                  onClick={handleDropOut}
+                                >
+                                  <DropLi>My Coupons</DropLi>
+                                </LinkAccount>
+                              </DropUl>
+                            </DropAccountWrap>
+                          </DropAccountCoverMain>
+                        </DropAccountContainer>
                         {/* {isOpenAddress && (
                           <PopupAddress
                             handleClose={toggleAddress}
