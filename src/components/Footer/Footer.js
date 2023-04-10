@@ -33,6 +33,7 @@ import GooPlay from '../../asset/googleplay.png';
 import Instar from '../../asset/insta.png';
 import Youtub from '../../asset/youtube.png';
 import Twit from '../../asset/twitter.png';
+import { Link } from 'react-router-dom';
 
 const Footer = ({ click }) => {
   return (
@@ -59,7 +60,7 @@ const Footer = ({ click }) => {
         </FooterLineOne>
         <FooterLineTwo>
           <HelpBtn>
-            <a href='/helpcenter'>Help Center</a>
+            <Link to='/helpcenter'>Help Center</Link>
             {/* Help Center */}
             <HelpIcon>
               <ChatBubbleOutlineIcon fontSize='small' />

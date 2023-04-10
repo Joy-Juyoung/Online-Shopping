@@ -70,7 +70,7 @@ const TestAddToCart = ({ onClose }) => {
         withCredentials: true,
       }
     );
-    window.location.reload();
+    window.location.reload(`/products/${id}`);
   };
 
   return (

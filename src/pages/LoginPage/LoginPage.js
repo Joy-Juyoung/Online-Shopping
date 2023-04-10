@@ -136,7 +136,7 @@ const LoginPage = () => {
       setPwd(pwd);
       setLoginSuccess(true);
       navigate('/');
-      window.location.reload();
+      window.location.reload('/');
       setLoading(false);
     }
   };

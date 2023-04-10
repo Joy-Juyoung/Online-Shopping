@@ -92,7 +92,7 @@ const TestCart = () => {
         });
       }
     });
-    window.location.reload();
+    window.location.reload('/carts');
   };
 
   if (loading)
