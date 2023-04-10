@@ -26,7 +26,7 @@ import {
   DescriptionListDetail,
   ListDetailBody,
   DetailBodyOne,
-  DetailBodyTwo
+  DetailBodyTwo,
 } from './ProductDetailElements';
 
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -35,7 +35,7 @@ import { useParams } from 'react-router-dom';
 import AddToCart from './AddToCart';
 
 import Loading from '../../components/Loading';
-
+import TestAddToCart from './TestAddToCart';
 
 // const PRODUCTDETAILS_URL = '/products/${id}';
 
@@ -67,42 +67,41 @@ const ProductDetailPage = ({ meData }) => {
   useEffect(() => {
     getProduct();
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  }, [id,addLiked]);
+  }, [id, addLiked]);
   console.log('id', id);
 
   const [isOpen, setIsOpen] = useState(false);
-  const handleLiked = (pk) => {
-    setLoading(false);
-    var tempItems = itemsDetail;
-    tempItems.forEach((item) => {
-      if (item.pk === pk) {
-        item.is_liked = !item.isLiked;
+  // const handleLiked = (pk) => {
+  //   setLoading(false);
+  //   var tempItems = itemsDetail;
+  //   tempItems.forEach((item) => {
+  //     if (item.pk === pk) {
+  //       item.is_liked = !item.isLiked;
 
-        const addLike = axios.put(
-          '/wishlists/',
-          {
-            product_pk: item.pk,
-          },
-          {
-            headers: { 'Content-Type': 'application/json' },
-            withCredentials: true,
-          }
-        );
-        setAddLiked(addLike);
+  //       const addLike = axios.put(
+  //         '/wishlists/',
+  //         {
+  //           product_pk: item.pk,
+  //         },
+  //         {
+  //           headers: { 'Content-Type': 'application/json' },
+  //           withCredentials: true,
+  //         }
+  //       );
+  //       setAddLiked(addLike);
 
-        console.log('clicked', addLike);
-      }
-    });
-    // setItems([...items]);
-    setItemsDetail(tempItems);
+  //       console.log('clicked', addLike);
+  //     }
+  //   });
+  //   setItemsDetail(tempItems);
+  // };
 
-  };
   if (loading)
-  return (
-    <div>
-      <Loading />
-    </div>
-  );
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
 
   return (
     <DetailContainer>
@@ -122,7 +121,7 @@ const ProductDetailPage = ({ meData }) => {
           </DetailRightInfoTop>
 
           <DetailRightInfoBottom>
-          {/* {itemsDetail.map((item) => {
+            {/* {itemsDetail.map((item) => {
             return (
                     <LikeBtnWrapper key={item.pk}>
                       {meData && (
@@ -138,79 +137,54 @@ const ProductDetailPage = ({ meData }) => {
                   );
             })} */}
             <LikeBtnWrapper>
-            <FavoriteBorderIcon fontSize='medium' color='disabled'/>
+              <FavoriteBorderIcon fontSize='medium' color='disabled' />
             </LikeBtnWrapper>
             <ButtonLarges onClick={() => setIsOpen(true)}>
               Add to Cart
             </ButtonLarges>
             {isOpen && <AddToCart onClose={() => setIsOpen(false)} />}
+            {/* {isOpen && <TestAddToCart onClose={() => setIsOpen(false)} />} */}
           </DetailRightInfoBottom>
         </DetailRightInfo>
       </DetailWrapperOne>
       <DetailWrapperTwo>
         <DetailInfoWrap>
-            <DetailInfoList>
-              <InfoListDetail>
-                <ListDetailBtn>
-                  <span>DESCRIPTION</span>
-                </ListDetailBtn>
-                <DetailDescription>
-                  <DescriptionList>
-                    <DescriptionListDetail>
-                      <ListDetailBody>
-                        <DetailBodyOne>
-                          <span>* Composition : 97% cotton and 3% ployurethane</span>
-                        </DetailBodyOne>
-                        <DetailBodyTwo>
-                          <span>* Color : Red</span>
-                        </DetailBodyTwo>
-                        <DetailBodyTwo>
-                          <span>* Country of origin : South Korea</span>
-                        </DetailBodyTwo>
-                        <DetailBodyTwo>
-                          <span>* Product No : 123455</span>
-                        </DetailBodyTwo>
-                        <DetailBodyTwo>
-                          <span>* For more information, click DETAIL IMAGES</span>
-                        </DetailBodyTwo>
-                      </ListDetailBody>
-                    </DescriptionListDetail>
-                  </DescriptionList>
-                </DetailDescription>
-              </InfoListDetail>
-              <InfoListDetailTwo>
-                <ListDetailBtn>
-                  <span>SIZE GUIDE</span>
-                </ListDetailBtn>
-                {/* <DetailDescription>
-                  <DescriptionList>
-                    <DescriptionListDetail>
-                      <ListDetailBody>
-                        <DetailBodyOne>
-                          <span>* Composition : 97% cotton and 3% ployurethane</span>
-                        </DetailBodyOne>
-                        <DetailBodyTwo>
-                          <span>* Color : Red</span>
-                        </DetailBodyTwo>
-                        <DetailBodyTwo>
-                          <span>* Country of origin : South Korea</span>
-                        </DetailBodyTwo>
-                        <DetailBodyTwo>
-                          <span>* Product No : 123455</span>
-                        </DetailBodyTwo>
-                        <DetailBodyTwo>
-                          <span>* For more information, click DETAIL IMAGES</span>
-                        </DetailBodyTwo>
-                      </ListDetailBody>
-                    </DescriptionListDetail>
-                  </DescriptionList>
-                </DetailDescription> */}
-              </InfoListDetailTwo>
-              <InfoListDetailTwo>
-                <ListDetailBtn>
-                  <span>SHIPPING & RETURNS</span>
-                </ListDetailBtn>
-                {/* <DetailDescription>
+          <DetailInfoList>
+            <InfoListDetail>
+              <ListDetailBtn>
+                <span>DESCRIPTION</span>
+              </ListDetailBtn>
+              <DetailDescription>
+                <DescriptionList>
+                  <DescriptionListDetail>
+                    <ListDetailBody>
+                      <DetailBodyOne>
+                        <span>
+                          * Composition : 97% cotton and 3% ployurethane
+                        </span>
+                      </DetailBodyOne>
+                      <DetailBodyTwo>
+                        <span>* Color : Red</span>
+                      </DetailBodyTwo>
+                      <DetailBodyTwo>
+                        <span>* Country of origin : South Korea</span>
+                      </DetailBodyTwo>
+                      <DetailBodyTwo>
+                        <span>* Product No : 123455</span>
+                      </DetailBodyTwo>
+                      <DetailBodyTwo>
+                        <span>* For more information, click DETAIL IMAGES</span>
+                      </DetailBodyTwo>
+                    </ListDetailBody>
+                  </DescriptionListDetail>
+                </DescriptionList>
+              </DetailDescription>
+            </InfoListDetail>
+            <InfoListDetailTwo>
+              <ListDetailBtn>
+                <span>SIZE GUIDE</span>
+              </ListDetailBtn>
+              {/* <DetailDescription>
                   <DescriptionList>
                     <DescriptionListDetail>
                       <ListDetailBody>
@@ -233,12 +207,12 @@ const ProductDetailPage = ({ meData }) => {
                     </DescriptionListDetail>
                   </DescriptionList>
                 </DetailDescription> */}
-              </InfoListDetailTwo>
-              <InfoListDetailTwo>
-                <ListDetailBtn>
-                  <span>REVIEWS</span>
-                </ListDetailBtn>
-                {/* <DetailDescription>
+            </InfoListDetailTwo>
+            <InfoListDetailTwo>
+              <ListDetailBtn>
+                <span>SHIPPING & RETURNS</span>
+              </ListDetailBtn>
+              {/* <DetailDescription>
                   <DescriptionList>
                     <DescriptionListDetail>
                       <ListDetailBody>
@@ -261,8 +235,36 @@ const ProductDetailPage = ({ meData }) => {
                     </DescriptionListDetail>
                   </DescriptionList>
                 </DetailDescription> */}
-              </InfoListDetailTwo>
-            </DetailInfoList>
+            </InfoListDetailTwo>
+            <InfoListDetailTwo>
+              <ListDetailBtn>
+                <span>REVIEWS</span>
+              </ListDetailBtn>
+              {/* <DetailDescription>
+                  <DescriptionList>
+                    <DescriptionListDetail>
+                      <ListDetailBody>
+                        <DetailBodyOne>
+                          <span>* Composition : 97% cotton and 3% ployurethane</span>
+                        </DetailBodyOne>
+                        <DetailBodyTwo>
+                          <span>* Color : Red</span>
+                        </DetailBodyTwo>
+                        <DetailBodyTwo>
+                          <span>* Country of origin : South Korea</span>
+                        </DetailBodyTwo>
+                        <DetailBodyTwo>
+                          <span>* Product No : 123455</span>
+                        </DetailBodyTwo>
+                        <DetailBodyTwo>
+                          <span>* For more information, click DETAIL IMAGES</span>
+                        </DetailBodyTwo>
+                      </ListDetailBody>
+                    </DescriptionListDetail>
+                  </DescriptionList>
+                </DetailDescription> */}
+            </InfoListDetailTwo>
+          </DetailInfoList>
         </DetailInfoWrap>
       </DetailWrapperTwo>
     </DetailContainer>
