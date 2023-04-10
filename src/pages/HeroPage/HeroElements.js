@@ -90,7 +90,7 @@ export const ParagraghTitle = styled.h2`
   font-size: 56px;
   line-height: 67px;
   word-break: break-word;
-  font-family: SuisseWorks;
+  /* font-family: SuisseWorks; */
 `;
 
 export const ParagraghBody = styled.p`
