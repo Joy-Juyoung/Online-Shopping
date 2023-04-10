@@ -12,12 +12,13 @@ import {
   ToggleLike,
 } from './ProductListElements';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-
+import { useNavigate } from 'react-router-dom';
 import axios from '../../api/axios';
 
 const ProductsCard = ({ all, meData, itemAllKinds, itemKinds, wishItems }) => {
   const [addLiked, setAddLiked] = useState();
   const [clickedLiked, setClickedLiked] = useState(false);
+  const navigate = useNavigate();
 
   // console.log('all', all);
   // console.log('meData', meData);
@@ -52,7 +53,10 @@ const ProductsCard = ({ all, meData, itemAllKinds, itemKinds, wishItems }) => {
               }
             );
             setAddLiked(addLike);
-            window.location.reload();
+            window.location.reload(
+              `/products/productAllParentsKinds/${itemAllKinds.pk}`
+            );
+            // navigate(`/products/productAllParentsKinds/${itemAllKinds.pk}`);
           }
         });
       });
@@ -73,7 +77,9 @@ const ProductsCard = ({ all, meData, itemAllKinds, itemKinds, wishItems }) => {
             }
           );
           setAddLiked(addLike);
-          window.location.reload();
+          window.location.reload(
+            `/products/productAllChildKinds/${itemKinds.pk}`
+          );
         }
       });
     } else if (wishItems) {
@@ -93,7 +99,7 @@ const ProductsCard = ({ all, meData, itemAllKinds, itemKinds, wishItems }) => {
             }
           );
           setAddLiked(addLike);
-          window.location.reload();
+          window.location.reload('/wishlist');
         }
       });
     } else {

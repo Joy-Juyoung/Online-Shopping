@@ -98,7 +98,7 @@ const Header = ({ meData }) => {
     setLogout(loggedOut?.data);
     setMe('');
     navigate('/');
-    window.location.reload();
+    window.location.reload('/');
     setLoading(false);
   };
 
