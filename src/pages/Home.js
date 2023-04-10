@@ -22,6 +22,7 @@ import ProductListByCategory from './ProductPage/ProductListByCategory';
 import HelpCenterPage from './HelpCenterPage/HelpCenter';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
+import TestCart from './CartPage/TestCart';
 
 const Home = ({ meData }) => {
   return (
@@ -77,6 +78,11 @@ const Home = ({ meData }) => {
             element={<CartPage meData={meData} />}
             exact={true}
           />
+          {/* <Route
+            path='/carts'
+            element={<TestCart meData={meData} />}
+            exact={true}
+          /> */}
 
           <Route
             path='/helpcenter'

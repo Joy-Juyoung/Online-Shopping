@@ -67,36 +67,9 @@ const ProductsListPage = ({ meData }) => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, [id]);
 
-  // useEffect(() => {
-  //   getAllKindsProduct();
-  // }, [addLiked]);
-
-  // const handleLiked = (pk) => {
-  //   var tempItems = itemAllKinds.productKinds;
-
-  //   tempItems.forEach((item) => {
-  //     item.products.forEach((each) => {
-  //       // console.log('each', each);
-
-  //       if (each.pk === pk) {
-  //         each.is_liked = !each.isLiked;
-
-  //         const addLike = axios.put(
-  //           '/wishlists/',
-  //           {
-  //             product_pk: each.pk,
-  //           },
-  //           {
-  //             headers: { 'Content-Type': 'application/json' },
-  //             withCredentials: true,
-  //           }
-  //         );
-  //         setAddLiked(addLike);
-  //         // console.log('clicked', addLike);
-  //       }
-  //     });
-  //   });
-  // };
+  useEffect(() => {
+    getAllKindsProduct();
+  }, [addLiked]);
 
   // const handleOptionChange = (e) => {
   //   setSelectedCategory(e.target.value);
@@ -161,7 +134,6 @@ const ProductsListPage = ({ meData }) => {
                           <ProductsCard
                             key={all.pk}
                             all={all}
-                            // kindEach={kindEach}
                             meData={meData}
                             itemAllKinds={itemAllKinds}
                           />

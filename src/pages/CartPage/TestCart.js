@@ -59,7 +59,7 @@ import Loading from '../../components/Loading';
 
 const CARTS_URL = '/carts';
 
-const CartPage = () => {
+const TestCart = () => {
   const [loading, setLoading] = useState(false);
   const [carts, setCarts] = useState([]);
   const ShippingFee = 15;
@@ -79,40 +79,21 @@ const CartPage = () => {
   }, []);
   console.log('carts', carts);
 
-  // const [counter, setCounter] = useState([]);
-  // const { id } = useParams();
-  // const putItemCart = async () => {
-  //   const cartItems = await axios.put(`/carts/${id}`,{
-  //       headers: { 'Content-Type': 'application/json' },
-  //       withCredentials: true,
-  //     }
-  //     );
-
-  //   console.log('cartItems', cartItems.data);
-  //   setCounter(cartItems?.data);
-  //   }
-  // useEffect(() => {
-  //   putItemCart();
-  // },[id])
-
-  // console.log("carts", carts);
-
-  // const itemIncrease = (increase) => {
-  //   const addQty = counter.map((cart) =>{
-  //     if (increase === cart.pk && cart.number_of_product < 10000) {
-  //       return {...cart, number_of_product: cart.number_of_product + 1};
-  //     } else return cart;
-  //   });
-  //   setCarts(addQty);
-  // }
-  // const itemDecrease = (decrease) => {
-  //   const minusQty = counter.map((cart) =>{
-  //     if (decrease === cart.pk && counter.number_of_product > 1) {
-  //       return {...cart, number_of_product: cart.number_of_product - 1};
-  //     } else return cart;
-  //   });
-  //   setCarts(minusQty);
-  // }
+  const handleDeleteCart = async (pk) => {
+    alert('Are you sure you want to remove the product?');
+    // console.log('pk', pk);
+    var tempCart = carts;
+    tempCart.forEach((c) => {
+      if (c.pk === pk) {
+        // console.log('c.pk', c.pk);
+        axios.delete(`/carts/${pk}`, {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        });
+      }
+    });
+    window.location.reload();
+  };
 
   if (loading)
     return (
@@ -184,13 +165,20 @@ const CartPage = () => {
                       </ItemDetailThree>
                     </ListsItemDetails>
                     <ListsDeleteBtn>
-                      <CloseIcon fontSize='small' />
+                      <CloseIcon
+                        fontSize='small'
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleDeleteCart(cart.pk);
+                        }}
+                      />
                     </ListsDeleteBtn>
                   </ListsDetails>
                 );
               })}
             </CartProductLists>
           </CartLeftInfo>
+
           <CartRightInfo>
             <CartRightTop>
               <h3>Promo Code</h3>
@@ -252,4 +240,4 @@ const CartPage = () => {
   );
 };
 
-export default CartPage;
+export default TestCart;
