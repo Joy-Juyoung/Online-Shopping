@@ -30,6 +30,10 @@ export const OrderWrapper = styled.div`
 export const OrderBodyWrap = styled.div`
   display: flex;
   justify-content: center;
+
+  @media screen and (max-width: 1024px) {
+    display: block;
+  }
 `;
 
 export const OrderLeftInfo = styled.div`
@@ -152,6 +156,11 @@ export const MethodRadio = styled.div`
 export const OrderRightInfo = styled.div`
   flex: 1;
   margin: 30px 0;
+
+  @media screen and (max-width: 1024px) {
+    border-top: 0.5px solid lightgray;
+    padding-top: 20px;
+  }
 `;
 
 export const OrderRightTop = styled.div`
