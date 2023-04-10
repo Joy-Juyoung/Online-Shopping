@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const AccountForm = styled.form`
-  margin-bottom: 50px;
+  /* margin-bottom: 50px; */
 `;
 
 export const AccountInput = styled.div`

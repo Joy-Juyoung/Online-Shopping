@@ -23,6 +23,7 @@ import HelpCenterPage from './HelpCenterPage/HelpCenter';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
 import TestCart from './CartPage/TestCart';
+import OrderPage from './OrderPage/OrderPage';
 
 const Home = ({ meData }) => {
   return (
@@ -83,6 +84,12 @@ const Home = ({ meData }) => {
             element={<TestCart meData={meData} />}
             exact={true}
           /> */}
+
+          <Route
+            path='/orders'
+            element={<OrderPage meData={meData} />}
+            exact={true}
+          />
 
           <Route
             path='/helpcenter'
