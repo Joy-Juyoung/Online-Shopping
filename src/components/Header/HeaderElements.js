@@ -209,10 +209,11 @@ export const DropChildWrap = styled.div`
 export const DropMenuChild = styled.ul`
   list-style-type: none;
   display: none;
-  padding: 0;
+  padding: 10px 0;
   margin: 0 auto;
   box-shadow: 0 500px 2px 500px rgba(0, 0, 0, 0.4);
   font-size: 14px;
+  /* padding-bottom: 10px; */
 `;
 
 export const DropMenuItem = styled.li`
