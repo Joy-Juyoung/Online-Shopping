@@ -51,13 +51,13 @@ const Home = ({ meData }) => {
 
           <Route
             path='/products/:id'
-            element={<ProductDetailPage />}
+            element={<ProductDetailPage meData={meData} />}
             exact={true}
           />
 
           <Route
             path='/products/productAllChildKinds/:id'
-            element={<ProductListByCategory />}
+            element={<ProductListByCategory meData={meData} />}
             exact={true}
           />
 
@@ -67,10 +67,22 @@ const Home = ({ meData }) => {
             exact={true}
           />
 
-          <Route path='/wishlist' element={<WishlistPage />} exact={true} />
-          <Route path='/carts' element={<CartPage />} exact={true} />
+          <Route
+            path='/wishlist'
+            element={<WishlistPage meData={meData} />}
+            exact={true}
+          />
+          <Route
+            path='/carts'
+            element={<CartPage meData={meData} />}
+            exact={true}
+          />
 
-          <Route path='/helpcenter' element={<HelpCenterPage />} exact={true} />
+          <Route
+            path='/helpcenter'
+            element={<HelpCenterPage meData={meData} />}
+            exact={true}
+          />
         </Routes>
       </Container>
     </>

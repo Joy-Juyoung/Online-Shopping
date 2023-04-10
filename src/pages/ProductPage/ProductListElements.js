@@ -105,7 +105,24 @@ export const TotalCountWrap = styled.div`
   /* margin: 20px 0; */
 `;
 
-export const SelectWrap = styled.div``;
+export const SelectWrap = styled.div`
+  select {
+    width: 150px;
+    height: 30px;
+    /* border: 1px solid #0a0f18; */
+    border: none;
+    /* font-size: 18px; */
+    /* color: #1c87c9; */
+    background-color: #f2f4f7;
+    border-radius: 5px;
+    /* box-shadow: 4px 4px #ccc; */
+    padding: 0 5px;
+  }
+
+  option {
+    padding: 5px;
+  }
+`;
 
 export const ListMidWrap = styled.div`
   /* display: flex; */

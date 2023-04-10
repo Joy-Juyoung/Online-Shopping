@@ -292,15 +292,14 @@ const Header = ({ meData }) => {
                           {category.productKinds?.map((child) => {
                             return (
                               <Link
+                                key={child.pk}
                                 style={{
                                   color: 'black',
                                   textDecoration: 'none',
                                 }}
                                 to={`/products/productAllChildKinds/${child.pk}`}
                               >
-                                <DropMenuItem key={child.pk}>
-                                  {child.name}
-                                </DropMenuItem>
+                                <DropMenuItem>{child.name}</DropMenuItem>
                               </Link>
                             );
                           })}

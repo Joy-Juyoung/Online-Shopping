@@ -115,6 +115,7 @@ const WishlistPage = ({ meData }) => {
                       all={all}
                       // kindEach={kindEach}
                       meData={meData}
+                      wishItems={wishItems}
                     />
                   );
                 })}

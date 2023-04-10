@@ -39,6 +39,8 @@ const ProductsListPage = ({ meData }) => {
   const [kindEach, setKindEach] = useState([]);
   const { id } = useParams();
 
+  // console.log('meDataList', meData);
+
   useEffect(() => {
     const loadData = async () => {
       await new Promise((r) => setTimeout(r, 1000));
@@ -159,8 +161,9 @@ const ProductsListPage = ({ meData }) => {
                           <ProductsCard
                             key={all.pk}
                             all={all}
-                            kindEach={kindEach}
+                            // kindEach={kindEach}
                             meData={meData}
+                            itemAllKinds={itemAllKinds}
                           />
                         );
                       })}

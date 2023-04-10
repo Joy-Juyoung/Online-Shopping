@@ -276,9 +276,7 @@ export const NoUserBtn = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  /* justify-content: space-between; */
   margin: 20px 0;
-  /* width: 50%; */
 
   button {
     cursor: pointer;
