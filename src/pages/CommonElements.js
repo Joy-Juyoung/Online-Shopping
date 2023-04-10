@@ -14,9 +14,9 @@ export const PesnalContainer = styled.div`
   font-size: 14px;
   color: #0a0f18;
 
-  @media screen and (min-width: 576px) {
+  /* @media screen and (min-width: 576px) {
     max-width: 375px;
-  }
+  } */
 `;
 
 export const PesnalWrapper = styled.div`
