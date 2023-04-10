@@ -1,30 +1,42 @@
 import styled from 'styled-components';
 
 export const AccountForm = styled.form`
-  /* margin: 0 auto;
-  width: 60%; */
   margin-bottom: 50px;
 `;
 
 export const AccountInput = styled.div`
-  /* margin: 0 0 20px; */
+  p {
+    margin: 5px 0;
+
+    &.empty {
+      font-weight: 200;
+    }
+  }
 `;
 
-export const RightInfo = styled.div`
-  /* flex: 1; */
+export const BasicInfo = styled.div``;
+
+export const InfoEach = styled.div`
+  margin-bottom: 15px;
 `;
 
-export const LeftInfo = styled.div`
-  /* flex: 1; */
+export const AccountInputTitle = styled.div`
+  font-weight: 600;
+  font-size: 15px;
+  margin-right: 15px;
 `;
 
-export const MainAvatar = styled.div`
+export const LeftInfo = styled.div``;
+
+export const ShippingInfo = styled.div`
+  margin: 40px 0 20px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 40px;
-  cursor: pointer;
+
+  h2 {
+    font-weight: 700;
+    margin-right: 15px;
+  }
 `;
 
 export const AccountInputLabel = styled.label`
@@ -33,47 +45,7 @@ export const AccountInputLabel = styled.label`
 `;
 
 export const InputEdit = styled.div`
-  display: flex;
-  /* flex-direction: column; */
-  align-items: center;
-  justify-content: center;
-  margin-top: 5px;
-  font-size: 13px;
-  font-weight: 300;
-
-  button {
-    cursor: pointer;
-
-    align-items: center;
-    margin-left: -50px;
-
-    &:hover {
-      font-weight: 600;
-    }
-  }
-`;
-
-// export const DisplayInput = styled.div``;
-
-// export const EditBtn = styled.div`
-//   background: lightgray;
-//   cursor: pointer;
-// `;
-
-export const ShippingInfo = styled.div`
-  margin: 40px 0;
-  padding: 10px;
-  /* border-radius: 5px; */
-  /* background: gray; */
-  /* color: #fff; */
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  div {
-    display: flex;
-    align-items: center;
-  }
+  margin-bottom: 15px;
 `;
 
 export const DelBtn = styled.div`
@@ -81,13 +53,14 @@ export const DelBtn = styled.div`
   align-items: center;
   justify-content: flex-end;
   margin: 40px 0;
+  border-bottom: 0.5px solid gray;
 
   button {
     cursor: pointer;
     border: none;
-    border-radius: 5px;
     padding: 10px;
     background: none;
+    /* border-bottom: 0.5px solid gray; */
 
     &:hover {
       font-weight: 600;

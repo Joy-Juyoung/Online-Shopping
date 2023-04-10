@@ -181,7 +181,7 @@ const LoginPage = () => {
               aria-describedby='uidnote'
               onFocus={() => setUsernameFocus(true)}
               onBlur={() => setUsernameFocus(false)}
-              placeholder='Enter user id.'
+              placeholder='Enter user id'
             />
             <VerificationMsg
               id='uidnote'

@@ -9,6 +9,7 @@ export const Container = styled.div`
 
 export const PesnalContainer = styled.div`
   /* max-width: 1280px; */
+  height: 70vh;
   margin: 0 auto;
   font-size: 14px;
   color: #0a0f18;

@@ -25,6 +25,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 const USERNAME_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 const REGISTER_URL = '/users/';
 
@@ -36,6 +37,10 @@ const RegisterPage = () => {
   const [username, setUsername] = useState('');
   const [validUsername, setValidUsername] = useState(false);
   const [usernameFocus, setUsernameFocus] = useState(false);
+
+  const [email, setEmail] = useState('');
+  const [validEmail, setValidEmail] = useState(false);
+  const [emailFocus, setEmailFocus] = useState(false);
 
   const [pwd, setPwd] = useState('');
   const [validPwd, setValidPwd] = useState(false);
@@ -83,6 +88,10 @@ const RegisterPage = () => {
   }, [username]);
 
   useEffect(() => {
+    setValidEmail(EMAIL_REGEX.test(email));
+  }, [email]);
+
+  useEffect(() => {
     setValidPwd(PWD_REGEX.test(pwd));
     setValidMatch(pwd === matchPwd);
   }, [pwd, matchPwd]);
@@ -100,7 +109,8 @@ const RegisterPage = () => {
 
     const v1 = USERNAME_REGEX.test(username);
     const v2 = PWD_REGEX.test(pwd);
-    if (!v1 || !v2) {
+    const v3 = EMAIL_REGEX.test(email);
+    if (!v1 || !v2 || !v3) {
       setErrMsg('Invalid Entry');
       return;
     }
@@ -110,6 +120,7 @@ const RegisterPage = () => {
       REGISTER_URL,
       {
         username: username,
+        email: email,
         password: pwd,
         type: 'user',
       },
@@ -128,6 +139,7 @@ const RegisterPage = () => {
     } else {
       setSuccess(true);
       setUsername('');
+      setEmail('');
       setPwd('');
       setMatchPwd('');
       setLoading(false);
@@ -187,7 +199,7 @@ const RegisterPage = () => {
                 aria-describedby='uidnote'
                 onFocus={() => setUsernameFocus(true)}
                 onBlur={() => setUsernameFocus(false)}
-                placeholder='Enter username.'
+                placeholder='Enter user Id.'
               />
               <VerificationMsg
                 id='uidnote'
@@ -202,6 +214,36 @@ const RegisterPage = () => {
                   underscores, hyphens allowed.
                 </span>
               </VerificationMsg>
+
+              <RegisterInputLabel htmlFor='email'>
+                Email address
+              </RegisterInputLabel>
+              <Input
+                // type='email'
+                type='text'
+                id='email'
+                // ref={userRef}
+                autoComplete='off'
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                required
+                aria-invalid={validEmail ? 'false' : 'true'}
+                aria-describedby='uidnote'
+                onFocus={() => setEmailFocus(true)}
+                onBlur={() => setEmailFocus(false)}
+                placeholder='Enter your Email address.'
+              />
+              <VerificationMsg
+                id='uidnote'
+                style={{
+                  display: validEmail || !email ? 'none' : 'flex',
+                  marginBottom: '20px',
+                }}
+              >
+                <ErrorOutlineIcon fontSize='small' style={{ color: 'red' }} />
+                <span>example@email.com</span>
+              </VerificationMsg>
+
               <RegisterInputLabel htmlFor='password'>
                 Password
               </RegisterInputLabel>

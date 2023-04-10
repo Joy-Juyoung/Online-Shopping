@@ -2,22 +2,18 @@ import React from 'react';
 import { Input } from '../../components/InputElements';
 import {
   DelBtn,
-  MainAvatar,
-  MainInfo,
-  MainInput,
-  MainLeft,
-  MainRight,
   AccountForm,
   AccountInput,
   AccountInputLabel,
   InputEdit,
   ShippingInfo,
-  EditBtn,
-  RightInfo,
   LeftInfo,
+  AccountInputTitle,
+  BasicInfo,
+  InfoEach,
 } from './UserAccountElements';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Avatar, { ConfigProvider } from 'react-avatar';
+
 import {
   ButtonHover,
   ButtonLarge,
@@ -41,7 +37,7 @@ const UserAccountPage = ({ meData }) => {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
-  const [changeUserInfo, setChangeUserInfo] = useState(null);
+  const [changeUserInfo, setChangeUserInfo] = useState('');
   const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
@@ -60,6 +56,8 @@ const UserAccountPage = ({ meData }) => {
     setAddress(meData?.address);
     setPhone(meData?.phone_number);
   }, [meData]);
+
+  console.log('name', address);
 
   const handleInputChange = (e) => {
     // console.log('name', e.target.value);
@@ -125,133 +123,91 @@ const UserAccountPage = ({ meData }) => {
         <h1>My Profile</h1>
         <AccountForm onSubmit={handleSubmit}>
           <AccountInput>
-            <RightInfo>
-              <MainAvatar>
-                <ConfigProvider colors={['red', 'grey', 'green']}>
-                  <Avatar
-                    name={changeUserInfo?.username}
-                    round={true}
-                    size={200}
-                  />
-                </ConfigProvider>
-              </MainAvatar>
-
-              <AccountInputLabel htmlFor='username'>
-                {/* User Id */}
-                User ID
-              </AccountInputLabel>
-              <Input
-                borderNone={true}
-                borderBottom={true}
-                type='text'
-                value={changeUserInfo?.username}
-                id='username'
-                disabled
-              />
-
-              <AccountInputLabel htmlFor='email'>Email</AccountInputLabel>
-              <Input
-                borderNone={true}
-                borderBottom={true}
-                type='text'
-                value={changeUserInfo?.email || ''}
-                id='email'
-                disabled
-              />
-            </RightInfo>
+            <BasicInfo>
+              <InfoEach>
+                <AccountInputTitle>User ID</AccountInputTitle>
+                <p>{changeUserInfo?.username}</p>
+              </InfoEach>
+              <AccountInputTitle>Email</AccountInputTitle>
+              <p>{changeUserInfo?.email}</p>
+            </BasicInfo>
 
             <LeftInfo>
               {!isEdit ? (
                 <>
                   <ShippingInfo>
-                    <div>
-                      <span>Personal Information</span>
-                      <ExpandMoreIcon />
-                    </div>
+                    <h2>Personal Information</h2>
                     <ButtonUtils>Edit</ButtonUtils>
                   </ShippingInfo>
-                  <AccountInputLabel htmlFor='name'>Name</AccountInputLabel>
-                  <InputEdit>
-                    <Input
-                      borderNone={true}
-                      borderBottom={true}
-                      type='text'
-                      value={name}
-                      id='name'
-                      disabled
-                    />
-                    {/* <ButtonUtils>Edit</ButtonUtils> */}
-                  </InputEdit>
-                  <AccountInputLabel htmlFor='address'>
-                    Address
-                  </AccountInputLabel>
-                  <InputEdit>
-                    <Input
-                      borderNone={true}
-                      borderBottom={true}
-                      type='text'
-                      value={address}
-                      id='address'
-                      disabled
-                    />
-                    {/* <ButtonUtils>Edit</ButtonUtils> */}
-                  </InputEdit>
-
-                  <AccountInputLabel htmlFor='phone'>
-                    Phone numbe
-                  </AccountInputLabel>
-                  <InputEdit>
-                    <Input
-                      borderNone={true}
-                      borderBottom={true}
-                      type='text'
-                      value={phone}
-                      id='phone'
-                      disabled
-                    />
-                    {/* <ButtonUtils>Edit</ButtonUtils> */}
-                  </InputEdit>
+                  <InfoEach>
+                    <AccountInputTitle>Name</AccountInputTitle>
+                    {name === '' ? (
+                      <p className='empty'>Add your name</p>
+                    ) : (
+                      <p>{name}</p>
+                    )}
+                  </InfoEach>
+                  <InfoEach>
+                    <AccountInputTitle>Address</AccountInputTitle>
+                    {address === null ? (
+                      <p className='empty'>Add your address</p>
+                    ) : (
+                      <p>{address}</p>
+                    )}
+                  </InfoEach>
+                  <InfoEach>
+                    <AccountInputTitle>Phone numbe</AccountInputTitle>
+                    {phone === null ? (
+                      <p className='empty'>Add your phone</p>
+                    ) : (
+                      <p>{phone}</p>
+                    )}
+                  </InfoEach>
                 </>
               ) : (
                 <>
                   <ShippingInfo>
-                    <span>Personal Information</span>
+                    <h2>Personal Information</h2>
                     <ButtonUtils>Save</ButtonUtils>
                   </ShippingInfo>
-                  <AccountInputLabel htmlFor='name'>Name</AccountInputLabel>
-                  <InputEdit>
-                    <Input
-                      type='text'
-                      value={name}
-                      id='name'
-                      onChange={handleInputChange}
-                    />
-                    {/* <ButtonUtils>Save</ButtonUtils> */}
-                  </InputEdit>
-                  <AccountInputLabel htmlFor='address'>
-                    Address
-                  </AccountInputLabel>
-                  <InputEdit>
-                    <Input
-                      type='text'
-                      value={address}
-                      id='address'
-                      onChange={handleInputChange}
-                    />
-                    {/* <ButtonUtils>Save</ButtonUtils> */}
-                  </InputEdit>
-                  <AccountInputLabel htmlFor='phone'>
-                    Phone numbe
-                  </AccountInputLabel>
-                  <InputEdit>
-                    <Input
-                      type='text'
-                      value={phone}
-                      id='phone'
-                      onChange={handleInputChange}
-                    />
-                    {/* <ButtonUtils>Save</ButtonUtils> */}
-                  </InputEdit>
+
+                  <InfoEach>
+                    <AccountInputLabel htmlFor='name'>Name</AccountInputLabel>
+                    <InputEdit>
+                      <Input
+                        type='text'
+                        value={name || ''}
+                        id='name'
+                        onChange={handleInputChange}
+                      />
+                    </InputEdit>
+                  </InfoEach>
+                  <InfoEach>
+                    <AccountInputLabel htmlFor='address'>
+                      Address
+                    </AccountInputLabel>
+                    <InputEdit>
+                      <Input
+                        type='text'
+                        value={address || ''}
+                        id='address'
+                        onChange={handleInputChange}
+                      />
+                    </InputEdit>
+                  </InfoEach>
+                  <InfoEach>
+                    <AccountInputLabel htmlFor='phone'>
+                      Phone numbe
+                    </AccountInputLabel>
+                    <InputEdit>
+                      <Input
+                        type='text'
+                        value={phone || ''}
+                        id='phone'
+                        onChange={handleInputChange}
+                      />
+                    </InputEdit>
+                  </InfoEach>
                 </>
               )}
             </LeftInfo>
