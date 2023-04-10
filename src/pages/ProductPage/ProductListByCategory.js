@@ -39,6 +39,8 @@ const ProductListByCategory = ({ meData }) => {
   const [itemAllKinds, setItemAllKinds] = useState([]);
   const { id } = useParams();
 
+  // console.log('meData', meData);
+
   useEffect(() => {
     const loadData = async () => {
       await new Promise((r) => setTimeout(r, 1000));
@@ -116,6 +118,7 @@ const ProductListByCategory = ({ meData }) => {
                       all={all}
                       // kindEach={kindEach}
                       meData={meData}
+                      itemKinds={itemKinds}
                     />
                   );
                 })}
