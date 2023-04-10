@@ -142,8 +142,8 @@ const ProductDetailPage = ({ meData }) => {
             <ButtonLarges onClick={() => setIsOpen(true)}>
               Add to Cart
             </ButtonLarges>
-            {isOpen && <AddToCart onClose={() => setIsOpen(false)} />}
-            {/* {isOpen && <TestAddToCart onClose={() => setIsOpen(false)} />} */}
+            {/* {isOpen && <AddToCart onClose={() => setIsOpen(false)} />} */}
+            {isOpen && <TestAddToCart onClose={() => setIsOpen(false)} />}
           </DetailRightInfoBottom>
         </DetailRightInfo>
       </DetailWrapperOne>

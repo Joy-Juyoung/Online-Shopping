@@ -13,8 +13,10 @@ import {
   InputEdit,
   ShippingInfo,
   EditBtn,
+  RightInfo,
+  LeftInfo,
 } from './UserAccountElements';
-
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Avatar, { ConfigProvider } from 'react-avatar';
 import {
   ButtonHover,
@@ -23,20 +25,19 @@ import {
   ButtonUtils,
 } from '../../components/ButtonElements';
 import { useState, useEffect } from 'react';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Link } from 'react-router-dom';
 import { PesnalContainer, PesnalWrapper } from '../CommonElements';
 import { InputWrap } from '../LoginPage/LoginElements';
 import Loading from '../../components/Loading';
 import axios from '../../api/axios';
+import { PersonalVideo } from '@material-ui/icons';
 
 const UserAccountPage = ({ meData }) => {
   const [loading, setLoading] = useState(false);
 
   // console.log('meData', meData);
 
-  const [email, setEmail] = useState('');
+  // const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
@@ -56,14 +57,22 @@ const UserAccountPage = ({ meData }) => {
   useEffect(() => {
     setChangeUserInfo(meData);
     setName(meData?.name);
+    setAddress(meData?.address);
+    setPhone(meData?.phone_number);
   }, [meData]);
 
   const handleInputChange = (e) => {
-    console.log('name', e.target.value);
+    // console.log('name', e.target.value);
     var tempChangeUserInfo = changeUserInfo;
 
     if (e.target.id === 'name') {
       setName(e.target.value);
+    }
+    if (e.target.id === 'address') {
+      setAddress(e.target.value);
+    }
+    if (e.target.id === 'phone') {
+      setPhone(e.target.value);
     }
     setChangeUserInfo(tempChangeUserInfo);
   };
@@ -77,8 +86,6 @@ const UserAccountPage = ({ meData }) => {
       const meInfo = await axios.put(
         '/users/me',
         {
-          username: meData.username,
-          email: email,
           name: name,
           address: address,
           phone_number: phone,
@@ -118,103 +125,140 @@ const UserAccountPage = ({ meData }) => {
         <h1>My Profile</h1>
         <AccountForm onSubmit={handleSubmit}>
           <AccountInput>
-            <MainAvatar>
-              <ConfigProvider colors={['red', 'grey', 'green']}>
-                <Avatar
-                  name={changeUserInfo?.username}
-                  round={true}
-                  size={200}
-                />
-              </ConfigProvider>
-            </MainAvatar>
+            <RightInfo>
+              <MainAvatar>
+                <ConfigProvider colors={['red', 'grey', 'green']}>
+                  <Avatar
+                    name={changeUserInfo?.username}
+                    round={true}
+                    size={200}
+                  />
+                </ConfigProvider>
+              </MainAvatar>
 
-            <AccountInputLabel htmlFor='username'>
-              {/* User Id */}
-              User ID
-            </AccountInputLabel>
-            <Input
-              borderNone={true}
-              borderBottom={true}
-              type='text'
-              value={changeUserInfo?.username}
-              id='username'
-              disabled
-            />
-
-            <AccountInputLabel htmlFor='email'>Email</AccountInputLabel>
-            <Input
-              borderNone={true}
-              borderBottom={true}
-              type='text'
-              value={changeUserInfo?.email || ''}
-              id='email'
-              disabled
-            />
-            <AccountInputLabel htmlFor='name'>Name</AccountInputLabel>
-            {!isEdit ? (
-              <InputEdit>
-                <Input
-                  borderNone={true}
-                  borderBottom={true}
-                  type='text'
-                  // value={changeUserInfo?.name || ''}
-                  value={name}
-                  id='name'
-                  // onChange={handleNameChange}
-                  disabled
-                />
-                <ButtonUtils style={{ marginLeft: '-50px' }}>Edit</ButtonUtils>
-              </InputEdit>
-            ) : (
-              <InputEdit>
-                <Input
-                  type='text'
-                  // value={changeUserInfo?.name || ''}
-                  value={name}
-                  id='name'
-                  onChange={handleInputChange}
-                />
-                <ButtonUtils style={{ marginLeft: '-50px' }}>Save</ButtonUtils>
-              </InputEdit>
-            )}
-
-            <ShippingInfo>Shipping Information</ShippingInfo>
-
-            <AccountInputLabel htmlFor='address'>Address</AccountInputLabel>
-            <InputEdit>
+              <AccountInputLabel htmlFor='username'>
+                {/* User Id */}
+                User ID
+              </AccountInputLabel>
               <Input
                 borderNone={true}
                 borderBottom={true}
                 type='text'
-                value={changeUserInfo?.address || ''}
-                id='address'
+                value={changeUserInfo?.username}
+                id='username'
                 disabled
               />
-              <ButtonUtils style={{ marginLeft: '-50px' }} onClick={handleEdit}>
-                Edit
-              </ButtonUtils>
-            </InputEdit>
 
-            <AccountInputLabel htmlFor='phone_numbe'>
-              Phone numbe
-            </AccountInputLabel>
-            <InputEdit>
+              <AccountInputLabel htmlFor='email'>Email</AccountInputLabel>
               <Input
                 borderNone={true}
                 borderBottom={true}
                 type='text'
-                value={changeUserInfo?.phone || ''}
-                id='phone_numbe'
+                value={changeUserInfo?.email || ''}
+                id='email'
                 disabled
               />
-              <ButtonUtils style={{ marginLeft: '-50px' }}>Edit</ButtonUtils>
-            </InputEdit>
+            </RightInfo>
 
-            <DelBtn>
-              {/* <ButtonHover>Delete Account</ButtonHover> */}
-              <ButtonUtils>Delete Account</ButtonUtils>
-            </DelBtn>
+            <LeftInfo>
+              {!isEdit ? (
+                <>
+                  <ShippingInfo>
+                    <div>
+                      <span>Personal Information</span>
+                      <ExpandMoreIcon />
+                    </div>
+                    <ButtonUtils>Edit</ButtonUtils>
+                  </ShippingInfo>
+                  <AccountInputLabel htmlFor='name'>Name</AccountInputLabel>
+                  <InputEdit>
+                    <Input
+                      borderNone={true}
+                      borderBottom={true}
+                      type='text'
+                      value={name}
+                      id='name'
+                      disabled
+                    />
+                    {/* <ButtonUtils>Edit</ButtonUtils> */}
+                  </InputEdit>
+                  <AccountInputLabel htmlFor='address'>
+                    Address
+                  </AccountInputLabel>
+                  <InputEdit>
+                    <Input
+                      borderNone={true}
+                      borderBottom={true}
+                      type='text'
+                      value={address}
+                      id='address'
+                      disabled
+                    />
+                    {/* <ButtonUtils>Edit</ButtonUtils> */}
+                  </InputEdit>
+
+                  <AccountInputLabel htmlFor='phone'>
+                    Phone numbe
+                  </AccountInputLabel>
+                  <InputEdit>
+                    <Input
+                      borderNone={true}
+                      borderBottom={true}
+                      type='text'
+                      value={phone}
+                      id='phone'
+                      disabled
+                    />
+                    {/* <ButtonUtils>Edit</ButtonUtils> */}
+                  </InputEdit>
+                </>
+              ) : (
+                <>
+                  <ShippingInfo>
+                    <span>Personal Information</span>
+                    <ButtonUtils>Save</ButtonUtils>
+                  </ShippingInfo>
+                  <AccountInputLabel htmlFor='name'>Name</AccountInputLabel>
+                  <InputEdit>
+                    <Input
+                      type='text'
+                      value={name}
+                      id='name'
+                      onChange={handleInputChange}
+                    />
+                    {/* <ButtonUtils>Save</ButtonUtils> */}
+                  </InputEdit>
+                  <AccountInputLabel htmlFor='address'>
+                    Address
+                  </AccountInputLabel>
+                  <InputEdit>
+                    <Input
+                      type='text'
+                      value={address}
+                      id='address'
+                      onChange={handleInputChange}
+                    />
+                    {/* <ButtonUtils>Save</ButtonUtils> */}
+                  </InputEdit>
+                  <AccountInputLabel htmlFor='phone'>
+                    Phone numbe
+                  </AccountInputLabel>
+                  <InputEdit>
+                    <Input
+                      type='text'
+                      value={phone}
+                      id='phone'
+                      onChange={handleInputChange}
+                    />
+                    {/* <ButtonUtils>Save</ButtonUtils> */}
+                  </InputEdit>
+                </>
+              )}
+            </LeftInfo>
           </AccountInput>
+          <DelBtn>
+            <button>Delete Account</button>
+          </DelBtn>
         </AccountForm>
       </PesnalWrapper>
     </PesnalContainer>

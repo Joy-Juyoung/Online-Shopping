@@ -1,5 +1,23 @@
 import styled from 'styled-components';
 
+export const AccountForm = styled.form`
+  /* margin: 0 auto;
+  width: 60%; */
+  margin-bottom: 50px;
+`;
+
+export const AccountInput = styled.div`
+  /* margin: 0 0 20px; */
+`;
+
+export const RightInfo = styled.div`
+  /* flex: 1; */
+`;
+
+export const LeftInfo = styled.div`
+  /* flex: 1; */
+`;
+
 export const MainAvatar = styled.div`
   display: flex;
   flex-direction: column;
@@ -7,12 +25,6 @@ export const MainAvatar = styled.div`
   justify-content: center;
   margin-bottom: 40px;
   cursor: pointer;
-`;
-
-export const AccountForm = styled.form``;
-
-export const AccountInput = styled.div`
-  margin: 0 0 20px;
 `;
 
 export const AccountInputLabel = styled.label`
@@ -26,6 +38,8 @@ export const InputEdit = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 5px;
+  font-size: 13px;
+  font-weight: 300;
 
   button {
     cursor: pointer;
@@ -49,9 +63,17 @@ export const InputEdit = styled.div`
 export const ShippingInfo = styled.div`
   margin: 40px 0;
   padding: 10px;
-  border-radius: 5px;
-  background: gray;
-  color: #fff;
+  /* border-radius: 5px; */
+  /* background: gray; */
+  /* color: #fff; */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  div {
+    display: flex;
+    align-items: center;
+  }
 `;
 
 export const DelBtn = styled.div`
@@ -65,6 +87,7 @@ export const DelBtn = styled.div`
     border: none;
     border-radius: 5px;
     padding: 10px;
+    background: none;
 
     &:hover {
       font-weight: 600;
