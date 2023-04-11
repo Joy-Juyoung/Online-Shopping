@@ -245,7 +245,7 @@ const CartPage = () => {
 
             <CartRightBottom>
               <CheckOutBtn>PROCEED TO CHECKOUT</CheckOutBtn>
-              <Link to='/orders'>go to order</Link>
+              <Link to='/payment'>go to order</Link>
             </CartRightBottom>
           </CartRightInfo>
         </CartBodyWrap>

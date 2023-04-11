@@ -1,61 +1,57 @@
 import React, { useEffect, useState } from 'react';
-import {
-  DetailDescription,
-  DetailName,
-  DetailOption,
-  ExtraInfo,
-  ItemTotalPrice,
-  ListsDetails,
-  ListsImgLink,
-  ListsItemDetails,
-  OrderPsersonalInfo,
-  OrderInfoDetails,
-  PaymentMethod,
-  MethodRadio,
-  DetailPrice,
-  TotalTitle,
-  ItemSummary,
-  OrderContainer,
-  OrderWrapper,
-  OrderBodyWrap,
-  OrderLeftInfo,
-  OrderListTitle,
-  OrderListWrap,
-  OrderRightInfo,
-  OrderRightTop,
-  OrderSummaryInfo,
-  OrderCheckout,
-} from './OrderElements';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import axios from '../../api/axios';
+import { ButtonUtils } from '../../components/ButtonElements';
+import { PesnalContainer, PesnalWrapper } from '../CommonElements';
+import {
+  ListTotal,
+  ListView,
+  OrderContainer,
+  OrderEachStatus,
+  OrderList,
+  OrderListEmpty,
+  OrderListTable,
+  OrderListTop,
+  OrderMenuByStatus,
+  OrderWrap,
+  OrderWrapper,
+} from './OrderElements';
 import Loading from '../../components/Loading';
-import { ButtonLarge, ButtonSmall } from '../../components/ButtonElements';
-import PaypalIcon from '../../asset/paypal.svg';
-import MastercardIcon from '../../asset/mastercard.svg';
-import VisaIcon from '../../asset/visa.svg';
-// import { Link } from 'react-router-dom';
 
-const CARTS_URL = '/carts';
-
-const OrderPage = ({ meData }) => {
+const OrderPage = () => {
+  const [total, setTotal] = useState(0);
+  const [orderItems, setOrderItems] = useState(null);
+  const [isEmpty, setIsEmpty] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [carts, setCarts] = useState([]);
-  const ShippingFee = 15;
-  const getAllCart = async () => {
-    const cartList = await axios.get(CARTS_URL, {
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true,
-    });
+  const [errMsg, setErMsg] = useState('');
 
-    console.log('cartList', cartList.data);
-    setCarts(cartList?.data);
-    setLoading(false);
+  const getOrders = async () => {
+    try {
+      const order = await axios.get('wishlists/', {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      });
+      setOrderItems(order?.data);
+      setLoading(false);
+    } catch (err) {
+      if (err.response?.status === 400) {
+        // console.log('400 error');
+        setLoading(false);
+        setIsEmpty(!isEmpty);
+      } else {
+        console.log('Error page or empty page');
+        setErMsg('Error page or empty page');
+      }
+    }
   };
+
+  console.log('orderItems', orderItems);
+
   useEffect(() => {
     setLoading(true);
-    getAllCart();
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    getOrders();
+    // setLoading(false);
   }, []);
-  console.log('carts', carts);
 
   if (loading)
     return (
@@ -63,120 +59,39 @@ const OrderPage = ({ meData }) => {
         <Loading />
       </div>
     );
-
   return (
     <OrderContainer>
-      <h1>SHOPPING BAG</h1>
       <OrderWrapper>
-        <OrderBodyWrap>
-          <OrderLeftInfo>
-            <OrderPsersonalInfo>
-              <OrderListTitle>Shipping address</OrderListTitle>
-              <OrderInfoDetails>
-                <h3>{meData?.name}</h3>
-                <p>{meData?.phone_number}</p>
-                <p>{meData?.address}</p>
-              </OrderInfoDetails>
-              <ButtonSmall>Edit my shipping address</ButtonSmall>
-            </OrderPsersonalInfo>
-            <OrderListWrap>
-              <OrderListTitle>
-                Product information <span>{carts.length} Items</span>
-              </OrderListTitle>
-              {carts?.map((cart) => {
-                return (
-                  <ListsDetails key={cart.pk}>
-                    <ListsImgLink to={``}>
-                      <img src={cart.product.photos[0].picture} alt='' />
-                    </ListsImgLink>
-
-                    <ListsItemDetails>
-                      <DetailName to={``}>
-                        {cart.product.name.toUpperCase()}
-                      </DetailName>
-                      <DetailDescription to={``}>
-                        {cart.product.detail}
-                      </DetailDescription>
-                      <DetailOption>
-                        {/* <span>{cart.product_option?.name}</span> */}
-                        Free, Qty 1
-                      </DetailOption>
-                      <DetailPrice>${cart.total_price}</DetailPrice>
-                    </ListsItemDetails>
-                  </ListsDetails>
-                );
-              })}
-            </OrderListWrap>
-            <OrderPsersonalInfo>
-              <OrderListTitle>Payment method</OrderListTitle>
-              <PaymentMethod>
-                <MethodRadio>
-                  <input type='radio' id='paypal' name='payment' />
-                  <label htmlFor='paypal'>Paypal</label>
-                </MethodRadio>
-
-                <img src={PaypalIcon} border='0' alt='PayPal Logo' />
-              </PaymentMethod>
-              <PaymentMethod>
-                <MethodRadio>
-                  <input type='radio' id='card' name='payment' />
-                  <label htmlFor='card'>Credit/Debit Card</label>
-                </MethodRadio>
-                <div>
-                  <img src={VisaIcon} border='0' alt='PayPal Logo' />
-                  <img src={MastercardIcon} border='0' alt='PayPal Logo' />
-                </div>
-              </PaymentMethod>
-            </OrderPsersonalInfo>
-          </OrderLeftInfo>
-
-          <OrderRightInfo>
-            <OrderRightTop>
-              <TotalTitle>Total</TotalTitle>
-              <span>
-                $600
-                <ExpandMoreIcon />
-              </span>
-            </OrderRightTop>
-
-            <OrderSummaryInfo>
-              <ItemSummary>
-                Price
-                <span>${139}</span>
-              </ItemSummary>
-              <ItemSummary>
-                Shipping fee
-                <span>${ShippingFee}</span>
-              </ItemSummary>
-              <ItemSummary>
-                Duties amd Taxes
-                <span>${ShippingFee}</span>
-              </ItemSummary>
-              <ItemSummary>
-                Discounts
-                <span>${ShippingFee}</span>
-              </ItemSummary>
-              <ItemTotalPrice>
-                Total
-                <span>$154</span>
-              </ItemTotalPrice>
-              <ExtraInfo>
-                <li>
-                  * No additional duties and taxes are charged on delivery, as
-                  they are included in the final price..
-                </li>
-              </ExtraInfo>
-            </OrderSummaryInfo>
-
-            <OrderCheckout>
-              <p>
-                I agree to the terms and conditions, order information, and
-                payment terms.
-              </p>
-              <ButtonLarge>PROCEED TO CHECKOUT</ButtonLarge>
-            </OrderCheckout>
-          </OrderRightInfo>
-        </OrderBodyWrap>
+        <h1>My Profile</h1>
+        <OrderWrap>
+          <OrderMenuByStatus>
+            <ButtonUtils>All</ButtonUtils>
+            <ButtonUtils>Order Placed</ButtonUtils>
+            <ButtonUtils>Dispatched</ButtonUtils>
+            <ButtonUtils>Dekivered</ButtonUtils>
+            <ButtonUtils>Cancel/Refund</ButtonUtils>
+          </OrderMenuByStatus>
+          <OrderList>
+            <OrderListTop>
+              <ListTotal>Total {total}</ListTotal>
+              <ListView>
+                <option value='Year 1'>Year 1</option>
+                <option value='Week 1'>Week 1</option>
+                <option value='Month 1'>Month 1</option>
+                <option value='Month 3'>Month 3</option>
+                <option value='Month 4'>Month 4</option>
+              </ListView>
+            </OrderListTop>
+            {isEmpty ? (
+              <OrderListEmpty>No orders found.</OrderListEmpty>
+            ) : (
+              <>
+                <OrderListEmpty>Table</OrderListEmpty>
+                {/* <OrderListTable></OrderListTable> */}
+              </>
+            )}
+          </OrderList>
+        </OrderWrap>
       </OrderWrapper>
     </OrderContainer>
   );
