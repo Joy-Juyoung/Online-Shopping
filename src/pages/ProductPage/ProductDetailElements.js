@@ -8,7 +8,7 @@ import styled  from 'styled-components';
 export const DetailContainer = styled.div`
     max-width: 1250px;
     margin: 0 auto;
-    padding: 0 20px 100px;
+    padding: 0 20px 50px;
 `;
 
 
@@ -95,6 +95,9 @@ export const LikeBtn = styled.button`
     background: none;
     border: none;
 `;
+export const ButtonLargeWrap = styled.div`
+
+`;
 
 export const ButtonLarges = styled.button`
  /* width: ${({ width }) => width}; */
@@ -173,7 +176,7 @@ export const ListDetailBtn = styled.button`
 export const DetailDescription = styled.div`
     float: left;
     width: 100%;
-    padding-bottom: 80px;
+    padding-bottom: 50px;
     border-top: 2px solid rgb(231, 233, 236);
     display: block;
 `;
@@ -190,7 +193,7 @@ export const DescriptionListDetail = styled.div`
 `;
 
 export const ListDetailBody = styled.dl`
-    padding-bottom: 16px;
+    padding-bottom: 10px;
     display: block;
 
 `;
@@ -202,6 +205,15 @@ export const DetailBodyOne = styled.dt`
     font-size: 16px;
     /* display: inline; */
     vertical-align: top;
+
+    img {
+        width: 100%;
+    }
+
+    p {
+        margin-top: 10px;
+        margin-left: 12px;
+    }
 `;
 
 export const DetailBodyTwo = styled.dt`
@@ -211,5 +223,10 @@ export const DetailBodyTwo = styled.dt`
     font-size: 16px;
     /* display: inline; */
     vertical-align: top;
-    margin-top: 16px;
+    margin-top: 50px;
+    
+    p{
+        margin-top: 10px;
+        margin-left: 12px;
+    }
 `;

@@ -81,9 +81,14 @@ const Home = ({ meData }) => {
             element={<WishlistPage meData={meData} />}
             exact={true}
           />
-          <Route
+          {/* <Route
             path='/carts'
             element={<CartPage meData={meData} />}
+            exact={true}
+          /> */}
+            <Route
+            path='/carts'
+            element={<TestCart meData={meData} />}
             exact={true}
           />
           {/* <Route

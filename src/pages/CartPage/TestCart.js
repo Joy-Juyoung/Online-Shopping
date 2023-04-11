@@ -95,6 +95,19 @@ const TestCart = () => {
     window.location.reload('/carts');
   };
 
+  const handleIncrease = async (pk) => {
+      if (carts.pk === pk) {
+        axios.put(`/carts/${pk}`,{
+          number_of_product: carts.number_of_product +1,
+        },
+         {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        });
+      }
+    // window.location.reload('/carts');
+  };
+
   if (loading)
     return (
       <div>
@@ -142,14 +155,14 @@ const TestCart = () => {
                       </ItemDetailOne>
                       <ItemDetailTwo>
                         <ItemDetailTwoWrap>
-                          {/* <ItemDecreaseBtn onClick={() => {itemDecrease(cart.pk)}}>
+                          {/* <ItemDecreaseBtn onClick={handleIncrease}>
                             <RemoveIcon fontSize='small' color='action'/>
-                          </ItemDecreaseBtn>
+                          </ItemDecreaseBtn> */}
                           <ItemNumberInput>{cart.number_of_product}</ItemNumberInput>
-                          <ItemIncreaseBtn onClick={() => {itemIncrease(cart.pk)}}>
+                          <ItemIncreaseBtn onClick={() => handleIncrease(cart.pk)}>
                             <AddIcon fontSize='small' color='action' />
-                          </ItemIncreaseBtn> */}
-                          <ItemDecreaseBtn>
+                          </ItemIncreaseBtn>
+                          {/* <ItemDecreaseBtn>
                             <RemoveIcon fontSize='small' color='action' />
                           </ItemDecreaseBtn>
                           <ItemNumberInput>
@@ -157,7 +170,7 @@ const TestCart = () => {
                           </ItemNumberInput>
                           <ItemIncreaseBtn>
                             <AddIcon fontSize='small' color='action' />
-                          </ItemIncreaseBtn>
+                          </ItemIncreaseBtn> */}
                         </ItemDetailTwoWrap>
                       </ItemDetailTwo>
                       <ItemDetailThree>
