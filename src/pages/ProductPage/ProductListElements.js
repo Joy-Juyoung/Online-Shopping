@@ -26,6 +26,8 @@ export const ProductsWrap = styled.div`
   margin-bottom: 40px;
 `;
 
+// -------------------Side
+
 export const SideFilterContainer = styled.div`
   margin: 0 auto;
   padding: 0 40px 0 0;
@@ -41,9 +43,11 @@ export const SideFilterUl = styled.ul`
 export const SideFilterLl = styled.div`
   display: flex;
   flex-direction: column;
+
   margin: 0 0 20px;
   padding: 0 0 20px 0;
   border-bottom: 1px solid lightgray;
+  list-style: none;
 
   ul {
     margin: 10px 0 0 10px;
@@ -52,18 +56,21 @@ export const SideFilterLl = styled.div`
   }
   li {
     list-style: none;
-    margin: 5px 0;
+    margin: 15px 0;
   }
 `;
 
 export const ListTitle = styled.div`
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: space-between;
   font-weight: 600;
+  /* margin-bottom: 20px; */
 `;
 
-export const SidePriceWrap = styled.div``;
+export const ListSub = styled.div``;
+
+// -------------------
 
 export const ProductsListWrapper = styled.div`
   margin: 0 auto;
