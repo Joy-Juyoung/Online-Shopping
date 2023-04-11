@@ -23,6 +23,7 @@ export const ProductsWrap = styled.div`
   display: flex;
   justify-content: center;
   /* align-items: center; */
+  margin-bottom: 40px;
 `;
 
 export const SideFilterContainer = styled.div`
@@ -86,6 +87,11 @@ export const Categories = styled.div`
   &:hover {
     font-weight: 500;
   }
+`;
+
+export const CategoriesInside = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export const ProductsList = styled.div`

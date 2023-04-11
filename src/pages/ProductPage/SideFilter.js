@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ListTitle,
   SideFilterContainer,
@@ -9,19 +9,20 @@ import {
 } from './ProductListElements';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Category } from '@mui/icons-material';
+import axios from '../../api/axios';
+import { Link } from 'react-router-dom';
 
 const side = [
   {
     id: 1,
     title: 'Category',
-    submenu: [
-      { id: 1, subTitle: 'Tops' },
-      { id: 2, subTitle: 'Bottoms' },
-      { id: 3, subTitle: 'Outers' },
-      { id: 4, subTitle: 'Shoes' },
-      { id: 5, subTitle: 'Accessories' },
-    ],
+    // submenu: [
+    //   { id: 1, subTitle: 'Tops' },
+    //   { id: 2, subTitle: 'Bottoms' },
+    //   { id: 3, subTitle: 'Outers' },
+    //   { id: 4, subTitle: 'Shoes' },
+    //   { id: 5, subTitle: 'Accessories' },
+    // ],
   },
   {
     id: 2,
@@ -37,13 +38,25 @@ const side = [
   },
 ];
 
-const SideFilter = () => {
+const SideFilter = ({ meData, itemAllKinds, itemKinds }) => {
   const [isDrop, setIsDrop] = useState(false);
+  const [categories, setCategories] = useState([]);
 
-  // console.log('side id', id);
+  console.log('itemAllKinds Side', itemAllKinds);
+
+  const getCategory = async () => {
+    const categoryData = await axios.get('/products/productAllParentsKinds', {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+    setCategories(categoryData?.data);
+  };
+
+  useEffect(() => {
+    getCategory();
+  }, [meData]);
 
   const clickMore = (id) => {
-    // var tempside = side;
     console.log('isDrop', isDrop);
 
     if (id === side.id) {
@@ -77,22 +90,48 @@ const SideFilter = () => {
                   <>
                     <ListTitle>
                       <div>{menu?.title.toUpperCase()}</div>
-                      <div>
-                        <ExpandLessIcon
-                          onClick={(e) => {
-                            e.preventDefault();
-                            clickMore(menu.id);
-                          }}
-                        />
+                      <div
+                        onClick={(e) => {
+                          e.preventDefault();
+                          clickMore(menu.id);
+                        }}
+                      >
+                        <ExpandLessIcon />
                       </div>
                     </ListTitle>
-                    {menu?.submenu?.map((sub) => {
-                      return (
-                        <ul key={sub.id}>
-                          <li>{sub.subTitle}</li>
-                        </ul>
-                      );
-                    })}
+                    {menu?.id === 1 && (
+                      <>
+                        {categories?.map((cat) => {
+                          return (
+                            <ul key={cat.pk}>
+                              <Link
+                                to={`/products/productAllParentsKinds/${cat.pk}`}
+                              >
+                                {cat?.name === itemAllKinds?.name ? (
+                                  // || cat?.name === itemKinds?.parents?.name
+                                  <li style={{ fontWeight: '700' }}>
+                                    {cat?.name}
+                                  </li>
+                                ) : (
+                                  <li>{cat?.name}</li>
+                                )}
+                              </Link>
+                            </ul>
+                          );
+                        })}
+                      </>
+                    )}
+                    {menu?.id === 2 && (
+                      <>
+                        {menu?.submenu?.map((sub) => {
+                          return (
+                            <ul key={sub.id}>
+                              <li>{sub.subTitle}</li>
+                            </ul>
+                          );
+                        })}
+                      </>
+                    )}
                   </>
                 )}
               </SideFilterLl>

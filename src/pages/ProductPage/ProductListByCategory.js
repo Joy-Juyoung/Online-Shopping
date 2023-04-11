@@ -14,6 +14,7 @@ import {
   TotalCountWrap,
   TotalCount,
   SelectWrap,
+  CategoriesInside,
 } from './ProductListElements';
 
 import Loading from '../../components/Loading';
@@ -32,12 +33,25 @@ const sort = [
 const ProductListByCategory = ({ meData }) => {
   const [loading, setLoading] = useState(false);
   const [itemKinds, setItemKinds] = useState([]);
-  const [itemAllKinds, setItemAllKinds] = useState([]);
+  // const [itemAllKinds, setItemAllKinds] = useState([]);
   const [kindEach, setKindEach] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
 
   const [isActive, setIsActive] = useState(false);
+  const [categories, setCategories] = useState([]);
+
+  const getCategory = async () => {
+    const categoryData = await axios.get('/products/productAllParentsKinds', {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+    setCategories(categoryData?.data);
+  };
+
+  useEffect(() => {
+    getCategory();
+  }, [meData]);
 
   useEffect(() => {
     const loadData = async () => {
@@ -66,6 +80,8 @@ const ProductListByCategory = ({ meData }) => {
     }
   }, [id]);
 
+  console.log('itemKinds', itemKinds);
+
   if (loading)
     return (
       <div>
@@ -77,24 +93,30 @@ const ProductListByCategory = ({ meData }) => {
     <ProductsListContainer>
       <h1>{itemKinds?.name}</h1>
 
-      {/* <Category /> */}
+      {/* <Category itemKinds={itemKinds} /> */}
       <CategoriesWrap>
-        <Link to=''>
+        {/* <Link to=''>
           <Categories onClick={() => navigate(-1)}>All</Categories>
-        </Link>
-        {itemKinds?.products?.map((kind) => {
+        </Link> */}
+        {categories?.map((cat) => {
           return (
-            <Link
-              key={kind?.pk}
-              to={`/products/productAllChildKinds/${itemKinds?.pk}`}
-            >
-              <Categories>{kind?.name}</Categories>
-            </Link>
+            <CategoriesInside key={cat?.pk}>
+              {cat.productKinds?.map((child) => {
+                return (
+                  <Link
+                    key={child?.pk}
+                    to={`/products/productAllChildKinds/${child?.pk}`}
+                  >
+                    <Categories>{child?.name}</Categories>
+                  </Link>
+                );
+              })}
+            </CategoriesInside>
           );
         })}
       </CategoriesWrap>
       <ProductsWrap>
-        <SideFilter />
+        <SideFilter itemKinds={itemKinds} />
         <ProductsListWrapper>
           <ProductsList>
             <ListTop>

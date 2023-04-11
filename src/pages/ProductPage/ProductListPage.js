@@ -37,6 +37,7 @@ const ProductsListPage = ({ meData }) => {
   const [kindEach, setKindEach] = useState([]);
   const { id } = useParams();
   const [isActive, setIsActive] = useState(false);
+  const [isChileOpen, setIsChileOpen] = useState(false);
 
   // console.log('meDataList', meData);
 
@@ -79,6 +80,14 @@ const ProductsListPage = ({ meData }) => {
     }
   }, [id]);
 
+  // const handChildOpen = (pk) => {
+  //   if ((isChileOpen = false)) {
+  //     setIsChileOpen(true);
+  //     console.log('ok');
+  //   }
+  //   setIsChileOpen(false);
+  // };
+
   if (loading)
     return (
       <div>
@@ -88,11 +97,11 @@ const ProductsListPage = ({ meData }) => {
   return (
     <ProductsListContainer>
       <h1>All {itemAllKinds.name}</h1>
-      <Category id={id} itemAllKinds={itemAllKinds} />
+      <Category id={id} itemAllKinds={itemAllKinds} meData={meData} />
       <ProductsWrap>
-        <SideFilter />
+        <SideFilter meData={meData} itemAllKinds={itemAllKinds} />
         <ProductsListWrapper>
-          {itemAllKinds !== null ? (
+          {!isChileOpen ? (
             <ProductsList>
               <ListTop>
                 <TotalCountWrap>
