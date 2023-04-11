@@ -114,6 +114,15 @@ const CartPage = () => {
   //   setCarts(minusQty);
   // }
 
+  // const deleteItem = (id) => {
+  //   fetch(`/carts/${id}`, {
+  //     method: 'DELETE'
+  //   }) .then((result) =>{
+  //     result.json().then((resp) =>{
+  //       console.warn(resp)
+  //     })
+  //   })
+  // };
   if (loading)
     return (
       <div>
@@ -186,6 +195,9 @@ const CartPage = () => {
                     <ListsDeleteBtn>
                       <CloseIcon fontSize='small' />
                     </ListsDeleteBtn>
+                    {/* <ListsDeleteBtn>
+                      <CloseIcon fontSize='small' />
+                    </ListsDeleteBtn> */}
                   </ListsDetails>
                 );
               })}
