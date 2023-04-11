@@ -24,6 +24,7 @@ import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
 import TestCart from './CartPage/TestCart';
 import OrderPage from './OrderPage/OrderPage';
+import PaymentPage from './PaymentPage/PaymentPage';
 
 const Home = ({ meData }) => {
   return (
@@ -48,6 +49,12 @@ const Home = ({ meData }) => {
           <Route
             path='/userAccount'
             element={<UserAccountPage meData={meData} />}
+            exact={true}
+          />
+
+          <Route
+            path='/userOrders'
+            element={<OrderPage meData={meData} />}
             exact={true}
           />
 
@@ -86,8 +93,8 @@ const Home = ({ meData }) => {
           /> */}
 
           <Route
-            path='/orders'
-            element={<OrderPage meData={meData} />}
+            path='/payment'
+            element={<PaymentPage meData={meData} />}
             exact={true}
           />
 

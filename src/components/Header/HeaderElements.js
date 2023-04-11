@@ -31,7 +31,7 @@ export const LeftSide = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  /* justify-content: start; */
+  justify-content: flex-start;
 `;
 
 export const ModalBtnWrap = styled.div`
@@ -101,7 +101,7 @@ export const RightSide = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
 `;
 
 export const RightIcon = styled.div`

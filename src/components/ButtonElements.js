@@ -77,6 +77,7 @@ export const ButtonUtils = styled.button`
   padding: 5px 10px;
   border: none;
   border-radius: 5px;
+  background: #f2f4f7;
 
   &:hover {
     font-weight: 600;
