@@ -3,44 +3,17 @@ import { ButtonSmall } from '../../components/ButtonElements';
 import {
   MainContainer,
   MainWrapper,
-  MidWrapper,
   MidInfo,
-  SectionOne,
-  SectionOneLeftInfo,
+  SectionInfo,
   FirstImg,
-  SectionOneRightInfo,
-  OneRightInfoUp,
-  OneRightInfoDown,
-  ParagraphOne,
   ParagraghTitle,
   ParagraghBody,
-  SectionTwo,
-  SectionTwoWrapper,
-  SectionTwoLeftInfo,
-  SectionTwoRightInfo,
-  TwoLeftInfoUp,
-  TwoLeftInfoDown,
-  ParagraghTwoTitle,
-  ParagraghTwoBody,
-  SecondImg,
-  SectionThree,
-  SectionThreeWrapper,
-  SectionThreeLeftInfo,
-  ThirdImg,
-  SectionThreeRightInfo,
-  ThreeRightInfoUp,
-  ThreeRightInfoDown,
-  ParagraghThreeTitle,
-  ParagraghThreeBody,
-  SectionFour,
-  SectionFourWrapper,
-  SectionFourLeftInfo,
-  FourLeftInfoUp,
-  FourLeftInfoDown,
-  ParagraghFourTitle,
-  ParagraghFourBody,
-  SectionFourthRightInfo,
-  FourthImg,
+  ParagraphWrap,
+  SectionInfoLeft,
+  SectionInfoRight,
+  SectionWrap,
+  ShopNowBtn,
+  SectionWrapTwo,
 } from './HeroElements';
 import FirstImage from '../../asset/firstimage.png';
 import SecondImage from '../../asset/couple.png';
@@ -70,121 +43,81 @@ const HeroPage = () => {
   return (
     <MainContainer>
       <MainWrapper>
-        <MidWrapper>
-          <MidInfo>
-            <SectionOne>
-              <SectionOneLeftInfo>
-                {/* 추후 링크로 변경  */}
-                <a href=''>
-                  <FirstImg src={FirstImage} />
-                </a>
-              </SectionOneLeftInfo>
+        <MidInfo>
+          <SectionWrap className='start__left'>
+            <SectionInfoLeft>
+              <FirstImg src={FirstImage} />
+            </SectionInfoLeft>
+            <SectionInfoRight>
+              <ParagraphWrap>
+                <ParagraghTitle>NEW IN : SPRING SUMMER 2023</ParagraghTitle>
+                <ParagraghBody>
+                  Leave your heavy outer behind, it's time for lighter layers
+                  and brighter colors. Get a head start on your spring wardrobe
+                  with 12 brand new styles from trending K-brands.
+                </ParagraghBody>
+              </ParagraphWrap>
+              <ButtonSmall to='/products'>Shop Now</ButtonSmall>
+            </SectionInfoRight>
+          </SectionWrap>
 
-              <SectionOneRightInfo>
-                <OneRightInfoUp>
-                  <a href=''>
-                    <ParagraphOne>
-                      <ParagraghTitle>
-                        NEW IN : SPRING SUMMER 2023
-                      </ParagraghTitle>
-                      <ParagraghBody>
-                        Leave your heavy outer behind, it's time for lighter
-                        layers and brighter colors. Get a head start on your
-                        spring wardrobe with 12 brand new styles from trending
-                        K-brands.
-                      </ParagraghBody>
-                    </ParagraphOne>
-                  </a>
-                </OneRightInfoUp>
-                <OneRightInfoDown>
-                  <ButtonSmall to='/products'>Shop Now</ButtonSmall>
-                </OneRightInfoDown>
-              </SectionOneRightInfo>
-            </SectionOne>
+          <SectionWrap className='start__right'>
+            <SectionInfoRight>
+              <FirstImg src={SecondImage} />
+            </SectionInfoRight>
 
-            <SectionTwo>
-              <SectionTwoWrapper>
-                <SectionTwoLeftInfo>
-                  <TwoLeftInfoUp>
-                    <a href=''>
-                      <ParagraghTwoTitle>FOCUS: SWEATSHIRTS</ParagraghTwoTitle>
-                      <ParagraghTwoBody>
-                        Sweatshirts are perfect for the weather. Meet
-                        sweatshirts at MUSINSA up to 60% discount rates.
-                      </ParagraghTwoBody>
-                    </a>
-                  </TwoLeftInfoUp>
-                  <TwoLeftInfoDown>
-                    <ButtonSmall>Shop Now</ButtonSmall>
-                  </TwoLeftInfoDown>
-                </SectionTwoLeftInfo>
+            <SectionInfoLeft>
+              <ParagraphWrap>
+                <ParagraghTitle>FOCUS: SWEATSHIRTS</ParagraghTitle>
+                <ParagraghBody>
+                  Sweatshirts are perfect for the weather. Meet sweatshirts at
+                  MUSINSA up to 60% discount rates.
+                </ParagraghBody>
+              </ParagraphWrap>
 
-                <SectionTwoRightInfo>
-                  {/* 추후 링크로 변경  */}
-                  <a href=''>
-                    <SecondImg src={SecondImage} />
-                  </a>
-                </SectionTwoRightInfo>
-              </SectionTwoWrapper>
-            </SectionTwo>
+              <ButtonSmall to='/products'>Shop Now</ButtonSmall>
+            </SectionInfoLeft>
+          </SectionWrap>
 
-            <SectionThree>
-              <SectionThreeWrapper>
-                <SectionThreeRightInfo>
-                  <ThreeRightInfoUp>
-                    <a href=''>
-                      <ParagraghThreeTitle>
-                        Milan Fashion Week Highlights
-                      </ParagraghThreeTitle>
-                      <ParagraghThreeBody>
-                        SPOTTED: The hottest street fashion highlights, just in
-                        from Milan Fashion Week.
-                      </ParagraghThreeBody>
-                    </a>
-                  </ThreeRightInfoUp>
-                  <ThreeRightInfoDown>
-                    <ButtonSmall>Shop Now</ButtonSmall>
-                  </ThreeRightInfoDown>
-                </SectionThreeRightInfo>
-                <SectionThreeLeftInfo>
-                  {/* 추후 링크로 변경  */}
-                  <a href=''>
-                    <ThirdImg src={ThirdImage} />
-                  </a>
-                </SectionThreeLeftInfo>
-              </SectionThreeWrapper>
-            </SectionThree>
+          {/* <SectionWrap>
+            <SectionInfoLeft>
+              <FirstImg src={ThirdImage} />
+            </SectionInfoLeft>
+            <SectionInfoRight>
+              <ParagraphWrap>
+                <ParagraghTitle>Milan Fashion Week Highlights</ParagraghTitle>
+                <ParagraghBody>
+                  SPOTTED: The hottest street fashion highlights, just in from
+                  Milan Fashion Week.
+                </ParagraghBody>
+              </ParagraphWrap>
+              <ShopNowBtn>
+                <ButtonSmall to='/products'>Shop Now</ButtonSmall>
+              </ShopNowBtn>
+            </SectionInfoRight>
+          </SectionWrap>
 
-            <SectionFour>
-              <SectionFourWrapper>
-                <SectionFourLeftInfo>
-                  <FourLeftInfoUp>
-                    <a href=''>
-                      <ParagraghFourTitle>
-                        OMG! NewJeans checked in at MUSINSA!
-                      </ParagraghFourTitle>
-                      <ParagraghFourBody>
-                        NewJeans show off their Gen Z version of office-wear.
-                        Take notes on how the rookie group styled themselves for
-                        their special day at the office!
-                      </ParagraghFourBody>
-                    </a>
-                  </FourLeftInfoUp>
-                  <FourLeftInfoDown>
-                    <ButtonSmall>Shop Now</ButtonSmall>
-                  </FourLeftInfoDown>
-                </SectionFourLeftInfo>
-
-                <SectionFourthRightInfo>
-                  {/* 추후 링크로 변경  */}
-                  <a href=''>
-                    <FourthImg src={FourthImage} />
-                  </a>
-                </SectionFourthRightInfo>
-              </SectionFourWrapper>
-            </SectionFour>
-          </MidInfo>
-        </MidWrapper>
+          <SectionWrap>
+            <SectionInfoRight>
+              <FirstImg src={FourthImage} />
+            </SectionInfoRight>
+            <SectionInfoLeft>
+              <ParagraphWrap>
+                <ParagraghTitle>
+                  OMG! NewJeans checked in at MUSINSA!
+                </ParagraghTitle>
+                <ParagraghBody>
+                  NewJeans show off their Gen Z version of office-wear. Take
+                  notes on how the rookie group styled themselves for their
+                  special day at the office!
+                </ParagraghBody>
+              </ParagraphWrap>
+              <ShopNowBtn>
+                <ButtonSmall to='/products'>Shop Now</ButtonSmall>
+              </ShopNowBtn>
+            </SectionInfoLeft>
+          </SectionWrap> */}
+        </MidInfo>
       </MainWrapper>
     </MainContainer>
   );
