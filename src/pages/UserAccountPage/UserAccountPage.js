@@ -27,8 +27,10 @@ import { InputWrap } from '../LoginPage/LoginElements';
 import Loading from '../../components/Loading';
 import axios from '../../api/axios';
 import { PersonalVideo } from '@material-ui/icons';
+import { useNavigate } from 'react-router-dom';
 
 const UserAccountPage = ({ meData }) => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   // console.log('meData', meData);
@@ -75,6 +77,17 @@ const UserAccountPage = ({ meData }) => {
     setChangeUserInfo(tempChangeUserInfo);
   };
 
+  const handleDeleteUser = async () => {
+    alert('Are you sure you want to delete this account?');
+
+    axios.delete('/users/me', {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+    navigate('/');
+    window.location.reload();
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -97,7 +110,7 @@ const UserAccountPage = ({ meData }) => {
       console.log('changed Data', meInfo?.data);
 
       setIsEdit(false);
-      window.location.reload('/userAccount');
+      window.location.reload('/login');
     }
   };
 
@@ -213,7 +226,7 @@ const UserAccountPage = ({ meData }) => {
             </LeftInfo>
           </AccountInput>
           <DelBtn>
-            <button>Delete Account</button>
+            <button onClick={handleDeleteUser}>Delete Account</button>
           </DelBtn>
         </AccountForm>
       </PesnalWrapper>
