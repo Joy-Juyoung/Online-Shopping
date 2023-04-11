@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from '../../api/axios';
 import {
   ProductsList,
@@ -10,20 +10,16 @@ import {
   ListTop,
   ListMidWrap,
   CategoriesWrap,
-  SideFilterWrapper,
-  SideClearWrap,
-  SideCategoriesWrap,
-  SidePriceWrap,
   Categories,
   TotalCountWrap,
   TotalCount,
   SelectWrap,
 } from './ProductListElements';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
 import Loading from '../../components/Loading';
 import ProductsCard from './ProductCard';
 import SideFilter from './SideFilter';
+import Category from './Category';
 // const TestProduct_URL = '/products/productAllChildKinds/${id}';
 
 const sort = [
@@ -37,9 +33,11 @@ const ProductListByCategory = ({ meData }) => {
   const [loading, setLoading] = useState(false);
   const [itemKinds, setItemKinds] = useState([]);
   const [itemAllKinds, setItemAllKinds] = useState([]);
+  const [kindEach, setKindEach] = useState([]);
   const { id } = useParams();
+  const navigate = useNavigate();
 
-  // console.log('meData', meData);
+  const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
@@ -54,17 +52,19 @@ const ProductListByCategory = ({ meData }) => {
       withCredentials: true,
     });
     setItemKinds(data);
-    console.log('itemKinds', data);
     setLoading(false);
   };
-
   useEffect(() => {
     setLoading(true);
     getKindsProduct();
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, [id]);
 
-  // console.log('itemKinds', itemKinds);
+  useEffect(() => {
+    if (id === itemKinds.pk) {
+      setIsActive(true);
+    }
+  }, [id]);
 
   if (loading)
     return (
@@ -75,23 +75,32 @@ const ProductListByCategory = ({ meData }) => {
 
   return (
     <ProductsListContainer>
-      <h1>{itemKinds.name}</h1>
+      <h1>{itemKinds?.name}</h1>
+
+      {/* <Category /> */}
+      <CategoriesWrap>
+        <Link to=''>
+          <Categories onClick={() => navigate(-1)}>All</Categories>
+        </Link>
+        {itemKinds?.products?.map((kind) => {
+          return (
+            <Link
+              key={kind?.pk}
+              to={`/products/productAllChildKinds/${itemKinds?.pk}`}
+            >
+              <Categories>{kind?.name}</Categories>
+            </Link>
+          );
+        })}
+      </CategoriesWrap>
       <ProductsWrap>
         <SideFilter />
         <ProductsListWrapper>
-          <CategoriesWrap>
-            {itemAllKinds?.productKinds?.map((kind) => {
-              return <Categories key={kind.pk}>{kind.name}</Categories>;
-            })}
-          </CategoriesWrap>
           <ProductsList>
             <ListTop>
               <TotalCountWrap>
                 <TotalCount style={{ fontSize: '13px' }}>
                   Total {itemKinds?.products?.length}
-                  {/* {itemKinds?.products?.map((kind) => {
-                  return <p>{kind?.products?.length}</p>;
-                })} */}
                 </TotalCount>
               </TotalCountWrap>
               <SelectWrap>

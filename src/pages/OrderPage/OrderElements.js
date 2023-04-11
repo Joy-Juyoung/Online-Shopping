@@ -39,6 +39,11 @@ export const OrderBodyWrap = styled.div`
 export const OrderLeftInfo = styled.div`
   flex: 2;
   margin-right: 50px;
+
+  @media screen and (max-width: 1024px) {
+    display: block;
+    margin: 0 auto;
+  }
 `;
 
 export const OrderPsersonalInfo = styled.div`

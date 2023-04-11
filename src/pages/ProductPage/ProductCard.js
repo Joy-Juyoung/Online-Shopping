@@ -22,9 +22,9 @@ const ProductsCard = ({ all, meData, itemAllKinds, itemKinds, wishItems }) => {
 
   // console.log('all', all);
   // console.log('meData', meData);
-  console.log('itemAllKind', itemAllKinds);
-  console.log('itemKinds', itemKinds);
-  console.log('wishItems', wishItems);
+  // console.log('itemAllKind', itemAllKinds);
+  // console.log('itemKinds', itemKinds);
+  // console.log('wishItems', wishItems);
 
   // useEffect(() => {
   //   handleClicked();

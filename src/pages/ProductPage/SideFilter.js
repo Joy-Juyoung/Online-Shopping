@@ -40,6 +40,8 @@ const side = [
 const SideFilter = () => {
   const [isDrop, setIsDrop] = useState(false);
 
+  // console.log('side id', id);
+
   const clickMore = (id) => {
     // var tempside = side;
     console.log('isDrop', isDrop);
