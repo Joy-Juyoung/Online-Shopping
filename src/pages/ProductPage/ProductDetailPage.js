@@ -236,12 +236,14 @@ const ProductDetailPage = ({ all, meData, itemAllKinds, itemKinds, wishItems }) 
             <ButtonLarges onClick={() => setIsOpen(true)}>
               Add to Cart
             </ButtonLarges>
+
             {/* <ButtonLargeWrap ref={ref}>
             <ButtonLarges onClick={() => setIsOpen(true)}>
               Add to Cart
             </ButtonLarges>
             </ButtonLargeWrap> */}
             {isOpen && <AddToCart onClose={() => setIsOpen(false)} />}
+
           </DetailRightInfoBottom>
         </DetailRightInfo>
       </DetailWrapperOne>

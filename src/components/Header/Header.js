@@ -43,20 +43,15 @@ import Search from './Search';
 import { Link, useNavigate } from 'react-router-dom';
 import Loading from '../../components/Loading';
 import DropUser from './DropUser';
-
 import { ButtonSmall, ButtonUtils } from '../ButtonElements';
 import Modal from '../Modal';
-import Avatar, { ConfigProvider } from 'react-avatar';
-
-// import CloseIcon from '@mui/icons-material/Close';
 import SearchIcon from '@mui/icons-material/Search';
 
-const CATEGORY_URL = '/products/productAllParentsKinds';
 const Header = ({ meData }) => {
   const navigate = useNavigate();
 
   const [categories, setCategories] = useState([]);
-  const [me = meData, setMe] = useState();
+  const [me, setMe] = useState(null);
   const [logout, setLogout] = useState();
   const [clickAccount, setClickAccount] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -66,10 +61,14 @@ const Header = ({ meData }) => {
   const ref = useRef();
   const searchRef = useRef();
 
-  console.log('Header Me', me);
+  // console.log('Header Me', me);
+
+  useEffect(() => {
+    setMe(meData);
+  }, [meData]);
 
   const getCategory = async () => {
-    const categoryData = await axios.get(CATEGORY_URL, {
+    const categoryData = await axios.get('/products/productAllParentsKinds', {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
@@ -79,7 +78,6 @@ const Header = ({ meData }) => {
 
   useEffect(() => {
     getCategory();
-    // setMe(meData);
   }, [me]);
 
   const handleLogout = async () => {
@@ -106,10 +104,6 @@ const Header = ({ meData }) => {
     setClickAccount(!clickAccount);
   };
 
-  // const handleDropOut = () => {
-  //   setClickAccount(false);
-  // };
-
   // detect click outside to close
   useEffect(() => {
     const checkIfClickedOutside = (e) => {
@@ -129,15 +123,6 @@ const Header = ({ meData }) => {
       document.removeEventListener('click', checkIfClickedOutside);
     };
   }, [clickAccount, isModalOpen]);
-
-  const hoverHandler = (e) => {
-    console.log('onMouseEnter');
-    e.target.style.borderBottom = '3px solid grey';
-  };
-  const outHandler = (e) => {
-    console.log('onMouseLeave');
-    e.target.style.borderBottom = 'none';
-  };
 
   if (loading)
     return (

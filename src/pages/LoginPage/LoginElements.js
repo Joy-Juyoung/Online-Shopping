@@ -9,19 +9,6 @@ export const InputWrap = styled.div`
   margin-bottom: 20px;
 `;
 
-// export const InputPassword = styled.div`
-//   width: 100%;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-// `;
-
-// export const EyeIcon = styled.div`
-//   color: #a3a9b3;
-//   margin: 0 8px 10px -28px;
-//   cursor: pointer;
-// `;
-
 export const ErrorMsg = styled.div`
   text-align: center;
   display: flex;

@@ -24,9 +24,8 @@ export const RegisterInput = styled.div`
 export const RegisterInputLabel = styled.label``;
 
 export const VerificationMsg = styled.div`
-  /* display: flex; */
+  display: flex;
   align-items: center;
-  /* justify-content: center; */
 
   span {
     margin-left: 10px;
@@ -38,7 +37,6 @@ export const GobackLogin = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  /* justify-content: space-between; */
 
   span {
     margin-right: 10px;

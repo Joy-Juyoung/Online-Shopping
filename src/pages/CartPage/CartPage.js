@@ -56,6 +56,7 @@ import AddIcon from '@mui/icons-material/Add';
 import axios from '../../api/axios';
 import { useParams } from 'react-router';
 import Loading from '../../components/Loading';
+import { Link } from 'react-router-dom';
 
 const CARTS_URL = '/carts';
 
@@ -256,6 +257,7 @@ const CartPage = () => {
 
             <CartRightBottom>
               <CheckOutBtn>PROCEED TO CHECKOUT</CheckOutBtn>
+              <Link to='/payment'>go to order</Link>
             </CartRightBottom>
           </CartRightInfo>
         </CartBodyWrap>

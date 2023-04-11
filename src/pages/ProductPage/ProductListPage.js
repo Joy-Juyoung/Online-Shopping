@@ -13,10 +13,6 @@ import {
   ProductsListWrapper,
   ProductsWrap,
   SelectWrap,
-  SideCategoriesWrap,
-  SideClearWrap,
-  SideFilterWrapper,
-  SidePriceWrap,
   TotalCount,
   TotalCountWrap,
 } from './ProductListElements';
@@ -24,6 +20,8 @@ import Loading from '../../components/Loading';
 import { Link, useParams } from 'react-router-dom';
 import ProductsCard from './ProductCard';
 import SideFilter from './SideFilter';
+import ProductListByCategory from './ProductListByCategory';
+import Category from './Category';
 
 const sort = [
   { value: 'Newest', text: 'Newest first' },
@@ -38,6 +36,8 @@ const ProductsListPage = ({ meData }) => {
   const [itemAllKinds, setItemAllKinds] = useState([]);
   const [kindEach, setKindEach] = useState([]);
   const { id } = useParams();
+  const [isActive, setIsActive] = useState(false);
+  const [isChileOpen, setIsChileOpen] = useState(false);
 
   // console.log('meDataList', meData);
 
@@ -53,8 +53,6 @@ const ProductsListPage = ({ meData }) => {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-
-    // console.log(data);
     setItemAllKinds(data);
     console.log('itemAllKinds', itemAllKinds);
     setKindEach(itemAllKinds.productKinds);
@@ -74,6 +72,21 @@ const ProductsListPage = ({ meData }) => {
   // const handleOptionChange = (e) => {
   //   setSelectedCategory(e.target.value);
   // };
+  console.log('id', id);
+
+  useEffect(() => {
+    if (id === itemAllKinds.pk) {
+      setIsActive(true);
+    }
+  }, [id]);
+
+  // const handChildOpen = (pk) => {
+  //   if ((isChileOpen = false)) {
+  //     setIsChileOpen(true);
+  //     console.log('ok');
+  //   }
+  //   setIsChileOpen(false);
+  // };
 
   if (loading)
     return (
@@ -84,67 +97,60 @@ const ProductsListPage = ({ meData }) => {
   return (
     <ProductsListContainer>
       <h1>All {itemAllKinds.name}</h1>
-      <CategoriesWrap>
-        {itemAllKinds?.productKinds?.map((kind) => {
-          return (
-            <Link
-              key={kind.pk}
-              to={`/products/productAllChildKinds/${kind.pk}`}
-            >
-              <Categories>{kind.name}</Categories>
-            </Link>
-          );
-        })}
-      </CategoriesWrap>
+      <Category id={id} itemAllKinds={itemAllKinds} meData={meData} />
       <ProductsWrap>
-        <SideFilter />
+        <SideFilter meData={meData} itemAllKinds={itemAllKinds} />
         <ProductsListWrapper>
-          <ProductsList>
-            <ListTop>
-              <TotalCountWrap>
-                <TotalCount style={{ fontSize: '13px' }}>
-                  Total {itemAllKinds?.productKinds?.length}
-                </TotalCount>
-              </TotalCountWrap>
-              <SelectWrap>
-                <select
-                  // onChange={handleOptionChange}
-                  name='category-list'
-                  id='category-list'
-                >
-                  {sort.map((option, index) => (
-                    <option key={index} value={option.value}>
-                      {option.text}
-                    </option>
-                  ))}
-                </select>
-              </SelectWrap>
-            </ListTop>
+          {!isChileOpen ? (
+            <ProductsList>
+              <ListTop>
+                <TotalCountWrap>
+                  <TotalCount style={{ fontSize: '13px' }}>
+                    Total {itemAllKinds?.productKinds?.length}
+                  </TotalCount>
+                </TotalCountWrap>
+                <SelectWrap>
+                  <select
+                    // onChange={handleOptionChange}
+                    name='category-list'
+                    id='category-list'
+                  >
+                    {sort.map((option, index) => (
+                      <option key={index} value={option.value}>
+                        {option.text}
+                      </option>
+                    ))}
+                  </select>
+                </SelectWrap>
+              </ListTop>
 
-            <ListMidWrap>
-              {itemAllKinds?.productKinds?.map((item) => {
-                return (
-                  <ListMidWrapper key={item.pk}>
-                    <Link to={`/products/productAllChildKinds/${item.pk}`}>
-                      <AllEachTitle>{item.name.toUpperCase()}</AllEachTitle>
-                    </Link>
-                    <ListMid>
-                      {item.products?.map((all) => {
-                        return (
-                          <ProductsCard
-                            key={all.pk}
-                            all={all}
-                            meData={meData}
-                            itemAllKinds={itemAllKinds}
-                          />
-                        );
-                      })}
-                    </ListMid>
-                  </ListMidWrapper>
-                );
-              })}
-            </ListMidWrap>
-          </ProductsList>
+              <ListMidWrap>
+                {itemAllKinds?.productKinds?.map((item) => {
+                  return (
+                    <ListMidWrapper key={item.pk}>
+                      <Link to={`/products/productAllChildKinds/${item.pk}`}>
+                        <AllEachTitle>{item.name.toUpperCase()}</AllEachTitle>
+                      </Link>
+                      <ListMid>
+                        {item.products?.map((all) => {
+                          return (
+                            <ProductsCard
+                              key={all.pk}
+                              all={all}
+                              meData={meData}
+                              itemAllKinds={itemAllKinds}
+                            />
+                          );
+                        })}
+                      </ListMid>
+                    </ListMidWrapper>
+                  );
+                })}
+              </ListMidWrap>
+            </ProductsList>
+          ) : (
+            <ProductListByCategory itemAllKinds={itemAllKinds} id={id} />
+          )}
         </ProductsListWrapper>
       </ProductsWrap>
     </ProductsListContainer>

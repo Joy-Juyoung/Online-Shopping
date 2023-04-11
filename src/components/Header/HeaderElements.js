@@ -31,7 +31,7 @@ export const LeftSide = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  /* justify-content: start; */
+  justify-content: flex-start;
 `;
 
 export const ModalBtnWrap = styled.div`
@@ -101,7 +101,7 @@ export const RightSide = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
 `;
 
 export const RightIcon = styled.div`
@@ -173,11 +173,10 @@ export const DropMenuList = styled.li`
     ul {
       display: block;
     }
-
     span {
-      border-bottom: 2px solid #0a0f18;
-      padding-bottom: 7px;
-      z-index: 5;
+      border-bottom: 3px solid #0a0f18;
+      padding-bottom: 4px;
+      z-index: 4;
     }
   }
 `;
@@ -209,10 +208,11 @@ export const DropChildWrap = styled.div`
 export const DropMenuChild = styled.ul`
   list-style-type: none;
   display: none;
-  padding: 0;
+  /* padding: 10px 0; */
   margin: 0 auto;
   box-shadow: 0 500px 2px 500px rgba(0, 0, 0, 0.4);
   font-size: 14px;
+  /* padding-bottom: 10px; */
 `;
 
 export const DropMenuItem = styled.li`

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from '../../api/axios';
 import {
   ProductsList,
@@ -10,20 +10,17 @@ import {
   ListTop,
   ListMidWrap,
   CategoriesWrap,
-  SideFilterWrapper,
-  SideClearWrap,
-  SideCategoriesWrap,
-  SidePriceWrap,
   Categories,
   TotalCountWrap,
   TotalCount,
   SelectWrap,
+  CategoriesInside,
 } from './ProductListElements';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
 import Loading from '../../components/Loading';
 import ProductsCard from './ProductCard';
 import SideFilter from './SideFilter';
+import Category from './Category';
 // const TestProduct_URL = '/products/productAllChildKinds/${id}';
 
 const sort = [
@@ -36,10 +33,25 @@ const sort = [
 const ProductListByCategory = ({ meData }) => {
   const [loading, setLoading] = useState(false);
   const [itemKinds, setItemKinds] = useState([]);
-  const [itemAllKinds, setItemAllKinds] = useState([]);
+  // const [itemAllKinds, setItemAllKinds] = useState([]);
+  const [kindEach, setKindEach] = useState([]);
   const { id } = useParams();
+  const navigate = useNavigate();
 
-  // console.log('meData', meData);
+  const [isActive, setIsActive] = useState(false);
+  const [categories, setCategories] = useState([]);
+
+  const getCategory = async () => {
+    const categoryData = await axios.get('/products/productAllParentsKinds', {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+    setCategories(categoryData?.data);
+  };
+
+  useEffect(() => {
+    getCategory();
+  }, [meData]);
 
   useEffect(() => {
     const loadData = async () => {
@@ -54,17 +66,21 @@ const ProductListByCategory = ({ meData }) => {
       withCredentials: true,
     });
     setItemKinds(data);
-    console.log('itemKinds', data);
     setLoading(false);
   };
-
   useEffect(() => {
     setLoading(true);
     getKindsProduct();
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, [id]);
 
-  // console.log('itemKinds', itemKinds);
+  useEffect(() => {
+    if (id === itemKinds.pk) {
+      setIsActive(true);
+    }
+  }, [id]);
+
+  console.log('itemKinds', itemKinds);
 
   if (loading)
     return (
@@ -75,23 +91,38 @@ const ProductListByCategory = ({ meData }) => {
 
   return (
     <ProductsListContainer>
-      <h1>{itemKinds.name}</h1>
+      <h1>{itemKinds?.name}</h1>
+
+      {/* <Category itemKinds={itemKinds} /> */}
+      <CategoriesWrap>
+        {/* <Link to=''>
+          <Categories onClick={() => navigate(-1)}>All</Categories>
+        </Link> */}
+        {categories?.map((cat) => {
+          return (
+            <CategoriesInside key={cat?.pk}>
+              {cat.productKinds?.map((child) => {
+                return (
+                  <Link
+                    key={child?.pk}
+                    to={`/products/productAllChildKinds/${child?.pk}`}
+                  >
+                    <Categories>{child?.name}</Categories>
+                  </Link>
+                );
+              })}
+            </CategoriesInside>
+          );
+        })}
+      </CategoriesWrap>
       <ProductsWrap>
-        <SideFilter />
+        <SideFilter itemKinds={itemKinds} />
         <ProductsListWrapper>
-          <CategoriesWrap>
-            {itemAllKinds?.productKinds?.map((kind) => {
-              return <Categories key={kind.pk}>{kind.name}</Categories>;
-            })}
-          </CategoriesWrap>
           <ProductsList>
             <ListTop>
               <TotalCountWrap>
                 <TotalCount style={{ fontSize: '13px' }}>
                   Total {itemKinds?.products?.length}
-                  {/* {itemKinds?.products?.map((kind) => {
-                  return <p>{kind?.products?.length}</p>;
-                })} */}
                 </TotalCount>
               </TotalCountWrap>
               <SelectWrap>

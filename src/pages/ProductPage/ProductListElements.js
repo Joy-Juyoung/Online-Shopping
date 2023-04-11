@@ -23,7 +23,10 @@ export const ProductsWrap = styled.div`
   display: flex;
   justify-content: center;
   /* align-items: center; */
+  margin-bottom: 40px;
 `;
+
+// -------------------Side
 
 export const SideFilterContainer = styled.div`
   margin: 0 auto;
@@ -40,9 +43,11 @@ export const SideFilterUl = styled.ul`
 export const SideFilterLl = styled.div`
   display: flex;
   flex-direction: column;
+
   margin: 0 0 20px;
   padding: 0 0 20px 0;
   border-bottom: 1px solid lightgray;
+  list-style: none;
 
   ul {
     margin: 10px 0 0 10px;
@@ -51,18 +56,21 @@ export const SideFilterLl = styled.div`
   }
   li {
     list-style: none;
-    margin: 5px 0;
+    margin: 15px 0;
   }
 `;
 
 export const ListTitle = styled.div`
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: space-between;
   font-weight: 600;
+  /* margin-bottom: 20px; */
 `;
 
-export const SidePriceWrap = styled.div``;
+export const ListSub = styled.div``;
+
+// -------------------
 
 export const ProductsListWrapper = styled.div`
   margin: 0 auto;
@@ -86,6 +94,11 @@ export const Categories = styled.div`
   &:hover {
     font-weight: 500;
   }
+`;
+
+export const CategoriesInside = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export const ProductsList = styled.div`

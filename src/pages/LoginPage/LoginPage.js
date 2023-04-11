@@ -21,19 +21,20 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import axios from '../../api/axios';
-
 import { useNavigate } from 'react-router-dom';
 import Loading from '../../components/Loading';
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+
+import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login';
+
 // import { GoogleLogin } from 'react-google-login';
 
 // 다른 경로 로그인하는 방법 추가
 // Validation 조건 충족 에러 넣기
 // Keep~ Forgot~ 이거 나중에 활성화해보기
 
-// const GOOGLE_CLIENT_ID =
-//   '232888623547-a7ji95besadd8bfain3pemtdovstl9ij.apps.googleusercontent.com';
+const GOOGLE_CLIENT_ID =
+  '232888623547-a7ji95besadd8bfain3pemtdovstl9ij.apps.googleusercontent.com';
 
 const USERNAME_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -113,18 +114,6 @@ const LoginPage = () => {
       }
     );
     console.log('loginData', loginData?.data);
-    // setUsername(username);
-    // setPwd(pwd);
-    // setLoginSuccess(true);
-    // navigate('/');
-    // window.location.reload();
-
-    // } catch (error) {
-    // setLoading(false);
-    //   console.log('error', error);
-    //   errRef.current.focus();
-    //   setErrMsg('LOGIN FAILD');
-    // }
     if (loginData.data.error) {
       setLoading(false);
       setErrMsg(
@@ -140,6 +129,46 @@ const LoginPage = () => {
       setLoading(false);
     }
   };
+
+  // const handleSocialSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   console.log(username);
+  //   console.log(pwd);
+
+  //   setLoading(true);
+  //   const loginData = await axios.post(
+  //     LOGIN_URL,
+  //     {
+  //       username: email.split('@')[0],
+  //       password: pwd,
+  //     },
+  //     {
+  //       headers: { 'Content-Type': 'application/json' },
+  //       withCredentials: true,
+  //     }
+  //   );
+  //   console.log('loginData', loginData?.data);
+  //   if (loginData.data.error) {
+  //     setLoading(false);
+  //     setErrMsg(
+  //       'Login faild! Please recheck the username and password and try again'
+  //     );
+  //     errRef.current.focus();
+  //   } else {
+  //     setUsername(username);
+  //     setPwd(pwd);
+  //     setLoginSuccess(true);
+  //     navigate('/');
+  //     window.location.reload('/');
+  //     setLoading(false);
+  //   }
+  // };
+
+  const responseGoogle = (response) => {
+    console.log(response);
+  };
+
   // console.log('username', username);
   // const isLoggIn = useSelector((state) => state.auth.isLoggIn);
   if (loading)
@@ -150,13 +179,6 @@ const LoginPage = () => {
     );
   return (
     <PesnalContainer>
-      {/* {isLoggIn ? (
-        <PesnalWrapper>
-          <h1>Welcom Username</h1>
-
-          <button>Logout</button>
-        </PesnalWrapper>
-      ) : ( */}
       <PesnalWrapper>
         <h1>Sign In</h1>
         <ErrorMsg
@@ -181,7 +203,7 @@ const LoginPage = () => {
               aria-describedby='uidnote'
               onFocus={() => setUsernameFocus(true)}
               onBlur={() => setUsernameFocus(false)}
-              placeholder='Enter user id.'
+              placeholder='Enter user id'
             />
             <VerificationMsg
               id='uidnote'
@@ -254,12 +276,13 @@ const LoginPage = () => {
             Countinue with Google
             {/* <GoogleLogin
               clientId={GOOGLE_CLIENT_ID}
-              buttonText='Login'
-              // onSuccess={onSuccess}
-              // onFailure={onFailure}
+              buttonText='LOGIN WITH GOOGLE'
+              onSuccess={responseGoogle}
+              onFailure={responseGoogle}
+              // onSuccess={handleSubmit}
+              // onFailure={handleSubmit}
               cookiePolicy={'single_host_origin'}
-              style={{ marginTop: '100px' }}
-              isSignedIn={true}
+              // style={{ width: '100%' }}
             /> */}
           </ButtonLarge>
           <ButtonLarge lightBg={true} darkFont={true}>

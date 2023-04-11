@@ -41,7 +41,7 @@ const DropUser = ({ meData }) => {
                 </DropLi>
                 {/* <DropLi >My Profile</DropLi> */}
               </LinkAccount>
-              <LinkAccount to='/testPage'>
+              <LinkAccount to='/userOrders'>
                 <DropLi>My Orders</DropLi>
               </LinkAccount>
               <LinkAccount to='/testPage'>
