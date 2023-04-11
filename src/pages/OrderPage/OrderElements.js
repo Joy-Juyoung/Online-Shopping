@@ -22,7 +22,8 @@ export const OrderContainer = styled.div`
 `;
 
 export const OrderWrapper = styled.div`
-  margin: 0 auto;
+  margin-bottom: 40px;
+  padding: 0 10px;
   /* display: flex;
   justify-content: center; */
 `;

@@ -47,7 +47,6 @@ import { ButtonSmall, ButtonUtils } from '../ButtonElements';
 import Modal from '../Modal';
 import SearchIcon from '@mui/icons-material/Search';
 
-const CATEGORY_URL = '/products/productAllParentsKinds';
 const Header = ({ meData }) => {
   const navigate = useNavigate();
 
@@ -69,7 +68,7 @@ const Header = ({ meData }) => {
   }, [meData]);
 
   const getCategory = async () => {
-    const categoryData = await axios.get(CATEGORY_URL, {
+    const categoryData = await axios.get('/products/productAllParentsKinds', {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
