@@ -1,10 +1,9 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const MainContainer = styled.div`
   min-height: 100%;
   margin: 0 auto;
-  padding: 3rem calc((100vw - 1300px) / 2);
+  padding: 40px 0;
 `;
 
 export const MainWrapper = styled.div`

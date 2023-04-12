@@ -282,7 +282,7 @@ const Header = ({ meData }) => {
                                   color: 'black',
                                   textDecoration: 'none',
                                 }}
-                                to={`/products/productAllChildKinds/${child.pk}`}
+                                to={`/products/productAllParentsKinds/${category?.pk}/${child?.name}/${child?.pk}`}
                               >
                                 <DropMenuItem>{child.name}</DropMenuItem>
                               </Link>
