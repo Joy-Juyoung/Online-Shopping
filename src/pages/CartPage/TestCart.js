@@ -56,19 +56,20 @@ import AddIcon from '@mui/icons-material/Add';
 import axios from '../../api/axios';
 import { useParams } from 'react-router';
 import Loading from '../../components/Loading';
+import { object } from 'prop-types';
 
 const CARTS_URL = '/carts';
 
 const TestCart = () => {
   const [loading, setLoading] = useState(false);
   const [carts, setCarts] = useState([]);
-  const ShippingFee = 15;
+  const [count, setCount] = useState();
+  
   const getAllCart = async () => {
     const cartList = await axios.get(CARTS_URL, {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-
     console.log('cartList', cartList.data);
     setCarts(cartList?.data);
     setLoading(false);
@@ -94,19 +95,61 @@ const TestCart = () => {
     });
     window.location.reload('/carts');
   };
-
+  // const handleDeleteCart = async (pk) => {
+  //   alert('Are you sure you want to remove the product?');
+  //   const deleteItem = carts.map((c) => {
+    //     if (c.pk === pk) {
+      //       axios.delete(`/carts/${pk}`, {
+        //         headers: { 'Content-Type': 'application/json' },
+        //         withCredentials: true,
+        //       });
+  //     }
+  //   });
+  //   setCarts(deleteItem);
+  //   getAllCart();
+  //   window.location.reload('/carts');
+  // };
+  
+  
   const handleIncrease = async (pk) => {
-      if (carts.pk === pk) {
+    const addQty = carts.map((i) => {
+      if (pk === i.pk && i.number_of_product < 10000) {   
         axios.put(`/carts/${pk}`,{
-          number_of_product: carts.number_of_product +1,
-        },
-         {
+          // pk: cart.pk,
+          number_of_product: i.number_of_product+1
+        },{
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        })
+      }
+    });
+    setCarts(addQty);
+    getAllCart();
+  };
+  
+  const handleDecrease = async (pk) => {
+    const minusQty = carts.map((i) => {
+      if (pk === i.pk && i.number_of_product > 1) {
+        axios.put(`/carts/${pk}`,{
+          pk: i.pk,
+          number_of_product: i.number_of_product-1
+        },{
           headers: { 'Content-Type': 'application/json' },
           withCredentials: true,
         });
       }
-    // window.location.reload('/carts');
+    });
+    setCarts(minusQty);
+    getAllCart();
   };
+  
+  const ShippingFee = 15;
+  const PriceForBill = carts.reduce((total, item) => {
+    return total + item?.total_price;
+  },0);
+  console.log('total: ', PriceForBill);
+  const TotalPriceTag = PriceForBill+ShippingFee;
+    
 
   if (loading)
     return (
@@ -114,7 +157,7 @@ const TestCart = () => {
         <Loading />
       </div>
     );
-
+    
   return (
     <CartContainer>
       <CartWrapper>
@@ -133,48 +176,39 @@ const TestCart = () => {
             <CartProductLists>
               {carts?.map((cart) => {
                 return (
-                  <ListsDetails key={cart.pk}>
+                  <ListsDetails key={cart?.pk}>
                     <ListsCheckBox>
                       <input type='checkbox' />
                       {/* <label/> */}
                     </ListsCheckBox>
                     <ListsItemImg>
                       <ListsImgLink to={``}>
-                        <img src={cart.product.photos[0].picture} alt='' />
+                        <img src={cart?.product?.photos[0].picture} alt='' />
                       </ListsImgLink>
                     </ListsItemImg>
                     <ListsItemDetails>
                       <ItemDetailOne>
-                        <DetailName to={``}>{cart.product.name}</DetailName>
+                        <DetailName to={``}>{cart?.product?.name}</DetailName>
                         <DetailDescription to={``}>
-                          {cart.product.detail}
+                          {cart?.product?.detail}
                         </DetailDescription>
                         <DetailOption>
-                          <span>{cart.product_option?.name}</span>
+                          <span>{cart?.product_option?.name}</span>
                         </DetailOption>
                       </ItemDetailOne>
                       <ItemDetailTwo>
                         <ItemDetailTwoWrap>
-                          {/* <ItemDecreaseBtn onClick={handleIncrease}>
+                          <ItemDecreaseBtn onClick={() => {handleDecrease(cart?.pk)}}>
                             <RemoveIcon fontSize='small' color='action'/>
-                          </ItemDecreaseBtn> */}
-                          <ItemNumberInput>{cart.number_of_product}</ItemNumberInput>
-                          <ItemIncreaseBtn onClick={() => handleIncrease(cart.pk)}>
+                          </ItemDecreaseBtn>
+                          <ItemNumberInput>{cart?.number_of_product}</ItemNumberInput>
+                          <ItemIncreaseBtn onClick={() => {handleIncrease(cart.pk)}}>
                             <AddIcon fontSize='small' color='action' />
                           </ItemIncreaseBtn>
-                          {/* <ItemDecreaseBtn>
-                            <RemoveIcon fontSize='small' color='action' />
-                          </ItemDecreaseBtn>
-                          <ItemNumberInput>
-                            {cart.number_of_product}
-                          </ItemNumberInput>
-                          <ItemIncreaseBtn>
-                            <AddIcon fontSize='small' color='action' />
-                          </ItemIncreaseBtn> */}
                         </ItemDetailTwoWrap>
                       </ItemDetailTwo>
                       <ItemDetailThree>
-                        <strong>${cart.total_price}</strong>
+                        <strong>${cart?.total_price}</strong>
                       </ItemDetailThree>
                     </ListsItemDetails>
                     <ListsDeleteBtn>
@@ -212,14 +246,14 @@ const TestCart = () => {
               <CartSummary>
                 Order Summary
                 <SummaryWrap>
-                  <span>{carts.length}</span>
+                  <span>{carts?.length}</span>
                   <span>Item</span>
                 </SummaryWrap>
               </CartSummary>
               <CartSummaryInfo>
                 <ItemPriceInfo>
                   Price
-                  <span>${139}</span>
+                  <span>${PriceForBill}</span>
                 </ItemPriceInfo>
                 <ItemShippingFee>
                   Shipping fee
@@ -227,7 +261,7 @@ const TestCart = () => {
                 </ItemShippingFee>
                 <ItemTotalPrice>
                   Total
-                  <span>$154</span>
+                  <span>${TotalPriceTag}</span>
                 </ItemTotalPrice>
                 <ExtraInfo>
                   <li>* Additional duties and taxes may apply at checkout.</li>
