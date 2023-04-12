@@ -6,21 +6,16 @@ import {
   SideFilterLl,
   SideFilterUl,
   SideFilterWrapper,
-  SidePriceWrap,
 } from './ProductListElements';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import axios from '../../api/axios';
 import { Link } from 'react-router-dom';
 
-const SideFilter = ({ meData, itemAllKinds, itemKinds }) => {
+const SideFilter = ({ meData, getAllKinds }) => {
   const [categories, setCategories] = useState([]);
-  const [isDrop, setIsDrop] = useState(false);
-  const [clickId, setClickId] = useState('');
   const [isCategoryDrop, setIsCategoryDrop] = useState(true);
   const [isPriceDrop, setIsPriceDrop] = useState(true);
-
-  console.log('itemAllKinds Side', itemAllKinds);
 
   const getCategory = async () => {
     const categoryData = await axios.get('/products/productAllParentsKinds', {
@@ -33,13 +28,6 @@ const SideFilter = ({ meData, itemAllKinds, itemKinds }) => {
   useEffect(() => {
     getCategory();
   }, [meData]);
-
-  // console.log('side.id', side);
-
-  // const clickCategoryMore = () => {
-
-  //   setIsCategoryDrop{!isCategoryDrop}
-  // };
 
   return (
     <SideFilterContainer>
@@ -62,8 +50,7 @@ const SideFilter = ({ meData, itemAllKinds, itemKinds }) => {
                           key={cat.pk}
                           to={`/products/productAllParentsKinds/${cat.pk}`}
                         >
-                          {cat?.name === itemAllKinds?.name ? (
-                            // || cat?.name === itemKinds?.parents?.name
+                          {cat?.name === getAllKinds?.name ? (
                             <li style={{ fontWeight: '700' }}>{cat?.name}</li>
                           ) : (
                             <li>{cat?.name}</li>

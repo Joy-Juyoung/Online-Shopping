@@ -33,10 +33,9 @@ const sort = [
 const ProductsListPage = ({ meData }) => {
   const [addLiked, setAddLiked] = useState();
   const [loading, setLoading] = useState(false);
-  const [itemAllKinds, setItemAllKinds] = useState([]);
+  const [getAllKinds, setGetAllKinds] = useState([]);
   const [kindEach, setKindEach] = useState([]);
-  const { id } = useParams();
-  const [isActive, setIsActive] = useState(false);
+  const { pId } = useParams();
   const [isChileOpen, setIsChileOpen] = useState(false);
 
   // console.log('meDataList', meData);
@@ -49,13 +48,16 @@ const ProductsListPage = ({ meData }) => {
   }, []);
 
   const getAllKindsProduct = async () => {
-    const { data } = await axios.get(`/products/productAllParentsKinds/${id}`, {
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true,
-    });
-    setItemAllKinds(data);
-    console.log('itemAllKinds', itemAllKinds);
-    setKindEach(itemAllKinds.productKinds);
+    const { data } = await axios.get(
+      `/products/productAllParentsKinds/${pId}`,
+      {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      }
+    );
+    setGetAllKinds(data);
+    // console.log('getAllKinds', getAllKinds);
+    setKindEach(getAllKinds.productKinds);
     setLoading(false);
   };
 
@@ -63,30 +65,11 @@ const ProductsListPage = ({ meData }) => {
     setLoading(true);
     getAllKindsProduct();
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  }, [id]);
+  }, [pId]);
 
   useEffect(() => {
     getAllKindsProduct();
   }, [addLiked]);
-
-  // const handleOptionChange = (e) => {
-  //   setSelectedCategory(e.target.value);
-  // };
-  console.log('id', id);
-
-  useEffect(() => {
-    if (id === itemAllKinds.pk) {
-      setIsActive(true);
-    }
-  }, [id]);
-
-  // const handChildOpen = (pk) => {
-  //   if ((isChileOpen = false)) {
-  //     setIsChileOpen(true);
-  //     console.log('ok');
-  //   }
-  //   setIsChileOpen(false);
-  // };
 
   if (loading)
     return (
@@ -96,17 +79,17 @@ const ProductsListPage = ({ meData }) => {
     );
   return (
     <ProductsListContainer>
-      <h1>All {itemAllKinds.name}</h1>
-      <Category id={id} itemAllKinds={itemAllKinds} meData={meData} />
+      <h1>All {getAllKinds.name}</h1>
+      <Category pId={pId} getAllKinds={getAllKinds} meData={meData} />
       <ProductsWrap>
-        <SideFilter meData={meData} itemAllKinds={itemAllKinds} />
+        <SideFilter meData={meData} getAllKinds={getAllKinds} />
         <ProductsListWrapper>
           {!isChileOpen ? (
             <ProductsList>
               <ListTop>
                 <TotalCountWrap>
                   <TotalCount style={{ fontSize: '13px' }}>
-                    Total {itemAllKinds?.productKinds?.length}
+                    Total {getAllKinds?.productKinds?.length}
                   </TotalCount>
                 </TotalCountWrap>
                 <SelectWrap>
@@ -125,10 +108,12 @@ const ProductsListPage = ({ meData }) => {
               </ListTop>
 
               <ListMidWrap>
-                {itemAllKinds?.productKinds?.map((item) => {
+                {getAllKinds?.productKinds?.map((item) => {
                   return (
                     <ListMidWrapper key={item.pk}>
-                      <Link to={`/products/productAllChildKinds/${item.pk}`}>
+                      <Link
+                        to={`/products/productAllParentsKinds/${pId}/${item?.name}/${item.pk}`}
+                      >
                         <AllEachTitle>{item.name.toUpperCase()}</AllEachTitle>
                       </Link>
                       <ListMid>
@@ -138,7 +123,7 @@ const ProductsListPage = ({ meData }) => {
                               key={all.pk}
                               all={all}
                               meData={meData}
-                              itemAllKinds={itemAllKinds}
+                              getAllKinds={getAllKinds}
                             />
                           );
                         })}
@@ -149,7 +134,7 @@ const ProductsListPage = ({ meData }) => {
               </ListMidWrap>
             </ProductsList>
           ) : (
-            <ProductListByCategory itemAllKinds={itemAllKinds} id={id} />
+            <ProductListByCategory getAllKinds={getAllKinds} pId={pId} />
           )}
         </ProductsListWrapper>
       </ProductsWrap>

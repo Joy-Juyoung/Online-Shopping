@@ -71,7 +71,13 @@ const Home = ({ meData }) => {
           />
 
           <Route
-            path='/products/productAllParentsKinds/:id'
+            path='/products/productAllParentsKinds/:pId/:cName/:cId'
+            element={<ProductListByCategory meData={meData} />}
+            exact={true}
+          />
+
+          <Route
+            path='/products/productAllParentsKinds/:pId'
             element={<ProductsListPage meData={meData} />}
             exact={true}
           />

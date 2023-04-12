@@ -33,25 +33,29 @@ const sort = [
 const ProductListByCategory = ({ meData }) => {
   const [loading, setLoading] = useState(false);
   const [itemKinds, setItemKinds] = useState([]);
-  // const [itemAllKinds, setItemAllKinds] = useState([]);
-  const [kindEach, setKindEach] = useState([]);
-  const { id } = useParams();
-  const navigate = useNavigate();
+  const { pId, pName, cName, cId } = useParams();
+  const [getAllKinds, setGetAllKinds] = useState([]);
 
-  const [isActive, setIsActive] = useState(false);
-  const [categories, setCategories] = useState([]);
+  // console.log('pId', pId);
+  // console.log('pName', pName);
+  // console.log('cName', cName);
+  // console.log('cId', cId);
 
-  const getCategory = async () => {
-    const categoryData = await axios.get('/products/productAllParentsKinds', {
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true,
-    });
-    setCategories(categoryData?.data);
+  const getAllKindsProduct = async () => {
+    const { data } = await axios.get(
+      `/products/productAllParentsKinds/${pId}`,
+      {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      }
+    );
+    setGetAllKinds(data);
   };
 
   useEffect(() => {
-    getCategory();
-  }, [meData]);
+    getAllKindsProduct();
+  }, []);
+  // console.log('getAllKinds', getAllKinds);
 
   useEffect(() => {
     const loadData = async () => {
@@ -61,7 +65,7 @@ const ProductListByCategory = ({ meData }) => {
   }, []);
 
   const getKindsProduct = async () => {
-    const { data } = await axios.get(`/products/productAllChildKinds/${id}`, {
+    const { data } = await axios.get(`/products/productAllChildKinds/${cId}`, {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
@@ -72,15 +76,9 @@ const ProductListByCategory = ({ meData }) => {
     setLoading(true);
     getKindsProduct();
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  }, [id]);
+  }, [cId]);
 
-  useEffect(() => {
-    if (id === itemKinds.pk) {
-      setIsActive(true);
-    }
-  }, [id]);
-
-  console.log('itemKinds', itemKinds);
+  // console.log('itemKinds', itemKinds);
 
   if (loading)
     return (
@@ -88,35 +86,19 @@ const ProductListByCategory = ({ meData }) => {
         <Loading />
       </div>
     );
-
   return (
     <ProductsListContainer>
       <h1>{itemKinds?.name}</h1>
 
-      {/* <Category itemKinds={itemKinds} /> */}
-      <CategoriesWrap>
-        {/* <Link to=''>
-          <Categories onClick={() => navigate(-1)}>All</Categories>
-        </Link> */}
-        {categories?.map((cat) => {
-          return (
-            <CategoriesInside key={cat?.pk}>
-              {cat.productKinds?.map((child) => {
-                return (
-                  <Link
-                    key={child?.pk}
-                    to={`/products/productAllChildKinds/${child?.pk}`}
-                  >
-                    <Categories>{child?.name}</Categories>
-                  </Link>
-                );
-              })}
-            </CategoriesInside>
-          );
-        })}
-      </CategoriesWrap>
+      <Category getAllKinds={getAllKinds} pId={pId} cId={cId} cName={cName} />
+
       <ProductsWrap>
-        <SideFilter itemKinds={itemKinds} />
+        <SideFilter
+          getAllKinds={getAllKinds}
+          pId={pId}
+          cId={cId}
+          cName={cName}
+        />
         <ProductsListWrapper>
           <ProductsList>
             <ListTop>
