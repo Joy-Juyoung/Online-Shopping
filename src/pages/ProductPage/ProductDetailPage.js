@@ -41,6 +41,7 @@ import TestAddToCart from './AddToCart';
 
 // const PRODUCTDETAILS_URL = '/products/${id}';
 const SHIPPING_RETURN_URL = '/settings/all';
+const REVIEWS_URL = '/reviews/';
 
 const ProductDetailPage = ({ all, meData, itemAllKinds, itemKinds, wishItems }) => {
   const [itemsDetail, setItemsDetail] = useState([]); //useState([]);
@@ -48,6 +49,13 @@ const ProductDetailPage = ({ all, meData, itemAllKinds, itemKinds, wishItems }) 
   const [addLiked, setAddLiked] = useState();
   const [loading, setLoading] = useState(false);
   const ref = useRef();
+  const [isOpen, setIsOpen] = useState(false);
+  const [shipReturn, setShipReturn] = useState([]);
+  const [description, setDescription] = useState(true);
+  const [size, setSize] = useState(false);
+  const [shippingReturn, setShippingReturn] = useState(false);
+  const [reviews, setReviews] = useState(false);
+  const [review, setReview] = useState([]);
 
   useEffect(() => {
     setLoading(true);
@@ -74,7 +82,6 @@ const ProductDetailPage = ({ all, meData, itemAllKinds, itemKinds, wishItems }) 
   }, [id, addLiked]);
   console.log('id', id);
 
-  const [shipReturn, setShipReturn] = useState([]);
   const getShipReturn = async () => {
     const shipData = await axios.get(SHIPPING_RETURN_URL, {
       headers: { 'Content-Type': 'application/json' },
@@ -84,17 +91,20 @@ const ProductDetailPage = ({ all, meData, itemAllKinds, itemKinds, wishItems }) 
     setShipReturn(shipData?.data);
   };
 
+  const getReviews = async () => {
+    const reviewsData = await axios.get(REVIEWS_URL, {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+    console.log('reviewsData', reviewsData?.data);
+    setReview(reviewsData?.data);
+  };
+
   useEffect(() => {
     getShipReturn();
+    getReviews();
     // setMe(meData);
   }, []);
-
-  const [isOpen, setIsOpen] = useState(false);
-
-  const [description, setDescription] = useState(true);
-  const [size, setSize] = useState(false);
-  const [shippingReturn, setShippingReturn] = useState(false);
-  const [reviews, setReviews] = useState(false);
 
       const ShowDescription = () => {
       if(description === false) {
@@ -345,23 +355,28 @@ const ProductDetailPage = ({ all, meData, itemAllKinds, itemKinds, wishItems }) 
               <DetailDescription>
                   <DescriptionList>
                     <DescriptionListDetail>
-                      <ListDetailBody>
+                      {review.map((r) => {
+                        return (
+                          <ListDetailBody key={r.pk}>
+                          {/* <ListDetailBody> */}
                         <DetailBodyOne>
-                          <span>* Composition : 97% cotton and 3% ployurethane</span>
+                          <span>* UserName : {r.user?.username}</span>
                         </DetailBodyOne>
                         <DetailBodyTwo>
-                          <span>* Color : Red</span>
+                          <span>* P : {r.payload}</span>
                         </DetailBodyTwo>
                         <DetailBodyTwo>
-                          <span>* Country of origin : South Korea</span>
+                          <span>* rating : {r.rating}</span>
                         </DetailBodyTwo>
-                        <DetailBodyTwo>
+                        {/* <DetailBodyTwo>
                           <span>* Product No : 123455</span>
-                        </DetailBodyTwo>
-                        <DetailBodyTwo>
+                          </DetailBodyTwo>
+                          <DetailBodyTwo>
                           <span>* For more information, click DETAIL IMAGES</span>
-                        </DetailBodyTwo>
+                        </DetailBodyTwo> */}
                       </ListDetailBody>
+                        )
+                      })}
                     </DescriptionListDetail>
                   </DescriptionList>
                 </DetailDescription>

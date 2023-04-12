@@ -98,32 +98,6 @@ const CartPage = () => {
 
   // console.log("carts", carts);
 
-  // const itemIncrease = (increase) => {
-  //   const addQty = counter.map((cart) =>{
-  //     if (increase === cart.pk && cart.number_of_product < 10000) {
-  //       return {...cart, number_of_product: cart.number_of_product + 1};
-  //     } else return cart;
-  //   });
-  //   setCarts(addQty);
-  // }
-  // const itemDecrease = (decrease) => {
-  //   const minusQty = counter.map((cart) =>{
-  //     if (decrease === cart.pk && counter.number_of_product > 1) {
-  //       return {...cart, number_of_product: cart.number_of_product - 1};
-  //     } else return cart;
-  //   });
-  //   setCarts(minusQty);
-  // }
-
-  // const deleteItem = (id) => {
-  //   fetch(`/carts/${id}`, {
-  //     method: 'DELETE'
-  //   }) .then((result) =>{
-  //     result.json().then((resp) =>{
-  //       console.warn(resp)
-  //     })
-  //   })
-  // };
   if (loading)
     return (
       <div>
