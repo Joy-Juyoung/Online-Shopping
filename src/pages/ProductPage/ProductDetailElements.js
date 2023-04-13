@@ -8,7 +8,7 @@ import styled  from 'styled-components';
 export const DetailContainer = styled.div`
     max-width: 1250px;
     margin: 0 auto;
-    padding: 0 20px 50px;
+    padding: 0 20px;
 `;
 
 
@@ -182,25 +182,80 @@ export const DetailDescription = styled.div`
 `;
 
 export const DescriptionList = styled.div`
-    padding: 80px 0px 0px;
+    padding: 50px 0px 0px;
     max-height: none;
     position: relative;
     overflow: hidden;
 `;
 
 export const DescriptionListDetail = styled.div`
+    h2{
+        /* margin-left: 10px; */
+        margin-bottom: 20px
+    }
+`;
+export const ReviewListDetail = styled.div`
+    display: block;
+    margin-bottom: 30px;        
+    margin-left: 20px;
 
+    span {
+        font-size: 14px;
+        color: #565959
+    }
 `;
 
-export const ListDetailBody = styled.dl`
-    padding-bottom: 10px;
-    display: block;
+export const ReviewListOne = styled.div`
+    margin-bottom: 4px;
+`;
 
+export const ListOneLink = styled(Link)`
+    text-decoration: none;
+    cursor: pointer;
+    display: table;
+`;
+
+export const ListOneAvatar = styled.div`
+    padding-right: 9px;
+    width: 43px;
+    display: table-cell;
+`;
+
+export const ListOneName = styled.div`
+    display: table-cell;
+    vertical-align: middle;
+
+    span {
+        font-size: 13px;
+        position: relative;
+    }
+`;
+
+export const ReviewListTwo = styled.div`
+    display: flex;
+    span {
+
+        color: #000;
+        margin-right: 20px;
+
+    }
+`;
+export const ReviewListThree = styled.div`
+    margin-bottom: 8px;
+
+    span {
+        color: #000;
+        font-size: 14px;
+    }
+`;
+export const ListDetailBody = styled.dl`
+    padding-bottom: 25px;
+    display: block;
 `;
 
 export const DetailBodyOne = styled.dt`
     position: relative;
-    padding-left: 10px;
+    padding-left: 20px;
     color: rgb(10, 15, 24);
     font-size: 16px;
     /* display: inline; */
@@ -218,7 +273,7 @@ export const DetailBodyOne = styled.dt`
 
 export const DetailBodyTwo = styled.dt`
     position: relative;
-    padding-left: 10px;
+    padding-left: 20px;
     color: rgb(10, 15, 24);
     font-size: 16px;
     /* display: inline; */
