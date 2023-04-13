@@ -28,6 +28,14 @@ import {
   DetailBodyOne,
   DetailBodyTwo,
   ButtonLargeWrap,
+  DetailBodyThree,
+  ReviewListDetail,
+  ReviewListOne,
+  ReviewListTwo,
+  ReviewListThree,
+  ListOneLink,
+  ListOneAvatar,
+  ListOneName
 } from './ProductDetailElements';
 
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -38,6 +46,8 @@ import AddToCart from './AddToCart';
 
 import Loading from '../../components/Loading';
 import TestAddToCart from './AddToCart';
+
+import Avatar from '@mui/material/Avatar';
 
 // const PRODUCTDETAILS_URL = '/products/${id}';
 const SHIPPING_RETURN_URL = '/settings/all';
@@ -355,28 +365,53 @@ const ProductDetailPage = ({ all, meData, itemAllKinds, itemKinds, wishItems }) 
               <DetailDescription>
                   <DescriptionList>
                     <DescriptionListDetail>
+                      <h2>Reviews</h2>
                       {review.map((r) => {
                         return (
-                          <ListDetailBody key={r.pk}>
-                          {/* <ListDetailBody> */}
-                        <DetailBodyOne>
-                          <span>* UserName : {r.user?.username}</span>
-                        </DetailBodyOne>
-                        <DetailBodyTwo>
-                          <span>* P : {r.payload}</span>
-                        </DetailBodyTwo>
-                        <DetailBodyTwo>
-                          <span>* rating : {r.rating}</span>
-                        </DetailBodyTwo>
-                        {/* <DetailBodyTwo>
-                          <span>* Product No : 123455</span>
-                          </DetailBodyTwo>
-                          <DetailBodyTwo>
-                          <span>* For more information, click DETAIL IMAGES</span>
-                        </DetailBodyTwo> */}
-                      </ListDetailBody>
+                      <ReviewListDetail key={r.pk}>
+                           <ReviewListOne>
+                              <ListOneLink to={`/userAccount`}>
+                                <ListOneAvatar>
+                                  <Avatar sx={{ width: 30, height: 30 }}>C</Avatar>
+                                </ListOneAvatar>
+                                <ListOneName>
+                                  <span>{r?.user?.username}</span>
+                                </ListOneName>
+                              </ListOneLink> 
+                          </ReviewListOne>
+                          <ReviewListTwo>
+                            <span> rating : {r?.rating}</span>
+                            <span><strong>{r?.Product_Name}</strong></span>
+                          </ReviewListTwo>
+                          <span>Reviewed on April 16, 2023</span>
+                          <ReviewListThree>
+                            <span>{r?.payload}</span>
+                          </ReviewListThree>
+                      </ReviewListDetail>
                         )
                       })}
+                      {/* <h2>Reviews</h2>
+                      {review.map((r) => {
+                        return (
+                        <ListDetailBody key={r.pk}>
+                           <DetailBodyOne>
+                            <span>* UserName : {r.user?.username}</span>
+                          </DetailBodyOne>
+                          <DetailBodyTwo>
+                            <span>* P : {r.payload}</span>
+                          </DetailBodyTwo>
+                          <DetailBodyTwo>
+                            <span>* rating : {r.rating}</span>
+                          </DetailBodyTwo>
+                          <DetailBodyTwo>
+                            <span>* Product No : 123455</span>
+                            </DetailBodyTwo>
+                            <DetailBodyTwo>
+                            <span>* For more information, click DETAIL IMAGES</span>
+                          </DetailBodyTwo>
+                      </ListDetailBody>
+                        )
+                      })} */}
                     </DescriptionListDetail>
                   </DescriptionList>
                 </DetailDescription>
