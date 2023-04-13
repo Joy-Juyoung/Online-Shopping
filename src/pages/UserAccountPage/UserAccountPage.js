@@ -110,7 +110,7 @@ const UserAccountPage = ({ meData }) => {
       console.log('changed Data', meInfo?.data);
 
       setIsEdit(false);
-      window.location.reload('/login');
+      // window.location.reload('/login');
     }
   };
 

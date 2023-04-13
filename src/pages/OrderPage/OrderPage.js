@@ -82,7 +82,7 @@ const OrderPage = () => {
                 <option value='Month 4'>Month 4</option>
               </ListView>
             </OrderListTop>
-            {isEmpty ? (
+            {!isEmpty ? (
               <OrderListEmpty>No orders found.</OrderListEmpty>
             ) : (
               <>

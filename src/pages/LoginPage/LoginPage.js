@@ -130,41 +130,6 @@ const LoginPage = () => {
     }
   };
 
-  // const handleSocialSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   console.log(username);
-  //   console.log(pwd);
-
-  //   setLoading(true);
-  //   const loginData = await axios.post(
-  //     LOGIN_URL,
-  //     {
-  //       username: email.split('@')[0],
-  //       password: pwd,
-  //     },
-  //     {
-  //       headers: { 'Content-Type': 'application/json' },
-  //       withCredentials: true,
-  //     }
-  //   );
-  //   console.log('loginData', loginData?.data);
-  //   if (loginData.data.error) {
-  //     setLoading(false);
-  //     setErrMsg(
-  //       'Login faild! Please recheck the username and password and try again'
-  //     );
-  //     errRef.current.focus();
-  //   } else {
-  //     setUsername(username);
-  //     setPwd(pwd);
-  //     setLoginSuccess(true);
-  //     navigate('/');
-  //     window.location.reload('/');
-  //     setLoading(false);
-  //   }
-  // };
-
   const responseGoogle = (response) => {
     console.log(response);
   };

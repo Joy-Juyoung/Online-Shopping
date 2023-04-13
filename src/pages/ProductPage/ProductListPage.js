@@ -4,6 +4,7 @@ import {
   AllEachTitle,
   Categories,
   CategoriesWrap,
+  ListAllMidWrap,
   ListMid,
   ListMidWrap,
   ListMidWrapper,
@@ -37,8 +38,13 @@ const ProductsListPage = ({ meData }) => {
   const [kindEach, setKindEach] = useState([]);
   const { pId } = useParams();
   const [isChileOpen, setIsChileOpen] = useState(false);
+  const [selectOption, setSelectOption] = useState();
+  const [sortList, setSortList] = useState([]);
 
   // console.log('meDataList', meData);
+  // const sortList = () => {
+
+  // };
 
   useEffect(() => {
     const loadData = async () => {
@@ -56,7 +62,7 @@ const ProductsListPage = ({ meData }) => {
       }
     );
     setGetAllKinds(data);
-    // console.log('getAllKinds', getAllKinds);
+    console.log('getAllKinds', getAllKinds);
     setKindEach(getAllKinds.productKinds);
     setLoading(false);
   };
@@ -64,12 +70,48 @@ const ProductsListPage = ({ meData }) => {
   useEffect(() => {
     setLoading(true);
     getAllKindsProduct();
+
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, [pId]);
 
   useEffect(() => {
     getAllKindsProduct();
   }, [addLiked]);
+
+  // const handleOptionChange = (e) => {
+  //   setSelectOption(e.target.value);
+
+  //   if (getAllKinds.pk === pId) {
+  //     getAllKinds.
+  //     if (selectOption === 'LowToHigh') {
+  //       const priceLToH = itemKinds.products.sort((a, b) => a.price - b.price);
+  //       setSortList(priceLToH);
+  //       console.log('SortList L-H', sortList);
+  //     }
+  //     if (selectOption === 'HighToLow') {
+  //       const priceHToL = itemKinds.products.sort((a, b) => b.price - a.price);
+  //       setSortList(priceHToL);
+  //       console.log('SortList H-L', sortList);
+  //     }
+  //   }
+  // if (selectOption === 'Newest') {
+  //   // setSortList(each.sort((a, b) => b - a));
+  //   console.log('SortList', sortList);
+  // }
+  // if (selectOption === 'Popular') {
+  //   // setSortList(each.sort((a, b) => b - a));
+  //   console.log('SortList', sortList);
+  // }
+  // });
+  // });
+  // setItemKinds(sortList);
+  // console.log('itemKinds', itemKinds);
+  // };
+  // console.log('SortList', sortList);
+
+  // useEffect(() => {
+  //   setSortList(itemKinds?.products);
+  // }, [selectOption]);
 
   if (loading)
     return (
@@ -86,7 +128,7 @@ const ProductsListPage = ({ meData }) => {
         <ProductsListWrapper>
           {!isChileOpen ? (
             <ProductsList>
-              <ListTop>
+              {/* <ListTop>
                 <TotalCountWrap>
                   <TotalCount style={{ fontSize: '13px' }}>
                     Total {getAllKinds?.productKinds?.length}
@@ -99,20 +141,24 @@ const ProductsListPage = ({ meData }) => {
                     id='category-list'
                   >
                     {sort.map((option, index) => (
-                      <option key={index} value={option.value}>
+                      <option
+                        key={index}
+                        value={option.value}
+                        // onClick={handleSort}
+                      >
                         {option.text}
                       </option>
                     ))}
                   </select>
                 </SelectWrap>
-              </ListTop>
+              </ListTop> */}
 
-              <ListMidWrap>
+              <ListAllMidWrap>
                 {getAllKinds?.productKinds?.map((item) => {
                   return (
                     <ListMidWrapper key={item.pk}>
                       <Link
-                        to={`/products/productAllParentsKinds/${pId}/${item?.name}/${item.pk}`}
+                        to={`/products/category/${pId}/${item?.name}/${item.pk}`}
                       >
                         <AllEachTitle>{item.name.toUpperCase()}</AllEachTitle>
                       </Link>
@@ -131,7 +177,7 @@ const ProductsListPage = ({ meData }) => {
                     </ListMidWrapper>
                   );
                 })}
-              </ListMidWrap>
+              </ListAllMidWrap>
             </ProductsList>
           ) : (
             <ProductListByCategory getAllKinds={getAllKinds} pId={pId} />

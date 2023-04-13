@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   FooterContainer,
   FooterWrapper,
@@ -35,7 +35,7 @@ import Youtub from '../../asset/youtube.png';
 import Twit from '../../asset/twitter.png';
 import { Link } from 'react-router-dom';
 
-const Footer = ({ click }) => {
+const Footer = ({ click, isNewWindow }) => {
   return (
     <FooterContainer>
       <FooterWrapper>
@@ -61,7 +61,6 @@ const Footer = ({ click }) => {
         <FooterLineTwo>
           <HelpBtn>
             <Link to='/helpcenter'>Help Center</Link>
-            {/* Help Center */}
             <HelpIcon>
               <ChatBubbleOutlineIcon fontSize='small' />
             </HelpIcon>

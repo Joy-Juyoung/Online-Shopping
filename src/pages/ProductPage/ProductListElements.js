@@ -142,6 +142,13 @@ export const ListMidWrap = styled.div`
   /* flex-direction: column; */
 `;
 
+export const ListAllMidWrap = styled.div`
+  /* display: flex;
+  align-items: center;
+  justify-content: space-between; */
+  margin: 40px auto;
+`;
+
 export const ListMidWrapper = styled.div``;
 
 export const AllEachTitle = styled.h2`

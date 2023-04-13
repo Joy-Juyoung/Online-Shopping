@@ -38,6 +38,7 @@ export const DropUl = styled.ul`
   top: 60px;
   width: 250px;
   border: 1px solid rgba(0, 0, 0, 0.04);
+  border-radius: 10px;
   box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.4);
   z-index: 3;
   font-size: 13px;

@@ -33,8 +33,11 @@ const sort = [
 const ProductListByCategory = ({ meData }) => {
   const [loading, setLoading] = useState(false);
   const [itemKinds, setItemKinds] = useState([]);
-  const { pId, pName, cName, cId } = useParams();
+  const { pId, cName, cId } = useParams();
   const [getAllKinds, setGetAllKinds] = useState([]);
+  const [selectOption, setSelectOption] = useState();
+  const [sortList, setSortList] = useState([]);
+  const [sortProducts, setSortProducts] = useState([]);
 
   // console.log('pId', pId);
   // console.log('pName', pName);
@@ -55,14 +58,6 @@ const ProductListByCategory = ({ meData }) => {
   useEffect(() => {
     getAllKindsProduct();
   }, []);
-  // console.log('getAllKinds', getAllKinds);
-
-  useEffect(() => {
-    const loadData = async () => {
-      await new Promise((r) => setTimeout(r, 1000));
-    };
-    loadData();
-  }, []);
 
   const getKindsProduct = async () => {
     const { data } = await axios.get(`/products/productAllChildKinds/${cId}`, {
@@ -70,15 +65,72 @@ const ProductListByCategory = ({ meData }) => {
       withCredentials: true,
     });
     setItemKinds(data);
+    setSortProducts(itemKinds?.products);
+    // console.log('SortProducts', sortProducts);
     setLoading(false);
   };
+
   useEffect(() => {
     setLoading(true);
     getKindsProduct();
+    setSortProducts(itemKinds?.products);
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, [cId]);
 
-  // console.log('itemKinds', itemKinds);
+  const handleOptionChange = (e) => {
+    setSelectOption(e.target.value);
+    // console.log('SelectOption', selectOption);
+    //   if (itemKinds.name === cName) {
+    //   if (selectOption === 'LowToHigh') {
+    //     const priceLToH = itemKinds.products.sort((a, b) => a.price - b.price);
+    //     setSortList(priceLToH);
+    //     console.log('L-H', sortList);
+    //   } if (selectOption === 'HighToLow') {
+    //     const priceHToL = itemKinds.products.sort((a, b) => b.price - a.price);
+    //     setSortList(priceHToL);
+    //     console.log('H-L', sortList);
+    //   } if (selectOption === 'Newest') {
+    //     const uploadNewest = itemKinds.products.sort(
+    //       (a, b) => a.created_at - b.created_at
+    //     );
+    //     setSortList(uploadNewest);
+    //     console.log('Upload Newest', sortList);
+    //   }
+    //   setSortProducts(sortList);
+    //   console.log('SortProductsssss', sortProducts);
+    // }
+  };
+
+  useEffect(() => {
+    console.log('selectedOptionnnn', selectOption);
+    if (itemKinds.name === cName) {
+      switch (selectOption) {
+        case 'LowToHigh':
+          const priceLToH = itemKinds.products.sort(
+            (a, b) => a.price - b.price
+          );
+          setSortList(priceLToH);
+          // setSortProducts(...sortList);
+          return setSortProducts(...sortList);
+        case 'HighToLow':
+          const priceHToL = itemKinds.products.sort(
+            (a, b) => b.price - a.price
+          );
+          setSortList(priceHToL);
+          // setSortProducts(sortList);
+          return setSortProducts(...sortList);
+        case 'Newest':
+          const uploadNewest = itemKinds.products.sort(
+            (a, b) => a.created_at - b.created_at
+          );
+          setSortList(uploadNewest);
+          // setSortProducts(sortList);
+          return setSortProducts(...sortList);
+        default:
+          return setSortList(sortProducts);
+      }
+    }
+  }, [selectOption, sortProducts]);
 
   if (loading)
     return (
@@ -109,7 +161,7 @@ const ProductListByCategory = ({ meData }) => {
               </TotalCountWrap>
               <SelectWrap>
                 <select
-                  // onChange={handleOptionChange}
+                  onChange={handleOptionChange}
                   name='category-list'
                   id='category-list'
                 >
@@ -124,7 +176,7 @@ const ProductListByCategory = ({ meData }) => {
 
             <ListMidWrap>
               <ListMid>
-                {itemKinds?.products?.map((all) => {
+                {itemKinds.products?.map((all) => {
                   return (
                     <ProductsCard
                       key={all.pk}

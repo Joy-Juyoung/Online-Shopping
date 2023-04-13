@@ -267,9 +267,7 @@ const Header = ({ meData }) => {
                   <DropMenuList key={category.pk}>
                     {/* <DropMenuWrap></DropMenuWrap> */}
                     <DropMenuParents>
-                      <DropdownButton
-                        to={`/products/productAllParentsKinds/${category.pk}`}
-                      >
+                      <DropdownButton to={`/products/category/${category.pk}`}>
                         <span>{category.name.toUpperCase()}</span>
                       </DropdownButton>
                       <DropChildWrap>
@@ -282,7 +280,7 @@ const Header = ({ meData }) => {
                                   color: 'black',
                                   textDecoration: 'none',
                                 }}
-                                to={`/products/productAllParentsKinds/${category?.pk}/${child?.name}/${child?.pk}`}
+                                to={`/products/category/${category?.pk}/${child?.name}/${child?.pk}`}
                               >
                                 <DropMenuItem>{child.name}</DropMenuItem>
                               </Link>
