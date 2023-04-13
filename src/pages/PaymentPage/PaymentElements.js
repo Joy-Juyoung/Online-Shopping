@@ -88,8 +88,10 @@ export const ListsDetails = styled.div`
 
 export const ListsImgLink = styled(Link)`
   img {
-    width: 100%;
+    /* width: 100%; */
     width: 80px;
+    height: 80px;
+    /* object-fit: cover; */
   }
 `;
 
@@ -120,33 +122,6 @@ export const DetailPrice = styled.div`
   margin-top: 5px;
   font-weight: 700;
   font-size: 18px;
-`;
-
-export const PaymentMethod = styled.div`
-  border: 1px solid lightgray;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 15px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-
-  img {
-    width: 50px;
-    object-fit: contain;
-  }
-  /* 
-  input {
-    margin-right: 10px;
-
-    &:checked {
-      border: 1px solid #0a0f18;
-    }
-
-    &:focus {
-      border: 1px solid #0a0f18;
-    }
-  } */
 `;
 
 export const MethodRadio = styled.div`

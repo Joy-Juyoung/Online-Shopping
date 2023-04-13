@@ -16,16 +16,14 @@ const Category = ({ pId, cName, cId, getAllKinds }) => {
         </Categories>
       ) : (
         <Categories>
-          <Link to={`/products/productAllParentsKinds/${pId}`}>
-            All {getAllKinds.name}
-          </Link>
+          <Link to={`/products/category/${pId}`}>All {getAllKinds.name}</Link>
         </Categories>
       )}
       {getAllKinds?.productKinds?.map((kind) => {
         return (
           <Link
             key={kind?.pk}
-            to={`/products/productAllParentsKinds/${pId}/${kind?.name}/${kind?.pk}`}
+            to={`/products/category/${pId}/${kind?.name}/${kind?.pk}`}
           >
             {kind.name === cName ? (
               <Categories

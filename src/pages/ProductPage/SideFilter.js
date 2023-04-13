@@ -46,10 +46,7 @@ const SideFilter = ({ meData, getAllKinds }) => {
                   <ul>
                     {categories?.map((cat) => {
                       return (
-                        <Link
-                          key={cat.pk}
-                          to={`/products/productAllParentsKinds/${cat.pk}`}
-                        >
+                        <Link key={cat.pk} to={`/products/category/${cat.pk}`}>
                           {cat?.name === getAllKinds?.name ? (
                             <li style={{ fontWeight: '700' }}>{cat?.name}</li>
                           ) : (

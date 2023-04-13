@@ -57,6 +57,7 @@ import axios from '../../api/axios';
 import { useParams } from 'react-router';
 import Loading from '../../components/Loading';
 import { object } from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const CARTS_URL = '/carts';
 
@@ -64,7 +65,7 @@ const TestCart = () => {
   const [loading, setLoading] = useState(false);
   const [carts, setCarts] = useState([]);
   const [count, setCount] = useState();
-  
+
   const getAllCart = async () => {
     const cartList = await axios.get(CARTS_URL, {
       headers: { 'Content-Type': 'application/json' },
@@ -77,6 +78,7 @@ const TestCart = () => {
   useEffect(() => {
     setLoading(true);
     getAllCart();
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
   console.log('carts', carts);
 
@@ -98,58 +100,64 @@ const TestCart = () => {
   // const handleDeleteCart = async (pk) => {
   //   alert('Are you sure you want to remove the product?');
   //   const deleteItem = carts.map((c) => {
-    //     if (c.pk === pk) {
-      //       axios.delete(`/carts/${pk}`, {
-        //         headers: { 'Content-Type': 'application/json' },
-        //         withCredentials: true,
-        //       });
+  //     if (c.pk === pk) {
+  //       axios.delete(`/carts/${pk}`, {
+  //         headers: { 'Content-Type': 'application/json' },
+  //         withCredentials: true,
+  //       });
   //     }
   //   });
   //   setCarts(deleteItem);
   //   getAllCart();
   //   window.location.reload('/carts');
   // };
-  
-  
+
   const handleIncrease = async (pk) => {
     const addQty = carts.map((i) => {
-      if (pk === i.pk && i.number_of_product < 10000) {   
-        axios.put(`/carts/${pk}`,{
-          // pk: cart.pk,
-          number_of_product: i.number_of_product+1
-        },{
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        })
+      if (pk === i.pk && i.number_of_product < 10000) {
+        axios.put(
+          `/carts/${pk}`,
+          {
+            // pk: cart.pk,
+            number_of_product: i.number_of_product + 1,
+          },
+          {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+          }
+        );
       }
     });
     setCarts(addQty);
     getAllCart();
   };
-  
+
   const handleDecrease = async (pk) => {
     const minusQty = carts.map((i) => {
       if (pk === i.pk && i.number_of_product > 1) {
-        axios.put(`/carts/${pk}`,{
-          pk: i.pk,
-          number_of_product: i.number_of_product-1
-        },{
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        });
+        axios.put(
+          `/carts/${pk}`,
+          {
+            pk: i.pk,
+            number_of_product: i.number_of_product - 1,
+          },
+          {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+          }
+        );
       }
     });
     setCarts(minusQty);
     getAllCart();
   };
-  
+
   const ShippingFee = 15;
   const PriceForBill = carts.reduce((total, item) => {
     return total + item?.total_price;
-  },0);
+  }, 0);
   console.log('total: ', PriceForBill);
-  const TotalPriceTag = PriceForBill+ShippingFee;
-    
+  const TotalPriceTag = PriceForBill + ShippingFee;
 
   if (loading)
     return (
@@ -157,7 +165,7 @@ const TestCart = () => {
         <Loading />
       </div>
     );
-    
+
   return (
     <CartContainer>
       <CartWrapper>
@@ -198,11 +206,21 @@ const TestCart = () => {
                       </ItemDetailOne>
                       <ItemDetailTwo>
                         <ItemDetailTwoWrap>
-                          <ItemDecreaseBtn onClick={() => {handleDecrease(cart?.pk)}}>
-                            <RemoveIcon fontSize='small' color='action'/>
+                          <ItemDecreaseBtn
+                            onClick={() => {
+                              handleDecrease(cart?.pk);
+                            }}
+                          >
+                            <RemoveIcon fontSize='small' color='action' />
                           </ItemDecreaseBtn>
-                          <ItemNumberInput>{cart?.number_of_product}</ItemNumberInput>
-                          <ItemIncreaseBtn onClick={() => {handleIncrease(cart.pk)}}>
+                          <ItemNumberInput>
+                            {cart?.number_of_product}
+                          </ItemNumberInput>
+                          <ItemIncreaseBtn
+                            onClick={() => {
+                              handleIncrease(cart.pk);
+                            }}
+                          >
                             <AddIcon fontSize='small' color='action' />
                           </ItemIncreaseBtn>
                         </ItemDetailTwoWrap>
@@ -278,7 +296,10 @@ const TestCart = () => {
             </CartRightMidTwo>
 
             <CartRightBottom>
-              <CheckOutBtn>PROCEED TO CHECKOUT</CheckOutBtn>
+              {/* <CheckOutBtn>PROCEED TO CHECKOUT</CheckOutBtn> */}
+              <Link to='/payment'>
+                <CheckOutBtn>PROCEED TO CHECKOUT</CheckOutBtn>
+              </Link>
             </CartRightBottom>
           </CartRightInfo>
         </CartBodyWrap>

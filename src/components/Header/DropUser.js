@@ -14,12 +14,9 @@ import Avatar, { ConfigProvider } from 'react-avatar';
 import { ButtonUtils } from '../ButtonElements';
 
 const DropUser = ({ meData }) => {
-  // const accountRef = useRef();
-  // const [clickAccount, setclickAccount] = useState(false);
-
-  // const handleDropOut = () => {
-  //   !clickAccount;
-  // };
+  const handleAddBalance = () => {
+    window.open('/userBalance', 'My Balance', 'height=650px,width=680px');
+  };
 
   return (
     // <DropAccountContainer ref={ref}>
@@ -44,7 +41,7 @@ const DropUser = ({ meData }) => {
               <LinkAccount to='/userOrders'>
                 <DropLi>My Orders</DropLi>
               </LinkAccount>
-              <LinkAccount to='/testPage'>
+              <LinkAccount onClick={handleAddBalance}>
                 <DropLi>My Balances</DropLi>
               </LinkAccount>
               <LinkAccount to='/testPage'>

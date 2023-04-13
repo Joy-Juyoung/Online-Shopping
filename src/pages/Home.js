@@ -25,6 +25,7 @@ import Header from '../components/Header/Header';
 import TestCart from './CartPage/TestCart';
 import OrderPage from './OrderPage/OrderPage';
 import PaymentPage from './PaymentPage/PaymentPage';
+import AddBalance from '../components/AddBalance';
 
 const Home = ({ meData }) => {
   return (
@@ -71,13 +72,13 @@ const Home = ({ meData }) => {
           />
 
           <Route
-            path='/products/productAllParentsKinds/:pId/:cName/:cId'
+            path='/products/category/:pId/:cName/:cId'
             element={<ProductListByCategory meData={meData} />}
             exact={true}
           />
 
           <Route
-            path='/products/productAllParentsKinds/:pId'
+            path='/products/category/:pId'
             element={<ProductsListPage meData={meData} />}
             exact={true}
           />
@@ -92,20 +93,21 @@ const Home = ({ meData }) => {
             element={<CartPage meData={meData} />}
             exact={true}
           /> */}
-            <Route
+          <Route
             path='/carts'
             element={<TestCart meData={meData} />}
             exact={true}
           />
-          {/* <Route
-            path='/carts'
-            element={<TestCart meData={meData} />}
-            exact={true}
-          /> */}
 
           <Route
             path='/payment'
             element={<PaymentPage meData={meData} />}
+            exact={true}
+          />
+
+          <Route
+            path='/userBalance'
+            element={<AddBalance meData={meData} />}
             exact={true}
           />
 
