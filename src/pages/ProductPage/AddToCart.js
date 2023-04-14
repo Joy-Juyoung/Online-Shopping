@@ -103,8 +103,8 @@ const AddToCart = ({ onClose }) => {
             </SidebarMenuMid>
             <SidebarMenuBottom>
               <MenuTotalSummary>
-                <p>Total </p>
-                <p>$0</p>
+                <p>Total {selectOptions?.length} </p>
+                <p>${selectOptions?.price}</p>
               </MenuTotalSummary>
               <ButtonLarges>ADD TO BAG</ButtonLarges>
             </SidebarMenuBottom>

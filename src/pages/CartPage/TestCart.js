@@ -97,21 +97,6 @@ const TestCart = () => {
     });
     window.location.reload('/carts');
   };
-  // const handleDeleteCart = async (pk) => {
-  //   alert('Are you sure you want to remove the product?');
-  //   const deleteItem = carts.map((c) => {
-  //     if (c.pk === pk) {
-  //       axios.delete(`/carts/${pk}`, {
-  //         headers: { 'Content-Type': 'application/json' },
-  //         withCredentials: true,
-  //       });
-  //     }
-  //   });
-  //   setCarts(deleteItem);
-  //   getAllCart();
-  //   window.location.reload('/carts');
-  // };
-
   const handleIncrease = async (pk) => {
     const addQty = carts.map((i) => {
       if (pk === i.pk && i.number_of_product < 10000) {

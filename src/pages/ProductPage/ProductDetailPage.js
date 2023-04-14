@@ -35,9 +35,10 @@ import {
   ReviewListThree,
   ListOneLink,
   ListOneAvatar,
-  ListOneName
+  ListOneName,
 } from './ProductDetailElements';
 
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useParams } from 'react-router-dom';
 import SizeImage from '../../asset/size.png';
@@ -48,6 +49,7 @@ import Loading from '../../components/Loading';
 import TestAddToCart from './AddToCart';
 
 import Avatar from '@mui/material/Avatar';
+import { Rating } from '@mui/material';
 
 // const PRODUCTDETAILS_URL = '/products/${id}';
 const SHIPPING_RETURN_URL = '/settings/all';
@@ -66,7 +68,7 @@ const ProductDetailPage = ({ all, meData, itemAllKinds, itemKinds, wishItems }) 
   const [shippingReturn, setShippingReturn] = useState(false);
   const [reviews, setReviews] = useState(false);
   const [review, setReview] = useState([]);
-
+ 
   useEffect(() => {
     setLoading(true);
     const loadData = async () => {
@@ -245,23 +247,11 @@ const ProductDetailPage = ({ all, meData, itemAllKinds, itemKinds, wishItems }) 
                       <FavoriteBorderIcon fontSize='medium' color='disabled'/>
                     )}
                   </LikeBtn>
-                )};
+                )}
               </LikeBtnWrapper>
-{/* 
-            <LikeBtnWrapper>
-              <LikeBtn>
-              <FavoriteBorderIcon fontSize='medium' color='disabled' />
-              </LikeBtn>
-            </LikeBtnWrapper> */}
             <ButtonLarges onClick={() => setIsOpen(true)}>
               Add to Cart
             </ButtonLarges>
-
-            {/* <ButtonLargeWrap ref={ref}>
-            <ButtonLarges onClick={() => setIsOpen(true)}>
-              Add to Cart
-            </ButtonLarges>
-            </ButtonLargeWrap> */}
             {isOpen && <AddToCart onClose={() => setIsOpen(false)} />}
 
           </DetailRightInfoBottom>
@@ -370,7 +360,7 @@ const ProductDetailPage = ({ all, meData, itemAllKinds, itemKinds, wishItems }) 
                         return (
                       <ReviewListDetail key={r.pk}>
                            <ReviewListOne>
-                              <ListOneLink to={`/userAccount`}>
+                              <ListOneLink>
                                 <ListOneAvatar>
                                   <Avatar sx={{ width: 30, height: 30 }}>C</Avatar>
                                 </ListOneAvatar>
@@ -380,7 +370,16 @@ const ProductDetailPage = ({ all, meData, itemAllKinds, itemKinds, wishItems }) 
                               </ListOneLink> 
                           </ReviewListOne>
                           <ReviewListTwo>
-                            <span> rating : {r?.rating}</span>
+                            {/* <span>
+                               <Rating
+                                      name="simple-controlled"
+                                      value={value}
+                                      onChange={(event, newValue) => {
+                                        setValue(newValue);
+                                      }}
+                                    />
+                            </span> */}
+                            <Rating value={r?.rating} readOnly />
                             <span><strong>{r?.Product_Name}</strong></span>
                           </ReviewListTwo>
                           <span>Reviewed on April 16, 2023</span>
@@ -390,28 +389,6 @@ const ProductDetailPage = ({ all, meData, itemAllKinds, itemKinds, wishItems }) 
                       </ReviewListDetail>
                         )
                       })}
-                      {/* <h2>Reviews</h2>
-                      {review.map((r) => {
-                        return (
-                        <ListDetailBody key={r.pk}>
-                           <DetailBodyOne>
-                            <span>* UserName : {r.user?.username}</span>
-                          </DetailBodyOne>
-                          <DetailBodyTwo>
-                            <span>* P : {r.payload}</span>
-                          </DetailBodyTwo>
-                          <DetailBodyTwo>
-                            <span>* rating : {r.rating}</span>
-                          </DetailBodyTwo>
-                          <DetailBodyTwo>
-                            <span>* Product No : 123455</span>
-                            </DetailBodyTwo>
-                            <DetailBodyTwo>
-                            <span>* For more information, click DETAIL IMAGES</span>
-                          </DetailBodyTwo>
-                      </ListDetailBody>
-                        )
-                      })} */}
                     </DescriptionListDetail>
                   </DescriptionList>
                 </DetailDescription>
