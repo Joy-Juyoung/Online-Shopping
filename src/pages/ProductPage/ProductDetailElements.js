@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled  from 'styled-components';
-
+import Rating from '@mui/material/Rating';
 
 
 
@@ -285,3 +285,4 @@ export const DetailBodyTwo = styled.dt`
         margin-left: 12px;
     }
 `;
+
