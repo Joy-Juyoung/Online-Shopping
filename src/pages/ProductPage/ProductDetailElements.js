@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled  from 'styled-components';
-import Rating from '@mui/material/Rating';
-
+import { Rating } from '@mui/material';
+import { right } from '@popperjs/core';
 
 
 
@@ -61,15 +61,25 @@ export const DetailPrice = styled.div`
     font-size: 25px;
 `;
 export const DetailCoupon = styled.div`
-    padding: 14px 20px;
-    margin-top: 12px;
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    background-color: rgb(245, 246, 247);
+    margin-right: auto;
+    margin-left: auto;
+    position: relative;
+     p {
+        font-size: 14px;
+        color: #000;
+     }
 `;
 
 export const DetailRightInfoBottom = styled.div`
     display: flex;
     width: 100%;
     background: #fff;
-    padding: 40px 0;
+    padding: 40px 0 0 0;
     position: relative;
     /* bottom: inherit; */
 `;
@@ -195,18 +205,11 @@ export const DescriptionListDetail = styled.div`
     }
 `;
 export const ReviewListDetail = styled.div`
-    display: block;
-    margin-bottom: 30px;        
-    margin-left: 20px;
-
-    span {
-        font-size: 14px;
-        color: #565959
-    }
+    margin-left: 10px;
 `;
 
 export const ReviewListOne = styled.div`
-    margin-bottom: 4px;
+    margin-bottom: 10px;
 `;
 
 export const ListOneLink = styled(Link)`
@@ -226,20 +229,36 @@ export const ListOneName = styled.div`
     vertical-align: middle;
 
     span {
-        font-size: 13px;
+        font-size: 16px;
         position: relative;
+        color: #0F1111;
     }
 `;
 
 export const ReviewListTwo = styled.div`
     display: flex;
-    span {
+    margin-bottom: 10px;
+    color: #000;
 
-        color: #000;
-        margin-right: 20px;
-
-    }
 `;
+export const StyledRating = styled(Rating)(
+    {
+    '& .MuiRating-iconFilled': {
+      color: '#ffb41e',
+    },
+    '& .MuiRating-iconHover': {
+      color: '#ffb41e',
+    },
+    // '& .MuiRating-icon': {
+
+    // },
+  });
+
+  export const RatingWrap = styled.div`
+    margin-left: 15px;
+
+`;
+
 export const ReviewListThree = styled.div`
     margin-bottom: 8px;
 
@@ -248,6 +267,12 @@ export const ReviewListThree = styled.div`
         font-size: 14px;
     }
 `;
+
+export const ReviewListFour = styled.div`
+    color: #565959;
+    font-size: 14px;
+`;
+
 export const ListDetailBody = styled.dl`
     padding-bottom: 25px;
     display: block;

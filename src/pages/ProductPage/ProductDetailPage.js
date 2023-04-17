@@ -36,6 +36,9 @@ import {
   ListOneLink,
   ListOneAvatar,
   ListOneName,
+  RatingWrap,
+  StyledRating,
+  ReviewListFour
 } from './ProductDetailElements';
 
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -49,7 +52,7 @@ import Loading from '../../components/Loading';
 import TestAddToCart from './AddToCart';
 
 import Avatar from '@mui/material/Avatar';
-import { Rating } from '@mui/material';
+// import { Rating } from '@mui/material';
 
 // const PRODUCTDETAILS_URL = '/products/${id}';
 const SHIPPING_RETURN_URL = '/settings/all';
@@ -67,7 +70,7 @@ const ProductDetailPage = ({ all, meData, itemAllKinds, itemKinds, wishItems }) 
   const [size, setSize] = useState(false);
   const [shippingReturn, setShippingReturn] = useState(false);
   const [reviews, setReviews] = useState(false);
-  const [review, setReview] = useState([]);
+  // const [review, setReview] = useState([]);
  
   useEffect(() => {
     setLoading(true);
@@ -103,18 +106,18 @@ const ProductDetailPage = ({ all, meData, itemAllKinds, itemKinds, wishItems }) 
     setShipReturn(shipData?.data);
   };
 
-  const getReviews = async () => {
-    const reviewsData = await axios.get(REVIEWS_URL, {
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true,
-    });
-    console.log('reviewsData', reviewsData?.data);
-    setReview(reviewsData?.data);
-  };
+  // const getReviews = async () => {
+  //   const reviewsData = await axios.get(REVIEWS_URL, {
+  //     headers: { 'Content-Type': 'application/json' },
+  //     withCredentials: true,
+  //   });
+  //   console.log('reviewsData', reviewsData?.data);
+  //   setReview(reviewsData?.data);
+  // };
 
   useEffect(() => {
     getShipReturn();
-    getReviews();
+    // getReviews();
     // setMe(meData);
   }, []);
 
@@ -208,14 +211,12 @@ const ProductDetailPage = ({ all, meData, itemAllKinds, itemKinds, wishItems }) 
     };
   }, [isOpen]);
 
-
   if (loading)
     return (
       <div>
         <Loading />
       </div>
     );
-
 
   return (
     <DetailContainer>
@@ -229,8 +230,12 @@ const ProductDetailPage = ({ all, meData, itemAllKinds, itemKinds, wishItems }) 
             <DetailProductName>
               <DetailTitle>{itemsDetail.detail}</DetailTitle>
               <DetailPrice>${itemsDetail.price}</DetailPrice>
-              {/* coupon*/}
-              <DetailCoupon>Product Coupon</DetailCoupon>
+              <DetailCoupon>
+                <p>Shop on our App and Enjoy 10% off
+                  <br/>Use code 
+                    <strong>APPFW22</strong>
+                </p>
+              </DetailCoupon>
             </DetailProductName>
           </DetailRightInfoTop>
 
@@ -356,39 +361,34 @@ const ProductDetailPage = ({ all, meData, itemAllKinds, itemKinds, wishItems }) 
                   <DescriptionList>
                     <DescriptionListDetail>
                       <h2>Reviews</h2>
-                      {review.map((r) => {
-                        return (
-                      <ReviewListDetail key={r.pk}>
-                           <ReviewListOne>
-                              <ListOneLink>
-                                <ListOneAvatar>
-                                  <Avatar sx={{ width: 30, height: 30 }}>C</Avatar>
-                                </ListOneAvatar>
-                                <ListOneName>
-                                  <span>{r?.user?.username}</span>
-                                </ListOneName>
-                              </ListOneLink> 
-                          </ReviewListOne>
-                          <ReviewListTwo>
-                            {/* <span>
-                               <Rating
-                                      name="simple-controlled"
-                                      value={value}
-                                      onChange={(event, newValue) => {
-                                        setValue(newValue);
-                                      }}
-                                    />
-                            </span> */}
-                            <Rating value={r?.rating} readOnly />
-                            <span><strong>{r?.Product_Name}</strong></span>
-                          </ReviewListTwo>
-                          <span>Reviewed on April 16, 2023</span>
-                          <ReviewListThree>
-                            <span>{r?.payload}</span>
-                          </ReviewListThree>
-                      </ReviewListDetail>
-                        )
-                      })}
+                      {/* {itemsDetail.map((i) => {
+                        return (  */}
+                          <ReviewListDetail>
+                              <ReviewListOne>
+                                  <ListOneLink>
+                                    <ListOneAvatar>
+                                      <Avatar sx={{ width: 30, height: 30 }}>C</Avatar>
+                                    </ListOneAvatar>
+                                    <ListOneName>
+                                      <span>{itemsDetail?.reviews?.[0].user?.username}</span>
+                                    </ListOneName>
+                                  </ListOneLink> 
+                              </ReviewListOne>
+                              <ReviewListTwo>
+                                <StyledRating size='medium' value={itemsDetail?.rating} readOnly />
+                                  <RatingWrap>
+                                    <span><strong>{itemsDetail?.name}</strong></span>
+                                  </RatingWrap>
+                              </ReviewListTwo>
+                              <ReviewListFour>
+                                <span>Reviewed on April 16, 2023</span>
+                              </ReviewListFour>
+                              <ReviewListThree>
+                                <span>{itemsDetail?.reviews?.[0].payload}</span>
+                              </ReviewListThree>
+                          </ReviewListDetail>
+                         {/* )
+                      })}                     */}
                     </DescriptionListDetail>
                   </DescriptionList>
                 </DetailDescription>

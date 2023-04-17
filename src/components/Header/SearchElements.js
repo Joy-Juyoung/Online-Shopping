@@ -9,6 +9,7 @@ export const ModalContainerSkin = styled.div`
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 2;
+
 `;
 
 export const TestModalContainer = styled.div`
@@ -17,12 +18,11 @@ export const TestModalContainer = styled.div`
   margin: 0px;
   right: 0px;
   left: 0px;
-  /* height: 500%; */
   max-height: 650px;
   min-height: 170px;
   background-color: rgb(255, 255, 255);
-  z-index: 5;
-  /* box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16); */
+  z-index: 5;y
+
 `;
 export const TestModalWrapper = styled.div`
   position: static;
@@ -33,14 +33,13 @@ export const TestModalWrapper = styled.div`
   inset: 0px;
   height: 100%;
   box-sizing: border-box;
+
 `;
 export const ModalHeader = styled.header`
   width: 680px;
   padding: 0px;
   display: flex;
-  /* -webkit-box-align: center; */
   align-items: center;
-  /* -webkit-box-pack: start; */
   justify-content: flex-start;
   margin: 0px auto 24px;
   background-color: rgb(255, 255, 255);
@@ -65,7 +64,6 @@ export const ModalHeaderSearch = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: left 0.2s ease-in-out 0s;
     transform: translateY(-50%);
   }
 `;
@@ -78,7 +76,7 @@ export const ModalHeaderInput = styled.input`
   font-size: 14px;
   font-weight: 400;
   line-height: 24px;
-  transition: padding-left 0.2s ease-in-out 0s;
+  /* transition: padding-left 0.2s ease-in-out 0s; */
   vertical-align: middle;
   outline: none;
   border: 0px;
@@ -105,9 +103,9 @@ export const ModalBody = styled.div`
   padding: 0px;
   display: flex;
   align-items: flex-start;
-  -webkit-box-pack: start;
   justify-content: flex-start;
   min-height: calc(100% - 78px);
+
 `;
 
 export const ModalBodyWrap = styled.article`
@@ -115,6 +113,7 @@ export const ModalBodyWrap = styled.article`
   min-width: 0px;
   width: 100%;
   box-sizing: border-box;
+
 `;
 
 export const ModalBodyHeader = styled.header`
@@ -142,9 +141,7 @@ export const ModalBodyPList = styled.li`
   align-items: center;
   overflow: hidden;
   margin-bottom: 10px;
-  /* white-space: nowrap;
-    animation: 0.3s ease 0s 1 normal forwards running iLtdKP, 1s ease-out 0s 1 normal forwards running kMHMnq;
-    opacity: 0;  */
+
 
   p {
     width: 100%;
