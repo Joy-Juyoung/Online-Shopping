@@ -167,7 +167,6 @@ export const DropMenu = styled.ul`
 export const DropMenuList = styled.li`
   display: inline-block;
   z-index: 3;
-  /* transition: 0.3s; */
 
   &:hover {
     ul {

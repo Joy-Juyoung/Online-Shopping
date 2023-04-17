@@ -50,11 +50,9 @@ import {
 
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import CloseIcon from '@mui/icons-material/Close';
-import SNEAKERS from '../../asset/SNEAKERS.png';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import axios from '../../api/axios';
-import { useParams } from 'react-router';
 import Loading from '../../components/Loading';
 import { object } from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -97,6 +95,7 @@ const TestCart = () => {
     });
     window.location.reload('/carts');
   };
+
   const handleIncrease = async (pk) => {
     const addQty = carts.map((i) => {
       if (pk === i.pk && i.number_of_product < 10000) {
@@ -116,7 +115,6 @@ const TestCart = () => {
     setCarts(addQty);
     getAllCart();
   };
-
   const handleDecrease = async (pk) => {
     const minusQty = carts.map((i) => {
       if (pk === i.pk && i.number_of_product > 1) {

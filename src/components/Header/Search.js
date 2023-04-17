@@ -10,8 +10,6 @@ import {
   ModalHeader,
   ModalHeaderInput,
   ModalHeaderSearch,
-  TestModalBlock,
-  TestModalCloseBtn,
   TestModalContainer,
   TestModalContent,
   TestModalSearch,
@@ -37,11 +35,6 @@ const Search = ({ onClose, ref }) => {
       document.removeEventListener('click', checkIfClickedOutside);
     };
   }, [onClose]);
-
-  // const TestModal = ({setOpen}) => {
-  //     const closeModal = () => {
-  //         setOpen(false);
-  //     };
 
   return (
     <ModalContainerSkin>
