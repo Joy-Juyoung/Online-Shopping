@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const ModalContainer = styled.div`
@@ -76,7 +77,9 @@ export const ModalHeaderSearch = styled.div`
   border-radius: 4px;
   background-color: rgb(242, 244, 247);
   padding: 0px;
-
+  form {
+    width: 100%;
+  }
   span {
     position: absolute;
     top: 50%;
@@ -128,6 +131,102 @@ export const ModalBody = styled.div`
 
 `;
 
+export const SearchResult = styled.article`
+  max-width: 325px;
+  height: 100%;
+  padding: 0px;
+  margin: 0px 32px 0px 0px;
+  border: 0px;  
+  flex: 0 1 auto;
+  min-width: 0px;
+  width: 100%;
+`;
+export const ResultHeader = styled.header`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+
+    h3 {
+      font-size: 18px;
+    }
+`;
+
+export const HeaderDelete = styled.button`
+    cursor: pointer;
+    border: 0px;
+    background: none;
+    color: rgb(116, 123, 139);
+    font-size: 12px;
+`;
+
+export const ResultList = styled.ul`
+  counter-reset: item 0;
+  list-style: none;
+
+`;
+
+export const ResultDetail = styled.li`
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  /* margin-bottom: 56px; */
+`;
+
+export const DetailDelete = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border: 0px;
+  background: none;
+  cursor: pointer;
+
+  svg{
+    width: 14;
+    height: 14;
+  }
+`;
+
+export const ResultLink = styled(Link)`
+  flex: 1 1 0%;
+  display: flex;
+  align-items: center;
+  min-width: 0px;
+  font-size: 14px;
+  color: rgb(10, 15, 24);
+  text-decoration: none;
+
+  svg{
+    margin-right: 8px;
+  }
+
+  p {
+    font-size: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  span{
+    ::before {
+      content: "";
+      display: inline-block;
+      vertical-align: top;
+      width: 1px;
+      height: 12px;
+      margin: 0px 8px;
+      background-color: rgb(184, 190, 201);
+    }
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 400;
+    color: rgb(122, 128, 139);
+  }
+`;
+
 export const ModalBodyWrap = styled.article`
   flex: 1 1 auto;
   min-width: 0px;
@@ -138,9 +237,7 @@ export const ModalBodyWrap = styled.article`
 
 export const ModalBodyHeader = styled.header`
   display: flex;
-  /* -webkit-box-align: center; */
   align-items: center;
-  /* -webkit-box-pack: justify; */
   justify-content: space-between;
   margin-bottom: 16px;
 
@@ -149,10 +246,50 @@ export const ModalBodyHeader = styled.header`
     color: rgb(10, 15, 24);
     font-size: 18px;
   }
+
+  button {
+    border: none;
+    background-color: none;
+  }
 `;
 
 export const ModalBodyParagraph = styled.ol`
   counter-reset: item 0;
+  /* opacity: 0;
+  animation-delay: 0.3s;
+  animation: 0.3s ease 0s 1 normal forwards running test1, 1s ease-out 0s 1 normal forwards running test2;
+  @keyframes test1 {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  } 
+  @keyframes test2 {
+    0% {
+      transform: translate(15px, 0px);
+    }
+    100% {
+      transform: translate(0px, 0px);
+    }
+  }  */
+
+  transform-origin: top;
+  animation: popularMenu 2s ease-in-out 0s forwards running;
+  @keyframes popularMenu {
+    0% {
+      transform: rotateX(-90deg);
+
+    }
+    /* 70% {
+      transform: rotateX(20deg);
+    } */
+    100% {
+      transform: rotateX(0deg);
+    }
+  }
+
 `;
 
 export const ModalBodyPList = styled.li`
@@ -161,6 +298,7 @@ export const ModalBodyPList = styled.li`
   align-items: center;
   overflow: hidden;
   margin-bottom: 10px;
+
 
 
   p {
