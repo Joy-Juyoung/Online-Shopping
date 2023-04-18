@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 export const OrderContainer = styled.div`
   /* max-width: 1280px; */
-  height: 100%;
+  /* height: 100%; */
+  height: 70vh;
   margin: 0 auto;
   font-size: 14px;
   color: #0a0f18;

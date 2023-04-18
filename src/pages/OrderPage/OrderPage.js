@@ -19,22 +19,25 @@ import Loading from '../../components/Loading';
 
 const OrderPage = () => {
   const [total, setTotal] = useState(0);
-  const [orderItems, setOrderItems] = useState(null);
+  const [orderStatus, setOrderStatus] = useState(null);
+  const [orderPk, setOrderPk] = useState([]);
+  const [orderItems, setOrderItems] = useState([]);
   const [isEmpty, setIsEmpty] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errMsg, setErMsg] = useState('');
+  const [soldItems, setSoldItems] = useState([]);
 
   const getOrders = async () => {
     try {
-      const order = await axios.get('wishlists/', {
+      const order = await axios.get('/orders/', {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
       });
-      setOrderItems(order?.data);
+      setOrderStatus(order?.data);
+      // setOrderPk(orderStatus?.pk);
       setLoading(false);
     } catch (err) {
       if (err.response?.status === 400) {
-        // console.log('400 error');
         setLoading(false);
         setIsEmpty(!isEmpty);
       } else {
@@ -44,13 +47,33 @@ const OrderPage = () => {
     }
   };
 
-  console.log('orderItems', orderItems);
+  console.log('orderStatus', orderStatus);
 
   useEffect(() => {
     setLoading(true);
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     getOrders();
-    // setLoading(false);
+  }, []);
+
+  const getOrdersById = () => {
+    orderStatus?.map((i) => {
+      axios
+        .get(`/orders/${i.pk}`, {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        })
+        .then((res) => {
+          setOrderItems(res.data);
+          console.log('ordered', orderItems.total);
+        });
+    });
+  };
+
+  console.log('ordered out', orderItems);
+
+  useEffect(() => {
+    getOrdersById();
+    // setOrderItems(orderItems);
   }, []);
 
   if (loading)
@@ -62,7 +85,7 @@ const OrderPage = () => {
   return (
     <OrderContainer>
       <OrderWrapper>
-        <h1>My Profile</h1>
+        <h1>My Orders</h1>
         <OrderWrap>
           <OrderMenuByStatus>
             <ButtonUtils>All</ButtonUtils>
@@ -73,7 +96,7 @@ const OrderPage = () => {
           </OrderMenuByStatus>
           <OrderList>
             <OrderListTop>
-              <ListTotal>Total {total}</ListTotal>
+              <ListTotal>Total {orderStatus?.length}</ListTotal>
               <ListView>
                 <option value='Year 1'>Year 1</option>
                 <option value='Week 1'>Week 1</option>
@@ -82,12 +105,30 @@ const OrderPage = () => {
                 <option value='Month 4'>Month 4</option>
               </ListView>
             </OrderListTop>
-            {!isEmpty ? (
+            {isEmpty ? (
               <OrderListEmpty>No orders found.</OrderListEmpty>
             ) : (
               <>
-                <OrderListEmpty>Table</OrderListEmpty>
-                {/* <OrderListTable></OrderListTable> */}
+                {/* <OrderListEmpty>Table</OrderListEmpty>
+                <OrderListTable></OrderListTable> */}
+                {orderStatus?.map((order) => {
+                  return (
+                    <ul key={order?.pk}>
+                      {/* {orderItems && <li>{orderItems?.pk}</li>} */}
+                      {/* {order?.pk === orderStatus.pk && (
+                        )} */}
+                      {/* <li>{order?.soldProduct?.length}</li> */}
+                      {orderItems?.soldProduct?.map((sold) => {
+                        return (
+                          <li>
+                            <div>{sold.pk}</div>
+                          </li>
+                        );
+                      })}
+                      <li>{order?.total_price}</li>
+                    </ul>
+                  );
+                })}
               </>
             )}
           </OrderList>

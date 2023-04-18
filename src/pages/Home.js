@@ -19,6 +19,7 @@ import WishlistPage from './WishlistPage/WishlistPage';
 import CartPage from './CartPage/CartPage';
 
 import ProductListByCategory from './ProductPage/ProductListByCategory';
+import AllProducts from './ProductPage/AllProducts';
 import HelpCenterPage from './HelpCenterPage/HelpCenter';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
@@ -56,6 +57,12 @@ const Home = ({ meData }) => {
           <Route
             path='/userOrders'
             element={<OrderPage meData={meData} />}
+            exact={true}
+          />
+
+          <Route
+            path='/products/all'
+            element={<AllProducts meData={meData} />}
             exact={true}
           />
 

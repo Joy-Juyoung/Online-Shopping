@@ -58,7 +58,13 @@ import Avatar from '@mui/material/Avatar';
 const SHIPPING_RETURN_URL = '/settings/all';
 const REVIEWS_URL = '/reviews/';
 
-const ProductDetailPage = ({ all, meData, itemAllKinds, itemKinds, wishItems }) => {
+const ProductDetailPage = ({
+  all,
+  meData,
+  itemAllKinds,
+  itemKinds,
+  wishItems,
+}) => {
   const [itemsDetail, setItemsDetail] = useState([]); //useState([]);
   const { id } = useParams();
   const [addLiked, setAddLiked] = useState();
@@ -121,58 +127,58 @@ const ProductDetailPage = ({ all, meData, itemAllKinds, itemKinds, wishItems }) 
     // setMe(meData);
   }, []);
 
-      const ShowDescription = () => {
-      if(description === false) {
-        setDescription(true)
-        setSize(false)
-        setShippingReturn(false)
-        setReviews(false)
-       } else {
-        setDescription(false)
-        setSize(false)
-        setShippingReturn(false)
-        setReviews(false)
-      }
+  const ShowDescription = () => {
+    if (description === false) {
+      setDescription(true);
+      setSize(false);
+      setShippingReturn(false);
+      setReviews(false);
+    } else {
+      setDescription(false);
+      setSize(false);
+      setShippingReturn(false);
+      setReviews(false);
     }
-    const ShowSize = () => {
-      if(size === true) {
-        setSize(false)
-        setDescription(false)
-        setShippingReturn(false)
-        setReviews(false)
-      } else {
-        setSize(true)
-        setDescription(false)
-        setShippingReturn(false)
-        setReviews(false)
-      }
+  };
+  const ShowSize = () => {
+    if (size === true) {
+      setSize(false);
+      setDescription(false);
+      setShippingReturn(false);
+      setReviews(false);
+    } else {
+      setSize(true);
+      setDescription(false);
+      setShippingReturn(false);
+      setReviews(false);
     }
-    const ShowShippingReturn = () => {
-      if(shippingReturn === true) {
-        setShippingReturn(false)
-        setSize(false)
-        setDescription(false)
-        setReviews(false)
-      } else {
-        setShippingReturn(true)
-        setSize(false)
-        setDescription(false)
-        setReviews(false)
-      }
+  };
+  const ShowShippingReturn = () => {
+    if (shippingReturn === true) {
+      setShippingReturn(false);
+      setSize(false);
+      setDescription(false);
+      setReviews(false);
+    } else {
+      setShippingReturn(true);
+      setSize(false);
+      setDescription(false);
+      setReviews(false);
     }
-    const ShowReviews = () => {
-      if(reviews === true) {
-        setShippingReturn(false)
-        setSize(false)
-        setDescription(false)
-        setReviews(false)
-      } else {
-        setReviews(true)
-        setShippingReturn(false)
-        setSize(false)
-        setDescription(false)
-      }
+  };
+  const ShowReviews = () => {
+    if (reviews === true) {
+      setShippingReturn(false);
+      setSize(false);
+      setDescription(false);
+      setReviews(false);
+    } else {
+      setReviews(true);
+      setShippingReturn(false);
+      setSize(false);
+      setDescription(false);
     }
+  };
 
   const handleLiked = (pk) => {
     if (itemsDetail.pk === pk) {
@@ -189,19 +195,13 @@ const ProductDetailPage = ({ all, meData, itemAllKinds, itemKinds, wishItems }) 
         }
       );
       setAddLiked(addLike);
-      window.location.reload(
-        `/products/${id}`
-      );
+      window.location.reload(`/products/${id}`);
       // navigate(`/products/productAllParentsKinds/${itemAllKinds.pk}`);
     }
-   };
+  };
   useEffect(() => {
     const checkIfClickedOutside = (e) => {
-      if (
-        isOpen &&
-        ref.current &&
-        !ref.current.contains(e.target)
-      ) {
+      if (isOpen && ref.current && !ref.current.contains(e.target)) {
         setIsOpen(false);
       }
     };
@@ -239,14 +239,17 @@ const ProductDetailPage = ({ all, meData, itemAllKinds, itemKinds, wishItems }) 
             </DetailProductName>
           </DetailRightInfoTop>
 
-          <DetailRightInfoBottom >
-            <LikeBtnWrapper >
+          <DetailRightInfoBottom>
+            <LikeBtnWrapper>
               {meData && (
-                <LikeBtn  onClick={(e) => {
-                            e.preventDefault();
-                            handleLiked(itemsDetail.pk);
-                          }}>
+                <LikeBtn
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleLiked(itemsDetail.pk);
+                  }}
+                >
                   {itemsDetail?.is_liked ? (
+
                       <FavoriteBorderIcon fontSize='medium' sx={{ color: '#e20000' }} />
                     ) : (
                       <FavoriteBorderIcon fontSize='medium' color='disabled'/>
@@ -254,47 +257,49 @@ const ProductDetailPage = ({ all, meData, itemAllKinds, itemKinds, wishItems }) 
                   </LikeBtn>
                 )}
               </LikeBtnWrapper>
+
             <ButtonLarges onClick={() => setIsOpen(true)}>
               Add to Cart
             </ButtonLarges>
             {isOpen && <AddToCart onClose={() => setIsOpen(false)} />}
-
           </DetailRightInfoBottom>
         </DetailRightInfo>
       </DetailWrapperOne>
       <DetailWrapperTwo>
         <DetailInfoWrap>
           <DetailInfoList>
-             <InfoListDetail>
+            <InfoListDetail>
               <ListDetailBtn onClick={ShowDescription}>
                 <span>DESCRIPTION</span>
               </ListDetailBtn>
               {description && (
-              <DetailDescription>
-                <DescriptionList>
-                  <DescriptionListDetail>
-                    <ListDetailBody>
-                      <DetailBodyOne>
-                        <span>
-                          * Composition : 97% cotton and 3% ployurethane
-                        </span>
-                      </DetailBodyOne>
-                      <DetailBodyTwo>
-                        <span>* Color : Red</span>
-                      </DetailBodyTwo>
-                      <DetailBodyTwo>
-                        <span>* Country of origin : South Korea</span>
-                      </DetailBodyTwo>
-                      <DetailBodyTwo>
-                        <span>* Product No : 123455</span>
-                      </DetailBodyTwo>
-                      <DetailBodyTwo>
-                        <span>* For more information, click DETAIL IMAGES</span>
-                      </DetailBodyTwo>
-                    </ListDetailBody>
-                  </DescriptionListDetail>
-                </DescriptionList>
-              </DetailDescription>
+                <DetailDescription>
+                  <DescriptionList>
+                    <DescriptionListDetail>
+                      <ListDetailBody>
+                        <DetailBodyOne>
+                          <span>
+                            * Composition : 97% cotton and 3% ployurethane
+                          </span>
+                        </DetailBodyOne>
+                        <DetailBodyTwo>
+                          <span>* Color : Red</span>
+                        </DetailBodyTwo>
+                        <DetailBodyTwo>
+                          <span>* Country of origin : South Korea</span>
+                        </DetailBodyTwo>
+                        <DetailBodyTwo>
+                          <span>* Product No : 123455</span>
+                        </DetailBodyTwo>
+                        <DetailBodyTwo>
+                          <span>
+                            * For more information, click DETAIL IMAGES
+                          </span>
+                        </DetailBodyTwo>
+                      </ListDetailBody>
+                    </DescriptionListDetail>
+                  </DescriptionList>
+                </DetailDescription>
               )}
             </InfoListDetail>
             <InfoListDetailTwo>
@@ -302,64 +307,64 @@ const ProductDetailPage = ({ all, meData, itemAllKinds, itemKinds, wishItems }) 
                 <span>SIZE GUIDE</span>
               </ListDetailBtn>
               {size && (
-              <DetailDescription>
+                <DetailDescription>
                   <DescriptionList>
                     <DescriptionListDetail>
                       <ListDetailBody>
                         <DetailBodyOne>
-                          <img src={SizeImage}/>
+                          <img src={SizeImage} />
                         </DetailBodyOne>
                       </ListDetailBody>
                     </DescriptionListDetail>
                   </DescriptionList>
                 </DetailDescription>
-                )}
+              )}
             </InfoListDetailTwo>
             <InfoListDetailTwo>
               <ListDetailBtn onClick={ShowShippingReturn}>
                 <span>SHIPPING & RETURNS</span>
               </ListDetailBtn>
               {shippingReturn && (
-              <DetailDescription>
+                <DetailDescription>
                   <DescriptionList>
                     <DescriptionListDetail>
                       <ListDetailBody>
                         <DetailBodyOne>
                           <span>
-                            <strong> * Shipping : </strong> 
-                            <br/>
+                            <strong> * Shipping : </strong>
+                            <br />
                             <p>{shipReturn.shipping_description}</p>
                           </span>
                         </DetailBodyOne>
                         <DetailBodyTwo>
                           <span>
                             <strong>* Duties and taxes : </strong>
-                            <br/>
+                            <br />
                             <p>{shipReturn.duties_and_taxes} </p>
                           </span>
                         </DetailBodyTwo>
                         <DetailBodyTwo>
                           <span>
-                            <strong>* Returns and refunds : </strong> 
-                            <br/>
+                            <strong>* Returns and refunds : </strong>
+                            <br />
                             <p>{shipReturn.returns_and_refunds}</p>
                           </span>
                         </DetailBodyTwo>
-
                       </ListDetailBody>
                     </DescriptionListDetail>
                   </DescriptionList>
                 </DetailDescription>
-                )}
+              )}
             </InfoListDetailTwo>
             <InfoListDetailTwo>
               <ListDetailBtn onClick={ShowReviews}>
                 <span>REVIEWS</span>
               </ListDetailBtn>
               {reviews && (
-              <DetailDescription>
+                <DetailDescription>
                   <DescriptionList>
                     <DescriptionListDetail>
+
                       <h2>Reviews</h2>
                       {/* {itemsDetail.map((i) => {
                         return (  */}
@@ -389,10 +394,11 @@ const ProductDetailPage = ({ all, meData, itemAllKinds, itemKinds, wishItems }) 
                           </ReviewListDetail>
                          {/* )
                       })}                     */}
+
                     </DescriptionListDetail>
                   </DescriptionList>
                 </DetailDescription>
-                )}
+              )}
             </InfoListDetailTwo>
           </DetailInfoList>
         </DetailInfoWrap>

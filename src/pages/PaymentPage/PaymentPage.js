@@ -34,14 +34,19 @@ import { ButtonLarge, ButtonSmall } from '../../components/ButtonElements';
 import PaypalIcon from '../../asset/paypal.svg';
 import MastercardIcon from '../../asset/mastercard.svg';
 import VisaIcon from '../../asset/visa.svg';
+import { useNavigate } from 'react-router-dom';
+import Modal from '../../components/Modal';
+import AddBalance from '../../components/AddBalance';
 // import { Link } from 'react-router-dom';
 
 const CARTS_URL = '/carts';
 
 const PaymentPage = ({ meData }) => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [carts, setCarts] = useState([]);
-  const [placeOrders, setPlaceOrders] = useState([]);
+  const [payList, setPayList] = useState([]);
+  const [modalShown, toggleModal] = useState(false);
 
   const PriceForBill = carts.reduce((total, item) => {
     return total + item?.total_price;
@@ -57,14 +62,14 @@ const PaymentPage = ({ meData }) => {
       withCredentials: true,
     });
 
-    console.log('cartList', cartList.data);
+    // console.log('cartList', cartList.data);
     setCarts(cartList?.data);
     setLoading(false);
   };
   useEffect(() => {
     setLoading(true);
     getAllCart();
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    // window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, [meData]);
   console.log('carts', carts);
 
@@ -72,24 +77,49 @@ const PaymentPage = ({ meData }) => {
     window.open('/userBalance', 'My Balance', 'height=650px,width=680px');
   };
 
-  // const payOrder = async () => {
-  //   const sendOrder = await axios.post(
-  //     '/orders/',
-  //     {
-  //       productsList: carts,
-  //       address: meData?.address,
-  //     },
-  //     {
-  //       headers: { 'Content-Type': 'application/json' },
-  //       withCredentials: true,
-  //     }
-  //   );
+  const payOrder = async () => {
+    alert('Are you sure you want to pay?');
+    carts.map((cItems) => {
+      payList.push({
+        product_id: cItems.product.pk,
+        number_of_product: cItems.number_of_product,
+      });
+    });
+    console.log('payList', payList);
 
-  //   console.log('cartList', sendOrder.data);
-  //   setPlaceOrders(sendOrder?.data);
-  // };
+    const sendOrder = axios.post(
+      '/orders/',
+      {
+        productsList: payList,
+        address: meData?.address,
+      },
+      {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      }
+    );
 
-  // console.log('PlaceOrders', placeOrders);
+    console.log('sendOrder', sendOrder);
+    handleDeleteCart();
+    setPayList([]);
+    navigate('/userOrders');
+    window.location.reload();
+  };
+
+  const handleDeleteCart = async () => {
+    // alert('Are you sure you want to remove the product?');
+    const deleteItem = carts.map((c) => {
+      // if (c.pk === pk) {
+      axios.delete(`/carts/${c.pk}`, {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      });
+      // }
+    });
+    setCarts(deleteItem);
+    getAllCart();
+    window.location.reload('/carts');
+  };
 
   if (loading)
     return (
@@ -154,10 +184,22 @@ const PaymentPage = ({ meData }) => {
                   </p>
                 )}
               </PaymentInfoDetails>
-              <ButtonSmall onClick={handleAddBalance}>
+              <ButtonSmall
+                onClick={() => {
+                  toggleModal(!modalShown);
+                }}
+              >
                 <AddIcon />
                 <span>Add your balance</span>
               </ButtonSmall>
+              <Modal
+                shown={modalShown}
+                close={() => {
+                  toggleModal(false);
+                }}
+              >
+                <AddBalance meData={meData} />
+              </Modal>
             </PaymentPsersonalInfo>
           </PaymentLeftInfo>
 
@@ -205,7 +247,7 @@ const PaymentPage = ({ meData }) => {
                 payment terms.
               </p>
               {/* <ButtonLarge onClick={payOrder}> */}
-              <ButtonLarge>Pay ${TotalPriceTag}</ButtonLarge>
+              <ButtonLarge onClick={payOrder}>Pay ${TotalPriceTag}</ButtonLarge>
             </PaymentCheckout>
           </PaymentRightInfo>
         </PaymentBodyWrap>

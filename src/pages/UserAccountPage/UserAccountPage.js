@@ -11,8 +11,17 @@ import {
   AccountInputTitle,
   BasicInfo,
   InfoEach,
+  ActivityInfo,
+  ActivityInfoWrap,
+  MainAvatar,
+  BasicInfoEach,
 } from './UserAccountElements';
+import {
+  ProductsListContainer,
+  ProductsWrap,
+} from '../ProductPage/ProductListElements';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 import {
   ButtonHover,
@@ -28,6 +37,7 @@ import Loading from '../../components/Loading';
 import axios from '../../api/axios';
 import { PersonalVideo } from '@material-ui/icons';
 import { useNavigate } from 'react-router-dom';
+import Avatar, { ConfigProvider } from 'react-avatar';
 
 const UserAccountPage = ({ meData }) => {
   const navigate = useNavigate();
@@ -41,6 +51,23 @@ const UserAccountPage = ({ meData }) => {
   const [phone, setPhone] = useState('');
   const [changeUserInfo, setChangeUserInfo] = useState('');
   const [isEdit, setIsEdit] = useState(false);
+  const [reviews, setReviews] = useState([]);
+
+  const getReviews = async () => {
+    const reviewsList = await axios.get('/reviews/', {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+    console.log('reviewsList', reviewsList?.data);
+    setReviews(reviewsList?.data);
+    // setLoading(false);
+  };
+
+  useEffect(() => {
+    // setLoading(true);
+    getReviews();
+    // window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -107,14 +134,14 @@ const UserAccountPage = ({ meData }) => {
         }
       );
       setChangeUserInfo(meInfo?.data);
-      console.log('changed Data', meInfo?.data);
+      // console.log('changed Data', meInfo?.data);
 
       setIsEdit(false);
       // window.location.reload('/login');
     }
   };
 
-  console.log('changed', changeUserInfo);
+  // console.log('changed', changeUserInfo);
 
   const handleEdit = () => {
     if (!isEdit) {
@@ -131,23 +158,33 @@ const UserAccountPage = ({ meData }) => {
       </div>
     );
   return (
-    <PesnalContainer>
+    <ProductsListContainer>
       <PesnalWrapper>
         <h1>My Profile</h1>
         <AccountForm onSubmit={handleSubmit}>
           <AccountInput>
             <BasicInfo>
-              <InfoEach>
-                <AccountInputTitle>User ID</AccountInputTitle>
-                <p>{changeUserInfo?.username}</p>
-              </InfoEach>
-              <AccountInputTitle>Email</AccountInputTitle>
-              <p>{changeUserInfo?.email}</p>
+              {/* <h2>User Information</h2> */}
+              <MainAvatar>
+                <ConfigProvider colors={['red', 'grey', 'green']}>
+                  <Avatar name={meData?.username} round={true} size={200} />
+                </ConfigProvider>
+              </MainAvatar>
+              <MainAvatar>
+                <BasicInfoEach>
+                  <AccountInputTitle>User ID</AccountInputTitle>
+                  <p>{changeUserInfo?.username}</p>
+                </BasicInfoEach>
+                <BasicInfoEach>
+                  <AccountInputTitle>Email</AccountInputTitle>
+                  <p>{changeUserInfo?.email}</p>
+                </BasicInfoEach>
+              </MainAvatar>
             </BasicInfo>
 
-            <LeftInfo>
+            <>
               {!isEdit ? (
-                <>
+                <LeftInfo>
                   <ShippingInfo>
                     <h2>Personal Information</h2>
                     <ButtonUtils>Edit</ButtonUtils>
@@ -176,9 +213,9 @@ const UserAccountPage = ({ meData }) => {
                       <p>{phone}</p>
                     )}
                   </InfoEach>
-                </>
+                </LeftInfo>
               ) : (
-                <>
+                <LeftInfo>
                   <ShippingInfo>
                     <h2>Personal Information</h2>
                     <ButtonUtils>Save</ButtonUtils>
@@ -221,16 +258,40 @@ const UserAccountPage = ({ meData }) => {
                       />
                     </InputEdit>
                   </InfoEach>
-                </>
+                </LeftInfo>
               )}
-            </LeftInfo>
+              {/* <DelBtn>
+                <button onClick={handleDeleteUser}>Delete Account</button>
+              </DelBtn> */}
+            </>
           </AccountInput>
-          <DelBtn>
-            <button onClick={handleDeleteUser}>Delete Account</button>
-          </DelBtn>
+          <ActivityInfo>
+            <h3>My Activities</h3>
+            <ActivityInfoWrap>
+              <p>
+                <strong
+                  style={{
+                    fontSize: '48px',
+                    marginRight: '5px',
+                  }}
+                >
+                  {reviews.length}
+                </strong>
+                Reviews
+              </p>
+              <ArrowForwardIosIcon style={{ cursor: 'pointer' }} />
+            </ActivityInfoWrap>
+            {/* {reviews.map((review) => {
+              return (
+                <div key={review.product}>
+                  <div>{review.Product_Name}</div>
+                </div>
+              );
+            })} */}
+          </ActivityInfo>
         </AccountForm>
       </PesnalWrapper>
-    </PesnalContainer>
+    </ProductsListContainer>
   );
 };
 
