@@ -5,27 +5,16 @@ import { ButtonLarge, ButtonSmall, ButtonUtils } from './ButtonElements';
 import { Input } from './InputElements';
 
 const PopupBox = styled.div`
-  position: fixed;
-  background: #fff;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  z-index: 3;
-  overflow: hidden !important;
+  margin: 0 auto;
+  padding: 10px 20px;
 `;
 
 const Box = styled.div`
-  position: relative;
-  margin: 20px auto;
-  background: #fff;
-  padding: 0 40px;
-  overflow: hidden !important;
+  margin: 0 auto;
 `;
 
 const BoxH2 = styled.h2`
+  margin: 20px 0;
   text-align: center;
 `;
 

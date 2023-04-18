@@ -48,9 +48,16 @@ const SideFilter = ({ meData, getAllKinds }) => {
                       return (
                         <Link key={cat.pk} to={`/products/category/${cat.pk}`}>
                           {cat?.name === getAllKinds?.name ? (
-                            <li style={{ fontWeight: '700' }}>{cat?.name}</li>
+                            <li
+                              style={{
+                                fontWeight: '700',
+                                fontSize: '15px',
+                              }}
+                            >
+                              <strong>{cat?.name.toUpperCase()}</strong>
+                            </li>
                           ) : (
-                            <li>{cat?.name}</li>
+                            <li>{cat?.name.toUpperCase()}</li>
                           )}
                         </Link>
                       );

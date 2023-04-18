@@ -2,14 +2,16 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const FooterContainer = styled.div`
+  /* max-width: 1250px; */
   width: 100%;
   border-top: 1px solid lightgray;
   background-color: white;
+  margin: 0 auto;
 `;
 
 export const FooterWrapper = styled.div`
-  /* max-width: 1280px; */
-  margin: 0px auto;
+  max-width: 1250px;
+  margin: 0 auto;
   padding: 28px 20px;
   /* box-sizing: border-box; */
 `;

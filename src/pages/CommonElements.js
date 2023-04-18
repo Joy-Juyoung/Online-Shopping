@@ -2,9 +2,9 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   max-width: 1250px;
-  min-height: 100%;
+  min-height: 80vh;
   margin: 0 auto;
-  padding: 0 20px;
+  /* padding: 0 20px; */
 `;
 
 export const PesnalContainer = styled.div`

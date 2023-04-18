@@ -60,7 +60,7 @@ export const ModalBtnDetail = styled.div`
   width: 338px;
   padding: 0px 8px;
   border-radius: 4px;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
   background: rgb(242, 244, 247);
 
   span {
@@ -90,7 +90,7 @@ export const MidLink = styled(Link)`
   text-decoration: none;
   color: black;
   font-size: 24px;
-  font-family: 'Roboto', sans-serif;
+  /* font-family: 'Roboto', sans-serif; */
   cursor: pointer;
   & :hover {
     color: gray;

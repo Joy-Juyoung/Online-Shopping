@@ -15,10 +15,23 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useNavigate } from 'react-router-dom';
 import axios from '../../api/axios';
 
-const ProductsCard = ({ all, meData, getAllKinds, itemKinds, wishItems }) => {
-  const [addLiked, setAddLiked] = useState();
+const ProductsCard = ({
+  all,
+  meData,
+  getAllKinds,
+  itemKinds,
+  wishItems,
+  addLiked,
+  items,
+}) => {
+  const [added, setAdded] = useState();
   const [clickedLiked, setClickedLiked] = useState(false);
   const navigate = useNavigate();
+
+  const [partentsItem, setParentsItem] = useState();
+  const [childItem, setChildItem] = useState();
+  const [likeItem, setLikeItem] = useState();
+  const [allofItems, setAllofItems] = useState();
 
   // console.log('all', all);
   // console.log('meData', meData);
@@ -26,13 +39,13 @@ const ProductsCard = ({ all, meData, getAllKinds, itemKinds, wishItems }) => {
   // console.log('itemKinds', itemKinds);
   // console.log('wishItems', wishItems);
 
-  // useEffect(() => {
-  //   handleClicked();
-  // }, [all.isLiked]);
-
-  // const handleClicked = () => {
-  //   setClickedLiked(!clickedLiked);
-  // };
+  useEffect(() => {
+    setParentsItem(getAllKinds);
+    setChildItem(itemKinds);
+    setLikeItem(wishItems);
+    setAdded(addLiked);
+    setAllofItems(items);
+  }, [getAllKinds, itemKinds, wishItems, addLiked, all, added]);
 
   const handleLiked = (pk) => {
     if (getAllKinds) {
@@ -52,12 +65,13 @@ const ProductsCard = ({ all, meData, getAllKinds, itemKinds, wishItems }) => {
                 withCredentials: true,
               }
             );
-            setAddLiked(addLike);
-            window.location.reload();
-            // navigate(`/products/productAllParentsKinds/${getAllKinds.pk}`);
+            setAdded(addLike);
+            // window.location.reload();
+            console.log('added', added);
           }
         });
       });
+      setParentsItem([...tempAllItems]);
     } else if (itemKinds) {
       var tempItems = itemKinds;
       tempItems.products.forEach((each) => {
@@ -74,10 +88,11 @@ const ProductsCard = ({ all, meData, getAllKinds, itemKinds, wishItems }) => {
               withCredentials: true,
             }
           );
-          setAddLiked(addLike);
-          window.location.reload();
+          setAdded(addLike);
+          // window.location.reload();
         }
       });
+      setChildItem([...tempItems]);
     } else if (wishItems) {
       var tempWishItems = wishItems;
       tempWishItems.forEach((each) => {
@@ -94,10 +109,11 @@ const ProductsCard = ({ all, meData, getAllKinds, itemKinds, wishItems }) => {
               withCredentials: true,
             }
           );
-          setAddLiked(addLike);
-          window.location.reload();
+          setAdded(addLike);
+          // window.location.reload();
         }
       });
+      setLikeItem([...tempWishItems]);
     } else {
       return console.log('Error: IsLiked');
     }
