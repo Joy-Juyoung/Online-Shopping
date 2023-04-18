@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
-
 import {
     DetailDelete,
     HeaderDelete,
@@ -30,7 +28,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import SearchBar from './SearchBar';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
-const TestSearch = ({ onClose, ref }) => {
+const TestSearch = ({ onClose}) => {
     const [keywords, setKeywords] = useState(
         JSON.parse(localStorage.getItem('keywords') || '[]'),
       )
@@ -119,44 +117,44 @@ const TestSearch = ({ onClose, ref }) => {
                     </ResultDetail>
                     ))
                     ):(
-                        <ModalBodyWrap>
-                        <ModalBodyHeader>
-                            <h3>Popular</h3>
-                        </ModalBodyHeader>
-                        <ModalBodyParagraph>
-                        <ModalBodyPList>
-                          <p>Top</p>
-                        </ModalBodyPList>
-                        <ModalBodyPList>
-                          <p>Button</p>
-                        </ModalBodyPList>
-                        <ModalBodyPList>
-                          <p>Outer</p>
-                        </ModalBodyPList>
-                        <ModalBodyPList>
-                          <p>Shoes</p>
-                        </ModalBodyPList>
-                        <ModalBodyPList>
-                          <p>Accessories</p>
-                        </ModalBodyPList>
-                        <ModalBodyPList>
-                          <p>육회</p>
-                        </ModalBodyPList>
-                        <ModalBodyPList>
-                          <p>해물찜</p>
-                        </ModalBodyPList>
-                        <ModalBodyPList>
-                          <p>누룽지탕</p>
-                        </ModalBodyPList>
-                        <ModalBodyPList>
-                          <p>문어숙회</p>
-                        </ModalBodyPList>
-                        <ModalBodyPList>
-                          <p>나도줘</p>
-                        </ModalBodyPList>
-                      </ModalBodyParagraph>
-                    </ModalBodyWrap>
-                        // <div>최근 검색어가 없습니다</div>
+                    //     <ModalBodyWrap>
+                    //     <ModalBodyHeader>
+                    //         <h3>Popular</h3>
+                    //     </ModalBodyHeader>
+                    //     <ModalBodyParagraph>
+                    //     <ModalBodyPList>
+                    //       <p>Top</p>
+                    //     </ModalBodyPList>
+                    //     <ModalBodyPList>
+                    //       <p>Button</p>
+                    //     </ModalBodyPList>
+                    //     <ModalBodyPList>
+                    //       <p>Outer</p>
+                    //     </ModalBodyPList>
+                    //     <ModalBodyPList>
+                    //       <p>Shoes</p>
+                    //     </ModalBodyPList>
+                    //     <ModalBodyPList>
+                    //       <p>Accessories</p>
+                    //     </ModalBodyPList>
+                    //     <ModalBodyPList>
+                    //       <p>육회</p>
+                    //     </ModalBodyPList>
+                    //     <ModalBodyPList>
+                    //       <p>해물찜</p>
+                    //     </ModalBodyPList>
+                    //     <ModalBodyPList>
+                    //       <p>누룽지탕</p>
+                    //     </ModalBodyPList>
+                    //     <ModalBodyPList>
+                    //       <p>문어숙회</p>
+                    //     </ModalBodyPList>
+                    //     <ModalBodyPList>
+                    //       <p>나도줘</p>
+                    //     </ModalBodyPList>
+                    //   </ModalBodyParagraph>
+                    // </ModalBodyWrap>
+                        <div>최근 검색어가 없습니다</div>
                     )
                     } 
                 </ResultList>
@@ -200,6 +198,7 @@ const TestSearch = ({ onClose, ref }) => {
             </ModalBodyWrap>
           </ModalBody>
         </TestModalWrapper>
+        <TestModalContainer onClick={onClose}></TestModalContainer>
       </TestModalContainer>
     </ModalContainerSkin>
   )

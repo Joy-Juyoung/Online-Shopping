@@ -366,8 +366,9 @@ const ProductDetailPage = ({
                     <DescriptionListDetail>
 
                       <h2>Reviews</h2>
-                      {/* {itemsDetail.map((i) => {
-                        return (  */}
+                      {itemsDetail.reviews.map((i) => {
+                        return ( 
+                        
                           <ReviewListDetail>
                               <ReviewListOne>
                                   <ListOneLink>
@@ -375,7 +376,7 @@ const ProductDetailPage = ({
                                       <Avatar sx={{ width: 30, height: 30 }}>C</Avatar>
                                     </ListOneAvatar>
                                     <ListOneName>
-                                      <span>{itemsDetail?.reviews?.[0].user?.username}</span>
+                                      <span>{i?.user?.username}</span>
                                     </ListOneName>
                                   </ListOneLink> 
                               </ReviewListOne>
@@ -392,8 +393,8 @@ const ProductDetailPage = ({
                                 <span>{itemsDetail?.reviews?.[0].payload}</span>
                               </ReviewListThree>
                           </ReviewListDetail>
-                         {/* )
-                      })}                     */}
+                         )
+                      })}                    
 
                     </DescriptionListDetail>
                   </DescriptionList>
