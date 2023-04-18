@@ -77,30 +77,7 @@ export const OrderCheckBox = styled.div`
     text-align: left;
     white-space: normal;
     cursor: pointer;
-
-    /* ::before {
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                left: 0;
-                width: 20px;
-                height: 20px;
-                border: 1px solid #c1c4c9;
-                border-radius: 4px;
-                content: "";
-        }
-
-        ::after {
-                    display: block;
-                    position: absolute;
-                    top: 11px;
-                    left: 8px;
-                    width: 4px;
-                    height: 8px;
-                    border-right: 1px solid #fff;
-                    border-bottom: 1px solid #fff;
-        } */
-  }
+    }
 `;
 
 export const CartProductLists = styled.div`
@@ -110,19 +87,21 @@ export const CartProductLists = styled.div`
 export const ListsDetails = styled.div`
   display: flex;
   align-items: flex-start;
+  margin-bottom: 15px;
 `;
 
 export const ListsCheckBox = styled.div`
   display: inline-flex;
   align-items: center;
   color: #a3a9b3;
+  padding-right: 15px;
 `;
 
 export const ListsItemImg = styled.div`
   margin-right: 24px;
   flex-shrink: 0;
   width: 80px;
-  height: 106px;
+  height: 80px;
 `;
 
 export const ListsImgLink = styled(Link)`
@@ -139,7 +118,8 @@ export const ListsImgLink = styled(Link)`
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 100%;
+    width: 80px;
+    height: 80px;
     border: none;
     vertical-align: top;
     transform: translate(-50%, -50%);
@@ -154,6 +134,7 @@ export const ListsItemDetails = styled.div`
 
 export const ItemDetailOne = styled.div`
   width: 280px;
+  margin-left: 10px;
 `;
 
 export const DetailName = styled(Link)`
@@ -272,11 +253,11 @@ export const CartRightInfo = styled.div`
 `;
 
 export const CartRightTop = styled.div`
-  margin: 26px 0 28px;
+  margin: 0 0 28px 0;
   position: relative;
 
   h3 {
-    padding: 20px 0;
+    padding:0 0 20px 0;
     font-size: 18px;
     font-weight: 700;
     margin: 0px;

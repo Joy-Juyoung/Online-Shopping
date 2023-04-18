@@ -18,10 +18,11 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 
 const AddToCart = ({ onClose }) => {
-  const [selectOptions, setSelectOptions] = useState();
-  const [options, setOptions] = useState();
+  const [selectOptions, setSelectOptions] = useState([]);
+  const [options, setOptions] = useState(null);
   const ref = useRef();
-
+  const { id } = useParams();
+  
   useEffect(() => {
     const checkIfClickedOutside = (e) => {
       if (ref.current && !ref.current.contains(e.target)) {
@@ -36,13 +37,7 @@ const AddToCart = ({ onClose }) => {
       document.removeEventListener('click', checkIfClickedOutside);
     };
   }, [onClose]);
-
-  const OptionHandleChange = (e) => {
-    setSelectOptions(e.target.value);
-    setOptions(selectOptions);
-  };
-
-  const { id } = useParams();
+  
   const getSelectOptions = async () => {
     const sideOption = await axios.get(`/products/${id}`, {
       headers: { 'Content-Type': 'application/json' },
@@ -52,11 +47,16 @@ const AddToCart = ({ onClose }) => {
     setSelectOptions(sideOption.data);
   };
   useEffect(() => {
-    getSelectOptions();
-    
+    getSelectOptions();    
   }, [id]);
-
+  
   console.log('id', id);
+  
+  const OptionHandleChange = (e) => {
+    setOptions(e.target.value);
+    // setSelectOptions(e.target.value);
+    console.log('options', options);
+  };
 
   const handleAddToCart = async (e) => {
     e.preventDefault();
@@ -64,17 +64,18 @@ const AddToCart = ({ onClose }) => {
       '/carts/',
       {
         product_id: id,
-        // product_option: options,
+        product_option: options,
         number_of_product: 1,
       },
       {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
       }
-    );
-    console.log('test', addToCart.data);
-    window.location.reload(`/products/${id}`);
-  };
+      );
+      console.log('test', addToCart.data);
+      window.location.reload(`/products/${id}`);
+    };
+  
 
   return (
     <SidebarMenuContainer>
@@ -87,11 +88,13 @@ const AddToCart = ({ onClose }) => {
               </SidebarMenuClose>
             </SidebarMenuTop>
             <SidebarMenuMid>
-              <SidebarSelect onChange={OptionHandleChange}>
+              <SidebarSelect 
+                  // value={options} 
+                onChange={OptionHandleChange}>
                 <option value='none'>Select color or size</option>
-                {selectOptions?.productOptions?.map((option) => (
-                  <option key={option.pk} value={option.name}>
-                    {option.description}
+                {selectOptions?.productOptions?.map((o) => (
+                  <option key={o.pk} value={o.pk}>
+                    {o.description}
                   </option>
                 ))}
               </SidebarSelect>
@@ -100,8 +103,8 @@ const AddToCart = ({ onClose }) => {
             </SidebarMenuMid>
             <SidebarMenuBottom>
               <MenuTotalSummary>
-                <p>Total </p>
-                <p>$0</p>
+                <p>Total {selectOptions?.length} </p>
+                <p>${selectOptions?.price}</p>
               </MenuTotalSummary>
               <ButtonLarges>ADD TO BAG</ButtonLarges>
             </SidebarMenuBottom>
