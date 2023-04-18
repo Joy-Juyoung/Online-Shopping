@@ -12,8 +12,12 @@ import {
 } from './DropUserElements';
 import Avatar, { ConfigProvider } from 'react-avatar';
 import { ButtonUtils } from '../ButtonElements';
+import Modal from '../Modal';
+import AddBalance from '../AddBalance';
 
 const DropUser = ({ meData }) => {
+  const [modalShown, toggleModal] = useState(false);
+
   const handleAddBalance = () => {
     window.open('/userBalance', 'My Balance', 'height=650px,width=680px');
   };
@@ -41,8 +45,22 @@ const DropUser = ({ meData }) => {
               <LinkAccount to='/userOrders'>
                 <DropLi>My Orders</DropLi>
               </LinkAccount>
-              <LinkAccount onClick={handleAddBalance}>
-                <DropLi>My Balances</DropLi>
+              <LinkAccount>
+                <DropLi
+                  onClick={() => {
+                    toggleModal(!modalShown);
+                  }}
+                >
+                  My Balances
+                </DropLi>
+                <Modal
+                  shown={modalShown}
+                  close={() => {
+                    toggleModal(false);
+                  }}
+                >
+                  <AddBalance meData={meData} />
+                </Modal>
               </LinkAccount>
               <LinkAccount to='/testPage'>
                 <DropLi>My Coupons</DropLi>

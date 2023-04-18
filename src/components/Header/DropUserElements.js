@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 export const DropAccountContainer = styled.div`
   margin: 0 auto;
+  /* color: #0a0f18; */
 `;
 
 export const DropAccountCoverTop = styled.div`
@@ -38,10 +39,10 @@ export const DropUl = styled.ul`
   top: 60px;
   width: 250px;
   border: 1px solid rgba(0, 0, 0, 0.04);
-  border-radius: 10px;
-  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.4);
+  border-radius: 7px;
+  box-shadow: 0 8px 15px 0 rgba(0, 0, 0, 0.4);
   z-index: 3;
-  font-size: 13px;
+  font-size: 14px;
 
   animation: rotateMenu 400ms ease-in-out forwards;
   transform-origin: top center;
@@ -63,16 +64,17 @@ export const DropUl = styled.ul`
 `;
 
 export const DropUlWrap = styled.div`
-  margin: 10px;
+  margin-bottom: 15px;
 `;
 
 export const DropLi = styled.li`
-  padding: 10px 15px;
+  padding: 10px;
+  margin: 10px;
 
   &:hover {
     cursor: pointer;
-    color: #0a0f18;
-    background: lightgray;
+    background: #e4e4e4;
+    border-radius: 5px;
   }
 `;
 

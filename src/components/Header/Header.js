@@ -111,13 +111,14 @@ const Header = ({ meData }) => {
       if (clickAccount && ref.current && !ref.current.contains(e.target)) {
         setClickAccount(false);
       }
-      if (
-        isModalOpen &&
-        searchRef.current &&
-        !searchRef.current.contains(e.target)
-      ) {
-        setIsModalOpen(false);
-      }
+      // if (
+      //   isModalOpen &&
+      //   searchRef.current &&
+      //   !searchRef.current.contains(e.target)
+      // )
+      // {
+      //   setIsModalOpen(false);
+      // }
     };
     document.addEventListener('click', checkIfClickedOutside);
     return () => {
@@ -138,9 +139,11 @@ const Header = ({ meData }) => {
         <HeaderWrapper>
           <HeaderUp>
             <LeftSide>
+
               <ModalBtnWrap
               //  ref={searchRef}
                >
+
                 <ModalBtn onClick={() => setIsModalOpen(true)}>
                   <ModalBtnDetail>
                     <SearchIcon color='disabled' fontSize='medium' />
@@ -155,7 +158,15 @@ const Header = ({ meData }) => {
 
             <MiddleSide>
               <MidLink to='/'>
-                <div>BlanketCLoset</div>
+                <div
+                  onClick={window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: 'smooth',
+                  })}
+                >
+                  BlanketCLoset
+                </div>
               </MidLink>
             </MiddleSide>
             <RightSide>
@@ -267,6 +278,16 @@ const Header = ({ meData }) => {
           </HeaderUp>
           <HeaderDown>
             <DropMenu>
+              <DropMenuList>
+                <DropMenuParents>
+                  <DropdownButton
+                    style={{ color: '#e00000', marginRight: '-20px' }}
+                    to='/products/all'
+                  >
+                    ALL
+                  </DropdownButton>
+                </DropMenuParents>
+              </DropMenuList>
               {categories.map((category) => {
                 return (
                   <DropMenuList key={category.pk}>

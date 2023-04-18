@@ -6,6 +6,15 @@ export const CartContainer = styled.div`
 
   margin: 0 auto;
   padding: 0 20px 120px;
+
+  a {
+    text-decoration: none;
+    /* color: #0a0f18; */
+
+    &:visited {
+      text-decoration: none;
+    }
+  }
 `;
 
 export const CartWrapper = styled.div`
@@ -24,6 +33,7 @@ export const CartBodyWrap = styled.div`
   justify-content: center;
   /* justify-content: space-between; */
   padding-top: 0;
+  /* margin: 0 auto; */
 `;
 
 export const CartLeftInfo = styled.div`

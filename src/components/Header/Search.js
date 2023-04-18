@@ -6,6 +6,7 @@ import {
   ModalBodyPList,
   ModalBodyWrap,
   ModalCloseBtn,
+  ModalContainer,
   ModalContainerSkin,
   ModalHeader,
   ModalHeaderInput,
@@ -18,27 +19,15 @@ import {
 } from './SearchElements';
 import CloseIcon from '@mui/icons-material/Close';
 import SearchIcon from '@mui/icons-material/Search';
+import { useState } from 'react';
 
-const Search = ({ onClose, ref }) => {
-  // const ref = useRef();
-  useEffect(() => {
-    const checkIfClickedOutside = (e) => {
-      // if (!ref.current && ref.current.contains(e.target)) {
-      //   onClose();
-      // }
-      // if (ref.current.contains(e.target)) {
-      //   onClose();
-      // }
-    };
-    document.addEventListener('click', checkIfClickedOutside);
-    return () => {
-      document.removeEventListener('click', checkIfClickedOutside);
-    };
-  }, [onClose]);
+
+const Search = ({ onClose }) => {
 
   return (
-    <ModalContainerSkin>
-      <TestModalContainer>
+    <ModalContainer>
+      <ModalContainerSkin>
+        {/* <TestModalContainer> */}
         <TestModalWrapper>
           <ModalHeader>
             <ModalHeaderSearch>
@@ -92,8 +81,9 @@ const Search = ({ onClose, ref }) => {
             </ModalBodyWrap>
           </ModalBody>
         </TestModalWrapper>
-      </TestModalContainer>
-    </ModalContainerSkin>
+        <TestModalContainer onClick={onClose}></TestModalContainer>
+      </ModalContainerSkin>
+    </ModalContainer>
   );
 };
 

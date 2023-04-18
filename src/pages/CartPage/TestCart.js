@@ -56,6 +56,7 @@ import axios from '../../api/axios';
 import Loading from '../../components/Loading';
 import { object } from 'prop-types';
 import { Link } from 'react-router-dom';
+import { ButtonLarge } from '../../components/ButtonElements';
 
 const CARTS_URL = '/carts';
 
@@ -63,6 +64,7 @@ const TestCart = () => {
   const [loading, setLoading] = useState(false);
   const [carts, setCarts] = useState([]);
   const [count, setCount] = useState();
+  // const [isEmptyCart, setIsEmptyCart] = useState(false);
 
   const getAllCart = async () => {
     const cartList = await axios.get(CARTS_URL, {
@@ -73,6 +75,7 @@ const TestCart = () => {
     setCarts(cartList?.data);
     setLoading(false);
   };
+
   useEffect(() => {
     setLoading(true);
     getAllCart();
@@ -135,6 +138,12 @@ const TestCart = () => {
     getAllCart();
   };
 
+  // const handleLinkOrder=()=> {
+  //   if(isEmptyCart) {
+
+  //   }
+  // }
+
   const ShippingFee = 15;
   const PriceForBill = carts.reduce((total, item) => {
     return total + item?.total_price;
@@ -153,139 +162,161 @@ const TestCart = () => {
     <CartContainer>
       <CartWrapper>
         <h2>SHOPPING BAG</h2>
-        <CartBodyWrap>
-          <CartLeftInfo>
-            <CartLeftCheckBar>
-              <CheckBarWrap>
-                <OrderCheckBox>
-                  <input type='checkbox' />
-                  <label>All</label>
-                </OrderCheckBox>
-                <DeleteBtn>Delete</DeleteBtn>
-              </CheckBarWrap>
-            </CartLeftCheckBar>
-            <CartProductLists>
-              {carts?.map((cart) => {
-                return (
-                  <ListsDetails key={cart?.pk}>
-                    <ListsCheckBox>
-                      <input type='checkbox' />
-                      {/* <label/> */}
-                    </ListsCheckBox>
-                    <ListsItemImg>
-                      <ListsImgLink to={``}>
-                        <img src={cart?.product?.photos[0].picture} alt='' />
-                      </ListsImgLink>
-                    </ListsItemImg>
-                    <ListsItemDetails>
-                      <ItemDetailOne>
-                        <DetailName to={``}>{cart?.product?.name}</DetailName>
-                        <DetailDescription to={``}>
-                          {cart?.product?.detail}
-                        </DetailDescription>
-                        <DetailOption>
-                          <span>{cart?.product_option?.name}</span>
-                        </DetailOption>
-                      </ItemDetailOne>
-                      <ItemDetailTwo>
-                        <ItemDetailTwoWrap>
-                          <ItemDecreaseBtn
-                            onClick={() => {
-                              handleDecrease(cart?.pk);
-                            }}
-                          >
-                            <RemoveIcon fontSize='small' color='action' />
-                          </ItemDecreaseBtn>
-                          <ItemNumberInput>
-                            {cart?.number_of_product}
-                          </ItemNumberInput>
-                          <ItemIncreaseBtn
-                            onClick={() => {
-                              handleIncrease(cart.pk);
-                            }}
-                          >
-                            <AddIcon fontSize='small' color='action' />
-                          </ItemIncreaseBtn>
-                        </ItemDetailTwoWrap>
-                      </ItemDetailTwo>
-                      <ItemDetailThree>
-                        <strong>${cart?.total_price}</strong>
-                      </ItemDetailThree>
-                    </ListsItemDetails>
-                    <ListsDeleteBtn>
-                      <CloseIcon
-                        fontSize='small'
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleDeleteCart(cart.pk);
-                        }}
-                      />
-                    </ListsDeleteBtn>
-                  </ListsDetails>
-                );
-              })}
-            </CartProductLists>
-          </CartLeftInfo>
+        {carts.length === 0 ? (
+          <CartBodyWrap
+            style={{
+              display: 'block',
+              textAlign: 'center',
+            }}
+          >
+            <p>
+              Your shopping bag is empty. Would you like to add items to your
+              shopping bag?
+            </p>
+            <Link to='/products/all'>
+              <ButtonLarge style={{ width: '30%', marginTop: '40px' }}>
+                Continue shoppng
+              </ButtonLarge>
+            </Link>
+          </CartBodyWrap>
+        ) : (
+          <CartBodyWrap>
+            <CartLeftInfo>
+              <CartLeftCheckBar>
+                <CheckBarWrap>
+                  <OrderCheckBox>
+                    <input type='checkbox' />
+                    <label>All</label>
+                  </OrderCheckBox>
+                  <DeleteBtn>Delete</DeleteBtn>
+                </CheckBarWrap>
+              </CartLeftCheckBar>
+              <CartProductLists>
+                {carts?.map((cart) => {
+                  return (
+                    <ListsDetails key={cart?.pk}>
+                      <ListsCheckBox>
+                        <input type='checkbox' />
+                        {/* <label/> */}
+                      </ListsCheckBox>
+                      <ListsItemImg>
+                        <ListsImgLink to={``}>
+                          <img src={cart?.product?.photos[0].picture} alt='' />
+                        </ListsImgLink>
+                      </ListsItemImg>
+                      <ListsItemDetails>
+                        <ItemDetailOne>
+                          <DetailName to={``}>{cart?.product?.name}</DetailName>
+                          <DetailDescription to={``}>
+                            {cart?.product?.detail}
+                          </DetailDescription>
+                          <DetailOption>
+                            <span>{cart?.product_option?.name}</span>
+                          </DetailOption>
+                        </ItemDetailOne>
+                        <ItemDetailTwo>
+                          <ItemDetailTwoWrap>
+                            <ItemDecreaseBtn
+                              onClick={() => {
+                                handleDecrease(cart?.pk);
+                              }}
+                            >
+                              <RemoveIcon fontSize='small' color='action' />
+                            </ItemDecreaseBtn>
+                            <ItemNumberInput>
+                              {cart?.number_of_product}
+                            </ItemNumberInput>
+                            <ItemIncreaseBtn
+                              onClick={() => {
+                                handleIncrease(cart.pk);
+                              }}
+                            >
+                              <AddIcon fontSize='small' color='action' />
+                            </ItemIncreaseBtn>
+                          </ItemDetailTwoWrap>
+                        </ItemDetailTwo>
+                        <ItemDetailThree>
+                          <strong>${cart?.total_price}</strong>
+                        </ItemDetailThree>
+                      </ListsItemDetails>
+                      <ListsDeleteBtn>
+                        <CloseIcon
+                          fontSize='small'
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleDeleteCart(cart.pk);
+                          }}
+                        />
+                      </ListsDeleteBtn>
+                    </ListsDetails>
+                  );
+                })}
+              </CartProductLists>
+            </CartLeftInfo>
 
-          <CartRightInfo>
-            <CartRightTop>
-              <h3>Promo Code</h3>
-              <PromoInfo>
-                <QuestionMark>
-                  <HelpOutlineIcon fontSize='small' color='action' />
-                </QuestionMark>
-              </PromoInfo>
-              <CouponInfo>
-                <CouponInputWrap>
-                  <CouponInput placeholder='Please enter your promo code' />
-                  <CouponBtn>Apply</CouponBtn>
-                </CouponInputWrap>
-              </CouponInfo>
-            </CartRightTop>
+            <CartRightInfo>
+              <CartRightTop>
+                <h3>Promo Code</h3>
+                <PromoInfo>
+                  <QuestionMark>
+                    <HelpOutlineIcon fontSize='small' color='action' />
+                  </QuestionMark>
+                </PromoInfo>
+                <CouponInfo>
+                  <CouponInputWrap>
+                    <CouponInput placeholder='Please enter your promo code' />
+                    <CouponBtn>Apply</CouponBtn>
+                  </CouponInputWrap>
+                </CouponInfo>
+              </CartRightTop>
 
-            <CartRightMidOne>
-              <CartSummary>
-                Order Summary
-                <SummaryWrap>
-                  <span>{carts?.length}</span>
-                  <span>Item</span>
-                </SummaryWrap>
-              </CartSummary>
-              <CartSummaryInfo>
-                <ItemPriceInfo>
-                  Price
-                  <span>${PriceForBill}</span>
-                </ItemPriceInfo>
-                <ItemShippingFee>
-                  Shipping fee
-                  <span>${ShippingFee}</span>
-                </ItemShippingFee>
-                <ItemTotalPrice>
-                  Total
-                  <span>${TotalPriceTag}</span>
-                </ItemTotalPrice>
-                <ExtraInfo>
-                  <li>* Additional duties and taxes may apply at checkout.</li>
-                </ExtraInfo>
-              </CartSummaryInfo>
-            </CartRightMidOne>
+              <CartRightMidOne>
+                <CartSummary>
+                  Order Summary
+                  <SummaryWrap>
+                    <span>{carts?.length}</span>
+                    <span>Item</span>
+                  </SummaryWrap>
+                </CartSummary>
+                <CartSummaryInfo>
+                  <ItemPriceInfo>
+                    Price
+                    <span>${PriceForBill}</span>
+                  </ItemPriceInfo>
+                  <ItemShippingFee>
+                    Shipping fee
+                    <span>${ShippingFee}</span>
+                  </ItemShippingFee>
+                  <ItemTotalPrice>
+                    Total
+                    <span>${TotalPriceTag}</span>
+                  </ItemTotalPrice>
+                  <ExtraInfo>
+                    <li>
+                      * Additional duties and taxes may apply at checkout.
+                    </li>
+                  </ExtraInfo>
+                </CartSummaryInfo>
+              </CartRightMidOne>
 
-            <CartRightMidTwo>
-              <FreeShippingInfo>
-                Add $<span>61 </span>
-                more to enjoy
-                <strong> FREE SHIPPING</strong>
-              </FreeShippingInfo>
-            </CartRightMidTwo>
+              <CartRightMidTwo>
+                <FreeShippingInfo>
+                  Add $<span>61 </span>
+                  more to enjoy
+                  <strong> FREE SHIPPING</strong>
+                </FreeShippingInfo>
+              </CartRightMidTwo>
 
-            <CartRightBottom>
-              {/* <CheckOutBtn>PROCEED TO CHECKOUT</CheckOutBtn> */}
-              <Link to='/payment'>
-                <CheckOutBtn>PROCEED TO CHECKOUT</CheckOutBtn>
-              </Link>
-            </CartRightBottom>
-          </CartRightInfo>
-        </CartBodyWrap>
+              <CartRightBottom>
+                {/* <CheckOutBtn>PROCEED TO CHECKOUT</CheckOutBtn> */}
+
+                <Link to='/payment'>
+                  <CheckOutBtn>PROCEED TO CHECKOUT</CheckOutBtn>
+                </Link>
+              </CartRightBottom>
+            </CartRightInfo>
+          </CartBodyWrap>
+        )}
       </CartWrapper>
     </CartContainer>
   );

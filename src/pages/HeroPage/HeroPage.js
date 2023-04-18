@@ -14,13 +14,23 @@ import {
   SectionWrap,
   ShopNowBtn,
   SectionWrapTwo,
+  Sectiontrending,
+  SectionTrending,
+  TrendingWrap,
+  SectionCategories,
+  CategoriesWrap,
+  SectionButton,
+  SectionProducts,
+  ProductsWrap,
+  SectionTitle,
 } from './HeroElements';
-import FirstImage from '../../asset/firstimage.png';
-import SecondImage from '../../asset/couple.png';
-import ThirdImage from '../../asset/fashion.png';
-import FourthImage from '../../asset/newjeans.png';
+import FirstImage from '../../asset/pic31.jpg';
+import SecondImage from '../../asset/pic20.jpg';
+import ThirdImage from '../../asset/pic18.jpg';
+import FourthImage from '../../asset/pic24.jpg';
 
 import Loading from '../../components/Loading';
+import Slider from './Slider';
 
 const HeroPage = () => {
   const [loading, setLoading] = useState(false);
@@ -32,6 +42,7 @@ const HeroPage = () => {
       setLoading(false);
     };
     loadData();
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
 
   if (loading)
@@ -56,67 +67,53 @@ const HeroPage = () => {
                   and brighter colors. Get a head start on your spring wardrobe
                   with 12 brand new styles from trending K-brands.
                 </ParagraghBody>
-              </ParagraphWrap>
-              <ButtonSmall to='/products'>Shop Now</ButtonSmall>
-            </SectionInfoRight>
-          </SectionWrap>
-
-          <SectionWrap className='start__right'>
-            <SectionInfoRight>
-              <FirstImg src={SecondImage} />
-            </SectionInfoRight>
-
-            <SectionInfoLeft>
-              <ParagraphWrap>
-                <ParagraghTitle>FOCUS: SWEATSHIRTS</ParagraghTitle>
-                <ParagraghBody>
-                  Sweatshirts are perfect for the weather. Meet sweatshirts at
-                  MUSINSA up to 60% discount rates.
-                </ParagraghBody>
-              </ParagraphWrap>
-
-              <ButtonSmall to='/products'>Shop Now</ButtonSmall>
-            </SectionInfoLeft>
-          </SectionWrap>
-
-          {/* <SectionWrap>
-            <SectionInfoLeft>
-              <FirstImg src={ThirdImage} />
-            </SectionInfoLeft>
-            <SectionInfoRight>
-              <ParagraphWrap>
-                <ParagraghTitle>Milan Fashion Week Highlights</ParagraghTitle>
-                <ParagraghBody>
-                  SPOTTED: The hottest street fashion highlights, just in from
-                  Milan Fashion Week.
-                </ParagraghBody>
-              </ParagraphWrap>
-              <ShopNowBtn>
                 <ButtonSmall to='/products'>Shop Now</ButtonSmall>
-              </ShopNowBtn>
+              </ParagraphWrap>
             </SectionInfoRight>
           </SectionWrap>
-
-          <SectionWrap>
-            <SectionInfoRight>
-              <FirstImg src={FourthImage} />
-            </SectionInfoRight>
-            <SectionInfoLeft>
-              <ParagraphWrap>
-                <ParagraghTitle>
-                  OMG! NewJeans checked in at MUSINSA!
-                </ParagraghTitle>
-                <ParagraghBody>
-                  NewJeans show off their Gen Z version of office-wear. Take
-                  notes on how the rookie group styled themselves for their
-                  special day at the office!
-                </ParagraghBody>
-              </ParagraphWrap>
-              <ShopNowBtn>
-                <ButtonSmall to='/products'>Shop Now</ButtonSmall>
-              </ShopNowBtn>
-            </SectionInfoLeft>
-          </SectionWrap> */}
+        </MidInfo>
+        <MidInfo>
+          <SectionTitle>Most Popular</SectionTitle>
+          <SectionProducts>
+            <Slider />
+          </SectionProducts>
+          <SectionButton>
+            <ButtonSmall>Shop now</ButtonSmall>
+          </SectionButton>
+        </MidInfo>
+        <MidInfo>
+          <SectionTitle>Top Categories</SectionTitle>
+          <SectionCategories>
+            <CategoriesWrap>
+              <span>Hoodies</span>
+              <span>Coats</span>
+              <span>Boots</span>
+              <span>Jeans</span>
+              <span>Watch</span>
+              <span>Joggers</span>
+              <span>Jackets</span>
+              <span>Sneakers</span>
+            </CategoriesWrap>
+          </SectionCategories>
+        </MidInfo>
+        <MidInfo>
+          <SectionTitle>New Arrival</SectionTitle>
+          <SectionProducts>
+            <Slider />
+          </SectionProducts>
+          <SectionButton>
+            <ButtonSmall>Shop now</ButtonSmall>
+          </SectionButton>
+        </MidInfo>
+        <MidInfo>
+          <SectionTitle>Editor's Pick: Today Street</SectionTitle>
+          <SectionTrending>
+            <TrendingWrap>
+              <img src={SecondImage} />
+              <img src={ThirdImage} />
+              <img src={FourthImage} />
+            </TrendingWrap>
+          </SectionTrending>
         </MidInfo>
       </MainWrapper>
     </MainContainer>

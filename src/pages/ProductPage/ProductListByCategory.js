@@ -79,26 +79,6 @@ const ProductListByCategory = ({ meData }) => {
 
   const handleOptionChange = (e) => {
     setSelectOption(e.target.value);
-    // console.log('SelectOption', selectOption);
-    //   if (itemKinds.name === cName) {
-    //   if (selectOption === 'LowToHigh') {
-    //     const priceLToH = itemKinds.products.sort((a, b) => a.price - b.price);
-    //     setSortList(priceLToH);
-    //     console.log('L-H', sortList);
-    //   } if (selectOption === 'HighToLow') {
-    //     const priceHToL = itemKinds.products.sort((a, b) => b.price - a.price);
-    //     setSortList(priceHToL);
-    //     console.log('H-L', sortList);
-    //   } if (selectOption === 'Newest') {
-    //     const uploadNewest = itemKinds.products.sort(
-    //       (a, b) => a.created_at - b.created_at
-    //     );
-    //     setSortList(uploadNewest);
-    //     console.log('Upload Newest', sortList);
-    //   }
-    //   setSortProducts(sortList);
-    //   console.log('SortProductsssss', sortProducts);
-    // }
   };
 
   useEffect(() => {
