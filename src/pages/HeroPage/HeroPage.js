@@ -109,9 +109,18 @@ const HeroPage = () => {
           <SectionTitle>Editor's Pick: Today Street</SectionTitle>
           <SectionTrending>
             <TrendingWrap>
-              <img src={SecondImage} />
-              <img src={ThirdImage} />
-              <img src={FourthImage} />
+              <div>
+                <img src={SecondImage} />
+                <p>@Photoby. Lee</p>
+              </div>
+              <div>
+                <img src={ThirdImage} />
+                <p>@Photoby. Lee</p>
+              </div>
+              <div>
+                <img src={FourthImage} />
+                <p>@Photoby. Lee</p>
+              </div>
             </TrendingWrap>
           </SectionTrending>
         </MidInfo>
