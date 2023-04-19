@@ -368,8 +368,7 @@ const ProductDetailPage = ({
                       <h2>Reviews</h2>
                       {itemsDetail.reviews.map((i) => {
                         return ( 
-                        
-                          <ReviewListDetail>
+                            <ReviewListDetail>
                               <ReviewListOne>
                                   <ListOneLink>
                                     <ListOneAvatar>
