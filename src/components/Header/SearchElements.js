@@ -96,7 +96,6 @@ export const ModalHeaderInput = styled.input`
   font-size: 14px;
   font-weight: 400;
   line-height: 24px;
-  /* transition: padding-left 0.2s ease-in-out 0s; */
   vertical-align: middle;
   outline: none;
   border: 0px;
