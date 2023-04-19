@@ -34,7 +34,6 @@ const OrderPage = () => {
         withCredentials: true,
       });
       setOrderStatus(order?.data);
-      // setOrderPk(orderStatus?.pk);
       setLoading(false);
     } catch (err) {
       if (err.response?.status === 400) {
