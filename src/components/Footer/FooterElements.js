@@ -7,12 +7,13 @@ export const FooterContainer = styled.div`
   border-top: 1px solid lightgray;
   background-color: white;
   margin: 0 auto;
+  padding: 10px 20px;
 `;
 
 export const FooterWrapper = styled.div`
   max-width: 1250px;
   margin: 0 auto;
-  padding: 28px 20px;
+  /* padding: 28px 20px; */
   /* box-sizing: border-box; */
 `;
 
