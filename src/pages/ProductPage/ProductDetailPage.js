@@ -28,8 +28,20 @@ import {
   DetailBodyOne,
   DetailBodyTwo,
   ButtonLargeWrap,
+  DetailBodyThree,
+  ReviewListDetail,
+  ReviewListOne,
+  ReviewListTwo,
+  ReviewListThree,
+  ListOneLink,
+  ListOneAvatar,
+  ListOneName,
+  RatingWrap,
+  StyledRating,
+  ReviewListFour
 } from './ProductDetailElements';
 
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useParams } from 'react-router-dom';
 import SizeImage from '../../asset/size.png';
@@ -38,6 +50,9 @@ import AddToCart from './AddToCart';
 
 import Loading from '../../components/Loading';
 import TestAddToCart from './AddToCart';
+
+import Avatar from '@mui/material/Avatar';
+// import { Rating } from '@mui/material';
 
 // const PRODUCTDETAILS_URL = '/products/${id}';
 const SHIPPING_RETURN_URL = '/settings/all';
@@ -61,8 +76,8 @@ const ProductDetailPage = ({
   const [size, setSize] = useState(false);
   const [shippingReturn, setShippingReturn] = useState(false);
   const [reviews, setReviews] = useState(false);
-  const [review, setReview] = useState([]);
-
+  // const [review, setReview] = useState([]);
+ 
   useEffect(() => {
     setLoading(true);
     const loadData = async () => {
@@ -97,18 +112,18 @@ const ProductDetailPage = ({
     setShipReturn(shipData?.data);
   };
 
-  const getReviews = async () => {
-    const reviewsData = await axios.get(REVIEWS_URL, {
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true,
-    });
-    console.log('reviewsData', reviewsData?.data);
-    setReview(reviewsData?.data);
-  };
+  // const getReviews = async () => {
+  //   const reviewsData = await axios.get(REVIEWS_URL, {
+  //     headers: { 'Content-Type': 'application/json' },
+  //     withCredentials: true,
+  //   });
+  //   console.log('reviewsData', reviewsData?.data);
+  //   setReview(reviewsData?.data);
+  // };
 
   useEffect(() => {
     getShipReturn();
-    getReviews();
+    // getReviews();
     // setMe(meData);
   }, []);
 
@@ -215,8 +230,12 @@ const ProductDetailPage = ({
             <DetailProductName>
               <DetailTitle>{itemsDetail.detail}</DetailTitle>
               <DetailPrice>${itemsDetail.price}</DetailPrice>
-              {/* coupon*/}
-              <DetailCoupon>Product Coupon</DetailCoupon>
+              <DetailCoupon>
+                <p>Shop on our App and Enjoy 10% off
+                  <br/>Use code 
+                    <strong>APPFW22</strong>
+                </p>
+              </DetailCoupon>
             </DetailProductName>
           </DetailRightInfoTop>
 
@@ -230,31 +249,18 @@ const ProductDetailPage = ({
                   }}
                 >
                   {itemsDetail?.is_liked ? (
-                    <FavoriteBorderIcon
-                      fontSize='medium'
-                      sx={{ color: '#e20000' }}
-                    />
-                  ) : (
-                    <FavoriteBorderIcon fontSize='medium' color='disabled' />
-                  )}
-                </LikeBtn>
-              )}
-            </LikeBtnWrapper>
-            {/* 
-            <LikeBtnWrapper>
-              <LikeBtn>
-              <FavoriteBorderIcon fontSize='medium' color='disabled' />
-              </LikeBtn>
-            </LikeBtnWrapper> */}
-            <ButtonLarges onClick={() => setIsOpen(true)}>
-              Add to Cart
-            </ButtonLarges>
 
-            {/* <ButtonLargeWrap ref={ref}>
+                      <FavoriteBorderIcon fontSize='medium' sx={{ color: '#e20000' }} />
+                    ) : (
+                      <FavoriteBorderIcon fontSize='medium' color='disabled'/>
+                    )}
+                  </LikeBtn>
+                )}
+              </LikeBtnWrapper>
+
             <ButtonLarges onClick={() => setIsOpen(true)}>
               Add to Cart
             </ButtonLarges>
-            </ButtonLargeWrap> */}
             {isOpen && <AddToCart onClose={() => setIsOpen(false)} />}
           </DetailRightInfoBottom>
         </DetailRightInfo>
@@ -358,28 +364,38 @@ const ProductDetailPage = ({
                 <DetailDescription>
                   <DescriptionList>
                     <DescriptionListDetail>
-                      {review.map((r) => {
-                        return (
-                          <ListDetailBody key={r.pk}>
-                            {/* <ListDetailBody> */}
-                            <DetailBodyOne>
-                              <span>* UserName : {r.user?.username}</span>
-                            </DetailBodyOne>
-                            <DetailBodyTwo>
-                              <span>* P : {r.payload}</span>
-                            </DetailBodyTwo>
-                            <DetailBodyTwo>
-                              <span>* rating : {r.rating}</span>
-                            </DetailBodyTwo>
-                            {/* <DetailBodyTwo>
-                          <span>* Product No : 123455</span>
-                          </DetailBodyTwo>
-                          <DetailBodyTwo>
-                          <span>* For more information, click DETAIL IMAGES</span>
-                        </DetailBodyTwo> */}
-                          </ListDetailBody>
-                        );
-                      })}
+
+                      <h2>Reviews</h2>
+                      {itemsDetail.reviews.map((i) => {
+                        return ( 
+                        
+                          <ReviewListDetail>
+                              <ReviewListOne>
+                                  <ListOneLink>
+                                    <ListOneAvatar>
+                                      <Avatar sx={{ width: 30, height: 30 }}>C</Avatar>
+                                    </ListOneAvatar>
+                                    <ListOneName>
+                                      <span>{i?.user?.username}</span>
+                                    </ListOneName>
+                                  </ListOneLink> 
+                              </ReviewListOne>
+                              <ReviewListTwo>
+                                <StyledRating size='medium' value={itemsDetail?.rating} readOnly />
+                                  <RatingWrap>
+                                    <span><strong>{itemsDetail?.name}</strong></span>
+                                  </RatingWrap>
+                              </ReviewListTwo>
+                              <ReviewListFour>
+                                <span>Reviewed on April 16, 2023</span>
+                              </ReviewListFour>
+                              <ReviewListThree>
+                                <span>{itemsDetail?.reviews?.[0].payload}</span>
+                              </ReviewListThree>
+                          </ReviewListDetail>
+                         )
+                      })}                    
+
                     </DescriptionListDetail>
                   </DescriptionList>
                 </DetailDescription>

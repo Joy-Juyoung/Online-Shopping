@@ -11,19 +11,19 @@ import {
   ModalHeader,
   ModalHeaderInput,
   ModalHeaderSearch,
-  TestModalBlock,
-  TestModalCloseBtn,
   TestModalContainer,
   TestModalContent,
   TestModalSearch,
   TestModalTop,
   TestModalWrapper,
-} from './SearchElements';
+} from './TestSearchElements';
 import CloseIcon from '@mui/icons-material/Close';
 import SearchIcon from '@mui/icons-material/Search';
 import { useState } from 'react';
 
+
 const Search = ({ onClose }) => {
+
   return (
     <ModalContainer>
       <ModalContainerSkin>

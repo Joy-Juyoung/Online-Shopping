@@ -40,6 +40,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import PermIdentityRoundedIcon from '@mui/icons-material/PermIdentityRounded';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Search from './Search';
+import TestSearch from './TestSearch';
 import { Link, useNavigate } from 'react-router-dom';
 import Loading from '../../components/Loading';
 import DropUser from './DropUser';
@@ -138,8 +139,11 @@ const Header = ({ meData }) => {
         <HeaderWrapper>
           <HeaderUp>
             <LeftSide>
-              {/* <ModalBtnWrap ref={searchRef}> */}
-              <ModalBtnWrap>
+
+              <ModalBtnWrap
+              //  ref={searchRef}
+               >
+
                 <ModalBtn onClick={() => setIsModalOpen(true)}>
                   <ModalBtnDetail>
                     <SearchIcon color='disabled' fontSize='medium' />
@@ -147,7 +151,9 @@ const Header = ({ meData }) => {
                   </ModalBtnDetail>
                 </ModalBtn>
               </ModalBtnWrap>
-              {isModalOpen && <Search onClose={() => setIsModalOpen(false)} />}
+              {/* {isModalOpen && <Search onClose={() => setIsModalOpen(false)} />} */}
+              {isModalOpen && <TestSearch onClose={() => setIsModalOpen(false)} />}
+              {/* <TestSearch onClose={() => setIsModalOpen(false)} /> */}
             </LeftSide>
 
             <MiddleSide>

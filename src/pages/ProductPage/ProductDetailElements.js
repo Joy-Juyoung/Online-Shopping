@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
 import styled  from 'styled-components';
-
-
+import { Rating } from '@mui/material';
+import { right } from '@popperjs/core';
 
 
 
 export const DetailContainer = styled.div`
     max-width: 1250px;
     margin: 0 auto;
-    padding: 0 20px 50px;
+    padding: 0 20px;
 `;
 
 
@@ -61,15 +61,25 @@ export const DetailPrice = styled.div`
     font-size: 25px;
 `;
 export const DetailCoupon = styled.div`
-    padding: 14px 20px;
-    margin-top: 12px;
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    background-color: rgb(245, 246, 247);
+    margin-right: auto;
+    margin-left: auto;
+    position: relative;
+     p {
+        font-size: 14px;
+        color: #000;
+     }
 `;
 
 export const DetailRightInfoBottom = styled.div`
     display: flex;
     width: 100%;
     background: #fff;
-    padding: 40px 0;
+    padding: 40px 0 0 0;
     position: relative;
     /* bottom: inherit; */
 `;
@@ -182,25 +192,95 @@ export const DetailDescription = styled.div`
 `;
 
 export const DescriptionList = styled.div`
-    padding: 80px 0px 0px;
+    padding: 50px 0px 0px;
     max-height: none;
     position: relative;
     overflow: hidden;
 `;
 
 export const DescriptionListDetail = styled.div`
+    h2{
+        /* margin-left: 10px; */
+        margin-bottom: 20px
+    }
+`;
+export const ReviewListDetail = styled.div`
+    margin-left: 10px;
+`;
+
+export const ReviewListOne = styled.div`
+    margin-bottom: 10px;
+`;
+
+export const ListOneLink = styled(Link)`
+    text-decoration: none;
+    cursor: pointer;
+    display: table;
+`;
+
+export const ListOneAvatar = styled.div`
+    padding-right: 9px;
+    width: 43px;
+    display: table-cell;
+`;
+
+export const ListOneName = styled.div`
+    display: table-cell;
+    vertical-align: middle;
+
+    span {
+        font-size: 16px;
+        position: relative;
+        color: #0F1111;
+    }
+`;
+
+export const ReviewListTwo = styled.div`
+    display: flex;
+    margin-bottom: 10px;
+    color: #000;
+
+`;
+export const StyledRating = styled(Rating)(
+    {
+    '& .MuiRating-iconFilled': {
+      color: '#ffb41e',
+    },
+    '& .MuiRating-iconHover': {
+      color: '#ffb41e',
+    },
+    // '& .MuiRating-icon': {
+
+    // },
+  });
+
+  export const RatingWrap = styled.div`
+    margin-left: 15px;
 
 `;
 
-export const ListDetailBody = styled.dl`
-    padding-bottom: 10px;
-    display: block;
+export const ReviewListThree = styled.div`
+    margin-bottom: 8px;
 
+    span {
+        color: #000;
+        font-size: 14px;
+    }
+`;
+
+export const ReviewListFour = styled.div`
+    color: #565959;
+    font-size: 14px;
+`;
+
+export const ListDetailBody = styled.dl`
+    padding-bottom: 25px;
+    display: block;
 `;
 
 export const DetailBodyOne = styled.dt`
     position: relative;
-    padding-left: 10px;
+    padding-left: 20px;
     color: rgb(10, 15, 24);
     font-size: 16px;
     /* display: inline; */
@@ -218,7 +298,7 @@ export const DetailBodyOne = styled.dt`
 
 export const DetailBodyTwo = styled.dt`
     position: relative;
-    padding-left: 10px;
+    padding-left: 20px;
     color: rgb(10, 15, 24);
     font-size: 16px;
     /* display: inline; */
@@ -230,3 +310,4 @@ export const DetailBodyTwo = styled.dt`
         margin-left: 12px;
     }
 `;
+
