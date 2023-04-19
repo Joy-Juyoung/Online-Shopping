@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import {
-    DetailDelete,
-    HeaderDelete,
+  DetailDelete,
+  HeaderDelete,
   ModalBody,
   ModalBodyHeader,
   ModalBodyParagraph,
   ModalBodyPList,
   ModalBodyWrap,
   ModalCloseBtn,
+  ModalContainer,
   ModalContainerSkin,
   ModalHeader,
   ModalHeaderInput,
@@ -28,62 +29,63 @@ import SearchIcon from '@mui/icons-material/Search';
 import SearchBar from './SearchBar';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
-const TestSearch = ({ onClose}) => {
-    const [keywords, setKeywords] = useState(
-        JSON.parse(localStorage.getItem('keywords') || '[]'),
-      )
+const TestSearch = ({ onClose }) => {
+  const [keywords, setKeywords] = useState(
+    JSON.parse(localStorage.getItem('keywords') || '[]')
+  );
 
-    // useEffect(() => {
-    //     if (typeof window !== 'undefined') {
-    //       const result = localStorage.getItem('keywords') || '[]'
-    //       setKeywords(JSON.parse(result))
-    //     }
-    //   }, [])
-    
-    useEffect(() => {
-    localStorage.setItem('keywords', JSON.stringify(keywords))
-    }, [keywords])
+  // useEffect(() => {
+  //     if (typeof window !== 'undefined') {
+  //       const result = localStorage.getItem('keywords') || '[]'
+  //       setKeywords(JSON.parse(result))
+  //     }
+  //   }, [])
 
-    const handleAddKeyword = (text) => {
-        console.log('text', text)
-        const newKeyword = {
-        id: Date.now(),
-        text: text,
-        }
-        setKeywords([newKeyword, ...keywords])
-    }
+  useEffect(() => {
+    localStorage.setItem('keywords', JSON.stringify(keywords));
+  }, [keywords]);
 
-    const handleRemoveKeyword = (id) => {
-        const nextKeyword = keywords.filter((thisKeyword) => {
-           console.log("thisKeyword", thisKeyword)
-           console.log("id", id)
-          
-        return thisKeyword.id !== id 
-     })
-        setKeywords(nextKeyword)
-    }
+  const handleAddKeyword = (text) => {
+    console.log('text', text);
+    const newKeyword = {
+      id: Date.now(),
+      text: text,
+    };
+    setKeywords([newKeyword, ...keywords]);
+  };
 
-    const handleClearKeywords = () => {
-        setKeywords([])
-    }
-    useEffect(() => {
-        const checkIfClickedOutside = (e) => {
-          // if (!ref.current && ref.current.contains(e.target)) {
-          //   onClose();
-          // }
-          // if (ref.current.contains(e.target)) {
-          //   onClose();
-          // }
-        };
-        document.addEventListener('click', checkIfClickedOutside);
-        return () => {
-          document.removeEventListener('click', checkIfClickedOutside);
-        };
-      }, [onClose]);
+  const handleRemoveKeyword = (id) => {
+    const nextKeyword = keywords.filter((thisKeyword) => {
+      console.log('thisKeyword', thisKeyword);
+      console.log('id', id);
+
+      return thisKeyword.id !== id;
+    });
+    setKeywords(nextKeyword);
+  };
+
+  const handleClearKeywords = () => {
+    setKeywords([]);
+  };
+  useEffect(() => {
+    const checkIfClickedOutside = (e) => {
+      // if (!ref.current && ref.current.contains(e.target)) {
+      //   onClose();
+      // }
+      // if (ref.current.contains(e.target)) {
+      //   onClose();
+      // }
+    };
+    document.addEventListener('click', checkIfClickedOutside);
+    return () => {
+      document.removeEventListener('click', checkIfClickedOutside);
+    };
+  }, [onClose]);
 
   return (
-    <ModalContainerSkin>
-      <TestModalContainer>
+    <ModalContainer>
+      <ModalContainerSkin>
+        {/* <TestModalContainer> */}
         <TestModalWrapper>
           <ModalHeader>
             <SearchBar onAddKeyword={handleAddKeyword} />
@@ -161,9 +163,10 @@ const TestSearch = ({ onClose}) => {
            </ModalBody>
         </TestModalWrapper>
         <TestModalContainer onClick={onClose}></TestModalContainer>
-      </TestModalContainer>
-    </ModalContainerSkin>
-  )
+        {/* </TestModalContainer> */}
+      </ModalContainerSkin>
+    </ModalContainer>
+  );
 };
 
 export default TestSearch;

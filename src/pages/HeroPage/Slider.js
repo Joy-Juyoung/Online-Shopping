@@ -25,6 +25,10 @@ const Container = styled.div`
   display: flex;
   position: relative;
   overflow: hidden;
+
+  @media screen and (max-width: 1024px) {
+    height: 100%;
+  }
 `;
 
 const Arrow = styled.div`
@@ -55,6 +59,10 @@ const Wrapper = styled.div`
   /* height: 90%; */
   transition: all 1s ease;
   transform: translateX(${(props) => props.slideIndex * -68}vw);
+
+  @media screen and (max-width: 1024px) {
+    transform: translateX(${(props) => props.slideIndex * -77}vw);
+  }
 `;
 
 const Slide = styled.div`
@@ -66,6 +74,13 @@ const Slide = styled.div`
   background-color: #${(props) => props.bg};
   /* margin-right: 20px; */
   padding-right: 40px;
+
+  @media screen and (max-width: 1024px) {
+    width: 12.3em;
+    /* height: 100%; */
+    /* height: 30em; */
+    padding-right: 5px;
+  }
 `;
 
 const Image = styled.img`

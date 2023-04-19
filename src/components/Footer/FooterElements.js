@@ -7,12 +7,13 @@ export const FooterContainer = styled.div`
   border-top: 1px solid lightgray;
   background-color: white;
   margin: 0 auto;
+  padding: 10px 20px;
 `;
 
 export const FooterWrapper = styled.div`
   max-width: 1250px;
   margin: 0 auto;
-  padding: 28px 20px;
+  /* padding: 28px 20px; */
   /* box-sizing: border-box; */
 `;
 
@@ -68,9 +69,7 @@ export const HelpBtn = styled.button`
   width: 236px;
   height: 40px;
   display: flex;
-  /* -webkit-box-align: center; */
   align-items: center;
-  /* -webkit-box-pack: center; */
   justify-content: center;
   border: 1px solid black;
   border-radius: 6px;
@@ -85,7 +84,14 @@ export const HelpBtn = styled.button`
   }
 `;
 export const HelpIcon = styled.div`
-  margin-left: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* margin-left: 4px; */
+
+  a {
+    margin-right: 5px;
+  }
 `;
 export const DownloadPart = styled.div`
   margin-top: 28px;

@@ -60,8 +60,8 @@ const Footer = ({ click, isNewWindow }) => {
         </FooterLineOne>
         <FooterLineTwo>
           <HelpBtn>
-            <Link to='/helpcenter'>Help Center</Link>
             <HelpIcon>
+              <Link to='/helpcenter'>Help Center</Link>
               <ChatBubbleOutlineIcon fontSize='small' />
             </HelpIcon>
           </HelpBtn>
