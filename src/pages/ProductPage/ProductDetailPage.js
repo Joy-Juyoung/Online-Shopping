@@ -39,20 +39,23 @@ import {
   RatingWrap,
   StyledRating,
   ReviewListFour,
-  DetailStock,
-} from './ProductDetailElements';
+  ReviewDeleteBtn,
+  ReviewEditBtn
 
+} from './ProductDetailElements';
+import EditIcon from '@mui/icons-material/Edit';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Avatar from '@mui/material/Avatar';
 import { useParams } from 'react-router-dom';
 import SizeImage from '../../asset/size.png';
 
 import AddToCart from './AddToCart';
-
 import Loading from '../../components/Loading';
 import TestAddToCart from './AddToCart';
 
-import Avatar from '@mui/material/Avatar';
+import DetailSlider from './DetailSlider';
 // import { Rating } from '@mui/material';
 
 // const PRODUCTDETAILS_URL = '/products/${id}';
@@ -66,7 +69,7 @@ const ProductDetailPage = ({
   itemKinds,
   wishItems,
 }) => {
-  const [itemsDetail, setItemsDetail] = useState([]); //useState([]);
+  const [itemsDetail, setItemsDetail] = useState([]); 
   const { id } = useParams();
   const [addLiked, setAddLiked] = useState();
   const [loading, setLoading] = useState(false);
@@ -77,7 +80,60 @@ const ProductDetailPage = ({
   const [size, setSize] = useState(false);
   const [shippingReturn, setShippingReturn] = useState(false);
   const [reviews, setReviews] = useState(false);
-  // const [review, setReview] = useState([]);
+
+  // const [changeReviews, setChangeReviews] = useState('');
+  // const [payload, setPayload] = useState('');
+  // const [rating, setRating] = useState('');
+  // const [isEdit, setIsEdit] = useState(false);
+
+  // useEffect(() => {
+  //   setChangeReviews(meData);
+  //   setRating(meData?.name);
+  //   setPayload(meData?.address);
+  // }, [meData]);
+
+  // const handleInputChange = (e) => {
+  //   // console.log('name', e.target.value);
+  //   var tempChangeReviews = changeReviews;
+
+  //   if (e.target.id === 'rating') {
+  //     setRating(e.target.value);
+  //   }
+  //   if (e.target.id === 'payload') {
+  //     setAddress(e.target.value);
+  //   }
+  //   setChangeReviews(tempChangeReviews);
+  // };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (!isEdit) {
+  //     handleEdit();
+  //   } else {
+  //     const meInfo = await axios.put(
+  //       `/reviews/${id}`,
+  //       {
+  //         payload: payload,
+  //         rating: rating,
+  //       },
+  //       {
+  //         headers: { 'Content-Type': 'application/json' },
+  //         withCredentials: true,
+  //       }
+  //     );
+  //     setChangeReviews(meInfo?.data);
+  //     // console.log('changed Data', meInfo?.data);
+
+  //     setIsEdit(false);
+  //   }
+  // };
+  // const handleEdit = () => {
+  // if (!isEdit) {
+  //   setIsEdit(true);
+  // } else {
+  //   setIsEdit(false);
+  // }
+  // };
 
   useEffect(() => {
     setLoading(true);
@@ -88,44 +144,47 @@ const ProductDetailPage = ({
     loadData();
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
-
+  console.log("me", meData);
   const getProduct = async () => {
     const { data } = await axios.get(`/products/${id}`, {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
 
-    console.log(data);
+    // console.log(data);
     setItemsDetail(data);
   };
   useEffect(() => {
     getProduct();
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, [id, addLiked]);
-  console.log('id', id);
+  // console.log('id', id);
 
   const getShipReturn = async () => {
     const shipData = await axios.get(SHIPPING_RETURN_URL, {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    console.log('shipData', shipData?.data);
+    // console.log('shipData', shipData?.data);
     setShipReturn(shipData?.data);
   };
-
-  // const getReviews = async () => {
-  //   const reviewsData = await axios.get(REVIEWS_URL, {
-  //     headers: { 'Content-Type': 'application/json' },
-  //     withCredentials: true,
-  //   });
-  //   console.log('reviewsData', reviewsData?.data);
-  //   setReview(reviewsData?.data);
-  // };
+  const handleDeleteReview = async (pk) => {
+    alert('Are you sure you want to remove the reviews?');
+    var tempReviews = itemsDetail.reviews;
+    tempReviews.forEach((c) => {
+      console.log('c', c);
+      if (c.pk === pk) {
+        axios.delete(`/reviews/${c.pk}`, {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        });
+      }
+    });
+    window.location.reload(`/products/${id}`);
+  };
 
   useEffect(() => {
     getShipReturn();
-    // getReviews();
-    // setMe(meData);
   }, []);
 
   const ShowDescription = () => {
@@ -184,7 +243,6 @@ const ProductDetailPage = ({
   const handleLiked = (pk) => {
     if (itemsDetail.pk === pk) {
       itemsDetail.is_liked = !itemsDetail.isLiked;
-
       const addLike = axios.put(
         '/wishlists/',
         {
@@ -222,9 +280,10 @@ const ProductDetailPage = ({
   return (
     <DetailContainer>
       <DetailWrapperOne>
-        <DetailLeftInfo>
+        <DetailSlider/>
+        {/* <DetailLeftInfo>
           <img src={itemsDetail.photos?.[0].picture} alt='' />
-        </DetailLeftInfo>
+        </DetailLeftInfo> */}
         <DetailRightInfo>
           <DetailRightInfoTop>
             <DetailName>{itemsDetail.name}</DetailName>
@@ -380,67 +439,64 @@ const ProductDetailPage = ({
                   <DescriptionList>
                     <DescriptionListDetail>
                       <h2>Reviews</h2>
-                      {itemsDetail.reviews.map((i) => {
-                        return (
-                          <ReviewListDetail>
-                            <ReviewListOne>
-                              <ListOneLink>
-                                <ListOneAvatar>
-                                  <Avatar sx={{ width: 30, height: 30 }}>
-                                    C
-                                  </Avatar>
-                                </ListOneAvatar>
-                                <ListOneName>
-                                  <span>{i?.user?.username}</span>
-                                </ListOneName>
-                              </ListOneLink>
-                            </ReviewListOne>
-                            <ReviewListTwo>
-                              <StyledRating
-                                size='medium'
-                                value={itemsDetail?.rating}
-                                readOnly
-                              />
-                              <RatingWrap>
-                                <span>
-                                  <strong>{itemsDetail?.name}</strong>
-                                </span>
-                              </RatingWrap>
-                            </ReviewListTwo>
-                            <ReviewListFour>
-                              <span>Reviewed on April 16, 2023</span>
-                            </ReviewListFour>
-                            <ReviewListThree>
-                              <span>{itemsDetail?.reviews?.[0].payload}</span>
-                            </ReviewListThree>
 
-                            {/* return ( 
-                            <ReviewListDetail>
-                              <ReviewListOne>
-                                  <ListOneLink>
-                                    <ListOneAvatar>
-                                      <Avatar sx={{ width: 30, height: 30 }}>C</Avatar>
-                                    </ListOneAvatar>
-                                    <ListOneName>
-                                      <span>{i?.user?.username}</span>
-                                    </ListOneName>
-                                  </ListOneLink> 
-                              </ReviewListOne>
-                              <ReviewListTwo>
-                                <StyledRating size='medium' value={itemsDetail?.rating} readOnly />
-                                  <RatingWrap>
-                                    <span><strong>{itemsDetail?.name}</strong></span>
-                                  </RatingWrap>
-                              </ReviewListTwo>
-                              <ReviewListFour>
-                                <span>Reviewed on April 16, 2023</span>
-                              </ReviewListFour>
-                              <ReviewListThree>
-                                <span>{itemsDetail?.reviews?.[0].payload}</span>
-                              </ReviewListThree> */}
-                          </ReviewListDetail>
-                        );
-                      })}
+                    {itemsDetail.reviews.length === 0 ? (
+                        <ReviewListDetail>
+                          <p>This product has no reviews.</p>
+                        </ReviewListDetail>
+                              ):(              
+                                <>
+                                  {itemsDetail?.reviews?.map((i) => {
+                                  return ( 
+                                          <ReviewListDetail key={i.pk}>
+                                              <ReviewListOne>
+                                                  <ListOneLink>
+                                                    <ListOneAvatar>
+                                                      <Avatar sx={{ width: 30, height: 30 }}>C</Avatar>
+                                                    </ListOneAvatar>
+                                                    <ListOneName>
+                                                      <span>{i?.user?.username}</span>
+                                                    </ListOneName>
+                                                  </ListOneLink> 
+                                                  {i?.user?.username === meData?.username &&
+                                                    <>
+                                                      <ReviewEditBtn>
+                                                        <EditIcon 
+                                                          fontSize='small'
+                                                          color="primary"
+                                                        />
+                                                      </ReviewEditBtn>
+                                                      <ReviewDeleteBtn>
+                                                        <DeleteIcon 
+                                                          fontSize='small' 
+                                                          color="primary"                                                        
+                                                          onClick={(e) => {
+                                                            e.preventDefault();
+                                                            handleDeleteReview(i.pk);
+                                                          }} 
+                                                          />
+                                                      </ReviewDeleteBtn>
+                                                    </>
+                                                  }
+                                              </ReviewListOne>
+                                              <ReviewListTwo>
+                                                <StyledRating size='medium' value={itemsDetail?.rating} readOnly />
+                                                  <RatingWrap>
+                                                    <span><strong>{itemsDetail?.name}</strong></span>
+                                                  </RatingWrap>
+                                              </ReviewListTwo>
+                                              <ReviewListFour>
+                                                <span>Reviewed on April 16, 2023</span>
+                                              </ReviewListFour>
+                                              <ReviewListThree>
+                                                <span>{itemsDetail?.reviews?.[0].payload}</span>
+                                              </ReviewListThree>
+                                            </ReviewListDetail>
+                                         )}
+                                  )}  
+                                </>                 
+                      )}
+
                     </DescriptionListDetail>
                   </DescriptionList>
                 </DetailDescription>
