@@ -10,8 +10,6 @@ import {
   ListsItemDetails,
   PaymentPsersonalInfo,
   PaymentInfoDetails,
-  PaymentMethod,
-  MethodRadio,
   DetailPrice,
   TotalTitle,
   ItemSummary,
@@ -34,19 +32,24 @@ import { ButtonLarge, ButtonSmall } from '../../components/ButtonElements';
 import PaypalIcon from '../../asset/paypal.svg';
 import MastercardIcon from '../../asset/mastercard.svg';
 import VisaIcon from '../../asset/visa.svg';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Modal from '../../components/Modal';
 import AddBalance from '../../components/AddBalance';
-// import { Link } from 'react-router-dom';
+import { useRef } from 'react';
 
 const CARTS_URL = '/carts';
 
 const PaymentPage = ({ meData }) => {
+  const balanceRef = useRef();
+  const addressRef = useRef();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [carts, setCarts] = useState([]);
   const [payList, setPayList] = useState([]);
   const [modalShown, toggleModal] = useState(false);
+  const [totalPrice, setTotalPrice] = useState();
+  const [disableAddress, setDisableAddress] = useState(false);
+  const [disableBalance, setDisableBalance] = useState(false);
 
   const PriceForBill = carts.reduce((total, item) => {
     return total + item?.total_price;
@@ -69,21 +72,26 @@ const PaymentPage = ({ meData }) => {
   useEffect(() => {
     setLoading(true);
     getAllCart();
-    // window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    setTotalPrice(TotalPriceTag);
   }, [meData]);
   console.log('carts', carts);
-
-  const handleAddBalance = () => {
-    window.open('/userBalance', 'My Balance', 'height=650px,width=680px');
-  };
 
   const payOrder = async () => {
     alert('Are you sure you want to pay?');
     carts.map((cItems) => {
-      payList.push({
-        product_id: cItems.product.pk,
-        number_of_product: cItems.number_of_product,
-      });
+      if (cItems.product_option === null) {
+        payList.push({
+          product_id: cItems.product.pk,
+          number_of_product: cItems.number_of_product,
+          product_option: null,
+        });
+      } else {
+        payList.push({
+          product_id: cItems.product.pk,
+          number_of_product: cItems.number_of_product,
+          product_option: cItems.product_option.pk,
+        });
+      }
     });
     console.log('payList', payList);
 
@@ -121,6 +129,22 @@ const PaymentPage = ({ meData }) => {
     window.location.reload('/carts');
   };
 
+  console.log('meData', meData);
+  const handlePayDisabled = () => {
+    if (meData?.address === null || meData?.phone_number === null) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      setDisableAddress(!disableAddress);
+      // addressRef.current.scrollIntoView({
+      //   top: 0,
+      //   left: 0,
+      //   behavior: 'smooth',
+      // });
+    } else if (meData?.balance < TotalPriceTag) {
+      balanceRef.current.scrollIntoView({ behavior: 'smooth' });
+      setDisableBalance(!disableBalance);
+    }
+  };
+
   if (loading)
     return (
       <div>
@@ -136,34 +160,49 @@ const PaymentPage = ({ meData }) => {
           <PaymentLeftInfo>
             <PaymentPsersonalInfo>
               <PaymentListTitle>Shipping address</PaymentListTitle>
-              <PaymentInfoDetails>
+              <PaymentInfoDetails ref={addressRef}>
                 <h3>{meData?.name}</h3>
+                {disableAddress && (
+                  <p style={{ color: 'red' }}>
+                    * Your address or phone number is required. Please add
+                    information through the button below.
+                  </p>
+                )}
                 <p>{meData?.phone_number}</p>
                 <p>{meData?.address}</p>
               </PaymentInfoDetails>
-              <ButtonSmall>Edit my shipping address</ButtonSmall>
+              <Link to='/userAccount'>
+                <ButtonSmall>Edit my shipping address</ButtonSmall>
+              </Link>
             </PaymentPsersonalInfo>
             <PaymentListWrap>
               <PaymentListTitle>
-                Product information <span>{carts.length} Items</span>
+                Product information <span>{carts?.length} Items</span>
               </PaymentListTitle>
               {carts?.map((cart) => {
                 return (
                   <ListsDetails key={cart.pk}>
-                    <ListsImgLink to={``}>
+                    <ListsImgLink>
                       <img src={cart.product.photos[0].picture} alt='' />
                     </ListsImgLink>
 
                     <ListsItemDetails>
-                      <DetailName to={``}>
+                      <DetailName>
                         {cart?.product.name.toUpperCase()}
                       </DetailName>
-                      <DetailDescription to={``}>
+                      <DetailDescription>
                         {cart?.product.detail}
                       </DetailDescription>
                       <DetailOption>
                         {/* <span>{cart.product_option?.name}</span> */}
-                        Free, Qty {cart?.number_of_product}
+                        {cart?.product_option === null ? (
+                          <>Free, Qty {cart?.number_of_product}</>
+                        ) : (
+                          <>
+                            {cart?.product_option?.name}, Qty
+                            {cart?.number_of_product}
+                          </>
+                        )}
                       </DetailOption>
                       <DetailPrice>${cart.total_price}</DetailPrice>
                     </ListsItemDetails>
@@ -174,10 +213,10 @@ const PaymentPage = ({ meData }) => {
             <PaymentPsersonalInfo>
               <PaymentListTitle>Your Balance</PaymentListTitle>
               <PaymentInfoDetails>
-                <h3>
+                <h3 ref={balanceRef}>
                   Your Current Balances: ${meData?.balance.toLocaleString()}
                 </h3>
-                {meData?.balance < TotalPriceTag && (
+                {disableBalance && (
                   <p style={{ color: 'red' }}>
                     * Your balance is not enough to buy items. Please add the
                     balance through the button below.
@@ -207,7 +246,7 @@ const PaymentPage = ({ meData }) => {
             <PaymentRightTop>
               <TotalTitle>Total</TotalTitle>
               <span>
-                ${TotalPriceTag}
+                ${TotalPriceTag.toLocaleString()}
                 <ExpandMoreIcon />
               </span>
             </PaymentRightTop>
@@ -215,23 +254,23 @@ const PaymentPage = ({ meData }) => {
             <PaymentSummaryInfo>
               <ItemSummary>
                 Price
-                <span>${PriceForBill}</span>
+                <span>${PriceForBill.toLocaleString()}</span>
               </ItemSummary>
               <ItemSummary>
                 Shipping fee
-                <span>${ShippingFee}</span>
+                <span>${ShippingFee.toLocaleString()}</span>
               </ItemSummary>
               <ItemSummary>
                 Duties amd Taxes
-                <span>${Taxes}</span>
+                <span>${Taxes.toLocaleString()}</span>
               </ItemSummary>
               <ItemSummary>
                 Discounts
-                <span>${Discounts}</span>
+                <span>${Discounts.toLocaleString()}</span>
               </ItemSummary>
               <ItemTotalPrice>
                 Total
-                <span>${TotalPriceTag}</span>
+                <span>${TotalPriceTag.toLocaleString()}</span>
               </ItemTotalPrice>
               <ExtraInfo>
                 <li>
@@ -247,7 +286,18 @@ const PaymentPage = ({ meData }) => {
                 payment terms.
               </p>
               {/* <ButtonLarge onClick={payOrder}> */}
-              <ButtonLarge onClick={payOrder}>Pay ${TotalPriceTag}</ButtonLarge>
+
+              {meData?.balance < TotalPriceTag ||
+              !meData?.address ||
+              !meData?.phone_number ? (
+                <ButtonLarge onClick={handlePayDisabled}>
+                  Pay ${TotalPriceTag.toLocaleString()}
+                </ButtonLarge>
+              ) : (
+                <ButtonLarge onClick={payOrder}>
+                  Pay ${TotalPriceTag.toLocaleString()}
+                </ButtonLarge>
+              )}
             </PaymentCheckout>
           </PaymentRightInfo>
         </PaymentBodyWrap>

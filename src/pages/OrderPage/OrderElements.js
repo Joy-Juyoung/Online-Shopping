@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const OrderContainer = styled.div`
   /* max-width: 1280px; */
   /* height: 100%; */
-  height: 70vh;
+  /* height: 70vh; */
   margin: 0 auto;
   font-size: 14px;
   color: #0a0f18;
@@ -26,11 +26,13 @@ export const OrderWrap = styled.div`
   margin: 0 auto;
 `;
 
-export const OrderMenuByStatus = styled.div`
+export const OrderMenuBy = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
 
+export const OrderMenuByStatus = styled.div`
   button {
     margin: 0 15px;
   }
@@ -45,10 +47,13 @@ export const OrderListTop = styled.div`
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid lightgray;
-  padding: 10px 0;
+  padding: 5px 20px;
 `;
 
-export const ListTotal = styled.div``;
+export const ListTotal = styled.div`
+  /* padding: 0 20px; */
+  font-size: 12px;
+`;
 
 export const ListView = styled.select`
   border: none;
@@ -63,4 +68,54 @@ export const OrderListEmpty = styled.div`
   font-weight: 400;
 `;
 
-export const OrderListTable = styled.table``;
+export const OrderListWrap = styled.div`
+  width: 100%;
+`;
+
+export const Table = styled.table`
+  width: 100%;
+  text-align: center;
+  margin-bottom: 5em;
+`;
+
+export const Thead = styled.thead``;
+
+export const Tbody = styled.tbody`
+  tr:nth-child(odd) {
+    background-color: #f7f7f7;
+  }
+  tr:nth-child(even) {
+    background-color: #fff;
+  }
+`;
+
+export const Tr = styled.tr``;
+
+export const Th = styled.th`
+  padding: 10px;
+`;
+
+export const Td = styled.td`
+  padding: 10px;
+
+  a {
+    text-decoration: none;
+    color: #0a0f18;
+
+    &:visited {
+      color: #0a0f18;
+    }
+
+    &:hover {
+      color: blue;
+    }
+  }
+`;
+
+export const StatusBox = styled.div`
+  border-radius: 5px;
+  border: none;
+  padding: 5px 0;
+  font-weight: 600;
+  font-size: 12px;
+`;

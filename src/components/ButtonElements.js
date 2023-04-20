@@ -77,7 +77,9 @@ export const ButtonUtils = styled.button`
   padding: 5px 10px;
   border: none;
   border-radius: 5px;
-  background: #f2f4f7;
+  /* background: #f2f4f7; */
+  background: ${({ selected }) => (selected ? '#0A0F18' : '#f2f4f7')};
+  color: ${({ selected }) => (selected ? '#fff' : '#0A0F18')};
 
   &:hover {
     font-weight: 600;

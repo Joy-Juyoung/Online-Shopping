@@ -9,6 +9,7 @@ import {
   ProductPrice,
   ProductsEach,
   ProductTitle,
+  SoldOutCover,
   ToggleLike,
 } from './ProductListElements';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -32,6 +33,8 @@ const ProductsCard = ({
   const [childItem, setChildItem] = useState();
   const [likeItem, setLikeItem] = useState();
   const [allofItems, setAllofItems] = useState();
+
+  const [getEachItem, setGetEachItem] = useState();
 
   // console.log('all', all);
   // console.log('meData', meData);
@@ -119,8 +122,30 @@ const ProductsCard = ({
     }
   };
 
+  // console.log('all', all);
+
+  const getEachProduct = async () => {
+    const { data } = await axios.get(`/products/${all.pk}`, {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+
+    // console.log('setGetEachItem', data);
+    setGetEachItem(data);
+  };
+  useEffect(() => {
+    if (getEachItem?.id === all?.pk && getEachItem?.in_stock === 0) {
+    }
+    getEachProduct();
+  }, []);
+
   return (
     <ProductsEach to={`/products/${all.pk}`} key={all.pk}>
+      {getEachItem?.id === all?.pk && getEachItem?.in_stock === 0 && (
+        <SoldOutCover>
+          <span>Sold Out</span>
+        </SoldOutCover>
+      )}
       <ProductEachPhoto src={all?.photos[0].picture} alt='' />
 
       {meData && (

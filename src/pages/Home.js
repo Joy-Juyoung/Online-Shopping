@@ -25,8 +25,10 @@ import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
 import TestCart from './CartPage/TestCart';
 import OrderPage from './OrderPage/OrderPage';
+import OrderDtails from './OrderPage/OrderDtails';
 import PaymentPage from './PaymentPage/PaymentPage';
 import AddBalance from '../components/AddBalance';
+import NewReview from './ReviewPage.js/NewReview';
 
 const Home = ({ meData }) => {
   return (
@@ -57,6 +59,16 @@ const Home = ({ meData }) => {
           <Route
             path='/userOrders'
             element={<OrderPage meData={meData} />}
+            exact={true}
+          />
+          <Route
+            path='/userOrders/:id'
+            element={<OrderDtails meData={meData} />}
+            exact={true}
+          />
+          <Route
+            path='/userOrders/:id/review/:reviewId'
+            element={<NewReview meData={meData} />}
             exact={true}
           />
 

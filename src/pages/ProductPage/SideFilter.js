@@ -10,12 +10,13 @@ import {
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import axios from '../../api/axios';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
-const SideFilter = ({ meData, getAllKinds }) => {
+const SideFilter = ({ meData, getAllKinds, items }) => {
   const [categories, setCategories] = useState([]);
   const [isCategoryDrop, setIsCategoryDrop] = useState(true);
   const [isPriceDrop, setIsPriceDrop] = useState(true);
+  const { all } = useParams();
 
   const getCategory = async () => {
     const categoryData = await axios.get('/products/productAllParentsKinds', {
@@ -44,6 +45,15 @@ const SideFilter = ({ meData, getAllKinds }) => {
               <>
                 <ListSub>
                   <ul>
+                    {items ? (
+                      <li>
+                        <strong>ALL PRODUCTS</strong>
+                      </li>
+                    ) : (
+                      <Link to='/products/all'>
+                        <li>ALL PRODUCTS</li>
+                      </Link>
+                    )}
                     {categories?.map((cat) => {
                       return (
                         <Link key={cat.pk} to={`/products/category/${cat.pk}`}>
