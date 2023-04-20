@@ -65,7 +65,6 @@ const TestCart = () => {
   const [loading, setLoading] = useState(false);
   const [carts, setCarts] = useState([]);
   const [count, setCount] = useState();
-  // const [isEmptyCart, setIsEmptyCart] = useState(false);
 
   const getAllCart = async () => {
     const cartList = await axios.get(CARTS_URL, {
@@ -138,12 +137,6 @@ const TestCart = () => {
     setCarts(minusQty);
     getAllCart();
   };
-
-  // const handleLinkOrder=()=> {
-  //   if(isEmptyCart) {
-
-  //   }
-  // }
 
   const ShippingFee = 15;
   const PriceForBill = carts.reduce((total, item) => {

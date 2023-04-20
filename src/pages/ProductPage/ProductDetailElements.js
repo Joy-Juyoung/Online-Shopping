@@ -77,7 +77,7 @@ export const DetailRightInfoBottom = styled.div`
   display: flex;
   width: 100%;
   background: #fff;
-  /* padding: 10px 0 0 0; */
+  padding: 10px 0 0 0;
   position: relative;
   /* bottom: inherit; */
 `;
@@ -272,7 +272,11 @@ export const RatingWrap = styled.div`
 
 export const ReviewListThree = styled.div`
   margin-bottom: 8px;
-
+  input {
+    border: 1px solid;
+    width: 265px;
+    height: 50px;
+  }
   span {
     color: #000;
     font-size: 14px;
