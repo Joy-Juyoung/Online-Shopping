@@ -74,33 +74,27 @@ const AllProducts = ({ meData }) => {
   };
 
   useEffect(() => {
-    // console.log('selectedOptionnnn', selectOption);
+    console.log('selectedOptionnnn', selectOption);
     // if (itemKinds.name === cName) {
-    //   switch (selectOption) {
-    //     case 'LowToHigh':
-    //       const priceLToH = itemKinds.products.sort(
-    //         (a, b) => a.price - b.price
-    //       );
-    //       setSortList(priceLToH);
-    //       // setSortProducts(...sortList);
-    //       return setSortProducts(...sortList);
-    //     case 'HighToLow':
-    //       const priceHToL = itemKinds.products.sort(
-    //         (a, b) => b.price - a.price
-    //       );
-    //       setSortList(priceHToL);
-    //       // setSortProducts(sortList);
-    //       return setSortProducts(...sortList);
-    //     case 'Newest':
-    //       const uploadNewest = itemKinds.products.sort(
-    //         (a, b) => a.created_at - b.created_at
-    //       );
-    //       setSortList(uploadNewest);
-    //       // setSortProducts(sortList);
-    //       return setSortProducts(...sortList);
-    //     default:
-    //       return setSortList(sortProducts);
-    //   }
+    switch (selectOption) {
+      case 'LowToHigh':
+        const priceLToH = items.sort((a, b) => a.price - b.price);
+        setSortList(priceLToH);
+        // setSortProducts(...sortList);
+        return setSortProducts(...sortList);
+      case 'HighToLow':
+        const priceHToL = items.sort((a, b) => b.price - a.price);
+        setSortList(priceHToL);
+        // setSortProducts(sortList);
+        return setSortProducts(...sortList);
+      case 'Newest':
+        const uploadNewest = items.sort((a, b) => a.created_at - b.created_at);
+        setSortList(uploadNewest);
+        // setSortProducts(sortList);
+        return setSortProducts(...sortList);
+      default:
+        return setSortList(sortProducts);
+    }
     // }
   }, [selectOption, sortProducts]);
 
@@ -113,33 +107,32 @@ const AllProducts = ({ meData }) => {
 
   return (
     <ProductsListContainer>
-      <h1>{items?.name}</h1>
-
-      <Category getAllKinds={getAllKinds} />
-
+      {/* <h1>{items?.name}</h1> */}
+      <h1>All Products</h1>
+      <Category getAllKinds={getAllKinds} items={items} />
       <ProductsWrap>
-        <SideFilter getAllKinds={getAllKinds} />
+        <SideFilter getAllKinds={getAllKinds} items={items} />
         <ProductsListWrapper>
           <ProductsList>
             <ListTop>
-              {/* <TotalCountWrap>
-              <TotalCount style={{ fontSize: '13px' }}>
-                Total {items?.products?.length}
-              </TotalCount>
-            </TotalCountWrap>
-            <SelectWrap>
-              <select
-                // onChange={handleOptionChange}
-                name='category-list'
-                id='category-list'
-              >
-                {sort.map((option, index) => (
-                  <option key={index} value={option.value}>
-                    {option.text}
-                  </option>
-                ))}
-              </select>
-            </SelectWrap> */}
+              <TotalCountWrap>
+                <TotalCount style={{ fontSize: '13px' }}>
+                  Total {items?.length}
+                </TotalCount>
+              </TotalCountWrap>
+              <SelectWrap>
+                <select
+                  onChange={handleOptionChange}
+                  name='category-list'
+                  id='category-list'
+                >
+                  {sort.map((option, index) => (
+                    <option key={index} value={option.value}>
+                      {option.text}
+                    </option>
+                  ))}
+                </select>
+              </SelectWrap>
             </ListTop>
 
             <ListMidWrap>
@@ -149,7 +142,6 @@ const AllProducts = ({ meData }) => {
                     <ProductsCard
                       key={all.pk}
                       all={all}
-                      // kindEach={kindEach}
                       meData={meData}
                       items={items}
                     />

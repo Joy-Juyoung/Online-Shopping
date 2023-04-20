@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Categories, CategoriesWrap } from './ProductListElements';
 
-const Category = ({ pId, cName, cId, getAllKinds }) => {
+const Category = ({ pId, cName, cId, getAllKinds, items }) => {
   return (
     <CategoriesWrap>
       {!cId ? (
@@ -12,7 +12,7 @@ const Category = ({ pId, cName, cId, getAllKinds }) => {
             color: '#fff',
           }}
         >
-          All {getAllKinds?.name}
+          {items ? <>All Products</> : <>All {getAllKinds?.name}</>}
         </Categories>
       ) : (
         <Categories>

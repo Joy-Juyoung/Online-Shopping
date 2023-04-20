@@ -38,7 +38,8 @@ import {
   ListOneName,
   RatingWrap,
   StyledRating,
-  ReviewListFour
+  ReviewListFour,
+  DetailStock,
 } from './ProductDetailElements';
 
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -77,7 +78,7 @@ const ProductDetailPage = ({
   const [shippingReturn, setShippingReturn] = useState(false);
   const [reviews, setReviews] = useState(false);
   // const [review, setReview] = useState([]);
- 
+
   useEffect(() => {
     setLoading(true);
     const loadData = async () => {
@@ -230,12 +231,18 @@ const ProductDetailPage = ({
             <DetailProductName>
               <DetailTitle>{itemsDetail.detail}</DetailTitle>
               <DetailPrice>${itemsDetail.price}</DetailPrice>
+              {/* <DetailPrice>${itemsDetail.price}</DetailPrice> */}
               <DetailCoupon>
-                <p>Shop on our App and Enjoy 10% off
-                  <br/>Use code 
-                    <strong>APPFW22</strong>
+                <p>
+                  Shop on our App and Enjoy 10% off
+                  <br />
+                  Use code
+                  <strong>APPFW22</strong>
                 </p>
               </DetailCoupon>
+              <DetailStock style={{ fontSize: '14px' }}>
+                InStock: {itemsDetail?.in_stock}
+              </DetailStock>
             </DetailProductName>
           </DetailRightInfoTop>
 
@@ -249,18 +256,26 @@ const ProductDetailPage = ({
                   }}
                 >
                   {itemsDetail?.is_liked ? (
+                    <FavoriteBorderIcon
+                      fontSize='medium'
+                      sx={{ color: '#e20000' }}
+                    />
+                  ) : (
+                    <FavoriteBorderIcon fontSize='medium' color='disabled' />
+                  )}
+                </LikeBtn>
+              )}
+            </LikeBtnWrapper>
 
-                      <FavoriteBorderIcon fontSize='medium' sx={{ color: '#e20000' }} />
-                    ) : (
-                      <FavoriteBorderIcon fontSize='medium' color='disabled'/>
-                    )}
-                  </LikeBtn>
-                )}
-              </LikeBtnWrapper>
-
-            <ButtonLarges onClick={() => setIsOpen(true)}>
-              Add to Cart
-            </ButtonLarges>
+            {itemsDetail?.in_stock === 0 ? (
+              <ButtonLarges style={{ background: 'gray' }} disabled>
+                Add to Cart
+              </ButtonLarges>
+            ) : (
+              <ButtonLarges onClick={() => setIsOpen(true)}>
+                Add to Cart
+              </ButtonLarges>
+            )}
             {isOpen && <AddToCart onClose={() => setIsOpen(false)} />}
           </DetailRightInfoBottom>
         </DetailRightInfo>
@@ -364,38 +379,43 @@ const ProductDetailPage = ({
                 <DetailDescription>
                   <DescriptionList>
                     <DescriptionListDetail>
-
                       <h2>Reviews</h2>
                       {itemsDetail.reviews.map((i) => {
-                        return ( 
-                        
+                        return (
                           <ReviewListDetail>
-                              <ReviewListOne>
-                                  <ListOneLink>
-                                    <ListOneAvatar>
-                                      <Avatar sx={{ width: 30, height: 30 }}>C</Avatar>
-                                    </ListOneAvatar>
-                                    <ListOneName>
-                                      <span>{i?.user?.username}</span>
-                                    </ListOneName>
-                                  </ListOneLink> 
-                              </ReviewListOne>
-                              <ReviewListTwo>
-                                <StyledRating size='medium' value={itemsDetail?.rating} readOnly />
-                                  <RatingWrap>
-                                    <span><strong>{itemsDetail?.name}</strong></span>
-                                  </RatingWrap>
-                              </ReviewListTwo>
-                              <ReviewListFour>
-                                <span>Reviewed on April 16, 2023</span>
-                              </ReviewListFour>
-                              <ReviewListThree>
-                                <span>{itemsDetail?.reviews?.[0].payload}</span>
-                              </ReviewListThree>
+                            <ReviewListOne>
+                              <ListOneLink>
+                                <ListOneAvatar>
+                                  <Avatar sx={{ width: 30, height: 30 }}>
+                                    C
+                                  </Avatar>
+                                </ListOneAvatar>
+                                <ListOneName>
+                                  <span>{i?.user?.username}</span>
+                                </ListOneName>
+                              </ListOneLink>
+                            </ReviewListOne>
+                            <ReviewListTwo>
+                              <StyledRating
+                                size='medium'
+                                value={itemsDetail?.rating}
+                                readOnly
+                              />
+                              <RatingWrap>
+                                <span>
+                                  <strong>{itemsDetail?.name}</strong>
+                                </span>
+                              </RatingWrap>
+                            </ReviewListTwo>
+                            <ReviewListFour>
+                              <span>Reviewed on April 16, 2023</span>
+                            </ReviewListFour>
+                            <ReviewListThree>
+                              <span>{itemsDetail?.reviews?.[0].payload}</span>
+                            </ReviewListThree>
                           </ReviewListDetail>
-                         )
-                      })}                    
-
+                        );
+                      })}
                     </DescriptionListDetail>
                   </DescriptionList>
                 </DetailDescription>

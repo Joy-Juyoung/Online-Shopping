@@ -19,7 +19,8 @@ const DropUser = ({ meData }) => {
   const [modalShown, toggleModal] = useState(false);
 
   const handleAddBalance = () => {
-    window.open('/userBalance', 'My Balance', 'height=650px,width=680px');
+    // window.open('/userBalance', 'My Balance', 'height=650px,width=680px');
+    toggleModal(!modalShown);
   };
 
   return (
@@ -46,13 +47,7 @@ const DropUser = ({ meData }) => {
                 <DropLi>My Orders</DropLi>
               </LinkAccount>
               <LinkAccount>
-                <DropLi
-                  onClick={() => {
-                    toggleModal(!modalShown);
-                  }}
-                >
-                  My Balances
-                </DropLi>
+                <DropLi onClick={handleAddBalance}>My Balances</DropLi>
                 <Modal
                   shown={modalShown}
                   close={() => {
