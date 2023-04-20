@@ -139,11 +139,9 @@ const Header = ({ meData }) => {
         <HeaderWrapper>
           <HeaderUp>
             <LeftSide>
-
               <ModalBtnWrap
               //  ref={searchRef}
-               >
-
+              >
                 <ModalBtn onClick={() => setIsModalOpen(true)}>
                   <ModalBtnDetail>
                     <SearchIcon color='disabled' fontSize='medium' />
@@ -152,7 +150,9 @@ const Header = ({ meData }) => {
                 </ModalBtn>
               </ModalBtnWrap>
               {/* {isModalOpen && <Search onClose={() => setIsModalOpen(false)} />} */}
-              {isModalOpen && <TestSearch onClose={() => setIsModalOpen(false)} />}
+              {isModalOpen && (
+                <TestSearch onClose={() => setIsModalOpen(false)} />
+              )}
               {/* <TestSearch onClose={() => setIsModalOpen(false)} /> */}
             </LeftSide>
 
@@ -165,7 +165,7 @@ const Header = ({ meData }) => {
                     behavior: 'smooth',
                   })}
                 >
-                  BlanketCLoset
+                  BlankCloset
                 </div>
               </MidLink>
             </MiddleSide>

@@ -60,12 +60,18 @@ export const SideFilterLl = styled.div`
   }
 `;
 
-export const ListTitle = styled.div`
+export const SideListDetails = styled.div`
   display: flex;
   /* align-items: center; */
   justify-content: space-between;
   font-weight: 600;
   /* margin-bottom: 20px; */
+`;
+
+export const SideListTitle = styled.div``;
+
+export const SideIcon = styled.div`
+  cursor: pointer;
 `;
 
 export const ListSub = styled.div``;
@@ -153,7 +159,7 @@ export const ListMidWrapper = styled.div``;
 
 export const AllEachTitle = styled.h2`
   width: 100%;
-  border-top: 1px dotted gray;
+  /* border-top: 1px dotted gray; */
   font-size: 18px;
   padding: 5px 0;
   display: flex;
@@ -183,6 +189,37 @@ export const ProductsEach = styled(Link)`
   cursor: pointer;
   margin: 0 0 50px;
   overflow: hidden;
+  position: relative;
+`;
+
+export const SoldOutCover = styled.div`
+  width: 100%;
+  height: 300px;
+  /* height: 100%; */
+  position: absolute;
+  top: 0;
+  z-index: 3;
+  /* background: red; */
+  background: rgb(0, 0, 0, 0.4);
+
+  span {
+    /* width: 100%; */
+    /* height: 100%; */
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    position: absolute;
+    top: 45%;
+    left: 30%;
+    right: 30%;
+    padding: 5px 0;
+    text-align: center;
+    font-weight: 600;
+    background: #f05c02;
+    color: #fff;
+    border-radius: 5px;
+    transform: rotate(15deg);
+  }
 `;
 
 export const ProductEachPhoto = styled.img`

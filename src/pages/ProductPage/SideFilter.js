@@ -6,16 +6,20 @@ import {
   SideFilterLl,
   SideFilterUl,
   SideFilterWrapper,
+  SideIcon,
+  SideListDetails,
+  SideListTitle,
 } from './ProductListElements';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import axios from '../../api/axios';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
-const SideFilter = ({ meData, getAllKinds }) => {
+const SideFilter = ({ meData, getAllKinds, items }) => {
   const [categories, setCategories] = useState([]);
   const [isCategoryDrop, setIsCategoryDrop] = useState(true);
   const [isPriceDrop, setIsPriceDrop] = useState(true);
+  const { all } = useParams();
 
   const getCategory = async () => {
     const categoryData = await axios.get('/products/productAllParentsKinds', {
@@ -34,16 +38,25 @@ const SideFilter = ({ meData, getAllKinds }) => {
       <SideFilterWrapper>
         <SideFilterUl>
           <SideFilterLl>
-            <ListTitle>
-              <div>CATEGORY</div>
-              <div onClick={() => setIsCategoryDrop(!isCategoryDrop)}>
+            <SideListDetails>
+              <SideListTitle>CATEGORY</SideListTitle>
+              <SideIcon onClick={() => setIsCategoryDrop(!isCategoryDrop)}>
                 {isCategoryDrop ? <ExpandMoreIcon /> : <ExpandLessIcon />}
-              </div>
-            </ListTitle>
+              </SideIcon>
+            </SideListDetails>
             {isCategoryDrop && (
               <>
                 <ListSub>
                   <ul>
+                    {items ? (
+                      <li>
+                        <strong>ALL PRODUCTS</strong>
+                      </li>
+                    ) : (
+                      <Link to='/products/all'>
+                        <li>ALL PRODUCTS</li>
+                      </Link>
+                    )}
                     {categories?.map((cat) => {
                       return (
                         <Link key={cat.pk} to={`/products/category/${cat.pk}`}>
@@ -68,12 +81,12 @@ const SideFilter = ({ meData, getAllKinds }) => {
             )}
           </SideFilterLl>
           <SideFilterLl>
-            <ListTitle>
-              <div>PRICE</div>
-              <div onClick={() => setIsPriceDrop(!isPriceDrop)}>
+            <SideListDetails>
+              <SideListTitle>PRICE</SideListTitle>
+              <SideIcon onClick={() => setIsPriceDrop(!isPriceDrop)}>
                 {isPriceDrop ? <ExpandMoreIcon /> : <ExpandLessIcon />}
-              </div>
-            </ListTitle>
+              </SideIcon>
+            </SideListDetails>
             {isPriceDrop && (
               <ListSub>
                 <ul>
