@@ -381,6 +381,7 @@ const ProductDetailPage = ({
                     <DescriptionListDetail>
                       <h2>Reviews</h2>
                       {itemsDetail.reviews.map((i) => {
+
                         return (
                           <ReviewListDetail>
                             <ReviewListOne>
@@ -413,6 +414,32 @@ const ProductDetailPage = ({
                             <ReviewListThree>
                               <span>{itemsDetail?.reviews?.[0].payload}</span>
                             </ReviewListThree>
+
+/*                        return ( 
+                            <ReviewListDetail>
+                              <ReviewListOne>
+                                  <ListOneLink>
+                                    <ListOneAvatar>
+                                      <Avatar sx={{ width: 30, height: 30 }}>C</Avatar>
+                                    </ListOneAvatar>
+                                    <ListOneName>
+                                      <span>{i?.user?.username}</span>
+                                    </ListOneName>
+                                  </ListOneLink> 
+                              </ReviewListOne>
+                              <ReviewListTwo>
+                                <StyledRating size='medium' value={itemsDetail?.rating} readOnly />
+                                  <RatingWrap>
+                                    <span><strong>{itemsDetail?.name}</strong></span>
+                                  </RatingWrap>
+                              </ReviewListTwo>
+                              <ReviewListFour>
+                                <span>Reviewed on April 16, 2023</span>
+                              </ReviewListFour>
+                              <ReviewListThree>
+                                <span>{itemsDetail?.reviews?.[0].payload}</span>
+                              </ReviewListThree>
+*/
                           </ReviewListDetail>
                         );
                       })}

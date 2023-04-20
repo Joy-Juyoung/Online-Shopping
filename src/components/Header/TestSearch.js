@@ -95,123 +95,72 @@ const TestSearch = ({ onClose }) => {
           </ModalHeader>
 
           <ModalBody>
-            <SearchResult>
-              <ResultHeader>
-                <h3>Recent</h3>
-                {keywords.length ? (
-                  <HeaderDelete onClick={handleClearKeywords}>
-                    Delete History
-                  </HeaderDelete>
-                ) : (
-                  <HeaderDelete />
-                )}
-              </ResultHeader>
-              <ResultList>
-                {keywords.length ? (
-                  keywords.map((k) => (
-                    <ResultDetail key={k.id}>
-                      <ResultLink>
-                        <AccessTimeIcon
-                          sx={{ width: 24, height: 25 }}
-                          color='disabled'
-                          fontSize='small'
-                        />
-                        <p>{k.text}</p>
-                        <span>Keyword</span>
-                      </ResultLink>
-                      <DetailDelete
-                        className='removeBtn'
-                        type='button'
-                        onClick={() => handleRemoveKeyword(k.id)}
-                      >
-                        <CloseIcon
-                          sx={{ width: 14, height: 14 }}
-                          color='disabled'
-                          fontSize='small'
-                        />
-                      </DetailDelete>
-                    </ResultDetail>
-                  ))
-                ) : (
-                  //     <ModalBodyWrap>
-                  //     <ModalBodyHeader>
-                  //         <h3>Popular</h3>
-                  //     </ModalBodyHeader>
-                  //     <ModalBodyParagraph>
-                  //     <ModalBodyPList>
-                  //       <p>Top</p>
-                  //     </ModalBodyPList>
-                  //     <ModalBodyPList>
-                  //       <p>Button</p>
-                  //     </ModalBodyPList>
-                  //     <ModalBodyPList>
-                  //       <p>Outer</p>
-                  //     </ModalBodyPList>
-                  //     <ModalBodyPList>
-                  //       <p>Shoes</p>
-                  //     </ModalBodyPList>
-                  //     <ModalBodyPList>
-                  //       <p>Accessories</p>
-                  //     </ModalBodyPList>
-                  //     <ModalBodyPList>
-                  //       <p>육회</p>
-                  //     </ModalBodyPList>
-                  //     <ModalBodyPList>
-                  //       <p>해물찜</p>
-                  //     </ModalBodyPList>
-                  //     <ModalBodyPList>
-                  //       <p>누룽지탕</p>
-                  //     </ModalBodyPList>
-                  //     <ModalBodyPList>
-                  //       <p>문어숙회</p>
-                  //     </ModalBodyPList>
-                  //     <ModalBodyPList>
-                  //       <p>나도줘</p>
-                  //     </ModalBodyPList>
-                  //   </ModalBodyParagraph>
-                  // </ModalBodyWrap>
-                  <div>최근 검색어가 없습니다</div>
-                )}
-              </ResultList>
-            </SearchResult>
-            <ModalBodyWrap>
-              <ModalBodyHeader>
-                <h3>Popular</h3>
-              </ModalBodyHeader>
-              <ModalBodyParagraph>
-                <ModalBodyPList>
-                  <p>Top</p>
-                </ModalBodyPList>
-                <ModalBodyPList>
-                  <p>Button</p>
-                </ModalBodyPList>
-                <ModalBodyPList>
-                  <p>Outer</p>
-                </ModalBodyPList>
-                <ModalBodyPList>
-                  <p>Shoes</p>
-                </ModalBodyPList>
-                <ModalBodyPList>
-                  <p>Accessories</p>
-                </ModalBodyPList>
-                <ModalBodyPList>
-                  <p>육회</p>
-                </ModalBodyPList>
-                <ModalBodyPList>
-                  <p>해물찜</p>
-                </ModalBodyPList>
-                <ModalBodyPList>
-                  <p>누룽지탕</p>
-                </ModalBodyPList>
-                <ModalBodyPList>
-                  <p>문어숙회</p>
-                </ModalBodyPList>
-                <ModalBodyPList>
-                  <p>나도줘</p>
-                </ModalBodyPList>
-              </ModalBodyParagraph>
-            </ModalBodyWrap>
-          </ModalBody>
+            {keywords.length === 0 ? (
+                    <ModalBodyWrap>
+                        <ModalBodyHeader>
+                            <h3>Popular</h3>
+                        </ModalBodyHeader>
+                        <ModalBodyParagraph>
+                            <ModalBodyPList>
+                            <p>Top</p>
+                            </ModalBodyPList>
+                            <ModalBodyPList>
+                            <p>Button</p>
+                            </ModalBodyPList>
+                            <ModalBodyPList>
+                            <p>Outer</p>
+                            </ModalBodyPList>
+                            <ModalBodyPList>
+                            <p>Shoes</p>
+                            </ModalBodyPList>
+                            <ModalBodyPList>
+                            <p>Accessories</p>
+                            </ModalBodyPList>
+                            <ModalBodyPList>
+                            <p>육회</p>
+                            </ModalBodyPList>
+                            <ModalBodyPList>
+                            <p>해물찜</p>
+                            </ModalBodyPList>
+                            <ModalBodyPList>
+                            <p>누룽지탕</p>
+                            </ModalBodyPList>
+                            <ModalBodyPList>
+                            <p>문어숙회</p>
+                            </ModalBodyPList>
+                            <ModalBodyPList>
+                            <p>나도줘</p>
+                            </ModalBodyPList>
+                        </ModalBodyParagraph>
+                    </ModalBodyWrap>
+                ):(
+                <SearchResult>
+                    <ResultHeader>
+                        <h3>Recent</h3>
+                        {keywords.length ? (
+                        <HeaderDelete onClick={handleClearKeywords}>Delete History</HeaderDelete>
+                        ) : (
+                            <HeaderDelete />
+                        )}
+                    </ResultHeader>
+                    <ResultList>
+                        {keywords.map((k) => (
+                            <ResultDetail key={k.id}>
+                                <ResultLink>
+                                    <AccessTimeIcon sx={{ width: 24, height: 25 }} color='disabled' fontSize='small' />
+                                    <p>{k.text}</p> 
+                                    <span>Keyword</span>
+                                </ResultLink>
+                                <DetailDelete className="removeBtn" type="button" onClick={() => handleRemoveKeyword(k.id)}>
+                                    <CloseIcon sx={{ width: 14, height:14 }} color='disabled' fontSize='small' />
+                                </DetailDelete>
+                            </ResultDetail>
+                            ))
+                        } 
+                    </ResultList>
+                </SearchResult>            
+            )}
+           </ModalBody>
         </TestModalWrapper>
         <TestModalContainer onClick={onClose}></TestModalContainer>
         {/* </TestModalContainer> */}
