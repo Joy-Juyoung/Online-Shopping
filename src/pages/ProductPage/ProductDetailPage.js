@@ -381,7 +381,6 @@ const ProductDetailPage = ({
                     <DescriptionListDetail>
                       <h2>Reviews</h2>
                       {itemsDetail.reviews.map((i) => {
-
                         return (
                           <ReviewListDetail>
                             <ReviewListOne>
@@ -415,7 +414,7 @@ const ProductDetailPage = ({
                               <span>{itemsDetail?.reviews?.[0].payload}</span>
                             </ReviewListThree>
 
-/*                        return ( 
+                            {/* return ( 
                             <ReviewListDetail>
                               <ReviewListOne>
                                   <ListOneLink>
@@ -438,8 +437,7 @@ const ProductDetailPage = ({
                               </ReviewListFour>
                               <ReviewListThree>
                                 <span>{itemsDetail?.reviews?.[0].payload}</span>
-                              </ReviewListThree>
-*/
+                              </ReviewListThree> */}
                           </ReviewListDetail>
                         );
                       })}
