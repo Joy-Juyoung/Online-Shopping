@@ -165,7 +165,7 @@ const Header = ({ meData }) => {
                     behavior: 'smooth',
                   })}
                 >
-                  BlanketCLoset
+                  BlankCloset
                 </div>
               </MidLink>
             </MiddleSide>

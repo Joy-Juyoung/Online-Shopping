@@ -159,7 +159,7 @@ export const ListMidWrapper = styled.div``;
 
 export const AllEachTitle = styled.h2`
   width: 100%;
-  border-top: 1px dotted gray;
+  /* border-top: 1px dotted gray; */
   font-size: 18px;
   padding: 5px 0;
   display: flex;
