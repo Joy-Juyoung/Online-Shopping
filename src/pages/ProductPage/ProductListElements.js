@@ -60,12 +60,18 @@ export const SideFilterLl = styled.div`
   }
 `;
 
-export const ListTitle = styled.div`
+export const SideListDetails = styled.div`
   display: flex;
   /* align-items: center; */
   justify-content: space-between;
   font-weight: 600;
   /* margin-bottom: 20px; */
+`;
+
+export const SideListTitle = styled.div``;
+
+export const SideIcon = styled.div`
+  cursor: pointer;
 `;
 
 export const ListSub = styled.div``;
@@ -194,7 +200,7 @@ export const SoldOutCover = styled.div`
   top: 0;
   z-index: 3;
   /* background: red; */
-  background: rgb(0, 0, 0, 0.3);
+  background: rgb(0, 0, 0, 0.4);
 
   span {
     /* width: 100%; */

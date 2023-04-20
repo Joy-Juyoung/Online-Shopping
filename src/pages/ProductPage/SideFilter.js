@@ -6,6 +6,9 @@ import {
   SideFilterLl,
   SideFilterUl,
   SideFilterWrapper,
+  SideIcon,
+  SideListDetails,
+  SideListTitle,
 } from './ProductListElements';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -35,12 +38,12 @@ const SideFilter = ({ meData, getAllKinds, items }) => {
       <SideFilterWrapper>
         <SideFilterUl>
           <SideFilterLl>
-            <ListTitle>
-              <div>CATEGORY</div>
-              <div onClick={() => setIsCategoryDrop(!isCategoryDrop)}>
+            <SideListDetails>
+              <SideListTitle>CATEGORY</SideListTitle>
+              <SideIcon onClick={() => setIsCategoryDrop(!isCategoryDrop)}>
                 {isCategoryDrop ? <ExpandMoreIcon /> : <ExpandLessIcon />}
-              </div>
-            </ListTitle>
+              </SideIcon>
+            </SideListDetails>
             {isCategoryDrop && (
               <>
                 <ListSub>
@@ -78,12 +81,12 @@ const SideFilter = ({ meData, getAllKinds, items }) => {
             )}
           </SideFilterLl>
           <SideFilterLl>
-            <ListTitle>
-              <div>PRICE</div>
-              <div onClick={() => setIsPriceDrop(!isPriceDrop)}>
+            <SideListDetails>
+              <SideListTitle>PRICE</SideListTitle>
+              <SideIcon onClick={() => setIsPriceDrop(!isPriceDrop)}>
                 {isPriceDrop ? <ExpandMoreIcon /> : <ExpandLessIcon />}
-              </div>
-            </ListTitle>
+              </SideIcon>
+            </SideListDetails>
             {isPriceDrop && (
               <ListSub>
                 <ul>
