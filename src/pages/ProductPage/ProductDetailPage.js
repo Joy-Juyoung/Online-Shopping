@@ -299,9 +299,9 @@ const ProductDetailPage = ({
                   <strong>APPFW22</strong>
                 </p>
               </DetailCoupon>
-              <DetailStock style={{ fontSize: '14px' }}>
+              {/* <DetailStock style={{ fontSize: '14px' }}>
                 InStock: {itemsDetail?.in_stock}
-              </DetailStock>
+              </DetailStock> */}
             </DetailProductName>
           </DetailRightInfoTop>
 
