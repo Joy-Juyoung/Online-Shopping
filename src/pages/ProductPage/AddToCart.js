@@ -5,6 +5,7 @@ import {
   ButtonLarges,
   MenuTotalSummary,
   OptionsSelect,
+  SidebarOutsideClose,
   SidebarMenuBottom,
   SidebarMenuClose,
   SidebarMenuContainer,
@@ -17,7 +18,7 @@ import {
 } from './AddToCartElements';
 import CloseIcon from '@mui/icons-material/Close';
 
-const AddToCart = ({ onClose }) => {
+const AddToCart = ({ onClose}) => {
   const [selectOptions, setSelectOptions] = useState([]);
   const [options, setOptions] = useState(null);
   const ref = useRef();
@@ -79,18 +80,17 @@ const AddToCart = ({ onClose }) => {
 
   return (
     <SidebarMenuContainer>
-      <SidebarMenuWrapper>
+        <SidebarMenuWrapper  >
         <form onSubmit={handleAddToCart}>
-          <SidebarMenuKinds>
+          <SidebarMenuKinds >
             <SidebarMenuTop>
-              <SidebarMenuClose onClick={onClose}>
+              <SidebarMenuClose  onClick={onClose} >
                 <CloseIcon fontSize='medium' />
               </SidebarMenuClose>
             </SidebarMenuTop>
             <SidebarMenuMid>
               <SidebarSelect 
-                  // value={options} 
-                onChange={OptionHandleChange}>
+                        onChange={OptionHandleChange}>
                 <option value='none'>Select color or size</option>
                 {selectOptions?.productOptions?.map((o) => (
                   <option key={o.pk} value={o.pk}>
@@ -111,6 +111,7 @@ const AddToCart = ({ onClose }) => {
           </SidebarMenuKinds>
         </form>
       </SidebarMenuWrapper>
+      <SidebarOutsideClose onClick={onClose} />
     </SidebarMenuContainer>
   );
 };

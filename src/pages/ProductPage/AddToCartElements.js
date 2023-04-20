@@ -9,6 +9,16 @@ export const SidebarMenuContainer = styled.div`
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 3;
 `;
+export const SidebarOutsideClose = styled.button`
+    width: 100%;
+    background: none;
+    position: absolute;
+    top: 0;
+    height: 100vh;
+    border: none;
+`;
+
+
 export const SidebarMenuWrapper = styled.div`
   position: fixed;
   top: 0;

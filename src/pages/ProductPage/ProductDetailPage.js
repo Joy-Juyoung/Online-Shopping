@@ -43,6 +43,7 @@ import {
   ReviewEditBtn
 
 } from './ProductDetailElements';
+import FileDownloadDoneIcon from '@mui/icons-material/FileDownloadDone';
 import EditIcon from '@mui/icons-material/Edit';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -81,59 +82,61 @@ const ProductDetailPage = ({
   const [shippingReturn, setShippingReturn] = useState(false);
   const [reviews, setReviews] = useState(false);
 
-  // const [changeReviews, setChangeReviews] = useState('');
-  // const [payload, setPayload] = useState('');
-  // const [rating, setRating] = useState('');
-  // const [isEdit, setIsEdit] = useState(false);
+  const [changeReviews, setChangeReviews] = useState('');
+  const [payload, setPayload] = useState('');
+  const [rating, setRating] = useState('');
+  const [isEdit, setIsEdit] = useState(false);
 
-  // useEffect(() => {
-  //   setChangeReviews(meData);
-  //   setRating(meData?.name);
-  //   setPayload(meData?.address);
-  // }, [meData]);
+  useEffect(() => {
+    setChangeReviews(itemsDetail.reviews);
+    setRating(itemsDetail?.reviews?.rating);
+    setPayload(itemsDetail?.reviews?.payload);
+  }, [itemsDetail.reviews]);
 
-  // const handleInputChange = (e) => {
-  //   // console.log('name', e.target.value);
-  //   var tempChangeReviews = changeReviews;
+  const handleInputChange = (e) => {
+    console.log('name', e.target.value);
+    var tempChangeReviews = changeReviews;
 
-  //   if (e.target.id === 'rating') {
-  //     setRating(e.target.value);
-  //   }
-  //   if (e.target.id === 'payload') {
-  //     setAddress(e.target.value);
-  //   }
-  //   setChangeReviews(tempChangeReviews);
-  // };
+    if (e.target.id === 'rating') {
+      setRating(e.target.value);
+    }
+    if (e.target.id === 'payload') {
+      setPayload(e.target.value);
+    }
+    setChangeReviews(tempChangeReviews);
+  };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (!isEdit) {
-  //     handleEdit();
-  //   } else {
-  //     const meInfo = await axios.put(
-  //       `/reviews/${id}`,
-  //       {
-  //         payload: payload,
-  //         rating: rating,
-  //       },
-  //       {
-  //         headers: { 'Content-Type': 'application/json' },
-  //         withCredentials: true,
-  //       }
-  //     );
-  //     setChangeReviews(meInfo?.data);
-  //     // console.log('changed Data', meInfo?.data);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!isEdit) {
+      handleEdit();
+    } else {
+      const reviewsInfo = await axios.put(
+        `/reviews/${id}`,
+        {
+          // id:id,
+          payload: payload,
+          rating: rating,
+        },
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        }
+      );
+      setChangeReviews(reviewsInfo?.data);
+      console.log('reviewsInfo', reviewsInfo?.data);
 
-  //     setIsEdit(false);
-  //   }
-  // };
-  // const handleEdit = () => {
-  // if (!isEdit) {
-  //   setIsEdit(true);
-  // } else {
-  //   setIsEdit(false);
-  // }
-  // };
+      setIsEdit(false);
+    }
+  };
+
+  const handleEdit = () => {
+  if (!isEdit) {
+    setIsEdit(true);
+  } else {
+    setIsEdit(false);
+  }
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -145,13 +148,14 @@ const ProductDetailPage = ({
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
   console.log("me", meData);
+
   const getProduct = async () => {
     const { data } = await axios.get(`/products/${id}`, {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
 
-    // console.log(data);
+    console.log("dada",data);
     setItemsDetail(data);
   };
   useEffect(() => {
@@ -441,62 +445,100 @@ const ProductDetailPage = ({
                       <h2>Reviews</h2>
 
                     {itemsDetail.reviews.length === 0 ? (
-                        <ReviewListDetail>
-                          <p>This product has no reviews.</p>
-                        </ReviewListDetail>
-                              ):(              
-                                <>
-                                  {itemsDetail?.reviews?.map((i) => {
-                                  return ( 
-                                          <ReviewListDetail key={i.pk}>
-                                              <ReviewListOne>
-                                                  <ListOneLink>
-                                                    <ListOneAvatar>
-                                                      <Avatar sx={{ width: 30, height: 30 }}>C</Avatar>
-                                                    </ListOneAvatar>
-                                                    <ListOneName>
-                                                      <span>{i?.user?.username}</span>
-                                                    </ListOneName>
-                                                  </ListOneLink> 
-                                                  {i?.user?.username === meData?.username &&
-                                                    <>
-                                                      <ReviewEditBtn>
-                                                        <EditIcon 
-                                                          fontSize='small'
-                                                          color="primary"
-                                                        />
-                                                      </ReviewEditBtn>
-                                                      <ReviewDeleteBtn>
-                                                        <DeleteIcon 
-                                                          fontSize='small' 
-                                                          color="primary"                                                        
-                                                          onClick={(e) => {
-                                                            e.preventDefault();
-                                                            handleDeleteReview(i.pk);
-                                                          }} 
-                                                          />
-                                                      </ReviewDeleteBtn>
-                                                    </>
-                                                  }
-                                              </ReviewListOne>
-                                              <ReviewListTwo>
-                                                <StyledRating size='medium' value={itemsDetail?.rating} readOnly />
-                                                  <RatingWrap>
-                                                    <span><strong>{itemsDetail?.name}</strong></span>
-                                                  </RatingWrap>
-                                              </ReviewListTwo>
-                                              <ReviewListFour>
-                                                <span>Reviewed on April 16, 2023</span>
-                                              </ReviewListFour>
-                                              <ReviewListThree>
-                                                <span>{itemsDetail?.reviews?.[0].payload}</span>
-                                              </ReviewListThree>
-                                            </ReviewListDetail>
-                                         )}
-                                  )}  
-                                </>                 
-                      )}
-
+                      <ReviewListDetail>
+                        <p>This product has no reviews.</p>
+                      </ReviewListDetail>
+                      ):(              
+                        <>
+                          {itemsDetail?.reviews?.map((i) => {
+                          return (
+                            <form onSubmit={handleSubmit}> 
+                            <>
+                            {!isEdit ? (
+                              <ReviewListDetail key={i.pk}>
+                                <ReviewListOne>
+                                  <ListOneLink>
+                                    <ListOneAvatar>
+                                      <Avatar sx={{ width: 30, height: 30 }}>C</Avatar>
+                                    </ListOneAvatar>
+                                    <ListOneName>
+                                      <span>{i?.user?.username}</span>
+                                    </ListOneName>
+                                  </ListOneLink> 
+                                  {i?.user?.username === meData?.username &&
+                                  <>
+                                  <ReviewEditBtn>
+                                    <EditIcon fontSize='small' color="primary"/>
+                                  </ReviewEditBtn>
+                                  <ReviewDeleteBtn>
+                                    <DeleteIcon 
+                                      fontSize='small' 
+                                      color="primary"                                                        
+                                      onClick={(e) => {
+                                        e.preventDefault();
+                                        handleDeleteReview(i.pk);
+                                      }} 
+                                      />
+                                  </ReviewDeleteBtn>
+                                  </>
+                                  }
+                                </ReviewListOne>
+                                <ReviewListTwo>
+                                  <StyledRating size='medium' value={itemsDetail?.reviews?.[0].rating} readOnly />
+                                    <RatingWrap>
+                                      <span><strong>{itemsDetail?.name}</strong></span>
+                                    </RatingWrap>
+                                </ReviewListTwo>
+                                <ReviewListFour>
+                                  <span>Reviewed on April 16, 2023</span>
+                                </ReviewListFour>
+                                <ReviewListThree>
+                                  <span>{itemsDetail?.reviews?.[0].payload}</span>
+                                </ReviewListThree>
+                              </ReviewListDetail>
+                            ):(
+                              <ReviewListDetail key={i.pk}>
+                                <ReviewListOne>
+                                  <ListOneLink>
+                                    <ListOneAvatar>
+                                      <Avatar sx={{ width: 30, height: 30 }}>C</Avatar>
+                                    </ListOneAvatar>
+                                    <ListOneName>
+                                      <span>{i?.user?.username}</span>
+                                    </ListOneName>
+                                  </ListOneLink> 
+                                  {i?.user?.username === meData?.username &&
+                                    <ReviewEditBtn>
+                                      <FileDownloadDoneIcon fontSize='small' color="primary"/>
+                                    </ReviewEditBtn>
+                                  }
+                                </ReviewListOne>
+                                <ReviewListTwo>
+                                  <StyledRating size='medium' value={itemsDetail?.reviews?.[0].rating} readOnly />
+                                    <RatingWrap>
+                                      <span><strong>{itemsDetail?.name}</strong></span>
+                                    </RatingWrap>
+                                </ReviewListTwo>
+                                <ReviewListFour>
+                                  <span>Reviewed on April 16, 2023</span>
+                                </ReviewListFour>
+                                <ReviewListThree>
+                                  <input
+                                    type='text'
+                                    value={payload || ''}
+                                    id='payload'
+                                    onChange={handleInputChange}
+                                    />
+                                  {/* <span>{itemsDetail?.reviews?.[0].payload}</span> */}
+                                </ReviewListThree>
+                              </ReviewListDetail>
+                            )}
+                            </>
+                            </form>
+                            )}
+                          )}  
+                        </>                 
+                    )}
                     </DescriptionListDetail>
                   </DescriptionList>
                 </DetailDescription>
