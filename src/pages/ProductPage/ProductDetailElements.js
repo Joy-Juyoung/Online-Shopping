@@ -165,7 +165,6 @@ export const ListDetailBtn = styled.button`
     flex-grow: 0;
     justify-content: center;
     height: 60px;
-    transform: rotate(0deg);
     display: inline-flex;
     align-items: center;
     position: relative;
@@ -210,12 +209,29 @@ export const ReviewListDetail = styled.div`
 
 export const ReviewListOne = styled.div`
     margin-bottom: 10px;
+    display: flex;
 `;
 
 export const ListOneLink = styled(Link)`
     text-decoration: none;
     cursor: pointer;
     display: table;
+`;
+
+export const ReviewDeleteBtn = styled.button`
+    border: 0px;
+    background: none;
+    cursor: pointer;
+    position: absolute;
+    left: 360px;
+`;
+
+export const ReviewEditBtn = styled.button`
+    border: 0px;
+    background: none;
+    cursor: pointer;
+    position: absolute;
+    left: 330px;
 `;
 
 export const ListOneAvatar = styled.div`
