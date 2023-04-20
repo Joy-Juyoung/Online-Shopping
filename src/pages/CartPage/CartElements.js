@@ -7,6 +7,11 @@ export const CartContainer = styled.div`
   margin: 0 auto;
   padding: 0 20px 120px;
 
+  h1 {
+    text-align: center;
+    margin: 40px auto;
+  }
+
   a {
     text-decoration: none;
     /* color: #0a0f18; */
@@ -18,28 +23,34 @@ export const CartContainer = styled.div`
 `;
 
 export const CartWrapper = styled.div`
-  margin: 0 auto;
-  h2 {
-    padding: 12px;
-    margin: 40px 0 28px;
-    font-size: 28px;
-    font-weight: 700;
-    text-align: center;
-  }
+  margin-bottom: 40px;
+  padding: 0 10px;
 `;
 
 export const CartBodyWrap = styled.div`
   display: flex;
   justify-content: center;
   /* justify-content: space-between; */
-  padding-top: 0;
+  /* padding-top: 0; */
   /* margin: 0 auto; */
+
+  @media screen and (max-width: 1024px) {
+    display: block;
+  }
 `;
 
 export const CartLeftInfo = styled.div`
-  min-width: 713px;
+  /* min-width: 713px;
   width: 100%;
+  flex: 2; */
   flex: 2;
+  margin-right: 50px;
+
+  @media screen and (max-width: 1024px) {
+    display: block;
+    margin: 0 auto;
+    border-bottom: 1px solid #e7e9ec;
+  }
 `;
 
 export const CartLeftCheckBar = styled.div``;
@@ -77,17 +88,17 @@ export const OrderCheckBox = styled.div`
     text-align: left;
     white-space: normal;
     cursor: pointer;
-    }
+  }
 `;
 
 export const CartProductLists = styled.div`
-  padding: 20px 0 0;
+  padding: 30px 0;
 `;
 
 export const ListsDetails = styled.div`
   display: flex;
   align-items: flex-start;
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
 `;
 
 export const ListsCheckBox = styled.div`
@@ -98,31 +109,33 @@ export const ListsCheckBox = styled.div`
 `;
 
 export const ListsItemImg = styled.div`
-  margin-right: 24px;
-  flex-shrink: 0;
-  width: 80px;
-  height: 80px;
+  /* margin-right: 24px;
+  flex-shrink: 0; */
+  /* width: 80px;
+  height: 80px; */
 `;
 
 export const ListsImgLink = styled(Link)`
-  display: block;
+  /* display: block;
   overflow: hidden;
   position: relative;
   width: 100%;
   height: 100%;
   color: rgb(10, 15, 24);
   text-decoration: none;
-  cursor: pointer;
+  cursor: pointer; */
 
   img {
-    position: absolute;
+    width: 80px;
+    height: 80px;
+    /* position: absolute;
     top: 50%;
     left: 50%;
     width: 80px;
     height: 80px;
     border: none;
     vertical-align: top;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); */
   }
 `;
 
@@ -130,26 +143,30 @@ export const ListsItemDetails = styled.div`
   display: flex;
   flex: 1 0 auto;
   justify-content: space-between;
+  margin-left: 20px;
+  font-size: 14px;
 `;
 
-export const ItemDetailOne = styled.div`
-  width: 280px;
-  margin-left: 10px;
+export const ItemDetailOne = styled(Link)`
+  /* width: 280px;
+  margin-left: 10px; */
+  color: #0a0f18;
+  text-decoration: none;
 `;
 
-export const DetailName = styled(Link)`
+export const DetailName = styled.div`
   display: block;
   margin-bottom: 4px;
   font-weight: 700;
-  color: #0a0f18;
+  /* color: #0a0f18;
   text-decoration: none;
-  cursor: pointer;
+  cursor: pointer; */
 `;
 
-export const DetailDescription = styled(Link)`
-  color: #0a0f18;
+export const DetailDescription = styled.div`
+  /* color: #0a0f18;
   text-decoration: none;
-  cursor: pointer;
+  cursor: pointer; */
 `;
 
 export const DetailOption = styled.div`
@@ -244,31 +261,54 @@ export const DeleteBtn = styled.button`
   cursor: pointer;
 `;
 
+//---
+
 export const CartRightInfo = styled.div`
-  position: relative;
+  /* position: relative;
   flex: 1;
   flex-shrink: 0;
   width: 341px;
-  margin-left: 80px;
+  margin-left: 80px; */
+  flex: 1;
+  margin: 30px 0;
+
+  @media screen and (max-width: 1024px) {
+    /* border-top: 0.5px solid lightgray; */
+    /* padding-top: 20px; */
+  }
 `;
 
 export const CartRightTop = styled.div`
-  margin: 0 0 28px 0;
-  position: relative;
+  /* margin: 0 0 28px 0;
+  position: relative; */
+  /* display: flex;
+  flex-direction: column;
+  justify-content: space-between; */
+  /* align-items: center; */
+`;
 
-  h3 {
-    padding:0 0 20px 0;
+export const TotalTitle = styled.h2`
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+
+  h2 {
+    /* padding: 0 0 20px 0;
     font-size: 18px;
     font-weight: 700;
-    margin: 0px;
+    margin: 0px; */
+    font-weight: 600;
+    font-size: 18px;
   }
 `;
 
 export const PromoInfo = styled.div`
-  display: inline-flex;
+  /* display: inline-flex;
   position: absolute;
   top: 23px;
-  right: 0;
+  right: 0; */
 `;
 
 export const QuestionMark = styled.button`

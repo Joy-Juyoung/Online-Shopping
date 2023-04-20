@@ -46,6 +46,7 @@ import {
   QuestionMark,
   SummaryWrap,
   ItemDetailTwoWrap,
+  TotalTitle,
 } from './CartElements';
 
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
@@ -148,8 +149,10 @@ const TestCart = () => {
   const PriceForBill = carts.reduce((total, item) => {
     return total + item?.total_price;
   }, 0);
+  const Taxes = PriceForBill * 0.05;
+  const Discounts = 0;
   console.log('total: ', PriceForBill);
-  const TotalPriceTag = PriceForBill + ShippingFee;
+  const TotalPriceTag = PriceForBill + ShippingFee + Taxes + Discounts;
 
   if (loading)
     return (
@@ -160,8 +163,8 @@ const TestCart = () => {
 
   return (
     <CartContainer>
+      <h1>SHOPPING BAG</h1>
       <CartWrapper>
-        <h2>SHOPPING BAG</h2>
         {carts.length === 0 ? (
           <CartBodyWrap
             style={{
@@ -200,18 +203,23 @@ const TestCart = () => {
                         {/* <label/> */}
                       </ListsCheckBox>
                       <ListsItemImg>
-                        <ListsImgLink to={``}>
+                        <ListsImgLink to={`/products/${cart?.product?.pk}`}>
                           <img src={cart?.product?.photos[0].picture} alt='' />
                         </ListsImgLink>
                       </ListsItemImg>
                       <ListsItemDetails>
-                        <ItemDetailOne>
-                          <DetailName to={``}>{cart?.product?.name}</DetailName>
-                          <DetailDescription to={``}>
+                        <ItemDetailOne to={`/products/${cart?.product?.pk}`}>
+                          <DetailName>{cart?.product?.name}</DetailName>
+                          <DetailDescription>
                             {cart?.product?.detail}
                           </DetailDescription>
                           <DetailOption>
-                            <span>{cart?.product_option?.name}</span>
+                            {/* <span>{cart?.product_option?.name}</span> */}
+                            {cart?.product_option === null ? (
+                              <>Free</>
+                            ) : (
+                              <>{cart?.product_option?.name}</>
+                            )}
                           </DetailOption>
                         </ItemDetailOne>
                         <ItemDetailTwo>
@@ -236,7 +244,7 @@ const TestCart = () => {
                           </ItemDetailTwoWrap>
                         </ItemDetailTwo>
                         <ItemDetailThree>
-                          <strong>${cart?.total_price}</strong>
+                          <strong>${cart?.total_price.toLocaleString()}</strong>
                         </ItemDetailThree>
                       </ListsItemDetails>
                       <ListsDeleteBtn>
@@ -256,12 +264,14 @@ const TestCart = () => {
 
             <CartRightInfo>
               <CartRightTop>
-                <h3>Promo Code</h3>
-                <PromoInfo>
-                  <QuestionMark>
-                    <HelpOutlineIcon fontSize='small' color='action' />
-                  </QuestionMark>
-                </PromoInfo>
+                <TotalTitle>
+                  <h2>Promo Code</h2>
+                  <PromoInfo>
+                    <QuestionMark>
+                      <HelpOutlineIcon fontSize='small' color='action' />
+                    </QuestionMark>
+                  </PromoInfo>
+                </TotalTitle>
                 <CouponInfo>
                   <CouponInputWrap>
                     <CouponInput placeholder='Please enter your promo code' />
@@ -281,15 +291,23 @@ const TestCart = () => {
                 <CartSummaryInfo>
                   <ItemPriceInfo>
                     Price
-                    <span>${PriceForBill}</span>
+                    <span>${PriceForBill.toLocaleString()}</span>
                   </ItemPriceInfo>
                   <ItemShippingFee>
                     Shipping fee
-                    <span>${ShippingFee}</span>
+                    <span>${ShippingFee.toLocaleString()}</span>
+                  </ItemShippingFee>
+                  <ItemShippingFee>
+                    Duties amd Taxes
+                    <span>${Taxes.toLocaleString()}</span>
+                  </ItemShippingFee>
+                  <ItemShippingFee>
+                    Discounts
+                    <span>${Discounts.toLocaleString()}</span>
                   </ItemShippingFee>
                   <ItemTotalPrice>
                     Total
-                    <span>${TotalPriceTag}</span>
+                    <span>${TotalPriceTag.toLocaleString()}</span>
                   </ItemTotalPrice>
                   <ExtraInfo>
                     <li>
