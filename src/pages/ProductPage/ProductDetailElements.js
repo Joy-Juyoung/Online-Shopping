@@ -71,6 +71,7 @@ export const DetailCoupon = styled.div`
 
 export const DetailStock = styled.div`
   margin: 20px 0;
+  font-size: 14px;
 `;
 
 export const DetailRightInfoBottom = styled.div`

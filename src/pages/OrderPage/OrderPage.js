@@ -118,7 +118,7 @@ const OrderPage = () => {
             })}
           </OrderMenuBy>
           <OrderList>
-            <OrderListTop>
+            {/* <OrderListTop>
               {isSelected === 'All' && (
                 <ListTotal>Total {orderStatus?.length}</ListTotal>
               )}
@@ -129,7 +129,7 @@ const OrderPage = () => {
                 <option value='Month 3'>Month 3</option>
                 <option value='Month 4'>Month 4</option>
               </ListView>
-            </OrderListTop>
+            </OrderListTop> */}
             {orderStatus?.length === 0 ? (
               <OrderListEmpty>No orders found.</OrderListEmpty>
             ) : (
@@ -151,7 +151,7 @@ const OrderPage = () => {
                         <Tr key={order?.pk}>
                           {isSelected === 'All' && (
                             <>
-                              <Td>{order.pk}</Td>
+                              <Td>{order.pk.toString().padStart(6, '0')}</Td>
 
                               <Td>
                                 {new Date(
@@ -159,7 +159,9 @@ const OrderPage = () => {
                                 ).toLocaleDateString()}
                               </Td>
                               <Td>{order.total_products}</Td>
-                              <Td>${order.total_price.toLocaleString()}</Td>
+                              <Td>
+                                ${order?.final_total_price?.toLocaleString()}
+                              </Td>
                               <Td>
                                 {order.status === 'pending' && (
                                   <StatusBox

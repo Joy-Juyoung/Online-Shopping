@@ -240,9 +240,9 @@ const ProductDetailPage = ({
                   <strong>APPFW22</strong>
                 </p>
               </DetailCoupon>
-              {/* <DetailStock style={{ fontSize: '14px' }}>
-                InStock: {itemsDetail?.in_stock}
-              </DetailStock> */}
+              <DetailStock>
+                InStock: {itemsDetail?.in_stock?.toLocaleString()}
+              </DetailStock>
             </DetailProductName>
           </DetailRightInfoTop>
 

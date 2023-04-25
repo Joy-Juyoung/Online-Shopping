@@ -7,6 +7,21 @@ import {
   PaymentWrapper,
 } from '../OrderPage/OrderDetailsElements';
 import { Rating } from '@mui/material';
+import {
+  ReviewBtn,
+  ReviewItemDetails,
+  ReviewItemInfo,
+  ReviewRate,
+  ReviewText,
+} from './ReviewsElements';
+import {
+  DetailDescription,
+  DetailName,
+  DetailOption,
+  ListsImgLink,
+} from '../PaymentPage/PaymentElements';
+import { OrderContainer, OrderWrapper } from '../OrderPage/OrderElements';
+import { ButtonLarge } from '../../components/ButtonElements';
 
 // const StyledRating = styled(Rating)(
 //   {
@@ -20,7 +35,10 @@ import { Rating } from '@mui/material';
 
 const NewReview = ({ meData }) => {
   const [getItem, setGetItem] = useState([]);
+  // const [selectedItem, setSelectedItem] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [reviewValue, setReviewValue] = useState('');
+  const [reviewRating, setReviewRating] = useState('');
   const { reviewId } = useParams();
 
   const getProduct = async () => {
@@ -39,6 +57,25 @@ const NewReview = ({ meData }) => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, [reviewId]);
 
+  useEffect(() => {
+    var tempReview = getItem?.reviews;
+    tempReview?.forEach((rv) => {
+      if (rv.user.username === meData.username) {
+        setReviewValue(rv.payload);
+        setReviewRating(rv.rating);
+      } else {
+        setReviewValue();
+        setReviewRating();
+      }
+    });
+  }, [getItem]);
+
+  const handleReviewChange = (e) => {
+    // e.preventDefault();
+    setReviewValue(e.target.value);
+  };
+  // console.log('reviewValue', reviewValue);
+
   if (loading)
     return (
       <div>
@@ -46,32 +83,48 @@ const NewReview = ({ meData }) => {
       </div>
     );
   return (
-    <PaymentContainer>
-      <h1>Create Review</h1>
-      <PaymentWrapper>
+    <OrderContainer>
+      <OrderWrapper>
+        <h1>Create Review</h1>
         <form>
-          <div>
-            <img src={getItem?.photos?.[0].picture} alt={getItem?.name} />
-            <div>{getItem?.name}</div>
-            <div>{getItem?.detail}</div>
-            <div>{getItem?.productOptions}</div>
-          </div>
-          <div>
+          <ReviewItemInfo>
+            <ListsImgLink to={`/products/${getItem?.id}`}>
+              <img src={getItem?.photos?.[0].picture} alt={getItem?.name} />
+            </ListsImgLink>
+            <ReviewItemDetails to={`/products/${getItem?.id}`}>
+              <DetailName>{getItem?.name}</DetailName>
+              <DetailDescription>{getItem?.detail}</DetailDescription>
+              {/* <DetailOption>
+                {getItem?.productOptions === null ? (
+                  'Free'
+                ) : (
+                  <>{optionDetail}</>
+                )}
+              </DetailOption> */}
+            </ReviewItemDetails>
+          </ReviewItemInfo>
+
+          <ReviewRate>
             <h2>Rate Features</h2>
             <div>
-              <Rating size='large' value='' />
+              <Rating size='large' value={reviewRating || null} />
             </div>
-          </div>
-          <div>
+          </ReviewRate>
+          <ReviewText>
             <h2>Add a written review</h2>
-            <textarea id='payload' name='payload' rows='4' cols='80' value='' />
-          </div>
-          <div>
-            <button>submit</button>
-          </div>
+            <textarea
+              id='payload'
+              name='payload'
+              value={reviewValue}
+              onChange={handleReviewChange}
+            />
+          </ReviewText>
+          <ReviewBtn>
+            <ButtonLarge>Submit</ButtonLarge>
+          </ReviewBtn>
         </form>
-      </PaymentWrapper>
-    </PaymentContainer>
+      </OrderWrapper>
+    </OrderContainer>
   );
 };
 

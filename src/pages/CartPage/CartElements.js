@@ -287,20 +287,23 @@ export const CartRightTop = styled.div`
   /* align-items: center; */
 `;
 
-export const TotalTitle = styled.h2`
+export const TotalTitle = styled.div`
   display: flex;
   /* flex-direction: column; */
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
 
-  h2 {
+  h3 {
     /* padding: 0 0 20px 0;
     font-size: 18px;
     font-weight: 700;
     margin: 0px; */
-    font-weight: 600;
+    /* font-weight: 600;
+    font-size: 18px; */
+    /* padding: 28px 0 20px; */
     font-size: 18px;
+    font-weight: 700;
   }
 `;
 
