@@ -1,72 +1,138 @@
 import React from 'react'
-import { ArrowLeftOutlined, ArrowRightOutlined } from '@material-ui/icons';
-import { useState } from 'react';
+import { useState,  useRef, useEffect  } from 'react';
 import styled from 'styled-components';
 import axios from '../../api/axios';
-import { useEffect } from 'react';
 import { useParams } from 'react-router';
+import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
+import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 
-const Container = styled.div`
-  /* height: 50vh; */
-  display: flex;
+
+
+const ImageSlide = styled.div`
   position: relative;
-  overflow: hidden;
-
-`;
-
-const Arrow = styled.div`
-  width: 50px;
-  height: 50px;
-  background-color: none;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: ${(props) => props.direction === 'left' && '10px'};
-  right: ${(props) => props.direction === 'right' && '50px'};
+  width: 500px;
   margin: auto;
-  cursor: pointer;
-  /* opacity: 0.5; */
-  z-index: 2;
-`;
+  padding-bottom: 30px;
+  `;
 
-const Wrapper = styled.div`
 
-`;
-
-const Slide = styled.div`
-    width: 450px;
-    margin-right: 40px;
+const SlideBox = styled.div`
     position: relative;
-    display: flex;
-  flex-direction: column;
-
-  img {
-    align-items:center;
-    width: 400px;
-    height: 500px;
-    justify-content: center;
-    margin-left: 25px;
-  }
+    width: 100%;
+    margin: auto;
+    overflow-x: hidden;
+`;
+const SlideList = styled.div`
+      width: 2800px;
+      overflow: hidden;
 `;
 
+const SlideContent = styled.div`
+        display: table;
+        float: left;
+        width: 500px;
+        height: 500px;
+        picture {
+          display: table-cell;
+          vertical-align: middle;
+          text-align: center;
+
+          img {
+            width: 100%;
+            height: auto;
+            
+          }
+        }
+`;
+    
+const ButtonPrev = styled.button`
+      position: absolute;
+      top: 250px;
+      border: none;
+      padding-top: 5px;
+      background:none;
+      vertical-align: middle;
+      
+      svg {
+        width: 40px;
+        height: 40px;
+      }
+
+      /* &:hover {
+        left: 0;
+        transition: left 0.5s;
+      } */
+
+`;
+
+const ButtonNext = styled.button`
+      position: absolute;
+      top: 250px;
+      padding-top: 5px;
+      background:none;
+      vertical-align: middle;
+      right: 5px;
+      border: none;
+      transition: all ease 0.5s;
+
+      svg {
+        width: 40px;
+        height: 40px;
+      }
+
+      /* &:hover {
+        right: 0;
+        transition: right 0.5s;
+      } */
+
+`;
+ 
+// const PaginationBox = styled.div`
+//   position: relative;
+//   display: grid;
+//   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+//   width: 100%;
+//   grid-column-gap: 1px;
+
+//   picture {
+//     width: 100%;
+
+//     img {
+//       width: 100%;
+//       cursor: pointer;
+//     }
+//   }
+// `;
 
 const DetailSlider = () => {
     const [slideIndex, setSlideIndex] = useState([]);
     const [slideInd, setSlideInd] = useState(0);
     const { id } = useParams();
-    
-    
-    const nextSlide = () => {
-        setSlideInd(slideInd === slideIndex.length - 1 ? 0 : slideInd + 1);
-      };
-    
-      const prevSlide = () => {
-        setSlideInd(slideInd === 0 ? slideIndex.length - 1 : slideInd - 1);
-      };
+    const slideRef = useRef(null);
+    const IMG_WIDTH = 500;
+    const slideRange = slideInd * IMG_WIDTH;
+
+    useEffect(() => {
+      slideRef.current.style.transition = "all 0.5s ease-in-out";
+      slideRef.current.style.transform = `translateX(-${slideRange}px)`;
+    }, [slideInd]);
+  
+    const moveToNextSlide = () => {
+      if (slideInd === 2) return;
+      setSlideInd(slideInd + 1);
+    };
+  
+    const moveToPrevSlide = () => {
+      if (slideInd === 0) return;
+      setSlideInd(slideInd - 1);
+    };
+
+    // const onChangeImage = (index) => {
+    //   if (slideIndex?.photos?.length <= index) index = 0;
+    //   if (index < 0) index = slideIndex?.photos?.length - 1;
+  
+    //   setSlideInd({ slideInd: index });
+    // };
 
     const getProduct = async () => {
         const { data } = await axios.get(`/products/${id}`, {
@@ -84,23 +150,53 @@ const DetailSlider = () => {
     }, [id]);
     
     return (
-    <Container>
-    <Arrow direction='left' onClick={prevSlide}>
-      <ArrowLeftOutlined />
-    </Arrow>
-    <Wrapper slideIndex={slideInd}>
-      {slideIndex?.photos?.map((item, index) => (
-        <Slide key={index}>
-            {index === slideInd &&(
-                <img src={item.picture} />
-            )}
-        </Slide>
-      ))}
-    </Wrapper>
-    <Arrow direction='right' onClick={nextSlide}>
-      <ArrowRightOutlined />
-    </Arrow>
-  </Container>
+      <ImageSlide>
+          <SlideBox>
+            {slideIndex?.photos?.length === 1 ? (
+                <SlideList ref={slideRef}>
+                {slideIndex?.photos?.map((image, no) => (
+                  <SlideContent key={no}>
+                    <picture>
+                      <img src={image.picture} />
+                    </picture>
+                  </SlideContent>
+                ))}
+              </SlideList>
+            ):(
+              <>
+                <SlideList ref={slideRef}>
+                  {slideIndex?.photos?.map((image, no) => (
+                    <SlideContent key={no}>
+                      <picture>
+                        <img src={image.picture} />
+                      </picture>
+                    </SlideContent>
+                  ))}
+                </SlideList>
+                <ButtonPrev onClick={moveToPrevSlide}>
+                  <ArrowCircleLeftIcon fontSize='large'/>
+                </ButtonPrev>
+                <ButtonNext onClick={moveToNextSlide}>
+                  <ArrowCircleRightIcon fontSize='large'/>
+                </ButtonNext>
+                {/* <PaginationBox>
+                  {slideIndex?.photos?.map((image, no) => (
+                    <div
+                      key={no}
+                      onClick={() => {
+                        onChangeImage(no);
+                      }}
+                    >
+                      <picture>
+                        <img src={image.picture} />
+                      </picture>
+                    </div>
+                  ))}
+                </PaginationBox> */}
+              </>
+            )}            
+          </SlideBox>
+    </ImageSlide>
   )
 }
 

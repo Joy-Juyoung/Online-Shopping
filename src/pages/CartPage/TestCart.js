@@ -64,7 +64,8 @@ const CARTS_URL = '/carts';
 const TestCart = () => {
   const [loading, setLoading] = useState(false);
   const [carts, setCarts] = useState([]);
-  const [count, setCount] = useState();
+  // const [count, setCount] = useState();
+  const [checkItems, setCheckItems] = useState([]);
 
   const getAllCart = async () => {
     const cartList = await axios.get(CARTS_URL, {
@@ -74,6 +75,7 @@ const TestCart = () => {
     console.log('cartList', cartList.data);
     setCarts(cartList?.data);
     setLoading(false);
+    setCheckItems(new Array(cartList?.length).fill(true));
   };
 
   useEffect(() => {
@@ -81,7 +83,45 @@ const TestCart = () => {
     getAllCart();
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
-  console.log('carts', carts);
+  // console.log('carts', carts);
+
+
+
+  // const handleSingleCheck = (checked, id) => {
+  //   if (checked) {
+  //     setCheckItems(prev => [...prev, id]);
+  //   } else {
+  //     setCheckItems(checkItems.filter((el) => el !== id));
+  //   }
+  // };
+
+  // const handleAllCheck = (checked) => {
+  //   if(checked) {
+  //      const idArray = [];
+  //     carts.forEach((el) => idArray.push(el.id));
+  //     setCheckItems(idArray);
+  //   }
+  //   else {
+  //     setCheckItems([]);
+  //   }
+  // }
+
+  // const handleAllDeleteCart = async (pk) => {
+  //   alert('Are you sure you want to remove the products?');
+  //   // console.log('pk', pk);
+  //   let arrayids = [];
+  //   carts.forEach((c) => {
+  //     if (c.length > 0) {
+  //       arrayids.push(c.pk)
+  //     }
+  //   });
+  //     axios.delete(`/carts/${pk}`, {
+  //       headers: { 'Content-Type': 'application/json' },
+  //       withCredentials: true,
+  //       getAllCart();
+  //   });
+  //   window.location.reload('/carts');
+  // };
 
   const handleDeleteCart = async (pk) => {
     alert('Are you sure you want to remove the product?');
@@ -181,10 +221,19 @@ const TestCart = () => {
               <CartLeftCheckBar>
                 <CheckBarWrap>
                   <OrderCheckBox>
-                    <input type='checkbox' />
+                    <input 
+                      type='checkbox'
+                      // onChange={(e) => handleAllCheck(e.target.checked)}
+                      // checked={checkItems.length === carts.length ? true : false}
+                    />
                     <label>All</label>
                   </OrderCheckBox>
-                  <DeleteBtn>Delete</DeleteBtn>
+                  <DeleteBtn
+                    //  onClick={(e) => {
+                    //   e.preventDefault();
+                    //   handleAllDeleteCart(carts.pk);
+                    // }}  
+                  >Delete</DeleteBtn>
                 </CheckBarWrap>
               </CartLeftCheckBar>
               <CartProductLists>
@@ -192,7 +241,11 @@ const TestCart = () => {
                   return (
                     <ListsDetails key={cart?.pk}>
                       <ListsCheckBox>
-                        <input type='checkbox' />
+                        <input 
+                          type='checkbox'
+                          // onChange={(e) => handleSingleCheck(e.target.checked, cart.pk)}
+                          // checked={checkItems.includes(cart.pk) ? true : false}
+                         />
                         {/* <label/> */}
                       </ListsCheckBox>
                       <ListsItemImg>

@@ -148,7 +148,8 @@ export const ListsItemDetails = styled.div`
 `;
 
 export const ItemDetailOne = styled(Link)`
-  width: 180px;
+  width: 200px;
+  /* height: 50px; */
   margin-left: 10px;
   color: #0a0f18;
   text-decoration: none;
