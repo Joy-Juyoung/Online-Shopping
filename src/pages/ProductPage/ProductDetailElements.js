@@ -95,6 +95,8 @@ export const LikeBtnWrapper = styled.div`
 `;
 
 export const LikeBtn = styled.button`
+  display: flex;
+  align-items: center;
   justify-content: center;
   position: absolute;
   width: 100%;
