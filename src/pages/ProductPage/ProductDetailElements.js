@@ -158,18 +158,16 @@ export const InfoListDetailTwo = styled.li`
 `;
 
 export const ListDetailBtn = styled.button`
-
-    flex-grow: 0;
-    justify-content: center;
-    height: 60px;
-    display: inline-flex;
-    align-items: center;
-    position: relative;
-    cursor: pointer;
-    appearance: none;
-    border: 0px;
-    background: none;
-
+  flex-grow: 0;
+  justify-content: center;
+  height: 60px;
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  appearance: none;
+  border: 0px;
+  background: none;
 
   span {
     font-weight: 600;
@@ -207,9 +205,8 @@ export const ReviewListDetail = styled.div`
 `;
 
 export const ReviewListOne = styled.div`
-    margin-bottom: 10px;
-    display: flex;
-
+  margin-bottom: 10px;
+  display: flex;
 `;
 
 export const ListOneLink = styled(Link)`
@@ -219,20 +216,20 @@ export const ListOneLink = styled(Link)`
 `;
 
 export const ReviewDeleteBtn = styled.button`
-    border: 0px;
-    background: none;
-    cursor: pointer;
-    position: absolute;
-    left: 360px;
+  border: 0px;
+  background: none;
+  cursor: pointer;
+  position: absolute;
+  left: 360px;
 `;
 
 export const ReviewEditBtn = styled(Link)`
-    border: 0px;
-    background: none;
-    cursor: pointer;
-    position: absolute;
-    left: 330px;
-    text-decoration: none;
+  border: 0px;
+  background: none;
+  cursor: pointer;
+  position: absolute;
+  left: 330px;
+  text-decoration: none;
 `;
 
 export const ListOneAvatar = styled.div`
