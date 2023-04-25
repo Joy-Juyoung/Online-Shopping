@@ -29,6 +29,8 @@ import OrderDtails from './OrderPage/OrderDtails';
 import PaymentPage from './PaymentPage/PaymentPage';
 import AddBalance from '../components/AddBalance';
 import NewReview from './ReviewPage.js/NewReview';
+import SuccessPayment from './PaymentPage/SuccessPayment';
+import MyReviews from './ReviewPage.js/MyReviews';
 
 const Home = ({ meData }) => {
   return (
@@ -57,6 +59,12 @@ const Home = ({ meData }) => {
           />
 
           <Route
+            path='/myReviews'
+            element={<MyReviews meData={meData} />}
+            exact={true}
+          />
+
+          <Route
             path='/userOrders'
             element={<OrderPage meData={meData} />}
             exact={true}
@@ -66,8 +74,13 @@ const Home = ({ meData }) => {
             element={<OrderDtails meData={meData} />}
             exact={true}
           />
+          {/* <Route
+            path='/userOrders/:orderId/review/:reviewId/:optionPk'
+            element={<NewReview meData={meData} />}
+            exact={true}
+          /> */}
           <Route
-            path='/userOrders/:id/review/:reviewId'
+            path='/review/:reviewId'
             element={<NewReview meData={meData} />}
             exact={true}
           />
@@ -119,10 +132,15 @@ const Home = ({ meData }) => {
           />
 
           <Route
-            path='/payment'
+            path='/carts/payment'
             element={<PaymentPage meData={meData} />}
             exact={true}
           />
+          {/* <Route
+            path='/carts/payment/:orderId'
+            element={<SuccessPayment meData={meData} />}
+            exact={true}
+          /> */}
 
           <Route
             path='/userBalance'

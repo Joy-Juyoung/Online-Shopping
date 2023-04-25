@@ -38,6 +38,7 @@ import axios from '../../api/axios';
 import { PersonalVideo } from '@material-ui/icons';
 import { useNavigate } from 'react-router-dom';
 import Avatar, { ConfigProvider } from 'react-avatar';
+import { useLocation } from 'react-router-dom';
 
 const UserAccountPage = ({ meData }) => {
   const navigate = useNavigate();
@@ -279,7 +280,9 @@ const UserAccountPage = ({ meData }) => {
                 </strong>
                 Reviews
               </p>
-              <ArrowForwardIosIcon style={{ cursor: 'pointer' }} />
+              <Link to='/myReviews'>
+                <ArrowForwardIosIcon style={{ cursor: 'pointer' }} />
+              </Link>
             </ActivityInfoWrap>
             {/* {reviews.map((review) => {
               return (

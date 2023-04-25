@@ -4,8 +4,9 @@ export const Container = styled.div`
   max-width: 1250px;
   min-height: 100vh;
   height: 100%;
-  margin: 0 auto;
+  margin: 40px auto;
   /* padding: 0 20px; */
+  color: #0a0f18;
 `;
 
 export const PesnalContainer = styled.div`
