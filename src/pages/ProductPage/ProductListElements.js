@@ -198,7 +198,7 @@ export const SoldOutCover = styled.div`
   /* height: 100%; */
   position: absolute;
   top: 0;
-  z-index: 3;
+  z-index: 2;
   /* background: red; */
   background: rgb(0, 0, 0, 0.4);
 

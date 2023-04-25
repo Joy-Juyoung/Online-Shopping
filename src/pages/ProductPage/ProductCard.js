@@ -35,6 +35,7 @@ const ProductsCard = ({
   const [allofItems, setAllofItems] = useState();
 
   const [getEachItem, setGetEachItem] = useState();
+  const [fav, setFav] = useState(false);
 
   // console.log('all', all);
   // console.log('meData', meData);
@@ -42,13 +43,21 @@ const ProductsCard = ({
   // console.log('itemKinds', itemKinds);
   // console.log('wishItems', wishItems);
 
+  // useEffect(() => {
+  //   setParentsItem(getAllKinds);
+  //   setChildItem(itemKinds);
+  //   setLikeItem(wishItems);
+  //   setAdded(addLiked);
+  //   setAllofItems(items);
+  // }, [getAllKinds, itemKinds, wishItems, addLiked, all, added]);
   useEffect(() => {
-    setParentsItem(getAllKinds);
-    setChildItem(itemKinds);
-    setLikeItem(wishItems);
-    setAdded(addLiked);
-    setAllofItems(items);
-  }, [getAllKinds, itemKinds, wishItems, addLiked, all, added]);
+    //   setParentsItem(getAllKinds);
+    //   setChildItem(itemKinds);
+    //   setLikeItem(wishItems);
+    //   setAdded(addLiked);
+    //   setAllofItems(items);
+    setFav(all?.is_liked);
+  }, []);
 
   const handleLiked = (pk) => {
     if (getAllKinds) {
@@ -56,8 +65,10 @@ const ProductsCard = ({
       tempAllItems.forEach((item) => {
         item.products.forEach((each) => {
           if (each.pk === pk) {
+            setFav(!fav);
+            // if (fav) {
             each.is_liked = !each.isLiked;
-
+            console.log('fav 2', fav);
             const addLike = axios.put(
               '/wishlists/',
               {
@@ -72,15 +83,17 @@ const ProductsCard = ({
             // window.location.reload();
             console.log('added', added);
           }
+          // }
         });
       });
-      setParentsItem([...tempAllItems]);
+      setParentsItem([tempAllItems]);
     } else if (itemKinds) {
       var tempItems = itemKinds;
       tempItems.products.forEach((each) => {
         if (each.pk === pk) {
           each.is_liked = !each.isLiked;
-
+          setFav(!fav);
+          console.log('fav 2', fav);
           const addLike = axios.put(
             '/wishlists/',
             {
@@ -95,13 +108,16 @@ const ProductsCard = ({
           // window.location.reload();
         }
       });
-      setChildItem([...tempItems]);
+      setChildItem([tempItems]);
     } else if (wishItems) {
       var tempWishItems = wishItems;
+      // setFav(!fav);
+      // console.log('fav 1', fav);
       tempWishItems.forEach((each) => {
         if (each.pk === pk) {
           each.is_liked = !each.isLiked;
-
+          setFav(!fav);
+          console.log('fav 2', fav);
           const addLike = axios.put(
             '/wishlists/',
             {
@@ -116,7 +132,7 @@ const ProductsCard = ({
           // window.location.reload();
         }
       });
-      setLikeItem([...tempWishItems]);
+      setLikeItem([tempWishItems]);
     } else {
       return console.log('Error: IsLiked');
     }
@@ -156,10 +172,10 @@ const ProductsCard = ({
           }}
         >
           <ProductLike>
-            {all?.is_liked ? (
+            {fav ? (
               <FavoriteIcon sx={{ color: '#e20000' }} />
             ) : (
-              <FavoriteIcon color='disabled' />
+              <FavoriteIcon sx={{ color: '#B1B1B1' }} />
             )}
           </ProductLike>
         </ToggleLike>
