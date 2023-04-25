@@ -427,6 +427,7 @@ const handleCheckAll = () => {
               <CartRightBottom>
                 {/* <CheckOutBtn>PROCEED TO CHECKOUT</CheckOutBtn> */}
 
+
                 <Link to={`/carts/payment`}>
                   <CheckOutBtn>PROCEED TO CHECKOUT</CheckOutBtn>
                 </Link>
