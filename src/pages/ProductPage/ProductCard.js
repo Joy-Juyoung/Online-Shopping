@@ -37,25 +37,7 @@ const ProductsCard = ({
   const [getEachItem, setGetEachItem] = useState();
   const [fav, setFav] = useState(false);
 
-  // console.log('all', all);
-  // console.log('meData', meData);
-  // console.log('itemAllKind', getAllKinds);
-  // console.log('itemKinds', itemKinds);
-  // console.log('wishItems', wishItems);
-
-  // useEffect(() => {
-  //   setParentsItem(getAllKinds);
-  //   setChildItem(itemKinds);
-  //   setLikeItem(wishItems);
-  //   setAdded(addLiked);
-  //   setAllofItems(items);
-  // }, [getAllKinds, itemKinds, wishItems, addLiked, all, added]);
   useEffect(() => {
-    //   setParentsItem(getAllKinds);
-    //   setChildItem(itemKinds);
-    //   setLikeItem(wishItems);
-    //   setAdded(addLiked);
-    //   setAllofItems(items);
     setFav(all?.is_liked);
   }, []);
 

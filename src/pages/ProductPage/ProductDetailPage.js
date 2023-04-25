@@ -86,6 +86,7 @@ const ProductDetailPage = ({
   const [payload, setPayload] = useState('');
   const [rating, setRating] = useState('');
   const [isEdit, setIsEdit] = useState(false);
+  const [fav, setFav] = useState(false);
 
   useEffect(() => {
     setChangeReviews(itemsDetail.reviews);
@@ -160,7 +161,6 @@ const ProductDetailPage = ({
   };
   useEffect(() => {
     getProduct();
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, [id, addLiked]);
   // console.log('id', id);
 
@@ -244,23 +244,28 @@ const ProductDetailPage = ({
     }
   };
 
-  const handleLiked = (pk) => {
-    if (itemsDetail.pk === pk) {
-      itemsDetail.is_liked = !itemsDetail.isLiked;
-      const addLike = axios.put(
-        '/wishlists/',
-        {
-          product_pk: itemsDetail.pk,
-        },
-        {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        }
-      );
-      setAddLiked(addLike);
-      window.location.reload(`/products/${id}`);
-      // navigate(`/products/productAllParentsKinds/${itemAllKinds.pk}`);
-    }
+  useEffect(() => {
+    setFav(itemsDetail.is_liked);
+  }, []);
+  console.log('itemsDetail', itemsDetail);
+
+  const handleLiked = () => {
+    itemsDetail.is_liked = !itemsDetail.is_Liked;
+    setFav(!fav);
+    const addLike = axios.put(
+      '/wishlists/',
+      {
+        product_pk: itemsDetail.id,
+      },
+      {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      }
+    );
+    setAddLiked(addLike);
+    // window.location.reload(`/products/${id}`);
+    // navigate(`/products/productAllParentsKinds/${itemAllKinds.pk}`);
+    setItemsDetail(itemsDetail);
   };
   useEffect(() => {
     const checkIfClickedOutside = (e) => {
@@ -314,15 +319,11 @@ const ProductDetailPage = ({
               {meData && (
                 <LikeBtn
                   onClick={(e) => {
-                    e.preventDefault();
-                    handleLiked(itemsDetail.pk);
+                    handleLiked();
                   }}
                 >
-                  {itemsDetail?.is_liked ? (
-                    <FavoriteBorderIcon
-                      fontSize='medium'
-                      sx={{ color: '#e20000' }}
-                    />
+                  {itemsDetail.is_liked ? (
+                    <FavoriteIcon fontSize='medium' sx={{ color: '#e20000' }} />
                   ) : (
                     <FavoriteBorderIcon fontSize='medium' color='disabled' />
                   )}
