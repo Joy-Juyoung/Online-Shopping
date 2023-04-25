@@ -35,6 +35,7 @@ const ProductsCard = ({
   const [allofItems, setAllofItems] = useState();
 
   const [getEachItem, setGetEachItem] = useState();
+  const [fav, setFav] = useState(false);
 
   // console.log('all', all);
   // console.log('meData', meData);
@@ -57,7 +58,8 @@ const ProductsCard = ({
         item.products.forEach((each) => {
           if (each.pk === pk) {
             each.is_liked = !each.isLiked;
-
+            setFav(!fav);
+            console.log('fav 2', fav);
             const addLike = axios.put(
               '/wishlists/',
               {
@@ -80,7 +82,8 @@ const ProductsCard = ({
       tempItems.products.forEach((each) => {
         if (each.pk === pk) {
           each.is_liked = !each.isLiked;
-
+          setFav(!fav);
+          console.log('fav 2', fav);
           const addLike = axios.put(
             '/wishlists/',
             {
@@ -98,10 +101,13 @@ const ProductsCard = ({
       setChildItem([...tempItems]);
     } else if (wishItems) {
       var tempWishItems = wishItems;
+      // setFav(!fav);
+      // console.log('fav 1', fav);
       tempWishItems.forEach((each) => {
         if (each.pk === pk) {
           each.is_liked = !each.isLiked;
-
+          setFav(!fav);
+          console.log('fav 2', fav);
           const addLike = axios.put(
             '/wishlists/',
             {
@@ -156,7 +162,7 @@ const ProductsCard = ({
           }}
         >
           <ProductLike>
-            {all?.is_liked ? (
+            {!fav ? (
               <FavoriteIcon sx={{ color: '#e20000' }} />
             ) : (
               <FavoriteIcon color='disabled' />
