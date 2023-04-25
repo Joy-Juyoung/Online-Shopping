@@ -12,6 +12,7 @@ import HelpCenterPage from './pages/HelpCenterPage/HelpCenter';
 
 function App() {
   const [meData, setMeData] = useState();
+  const [catData, setCatData] = useState([]);
 
   const getMe = async () => {
     try {
@@ -29,12 +30,24 @@ function App() {
     getMe();
   }, []);
 
+  const getCategory = async () => {
+    const categoryData = await axios.get('/products/productAllParentsKinds', {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+    setCatData(categoryData?.data);
+  };
+
+  useEffect(() => {
+    getCategory();
+  }, [meData]);
+
   return (
     <>
       <Router>
-        <Header meData={meData} />
-        <Home meData={meData} />
-        <Footer />
+        {/* <Header meData={meData} /> */}
+        <Home meData={meData} catData={catData} />
+        {/* <Footer /> */}
       </Router>
     </>
   );

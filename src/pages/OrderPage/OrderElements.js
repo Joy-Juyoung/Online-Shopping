@@ -8,6 +8,21 @@ export const OrderContainer = styled.div`
   font-size: 14px;
   color: #0a0f18;
 
+  h1 {
+    text-align: center;
+    margin: 40px auto;
+  }
+
+  a {
+    text-decoration: none;
+    color: #0a0f18;
+
+    &:visited {
+      text-decoration: none;
+      color: #0a0f18;
+    }
+  }
+
   @media screen and (min-width: 576px) {
     max-width: 55%;
   }
@@ -24,6 +39,7 @@ export const OrderWrapper = styled.div`
 
 export const OrderWrap = styled.div`
   margin: 0 auto;
+  /* margin-bottom: 5em; */
 `;
 
 export const OrderMenuBy = styled.div`
@@ -75,7 +91,7 @@ export const OrderListWrap = styled.div`
 export const Table = styled.table`
   width: 100%;
   text-align: center;
-  margin-bottom: 5em;
+  /* margin-bottom: 10em; */
 `;
 
 export const Thead = styled.thead``;
@@ -97,10 +113,13 @@ export const Th = styled.th`
 
 export const Td = styled.td`
   padding: 10px;
+  position: relative;
 
   a {
     text-decoration: none;
     color: #0a0f18;
+    text-align: center;
+    padding-top: 5px;
 
     &:visited {
       color: #0a0f18;

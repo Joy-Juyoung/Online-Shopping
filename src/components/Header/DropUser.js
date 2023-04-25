@@ -15,14 +15,7 @@ import { ButtonUtils } from '../ButtonElements';
 import Modal from '../Modal';
 import AddBalance from '../AddBalance';
 
-const DropUser = ({ meData }) => {
-  const [modalShown, toggleModal] = useState(false);
-
-  const handleAddBalance = () => {
-    // window.open('/userBalance', 'My Balance', 'height=650px,width=680px');
-    toggleModal(!modalShown);
-  };
-
+const DropUser = ({ meData, shown }) => {
   return (
     // <DropAccountContainer ref={ref}>
     <DropAccountContainer>
@@ -47,15 +40,7 @@ const DropUser = ({ meData }) => {
                 <DropLi>My Orders</DropLi>
               </LinkAccount>
               <LinkAccount>
-                <DropLi onClick={handleAddBalance}>My Balances</DropLi>
-                <Modal
-                  shown={modalShown}
-                  close={() => {
-                    toggleModal(false);
-                  }}
-                >
-                  <AddBalance meData={meData} />
-                </Modal>
+                <DropLi onClick={shown}>My Balances</DropLi>
               </LinkAccount>
               <LinkAccount to='/testPage'>
                 <DropLi>My Coupons</DropLi>

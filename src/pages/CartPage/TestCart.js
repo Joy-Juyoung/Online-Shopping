@@ -354,7 +354,7 @@ const handleCheckAll = () => {
             <CartRightInfo>
               <CartRightTop>
                 <TotalTitle>
-                  <h2>Promo Code</h2>
+                  <h3>Promo Code</h3>
                   <PromoInfo>
                     <QuestionMark>
                       <HelpOutlineIcon fontSize='small' color='action' />
@@ -426,7 +426,9 @@ const handleCheckAll = () => {
 
               <CartRightBottom>
                 {/* <CheckOutBtn>PROCEED TO CHECKOUT</CheckOutBtn> */}
-                <Link to='/payment' state={checkNewList}>
+
+
+                <Link to={`/carts/payment`}>
                   <CheckOutBtn>PROCEED TO CHECKOUT</CheckOutBtn>
                 </Link>
               </CartRightBottom>

@@ -129,7 +129,7 @@ const OrderDtails = ({ meData }) => {
               <PaymentInfoDetails>
                 <h3>{meData?.name}</h3>
                 <p>{meData?.phone_number}</p>
-                <p>{meData?.address}</p>
+                <p>{ordered?.address}</p>
               </PaymentInfoDetails>
             </PaymentPsersonalInfo>
             <PaymentListWrap>
@@ -162,18 +162,16 @@ const OrderDtails = ({ meData }) => {
                           ${sold?.product?.price * sold?.number_of_product}
                         </Td>
                         <Td>
-                          <Link
-                            to={`/userOrders/${id}/review/${sold?.product?.pk}`}
-                          >
+                          <Link to={`/review/${sold?.product?.pk}`}>
                             {ordered?.status === 'delivered' ? (
                               <ReviewBtn active={true}>
-                                <AddIcon fontSize='11px' />
-                                Add Review
+                                {/* <AddIcon fontSize='11px' /> */}
+                                View Review
                               </ReviewBtn>
                             ) : (
                               <ReviewBtn disabled>
-                                <AddIcon fontSize='11px' />
-                                Add Review
+                                {/* <AddIcon fontSize='11px' /> */}
+                                View Review
                               </ReviewBtn>
                             )}
                           </Link>
@@ -188,15 +186,15 @@ const OrderDtails = ({ meData }) => {
 
           <PaymentRightInfo>
             <PaymentRightTop>
-              <TotalTitle>Total</TotalTitle>
-              <span>${TotalPriceTag.toLocaleString()}</span>
+              <TotalTitle>Summary</TotalTitle>
+              {/* <span>${TotalPriceTag.toLocaleString()}</span> */}
             </PaymentRightTop>
 
             <PaymentSummaryInfo>
-              {/* <ItemSummary>
+              <ItemSummary>
                 Price
-                <span>${PriceForBill.toLocaleString()}</span>
-              </ItemSummary> */}
+                <span>${ordered?.total_price?.toLocaleString()}</span>
+              </ItemSummary>
               <ItemSummary>
                 Shipping fee
                 <span>${ShippingFee.toLocaleString()}</span>
@@ -212,6 +210,7 @@ const OrderDtails = ({ meData }) => {
               <ItemTotalPrice>
                 Total
                 <span>${TotalPriceTag.toLocaleString()}</span>
+                {/* <span>${ordered?.final_total_price?.toLocaleString()}</span> */}
               </ItemTotalPrice>
               <ExtraInfo>
                 <li>

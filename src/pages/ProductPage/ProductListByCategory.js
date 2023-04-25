@@ -30,7 +30,7 @@ const sort = [
   { value: 'LowToHigh', text: 'Price: low to high' },
 ];
 
-const ProductListByCategory = ({ meData }) => {
+const ProductListByCategory = ({ meData, catData }) => {
   const [loading, setLoading] = useState(false);
   const [itemKinds, setItemKinds] = useState([]);
   const { pId, cName, cId } = useParams();
@@ -130,6 +130,7 @@ const ProductListByCategory = ({ meData }) => {
           pId={pId}
           cId={cId}
           cName={cName}
+          catData={catData}
         />
         <ProductsListWrapper>
           <ProductsList>
@@ -164,6 +165,7 @@ const ProductListByCategory = ({ meData }) => {
                       // kindEach={kindEach}
                       meData={meData}
                       itemKinds={itemKinds}
+                      // getAllKinds={getAllKinds}
                     />
                   );
                 })}

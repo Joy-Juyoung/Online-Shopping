@@ -47,20 +47,26 @@ import DropUser from './DropUser';
 import { ButtonSmall, ButtonUtils } from '../ButtonElements';
 import Modal from '../Modal';
 import SearchIcon from '@mui/icons-material/Search';
+import AddBalance from '../AddBalance';
 
-const Header = ({ meData }) => {
+const Header = ({ meData, catData }) => {
   const navigate = useNavigate();
 
-  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
   const [me, setMe] = useState(null);
   const [logout, setLogout] = useState();
   const [clickAccount, setClickAccount] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalShown, toggleModal] = useState(false);
+  const [balanceShown, toggleBalance] = useState(false);
 
   const ref = useRef();
   const searchRef = useRef();
+
+  const handleAddBalance = () => {
+    toggleBalance(!balanceShown);
+  };
 
   // console.log('Header Me', me);
 
@@ -68,18 +74,17 @@ const Header = ({ meData }) => {
     setMe(meData);
   }, [meData]);
 
-  const getCategory = async () => {
-    const categoryData = await axios.get('/products/productAllParentsKinds', {
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true,
-    });
-    // console.log('Header Load Me', meData);
-    setCategories(categoryData?.data);
-  };
+  // const getCategory = async () => {
+  //   const categoryData = await axios.get('/products/productAllParentsKinds', {
+  //     headers: { 'Content-Type': 'application/json' },
+  //     withCredentials: true,
+  //   });
+  //   setCategories(categoryData?.data);
+  // };
 
-  useEffect(() => {
-    getCategory();
-  }, [me]);
+  // useEffect(() => {
+  //   getCategory();
+  // }, [me]);
 
   const handleLogout = async () => {
     setLoading(true);
@@ -263,7 +268,20 @@ const Header = ({ meData }) => {
                             ref={ref}
                           />
                         </PermLink>
-                        {clickAccount && <DropUser meData={meData} />}
+                        {clickAccount && (
+                          <DropUser
+                            meData={meData}
+                            shown={() => toggleBalance(!balanceShown)}
+                          />
+                        )}
+                        <Modal
+                          shown={balanceShown}
+                          close={() => {
+                            toggleBalance(false);
+                          }}
+                        >
+                          <AddBalance meData={meData} />
+                        </Modal>
                       </>
                     )}
                   </RightIcon>
@@ -288,7 +306,7 @@ const Header = ({ meData }) => {
                   </DropdownButton>
                 </DropMenuParents>
               </DropMenuList>
-              {categories.map((category) => {
+              {catData.map((category) => {
                 return (
                   <DropMenuList key={category.pk}>
                     {/* <DropMenuWrap></DropMenuWrap> */}

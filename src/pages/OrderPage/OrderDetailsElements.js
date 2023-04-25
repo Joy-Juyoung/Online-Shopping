@@ -214,6 +214,8 @@ export const ReviewBtn = styled.button`
   cursor: pointer;
   padding: 5px;
   border-radius: 5px;
+  display: flex;
+  align-items: center;
   /* display: flex;
   align-items: center;
   justify-content: center; */

@@ -41,24 +41,22 @@ const sort = [
   { value: 'HighToLow', text: 'Price: high to low' },
   { value: 'LowToHigh', text: 'Price: low to high' },
 ];
-const AllProducts = ({ meData }) => {
+const AllProducts = ({ meData, catData }) => {
   const [items, setItems] = useState([]);
-  const [addLiked, setAddLiked] = useState();
   const [loading, setLoading] = useState(false);
-  const [getAllKinds, setGetAllKinds] = useState([]);
-  const [kindEach, setKindEach] = useState([]);
+  // const [getAllKinds, setGetAllKinds] = useState([]);
   const { pId } = useParams();
-  const [isChileOpen, setIsChileOpen] = useState(false);
   const [selectOption, setSelectOption] = useState();
   const [sortList, setSortList] = useState([]);
   const [sortProducts, setSortProducts] = useState([]);
+  const [addLiked, setAddLiked] = useState();
 
   const getItems = async () => {
     const itemsList = await axios.get('/products/', {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    console.log('ProductList', itemsList?.data);
+    // console.log('ProductList', itemsList?.data);
     setItems(itemsList?.data);
     setLoading(false);
   };
@@ -68,6 +66,10 @@ const AllProducts = ({ meData }) => {
     getItems();
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
+
+  useEffect(() => {
+    getItems();
+  }, [addLiked]);
 
   const handleOptionChange = (e) => {
     setSelectOption(e.target.value);
@@ -109,9 +111,9 @@ const AllProducts = ({ meData }) => {
     <ProductsListContainer>
       {/* <h1>{items?.name}</h1> */}
       <h1>All Products</h1>
-      <Category getAllKinds={getAllKinds} items={items} />
+      <Category items={items} />
       <ProductsWrap>
-        <SideFilter getAllKinds={getAllKinds} items={items} />
+        <SideFilter items={items} catData={catData} />
         <ProductsListWrapper>
           <ProductsList>
             <ListTop>
@@ -144,6 +146,7 @@ const AllProducts = ({ meData }) => {
                       all={all}
                       meData={meData}
                       items={items}
+                      // getAllKinds={getAllKinds}
                     />
                   );
                 })}

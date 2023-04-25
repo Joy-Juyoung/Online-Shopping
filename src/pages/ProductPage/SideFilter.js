@@ -15,23 +15,23 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import axios from '../../api/axios';
 import { Link, useParams } from 'react-router-dom';
 
-const SideFilter = ({ meData, getAllKinds, items }) => {
-  const [categories, setCategories] = useState([]);
+const SideFilter = ({ meData, getAllKinds, items, catData }) => {
+  // const [categories, setCategories] = useState([]);
   const [isCategoryDrop, setIsCategoryDrop] = useState(true);
   const [isPriceDrop, setIsPriceDrop] = useState(true);
-  const { all } = useParams();
+  // const { all } = useParams();
 
-  const getCategory = async () => {
-    const categoryData = await axios.get('/products/productAllParentsKinds', {
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true,
-    });
-    setCategories(categoryData?.data);
-  };
+  // const getCategory = async () => {
+  //   const categoryData = await axios.get('/products/productAllParentsKinds', {
+  //     headers: { 'Content-Type': 'application/json' },
+  //     withCredentials: true,
+  //   });
+  //   setCategories(categoryData?.data);
+  // };
 
-  useEffect(() => {
-    getCategory();
-  }, [meData]);
+  // useEffect(() => {
+  //   getCategory();
+  // }, [meData]);
 
   return (
     <SideFilterContainer>
@@ -57,7 +57,7 @@ const SideFilter = ({ meData, getAllKinds, items }) => {
                         <li>ALL PRODUCTS</li>
                       </Link>
                     )}
-                    {categories?.map((cat) => {
+                    {catData?.map((cat) => {
                       return (
                         <Link key={cat.pk} to={`/products/category/${cat.pk}`}>
                           {cat?.name === getAllKinds?.name ? (

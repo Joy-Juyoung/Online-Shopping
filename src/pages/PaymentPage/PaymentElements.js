@@ -21,6 +21,34 @@ export const PaymentContainer = styled.div`
   }
 `;
 
+export const PaymentSuccessMsg = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+  margin: 50px auto;
+  width: 375px;
+
+  div {
+    text-align: center;
+    width: 100%;
+  }
+
+  h1 {
+    font-size: 25px;
+    margin: 20px 0;
+  }
+  p {
+    text-align: center;
+    margin: 20px 0 30px;
+    padding: 15px;
+    border: 1px solid #009605;
+    background: #dff0d7;
+    color: #009605;
+    font-weight: 600;
+  }
+`;
+
 export const PaymentWrapper = styled.div`
   margin-bottom: 40px;
   padding: 0 10px;
@@ -95,7 +123,7 @@ export const ListsImgLink = styled(Link)`
   }
 `;
 
-export const ListsItemDetails = styled.div`
+export const ListsItemDetails = styled(Link)`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -103,13 +131,13 @@ export const ListsItemDetails = styled.div`
   font-size: 14px;
 `;
 
-export const DetailName = styled(Link)`
+export const DetailName = styled.div`
   margin-bottom: 4px;
   font-weight: 600;
   cursor: pointer;
 `;
 
-export const DetailDescription = styled(Link)`
+export const DetailDescription = styled.div`
   cursor: pointer;
 `;
 
