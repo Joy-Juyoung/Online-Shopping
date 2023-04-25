@@ -32,14 +32,14 @@ import { ButtonLarge, ButtonSmall } from '../../components/ButtonElements';
 import PaypalIcon from '../../asset/paypal.svg';
 import MastercardIcon from '../../asset/mastercard.svg';
 import VisaIcon from '../../asset/visa.svg';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Modal from '../../components/Modal';
 import AddBalance from '../../components/AddBalance';
 import { useRef } from 'react';
 
 const CARTS_URL = '/carts';
 
-const PaymentPage = ({ meData }) => {
+const PaymentPage = ({ meData }, props) => {
   const balanceRef = useRef();
   const addressRef = useRef();
   const navigate = useNavigate();
@@ -58,6 +58,10 @@ const PaymentPage = ({ meData }) => {
   const Taxes = PriceForBill * 0.05;
   const Discounts = 0;
   const TotalPriceTag = PriceForBill + ShippingFee + Taxes + Discounts;
+
+  const location = useLocation();
+  const propsData = location.state;
+  console.log("test2",propsData);
 
   const getAllCart = async () => {
     const cartList = await axios.get(CARTS_URL, {

@@ -426,8 +426,7 @@ const handleCheckAll = () => {
 
               <CartRightBottom>
                 {/* <CheckOutBtn>PROCEED TO CHECKOUT</CheckOutBtn> */}
-
-                <Link to='/payment'>
+                <Link to='/payment' state={checkNewList}>
                   <CheckOutBtn>PROCEED TO CHECKOUT</CheckOutBtn>
                 </Link>
               </CartRightBottom>
