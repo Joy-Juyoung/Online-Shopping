@@ -202,6 +202,7 @@ export const DescriptionListDetail = styled.div`
 `;
 export const ReviewListDetail = styled.div`
   margin-left: 10px;
+  margin-bottom: 20px;
 `;
 
 export const ReviewListOne = styled.div`
@@ -224,12 +225,13 @@ export const ReviewDeleteBtn = styled.button`
     left: 360px;
 `;
 
-export const ReviewEditBtn = styled.button`
+export const ReviewEditBtn = styled(Link)`
     border: 0px;
     background: none;
     cursor: pointer;
     position: absolute;
     left: 330px;
+    text-decoration: none;
 `;
 
 export const ListOneAvatar = styled.div`

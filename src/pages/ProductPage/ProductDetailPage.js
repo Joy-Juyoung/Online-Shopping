@@ -467,7 +467,9 @@ const ProductDetailPage = ({
                                   </ListOneLink> 
                                   {i?.user?.username === meData?.username &&
                                   <>
-                                  <ReviewEditBtn>
+                                  <ReviewEditBtn 
+                                    // to={`/userOrders/${id}/review/${sold?.product?.pk}`}
+                                  >
                                     <EditIcon fontSize='small' color="primary"/>
                                   </ReviewEditBtn>
                                   <ReviewDeleteBtn>

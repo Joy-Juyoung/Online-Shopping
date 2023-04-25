@@ -261,7 +261,7 @@ export const ModalBodyParagraph = styled.ol`
     }
   }  */
   transform-origin: top;
-  animation: popularMenu 2s ease-in-out 0s forwards running;
+  animation: popularMenu 0.9s ease-in-out 0s forwards running;
   @keyframes popularMenu {
     0% {
       transform: rotateX(-90deg);

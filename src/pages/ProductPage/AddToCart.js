@@ -88,26 +88,32 @@ const AddToCart = ({ onClose}) => {
                 <CloseIcon fontSize='medium' />
               </SidebarMenuClose>
             </SidebarMenuTop>
-            <SidebarMenuMid>
-              <SidebarSelect 
-                        onChange={OptionHandleChange}>
-                <option value='none'>Select color or size</option>
-                {selectOptions?.productOptions?.map((o) => (
-                  <option key={o.pk} value={o.pk}>
-                    {o.description}
-                  </option>
-                ))}
-              </SidebarSelect>
-              <SidebarMenuMidWrap />
-              {/* <select value={selectOptions} onChange={OptionHandleChange}>{optionLists}</select>  */}
-            </SidebarMenuMid>
-            <SidebarMenuBottom>
-              <MenuTotalSummary>
-                <p>Total {selectOptions?.length} </p>
-                <p>${selectOptions?.price}</p>
-              </MenuTotalSummary>
-              <ButtonLarges>ADD TO BAG</ButtonLarges>
-            </SidebarMenuBottom>
+                <SidebarMenuMid>
+                  {selectOptions?.productOptions?.length === 0 ? (
+                  <SidebarSelect>
+                    <option>Free</option>
+                    </SidebarSelect>
+                    ):(
+                      <SidebarSelect onChange={OptionHandleChange}>
+                      <option value='none'>Select color or size</option>
+                      {selectOptions?.productOptions?.map((o) => (
+                        <option key={o.pk} value={o.pk}>
+                          {o.description}
+                        </option>
+                      ))}
+                      </SidebarSelect>
+                    )}
+
+                  <SidebarMenuMidWrap />
+                  {/* <select value={selectOptions} onChange={OptionHandleChange}>{optionLists}</select>  */}
+                </SidebarMenuMid>
+                <SidebarMenuBottom>
+                  <MenuTotalSummary>
+                    <p>Total {selectOptions?.length} </p>
+                    <p>${selectOptions?.price}</p>
+                  </MenuTotalSummary>
+                  <ButtonLarges>ADD TO BAG</ButtonLarges>
+                </SidebarMenuBottom>
           </SidebarMenuKinds>
         </form>
       </SidebarMenuWrapper>
