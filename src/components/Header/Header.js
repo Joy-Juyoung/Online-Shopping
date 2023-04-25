@@ -49,10 +49,10 @@ import Modal from '../Modal';
 import SearchIcon from '@mui/icons-material/Search';
 import AddBalance from '../AddBalance';
 
-const Header = ({ meData }) => {
+const Header = ({ meData, catData }) => {
   const navigate = useNavigate();
 
-  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
   const [me, setMe] = useState(null);
   const [logout, setLogout] = useState();
   const [clickAccount, setClickAccount] = useState(false);
@@ -74,18 +74,17 @@ const Header = ({ meData }) => {
     setMe(meData);
   }, [meData]);
 
-  const getCategory = async () => {
-    const categoryData = await axios.get('/products/productAllParentsKinds', {
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true,
-    });
-    // console.log('Header Load Me', meData);
-    setCategories(categoryData?.data);
-  };
+  // const getCategory = async () => {
+  //   const categoryData = await axios.get('/products/productAllParentsKinds', {
+  //     headers: { 'Content-Type': 'application/json' },
+  //     withCredentials: true,
+  //   });
+  //   setCategories(categoryData?.data);
+  // };
 
-  useEffect(() => {
-    getCategory();
-  }, [me]);
+  // useEffect(() => {
+  //   getCategory();
+  // }, [me]);
 
   const handleLogout = async () => {
     setLoading(true);
@@ -307,7 +306,7 @@ const Header = ({ meData }) => {
                   </DropdownButton>
                 </DropMenuParents>
               </DropMenuList>
-              {categories.map((category) => {
+              {catData.map((category) => {
                 return (
                   <DropMenuList key={category.pk}>
                     {/* <DropMenuWrap></DropMenuWrap> */}

@@ -31,7 +31,7 @@ const sort = [
   { value: 'LowToHigh', text: 'Price: low to high' },
 ];
 
-const ProductsListPage = ({ meData }) => {
+const ProductsListPage = ({ meData, catData }) => {
   const [addLiked, setAddLiked] = useState();
   const [loading, setLoading] = useState(false);
   const [getAllKinds, setGetAllKinds] = useState([]);
@@ -41,12 +41,12 @@ const ProductsListPage = ({ meData }) => {
   const [selectOption, setSelectOption] = useState();
   const [sortList, setSortList] = useState([]);
 
-  useEffect(() => {
-    const loadData = async () => {
-      await new Promise((r) => setTimeout(r, 1000));
-    };
-    loadData();
-  }, []);
+  // useEffect(() => {
+  //   const loadData = async () => {
+  //     await new Promise((r) => setTimeout(r, 1000));
+  //   };
+  //   loadData();
+  // }, []);
 
   const getAllKindsProduct = async () => {
     const { data } = await axios.get(
@@ -58,7 +58,7 @@ const ProductsListPage = ({ meData }) => {
     );
     setGetAllKinds(data);
     // console.log('getAllKinds', getAllKinds);
-    setKindEach(getAllKinds.productKinds);
+    // setKindEach(getAllKinds.productKinds);
     setLoading(false);
   };
 
@@ -86,7 +86,11 @@ const ProductsListPage = ({ meData }) => {
       <h1>All {getAllKinds.name}</h1>
       <Category pId={pId} getAllKinds={getAllKinds} meData={meData} />
       <ProductsWrap>
-        <SideFilter meData={meData} getAllKinds={getAllKinds} />
+        <SideFilter
+          meData={meData}
+          getAllKinds={getAllKinds}
+          catData={catData}
+        />
         <ProductsListWrapper>
           {!isChileOpen ? (
             <ProductsList>
@@ -150,7 +154,7 @@ const ProductsListPage = ({ meData }) => {
               </ListAllMidWrap>
             </ProductsList>
           ) : (
-            <ProductListByCategory getAllKinds={getAllKinds} pId={pId} />
+            <ProductListByCategory pId={pId} />
           )}
         </ProductsListWrapper>
       </ProductsWrap>

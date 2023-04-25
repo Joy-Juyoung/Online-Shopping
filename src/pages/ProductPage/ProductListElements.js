@@ -109,6 +109,7 @@ export const CategoriesInside = styled.div`
 
 export const ProductsList = styled.div`
   /* margin: 20px; */
+  width: 100%;
 `;
 
 export const ListTop = styled.div`

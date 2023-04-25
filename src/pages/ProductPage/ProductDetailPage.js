@@ -86,7 +86,7 @@ const ProductDetailPage = ({
   const [payload, setPayload] = useState('');
   const [rating, setRating] = useState('');
   const [isEdit, setIsEdit] = useState(false);
-  const [fav, setFav] = useState(false);
+  // const [fav, setFav] = useState(false);
 
   useEffect(() => {
     setChangeReviews(itemsDetail.reviews);
@@ -139,15 +139,15 @@ const ProductDetailPage = ({
     }
   };
 
-  useEffect(() => {
-    setLoading(true);
-    const loadData = async () => {
-      await new Promise((r) => setTimeout(r, 1000));
-      setLoading(false);
-    };
-    loadData();
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  }, []);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   const loadData = async () => {
+  //     await new Promise((r) => setTimeout(r, 1000));
+  //     setLoading(false);
+  //   };
+  //   loadData();
+  //   window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  // }, []);
   console.log('me', meData);
 
   const getProduct = async () => {
@@ -244,14 +244,14 @@ const ProductDetailPage = ({
     }
   };
 
-  useEffect(() => {
-    setFav(itemsDetail.is_liked);
-  }, []);
-  console.log('itemsDetail', itemsDetail);
+  // useEffect(() => {
+  //   setFav(itemsDetail.is_liked);
+  // }, []);
+  // console.log('itemsDetail', itemsDetail);
 
   const handleLiked = () => {
     itemsDetail.is_liked = !itemsDetail.is_Liked;
-    setFav(!fav);
+    // setFav(!fav);
     const addLike = axios.put(
       '/wishlists/',
       {
@@ -333,7 +333,7 @@ const ProductDetailPage = ({
 
             {itemsDetail?.in_stock === 0 ? (
               <ButtonLarges style={{ background: 'gray' }} disabled>
-                Add to Cart
+                Sold out
               </ButtonLarges>
             ) : (
               <ButtonLarges onClick={() => setIsOpen(true)}>
