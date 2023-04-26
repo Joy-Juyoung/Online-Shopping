@@ -399,7 +399,11 @@ const TestCart = () => {
                   </ItemShippingFee>
                   <ItemTotalPrice>
                     Total
-                    <span>${TotalPriceTag?.toLocaleString()}</span>
+                    {PriceForBill === 0 ? (
+                      <span>$0</span>
+                    ) : (
+                      <span>${TotalPriceTag?.toLocaleString()}</span>
+                    )}
                   </ItemTotalPrice>
                   <ExtraInfo>
                     <li>
