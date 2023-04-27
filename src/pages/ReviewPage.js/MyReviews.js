@@ -30,6 +30,10 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
 import { ReviewBtn } from '../OrderPage/OrderDetailsElements';
+import RateReviewIcon from '@mui/icons-material/RateReview';
+import DeleteIcon from '@mui/icons-material/Delete';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import { ReviewListEmpty } from './ReviewsElements';
 
 const MyReviews = ({ meData }) => {
   const [loading, setLoading] = useState(false);
@@ -51,6 +55,30 @@ const MyReviews = ({ meData }) => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
 
+  const deleteReview = (pk) => {
+    reviews.map(async (rv) => {
+      if (pk === rv.pk) {
+        if (window.confirm('Are you sure you want to delete this review?')) {
+          try {
+            await axios.delete(`/reviews/${pk}`, {
+              headers: { 'Content-Type': 'application/json' },
+              withCredentials: true,
+            });
+            window.location.reload();
+          } catch (err) {
+            console.log('Error: Deleted failed. Please try again later');
+          }
+        } else {
+          window.location.reload();
+        }
+      }
+    });
+  };
+
+  // useEffect(() => {
+  //   deleteReview();
+  // }, []);
+
   if (loading)
     return (
       <div>
@@ -60,11 +88,14 @@ const MyReviews = ({ meData }) => {
   return (
     <OrderContainer>
       <OrderWrapper>
-        <h1>My Orders</h1>
+        <h1>My Reviews</h1>
         <OrderWrap>
           <OrderList>
             {reviews?.length === 0 ? (
-              <OrderListEmpty>No reviews found.</OrderListEmpty>
+              <ReviewListEmpty>
+                <span>No reviews found.</span>
+                {/* <FormatListBulletedIcon /> */}
+              </ReviewListEmpty>
             ) : (
               <OrderListWrap>
                 <Table>
@@ -74,6 +105,7 @@ const MyReviews = ({ meData }) => {
                       <Th>Date</Th>
                       <Th>Item name</Th>
                       <Th>Reviews</Th>
+                      <Th></Th>
                       <Th></Th>
                     </Tr>
                   </Thead>
@@ -90,7 +122,21 @@ const MyReviews = ({ meData }) => {
                             <Td>{review?.payload}</Td>
                             <Td>
                               <Link to={`/review/${review.product}`}>
-                                <ReviewBtn active={true}>View</ReviewBtn>
+                                <ReviewBtn active={true}>
+                                  View
+                                  <RateReviewIcon fontSize='small' />
+                                </ReviewBtn>
+                              </Link>
+                            </Td>
+                            <Td>
+                              <Link>
+                                <DeleteIcon
+                                  fontSize='small'
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    deleteReview(review?.pk);
+                                  }}
+                                />
                               </Link>
                             </Td>
                           </>
