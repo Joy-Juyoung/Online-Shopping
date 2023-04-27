@@ -109,6 +109,16 @@ export const Tr = styled.tr``;
 
 export const Th = styled.th`
   padding: 10px;
+
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      cursor: pointer;
+    }
+  }
 `;
 
 export const Td = styled.td`
@@ -119,7 +129,15 @@ export const Td = styled.td`
     text-decoration: none;
     color: #0a0f18;
     text-align: center;
-    padding-top: 5px;
+    /* padding-top: 5px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      margin-left: 2px;
+      /* color: gray; */
+    }
 
     &:visited {
       color: #0a0f18;

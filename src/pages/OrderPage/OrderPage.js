@@ -27,7 +27,8 @@ import {
 import Loading from '../../components/Loading';
 import { Link } from 'react-router-dom';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import styled from 'styled-components';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
 const statusKinds = ['All', 'pending', 'inprogress', 'delivered', 'cancelled'];
 const OrderPage = () => {
@@ -206,7 +207,12 @@ const OrderPage = () => {
                   <Thead>
                     <Tr>
                       <Th>Order No.</Th>
-                      <Th onClick={handleDateSort}>Order Date</Th>
+                      <Th onClick={handleDateSort}>
+                        <span>
+                          Order Date
+                          {isSort ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+                        </span>
+                      </Th>
                       {/* <Th>Order Date</Th> */}
                       <Th>Number of Items</Th>
                       <Th>Order Pice</Th>
@@ -215,7 +221,7 @@ const OrderPage = () => {
                     </Tr>
                   </Thead>
                   <Tbody>
-                    {orderStatus?.map((order) => {
+                    {orderStatus?.reverse().map((order) => {
                       return (
                         <Tr key={order?.pk}>
                           {isSelected === 'All' && (
@@ -285,10 +291,10 @@ const OrderPage = () => {
                               </Td>
                             </>
                           )}
+                          {/* {order?.status === isSelected ? ( */}
                           {order?.status === isSelected && (
                             <>
-                              <Td>{order.pk}</Td>
-
+                              <Td>{order.pk.toString().padStart(6, '0')}</Td>
                               <Td>
                                 {new Date(
                                   order.created_at
@@ -344,6 +350,18 @@ const OrderPage = () => {
                                 </Link>
                               </Td>
                             </>
+                            // ) : (
+                            //   <>
+                            //     {isSelected !== 'All' &&
+                            //       isSelected !== 'pending' &&
+                            //       // isSelected !== 'inprogress' &&
+                            //       isSelected !== 'delivered' &&
+                            //       isSelected !== 'cancelled' && (
+                            //         <Td colSpan='6' rowSpan='1'>
+                            //           Nodata
+                            //         </Td>
+                            //       )}
+                            //   </>
                           )}
                         </Tr>
                       );

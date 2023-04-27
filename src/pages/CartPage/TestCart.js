@@ -63,7 +63,7 @@ const CARTS_URL = '/carts';
 
 const TestCart = () => {
   const [loading, setLoading] = useState(false);
-  
+
   const [carts, setCarts] = useState([]);
 
   const [checkList, setCheckList] = useState([]);
@@ -91,8 +91,10 @@ const TestCart = () => {
       // }
    }
 
-   const onChangeEach = async (e, id) => {
+
+  const onChangeEach = async (e, id) => {
     // console.log("id",id);
+
       if (e.target.checked) {
           setCheckList([...checkList, id]);
           const check = await axios.get(`/carts/${id}`, {
@@ -115,6 +117,7 @@ const TestCart = () => {
     console.log("each",checkList)
     console.log("NEW", checkNewList);
 
+
   const getAllCart = async () => {
     const cartList = await axios.get(CARTS_URL, {
       headers: { 'Content-Type': 'application/json' },
@@ -131,6 +134,7 @@ const TestCart = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
   // console.log('carts', carts);
+
 
 
  
@@ -153,6 +157,7 @@ const TestCart = () => {
     console.log("empty", empty);
   };
 
+
   const handleDeleteCart = async (pk) => {
     alert('Are you sure you want to remove the product?');
     // console.log('pk', pk);
@@ -170,7 +175,9 @@ const TestCart = () => {
   };
 
   const handleIncrease = async (pk) => {
+
     const addQty =  carts.map((i) => {
+
       if (pk === i?.pk && i.number_of_product < 10000) {
         axios.put(
           `/carts/${pk}`,
@@ -190,9 +197,11 @@ const TestCart = () => {
   };
 
   const handleDecrease = async (pk) => {
+
     const minusQty = await carts.map((i) => {
       if (pk === i?.pk && i.number_of_product > 1) {
          axios.put(
+
           `/carts/${pk}`,
           {
             pk: i?.pk,
@@ -209,10 +218,12 @@ const TestCart = () => {
     getAllCart();
   };
 
-  const ShippingFee = 15;
   const PriceForBill = checkNewList.reduce((total, item) => {
     return total + item?.total_price;
   }, 0);
+
+   const ShippingFee = 15;
+
   const Taxes = PriceForBill * 0.05;
   const Discounts = 0;
   console.log('total: ', PriceForBill);
@@ -252,22 +263,24 @@ const TestCart = () => {
               <CartLeftCheckBar>
                 <CheckBarWrap>
                   <OrderCheckBox>
-                    <input 
+                    <input
                       type='checkbox'
-                      onChange={onChangeAll} 
+                      onChange={onChangeAll}
                       // onClick={handleCheckAll}
-                      checked={checkList.length === IdList.length} 
-                      // onChange={onChangeAll} 
+                      checked={checkList.length === IdList.length}
+                      // onChange={onChangeAll}
                       // checked={isCheckAll}
                     />
                     <label>All</label>
                   </OrderCheckBox>
                   <DeleteBtn
+
                     onClick={(e) => {
                       e.preventDefault();
                       handleAllDeleteCart(carts?.pk);
                     }}
                   >Delete</DeleteBtn>
+
                 </CheckBarWrap>
               </CartLeftCheckBar>
               <CartProductLists>
@@ -275,13 +288,15 @@ const TestCart = () => {
                   return (
                     <ListsDetails key={cart?.pk}>
                       <ListsCheckBox>
-                        <input 
+                        <input
                           type='checkbox'
+
                           onChange={(e) => onChangeEach(e, cart?.pk)} 
                           checked={checkList.includes(cart?.pk) } 
                           // onChange={(e) => onChangeEach(cart?.pk)}
                           // checked={isCheck.includes(cart?.pk)}
                          />
+
                         {/* <label/> */}
                       </ListsCheckBox>
                       <ListsItemImg>
@@ -373,33 +388,31 @@ const TestCart = () => {
                 <CartSummaryInfo>
                   <ItemPriceInfo>
                     Price
-                    <span>
-                      ${PriceForBill?.toLocaleString()}
-                    </span>
+                    <span>${PriceForBill?.toLocaleString()}</span>
                   </ItemPriceInfo>
                   <ItemShippingFee>
                     Shipping fee
-                    <span>
-                      ${ShippingFee?.toLocaleString()}
-                    </span>
+                    {PriceForBill === 0 ? (
+                      <span>$0</span>
+                    ) : (
+                      <span>${ShippingFee?.toLocaleString()}</span>
+                    )}
                   </ItemShippingFee>
                   <ItemShippingFee>
                     Duties amd Taxes
-                    <span>
-                      ${Taxes?.toLocaleString()}
-                    </span>
+                    <span>${Taxes?.toLocaleString()}</span>
                   </ItemShippingFee>
                   <ItemShippingFee>
                     Discounts
-                    <span>
-                      ${Discounts?.toLocaleString()}
-                    </span>
+                    <span>${Discounts?.toLocaleString()}</span>
                   </ItemShippingFee>
                   <ItemTotalPrice>
                     Total
-                    <span>
-                     ${TotalPriceTag?.toLocaleString()}
-                    </span>
+                    {PriceForBill === 0 ? (
+                      <span>$0</span>
+                    ) : (
+                      <span>${TotalPriceTag?.toLocaleString()}</span>
+                    )}
                   </ItemTotalPrice>
                   <ExtraInfo>
                     <li>

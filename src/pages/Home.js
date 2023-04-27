@@ -11,7 +11,7 @@ import RegisterPage from './RegisterPage/RegisterPage';
 // import TestLogin from './LoginPage/TestLogin';
 // import TestRegister from './RegisterPage/TestRegister';
 // import ProductAllParentsKinds from './ProductPage/ProductAllParentsKinds';
-import TestPage from './Test/TestPage';
+// import TestPage from './Test/TestPage';
 
 import UserAccountPage from './UserAccountPage/UserAccountPage';
 
@@ -34,6 +34,7 @@ import MyReviews from './ReviewPage.js/MyReviews';
 import { useState } from 'react';
 import axios from '../api/axios';
 import { useEffect } from 'react';
+import MyCoupons from './CouponPage/MyCoupons';
 
 const Home = ({ meData, catData }) => {
   return (
@@ -41,7 +42,7 @@ const Home = ({ meData, catData }) => {
       <Header meData={meData} catData={catData} />
       <Container>
         <Routes>
-          <Route path='/testPage' element={<TestPage />} exact={true} />
+          <Route path='/coupon' element={<MyCoupons />} exact={true} />
 
           <Route path='/' element={<HeroPage />} exact={true} />
 
