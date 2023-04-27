@@ -73,54 +73,50 @@ const TestCart = () => {
   const [isCheckAll, setIsCheckAll] = useState(false);
   const [checkNewList, setCheckNewList] = useState([]);
 
-  useEffect(() => {
-    let ids = [];
-    carts.map((item, i) => {
-      ids[i] = item?.pk;
-    });
-    setIdList(ids);
-    console.log('ids', ids);
-  }, [carts]);
+    useEffect(() => {
+      let ids = []
+      carts?.map((item, i) => {
+        ids[i] = item?.pk
+      })
+      setIdList(ids)
+      console.log("ids", ids);
+  }, [carts])
 
-  const onChangeAll = (e) => {
-    setCheckList(e.target.checked ? IdList : []);
-    // setIsCheckAll(!isCheckAll);
-    // setIsCheck(carts.map(li => li?.pk));
-    // if (isCheckAll) {
-    //   setIsCheck([]);
-    // }
-  };
+    const onChangeAll = (e) => {
+      setCheckList(e.target.checked ? IdList : [])
+      // setIsCheckAll(!isCheckAll);
+      // setIsCheck(carts.map(li => li?.pk));
+      // if (isCheckAll) {
+      //   setIsCheck([]);
+      // }
+   }
+
 
   const onChangeEach = async (e, id) => {
     // console.log("id",id);
-    if (e.target.checked) {
-      setCheckList([...checkList, id]);
-      const check = await axios.get(`/carts/${id}`, {
-        headers: { 'Content-Type': 'application/json' },
-        withCredentials: true,
-      });
-      setCheckNewList([...checkNewList, check.data]);
-      // setItemPrice(checkList.total_price);
-    } else {
-      setCheckList(checkList.filter((checkedId) => checkedId !== id));
-      setCheckNewList(checkNewList.filter((checked) => checked?.pk !== id));
-    }
-    // const checked = e.target;
-    // setIsCheck([...isCheck, id]);
-    // if (!checked) {
-    //   setIsCheck(isCheck.filter(item => item !== id));
-    // }
-  };
-  console.log('each', checkList);
-  console.log('NEW', checkNewList);
 
-  const handleCheckAll = () => {
-    setIsCheckAll(!isCheckAll);
-    setCheckList(carts.map((li) => li?.pk));
-    if (isCheckAll) {
-      setCheckList([]);
-    }
-  };
+      if (e.target.checked) {
+          setCheckList([...checkList, id]);
+          const check = await axios.get(`/carts/${id}`, {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+          });
+          setCheckNewList([...checkNewList, check.data]);
+          // setItemPrice(checkList.total_price);
+      } else {
+         setCheckList(checkList.filter((checkedId) => checkedId !== id));
+         setCheckNewList(checkNewList.filter((checked) => checked?.pk !== id));
+      }
+      // const checked = e.target;
+      // setIsCheck([...isCheck, id]);
+      // if (!checked) {
+      //   setIsCheck(isCheck.filter(item => item !== id));
+      // }
+
+    };
+    console.log("each",checkList)
+    console.log("NEW", checkNewList);
+
 
   const getAllCart = async () => {
     const cartList = await axios.get(CARTS_URL, {
@@ -130,7 +126,6 @@ const TestCart = () => {
     console.log('cartList', cartList.data);
     setCarts(cartList?.data);
     setLoading(false);
-    // setCheckItems(new Array(cartList?.length).fill(true));
   };
 
   useEffect(() => {
@@ -140,22 +135,28 @@ const TestCart = () => {
   }, []);
   // console.log('carts', carts);
 
-  // const handleAllDeleteCart = async (pk) => {
-  //   alert('Are you sure you want to remove the products?');
-  //   // console.log('pk', pk);
-  //   let arrayids = [];
-  //   carts.forEach((c) => {
-  //     if (c.length > 0) {
-  //       arrayids.push(c?.pk)
-  //     }
-  //   });
-  //     axios.delete(`/carts/${pk}`, {
-  //       headers: { 'Content-Type': 'application/json' },
-  //       withCredentials: true,
-  //       getAllCart();
-  //   });
-  //   window.location.reload('/carts');
-  // };
+
+
+ 
+  const handleAllDeleteCart = async (pk) => {
+    alert('Are you sure you want to remove the product?');
+    var emptyList = 0;
+    const empty =  carts.filter((i) => {
+      if (pk == i.pk && emptyList !== i.length) {
+        axios.delete(`/carts/${pk}`,{
+          length:i.length,
+        },
+          {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+          }
+        );
+      }
+    });
+    setCarts(empty);
+    console.log("empty", empty);
+  };
+
 
   const handleDeleteCart = async (pk) => {
     alert('Are you sure you want to remove the product?');
@@ -174,7 +175,9 @@ const TestCart = () => {
   };
 
   const handleIncrease = async (pk) => {
-    const addQty = carts.map((i) => {
+
+    const addQty =  carts.map((i) => {
+
       if (pk === i?.pk && i.number_of_product < 10000) {
         axios.put(
           `/carts/${pk}`,
@@ -192,10 +195,13 @@ const TestCart = () => {
     setCarts(addQty);
     getAllCart();
   };
+
   const handleDecrease = async (pk) => {
-    const minusQty = carts.map((i) => {
+
+    const minusQty = await carts.map((i) => {
       if (pk === i?.pk && i.number_of_product > 1) {
-        axios.put(
+         axios.put(
+
           `/carts/${pk}`,
           {
             pk: i?.pk,
@@ -215,8 +221,9 @@ const TestCart = () => {
   const PriceForBill = checkNewList.reduce((total, item) => {
     return total + item?.total_price;
   }, 0);
-  // const PriceForBill = checkList.total_price;
-  const ShippingFee = 15;
+
+   const ShippingFee = 15;
+
   const Taxes = PriceForBill * 0.05;
   const Discounts = 0;
   console.log('total: ', PriceForBill);
@@ -267,13 +274,13 @@ const TestCart = () => {
                     <label>All</label>
                   </OrderCheckBox>
                   <DeleteBtn
-                  //  onChange={(e) => {
-                  //   e.preventDefault();
-                  //   handleAllDeleteCart(carts?.pk);
-                  // }}
-                  >
-                    Delete
-                  </DeleteBtn>
+
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleAllDeleteCart(carts?.pk);
+                    }}
+                  >Delete</DeleteBtn>
+
                 </CheckBarWrap>
               </CartLeftCheckBar>
               <CartProductLists>
@@ -283,11 +290,13 @@ const TestCart = () => {
                       <ListsCheckBox>
                         <input
                           type='checkbox'
-                          onChange={(e) => onChangeEach(e, cart?.pk)}
-                          checked={checkList.includes(cart?.pk)}
+
+                          onChange={(e) => onChangeEach(e, cart?.pk)} 
+                          checked={checkList.includes(cart?.pk) } 
                           // onChange={(e) => onChangeEach(cart?.pk)}
                           // checked={isCheck.includes(cart?.pk)}
-                        />
+                         />
+
                         {/* <label/> */}
                       </ListsCheckBox>
                       <ListsItemImg>
@@ -437,4 +446,5 @@ const TestCart = () => {
   );
 };
 
-export default TestCart;
+// export default TestCart;
+export default React.memo(TestCart);

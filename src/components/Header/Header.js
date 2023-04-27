@@ -33,6 +33,8 @@ import {
   DropChildWrap,
   ModalBtnWrap,
   ModalBtnDetail,
+  FlagBtn,
+  ItemCount,
 } from './HeaderElements';
 import FlagIcon from '@mui/icons-material/Flag';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -49,10 +51,10 @@ import Modal from '../Modal';
 import SearchIcon from '@mui/icons-material/Search';
 import AddBalance from '../AddBalance';
 
+const CARTS_URL = '/carts';
+
 const Header = ({ meData, catData }) => {
   const navigate = useNavigate();
-
-  // const [categories, setCategories] = useState([]);
   const [me, setMe] = useState(null);
   const [logout, setLogout] = useState();
   const [clickAccount, setClickAccount] = useState(false);
@@ -60,7 +62,7 @@ const Header = ({ meData, catData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalShown, toggleModal] = useState(false);
   const [balanceShown, toggleBalance] = useState(false);
-
+  const [carts, setCarts] = useState([]);
   const ref = useRef();
   const searchRef = useRef();
 
@@ -74,17 +76,23 @@ const Header = ({ meData, catData }) => {
     setMe(meData);
   }, [meData]);
 
-  // const getCategory = async () => {
-  //   const categoryData = await axios.get('/products/productAllParentsKinds', {
-  //     headers: { 'Content-Type': 'application/json' },
-  //     withCredentials: true,
-  //   });
-  //   setCategories(categoryData?.data);
-  // };
+  const getAllCart = async () => {
+    const cartList = await axios.get(CARTS_URL, {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+    console.log('cartList', cartList.data);
+    setCarts(cartList?.data);
+    setLoading(false);
+    // setCheckItems(new Array(cartList?.length).fill(true));
+  };
 
-  // useEffect(() => {
-  //   getCategory();
-  // }, [me]);
+  useEffect(() => {
+    setLoading(true);
+    getAllCart();
+      // setCheckNewList(carts)
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }, []);
 
   const handleLogout = async () => {
     setLoading(true);
@@ -175,12 +183,15 @@ const Header = ({ meData, catData }) => {
               </MidLink>
             </MiddleSide>
             <RightSide>
-              <RightIcon>
-                <FlagIcon fontSize='medium' />
-              </RightIcon>
 
               {!me && logout !== null ? (
                 <>
+                  <RightIcon>
+                    <FlagBtn>
+                      <img src="https://static.msscdn.net/global/country/flag/CA.svg" />
+                    </FlagBtn>
+                  </RightIcon>
+
                   <RightIcon>
                     <FaLink>
                       <FavoriteBorderIcon
@@ -249,15 +260,34 @@ const Header = ({ meData, catData }) => {
               ) : (
                 <>
                   <RightIcon>
+                    <FlagBtn>
+                      <img src="https://static.msscdn.net/global/country/flag/CA.svg" />
+                    </FlagBtn>
+                  </RightIcon>
+                  <RightIcon>
                     <FaLink to='/wishlist'>
                       <FavoriteBorderIcon fontSize='medium' />
                     </FaLink>
                   </RightIcon>
-                  <RightIcon>
-                    <CartLink to='/carts'>
-                      <AddShoppingCartIcon fontSize='medium' />
-                    </CartLink>
-                  </RightIcon>
+                  {carts.length === 0 ? (
+                    <>
+                      <RightIcon>
+                      <CartLink to='/carts'>
+                        <AddShoppingCartIcon fontSize='medium' />
+                      </CartLink>
+                    </RightIcon>
+                    </>
+                  ):(
+                    <>
+                      <RightIcon>
+                        <CartLink to='/carts'>
+                          <ItemCount>{carts.length}</ItemCount>
+                          {/* <span>1</span> */}
+                          <AddShoppingCartIcon fontSize='medium' />
+                        </CartLink>
+                      </RightIcon>
+                    </>
+                  )}
                   <RightIcon>
                     {!isModalOpen && (
                       <>
