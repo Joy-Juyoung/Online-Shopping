@@ -192,10 +192,15 @@ export const Td = styled.td`
   a {
     text-decoration: none;
     color: #0a0f18;
-    display: flex;
+    padding: 0;
+    /* display: flex;
     align-items: center;
-    justify-content: center;
-    /* text-align: center; */
+    justify-content: center; */
+
+    svg {
+      margin-left: 2px;
+      /* color: gray; */
+    }
 
     &:visited {
       color: #0a0f18;

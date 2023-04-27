@@ -7,6 +7,7 @@ import { ButtonSmall, ButtonUtils } from '../../components/ButtonElements';
 import Loading from '../../components/Loading';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import AddIcon from '@mui/icons-material/Add';
+import RateReviewIcon from '@mui/icons-material/RateReview';
 
 import {
   DetailDescription,
@@ -156,7 +157,12 @@ const OrderDtails = ({ meData }) => {
                             {sold?.product.name.toUpperCase()}
                           </Link>
                         </Td>
-                        <Td>{sold?.product_option?.name}</Td>
+                        {sold?.product_option === null ? (
+                          <Td>Free</Td>
+                        ) : (
+                          <Td>{sold?.product_option?.name}</Td>
+                        )}
+
                         <Td>{sold?.number_of_product}</Td>
                         <Td>
                           ${sold?.product?.price * sold?.number_of_product}
@@ -166,12 +172,14 @@ const OrderDtails = ({ meData }) => {
                             {ordered?.status === 'delivered' ? (
                               <ReviewBtn active={true}>
                                 {/* <AddIcon fontSize='11px' /> */}
-                                View Review
+                                View
+                                <RateReviewIcon fontSize='small' />
                               </ReviewBtn>
                             ) : (
                               <ReviewBtn disabled>
                                 {/* <AddIcon fontSize='11px' /> */}
-                                View Review
+                                View
+                                <RateReviewIcon fontSize='small' />
                               </ReviewBtn>
                             )}
                           </Link>

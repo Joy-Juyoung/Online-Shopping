@@ -42,7 +42,7 @@ const DropUser = ({ meData, shown }) => {
               <LinkAccount>
                 <DropLi onClick={shown}>My Balances</DropLi>
               </LinkAccount>
-              <LinkAccount to='/testPage'>
+              <LinkAccount to='/coupon'>
                 <DropLi>My Coupons</DropLi>
               </LinkAccount>
             </DropUlWrap>
