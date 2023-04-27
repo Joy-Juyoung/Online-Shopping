@@ -111,6 +111,20 @@ export const RightIcon = styled.div`
   cursor: pointer;
 `;
 
+export const FlagBtn = styled.button`
+  border: 0px;
+  background: none; 
+  cursor: pointer;
+
+  img {
+    width: 27px;
+    height: 27px;
+    border: 2px solid rgb(228, 231, 236);
+    border-radius: 100%;
+  }
+
+`;
+
 export const FaLink = styled(Link)`
   text-decoration: none;
   color: black;
@@ -121,12 +135,49 @@ export const FaLink = styled(Link)`
 `;
 
 export const CartLink = styled(Link)`
+  position: relative;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
   color: black;
   cursor: pointer;
   & :hover {
     color: lightgray;
   }
+
+  /* span{
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 17px;
+    height: 17px;
+    padding: 0px 5px;
+    border-radius: 17px;
+    box-sizing: border-box;
+    background: rgb(10, 15, 24);
+    font-size: 11px;
+    color: rgb(255, 255, 255);
+  } */
+`;
+
+export const ItemCount = styled.span`
+  position: absolute;
+  bottom: 5px;
+  right: -3px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 17px;
+  height: 17px;
+  padding: 0px 5px;
+  border-radius: 17px;
+  box-sizing: border-box;
+  background: rgb(10, 15, 24);
+  font-size: 11px;
+  color: rgb(255, 255, 255);
 `;
 
 export const PermLink = styled(Link)`
