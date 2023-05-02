@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import {
   CartBodyWrap,
   CartContainer,
@@ -14,7 +14,6 @@ import {
   CartSummaryInfo,
   CartWrapper,
   CheckBarWrap,
-  CheckBox,
   CheckOutBtn,
   CouponBtn,
   CouponInfo,
@@ -55,69 +54,19 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import axios from '../../api/axios';
 import Loading from '../../components/Loading';
-import { object } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { ButtonLarge } from '../../components/ButtonElements';
+
 
 const CARTS_URL = '/carts';
 
 const TestCart = () => {
   const [loading, setLoading] = useState(false);
-
   const [carts, setCarts] = useState([]);
-
   const [checkList, setCheckList] = useState([]);
   const [IdList, setIdList] = useState([]);
-  const [isCheck, setIsCheck] = useState([]);
-  const [itemPrice, setItemPrice] = useState(0);
-  const [isCheckAll, setIsCheckAll] = useState(false);
   const [checkNewList, setCheckNewList] = useState([]);
-
-    useEffect(() => {
-      let ids = []
-      carts?.map((item, i) => {
-        ids[i] = item?.pk
-      })
-      setIdList(ids)
-      console.log("ids", ids);
-  }, [carts])
-
-    const onChangeAll = (e) => {
-      setCheckList(e.target.checked ? IdList : [])
-      // setIsCheckAll(!isCheckAll);
-      // setIsCheck(carts.map(li => li?.pk));
-      // if (isCheckAll) {
-      //   setIsCheck([]);
-      // }
-   }
-
-
-  const onChangeEach = async (e, id) => {
-    // console.log("id",id);
-
-      if (e.target.checked) {
-          setCheckList([...checkList, id]);
-          const check = await axios.get(`/carts/${id}`, {
-            headers: { 'Content-Type': 'application/json' },
-            withCredentials: true,
-          });
-          setCheckNewList([...checkNewList, check.data]);
-          // setItemPrice(checkList.total_price);
-      } else {
-         setCheckList(checkList.filter((checkedId) => checkedId !== id));
-         setCheckNewList(checkNewList.filter((checked) => checked?.pk !== id));
-      }
-      // const checked = e.target;
-      // setIsCheck([...isCheck, id]);
-      // if (!checked) {
-      //   setIsCheck(isCheck.filter(item => item !== id));
-      // }
-
-    };
-    console.log("each",checkList)
-    console.log("NEW", checkNewList);
-
-
+ 
   const getAllCart = async () => {
     const cartList = await axios.get(CARTS_URL, {
       headers: { 'Content-Type': 'application/json' },
@@ -128,7 +77,7 @@ const TestCart = () => {
     setLoading(false);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setLoading(true);
     getAllCart();
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -136,28 +85,24 @@ const TestCart = () => {
   // console.log('carts', carts);
 
 
-
- 
-  const handleAllDeleteCart = async (pk) => {
+  const handleAllDeleteCart = async() => {
     alert('Are you sure you want to remove the product?');
-    var emptyList = 0;
-    const empty =  carts.filter((i) => {
-      if (pk == i.pk && emptyList !== i.length) {
-        axios.delete(`/carts/${pk}`,{
-          length:i.length,
-        },
+    // const empty = 
+    await carts.map((i) => {
+       axios.delete(`/carts/${i.pk}`,
           {
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
           }
         );
-      }
-    });
-    setCarts(empty);
-    console.log("empty", empty);
+        setCarts([]);
+      });
+      // setCarts(empty);
+    getAllCart([]);
+    // console.log("empty", empty);
+    window.location.reload('/carts');
   };
-
-
+ 
   const handleDeleteCart = async (pk) => {
     alert('Are you sure you want to remove the product?');
     // console.log('pk', pk);
@@ -175,14 +120,11 @@ const TestCart = () => {
   };
 
   const handleIncrease = async (pk) => {
-
     const addQty =  carts.map((i) => {
-
       if (pk === i?.pk && i.number_of_product < 10000) {
         axios.put(
           `/carts/${pk}`,
           {
-            // pk: cart?.pk,
             number_of_product: i.number_of_product + 1,
           },
           {
@@ -197,7 +139,6 @@ const TestCart = () => {
   };
 
   const handleDecrease = async (pk) => {
-
     const minusQty = await carts.map((i) => {
       if (pk === i?.pk && i.number_of_product > 1) {
          axios.put(
@@ -217,6 +158,42 @@ const TestCart = () => {
     setCarts(minusQty);
     getAllCart();
   };
+  
+  useEffect(() => {
+    let ids = []
+    carts?.map((item, i) => {
+      ids[i] = item?.pk
+    })
+    setIdList(ids)
+    // console.log("ids", ids);
+}, [carts])
+
+  const onChangeAll = (e) => {
+    setCheckList(e.target.checked ? IdList : [])
+    // // setIsCheckAll(!isCheckAll);
+    // // setIsCheck(carts.map(li => li?.pk));
+    // // if (isCheckAll) {
+    // //   setIsCheck([]);
+    // // }
+ }
+
+const onChangeEach = async (e, id) => {
+  // console.log("id",id);
+    if (e.target.checked) {
+        setCheckList([...checkList, id]);
+        const check = await axios.get(`/carts/${id}`, {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        });
+        setCheckNewList([...checkNewList, check.data]);
+        // setItemPrice(checkList.total_price);
+    } else {
+       setCheckList(checkList.filter((checkedId) => checkedId !== id));
+       setCheckNewList(checkNewList.filter((checked) => checked?.pk !== id));
+    }
+
+  };
+
 
   const PriceForBill = checkNewList.reduce((total, item) => {
     return total + item?.total_price;
@@ -226,7 +203,7 @@ const TestCart = () => {
 
   const Taxes = PriceForBill * 0.05;
   const Discounts = 0;
-  console.log('total: ', PriceForBill);
+  // console.log('total: ', PriceForBill);
   const TotalPriceTag = PriceForBill + ShippingFee + Taxes + Discounts;
 
   if (loading)
@@ -274,10 +251,11 @@ const TestCart = () => {
                     <label>All</label>
                   </OrderCheckBox>
                   <DeleteBtn
-
+                      // onClick={() => handleAllDeleteCart()
+                      // }
                     onClick={(e) => {
                       e.preventDefault();
-                      handleAllDeleteCart(carts?.pk);
+                      handleAllDeleteCart();
                     }}
                   >Delete</DeleteBtn>
 
@@ -322,7 +300,8 @@ const TestCart = () => {
                         <ItemDetailTwo>
                           <ItemDetailTwoWrap>
                             <ItemDecreaseBtn
-                              onClick={() => {
+                              onClick={(e) => {
+                                e.preventDefault();
                                 handleDecrease(cart?.pk);
                               }}
                             >
@@ -332,7 +311,8 @@ const TestCart = () => {
                               {cart?.number_of_product}
                             </ItemNumberInput>
                             <ItemIncreaseBtn
-                              onClick={() => {
+                              onClick={(e) => {
+                                e.preventDefault(); 
                                 handleIncrease(cart?.pk);
                               }}
                             >
@@ -341,7 +321,7 @@ const TestCart = () => {
                           </ItemDetailTwoWrap>
                         </ItemDetailTwo>
                         <ItemDetailThree>
-                          <strong>${cart?.total_price.toLocaleString()}</strong>
+                          <strong>${cart?.total_price?.toLocaleString()}</strong>
                         </ItemDetailThree>
                       </ListsItemDetails>
                       <ListsDeleteBtn>
