@@ -21,14 +21,19 @@ const SearchBar = ({ onAddKeyword }) => {
     // window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   },[searchValue]);
 
+//   const searched = searchData.filter((item) =>
+//   item.kind.name.toLowerCase().includes(searchValue)
+// );
+
   const onChangeSearch = useCallback((e) => {
-    setSearchValue(e.target.value)
+    setSearchValue(e.target.value.toLowerCase())
   }, [])
 
   const onSubmit = useCallback((e) => {
       e.preventDefault()
       onAddKeyword(searchValue)
       setSearchValue('')
+      // setSearchData()
     },
     [searchValue,onAddKeyword]
   )

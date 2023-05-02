@@ -124,4 +124,5 @@ export const ButtonLarges = styled.button`
   text-align: center;
   cursor: pointer;
   margin-left: 10px;
+
 `;

@@ -17,6 +17,8 @@ import {
   SidebarSelect,
 } from './AddToCartElements';
 import CloseIcon from '@mui/icons-material/Close';
+import { Bounce, ToastContainer, Zoom, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddToCart = ({ onClose}) => {
   const [selectOptions, setSelectOptions] = useState([]);
@@ -24,6 +26,18 @@ const AddToCart = ({ onClose}) => {
   const ref = useRef();
   const { id } = useParams();
   
+  const ErrorNotify = () => toast.warn("Please make sure to select an option.")
+
+  const SuccessNotify = ({text}) => (
+    <div>
+     <p className="text">{text}</p>
+    {/* <button className="button1" onClick={() => toast.dismiss()}>Ok!</button> */}
+    </div>
+  );
+  const showCustomToast = () => {
+    toast.success(<SuccessNotify text="Success" />)
+  }
+
   useEffect(() => {
     const checkIfClickedOutside = (e) => {
       if (ref.current && !ref.current.contains(e.target)) {
@@ -76,7 +90,7 @@ const AddToCart = ({ onClose}) => {
       console.log('test', addToCart.data);
       window.location.reload(`/products/${id}`);
     };
-  
+
 
   return (
     <SidebarMenuContainer>
@@ -91,7 +105,7 @@ const AddToCart = ({ onClose}) => {
                 <SidebarMenuMid>
                   {selectOptions?.productOptions?.length === 0 ? (
                   <SidebarSelect>
-                    <option>Free</option>
+                    <option value='free'>Free</option>
                     </SidebarSelect>
                     ):(
                       <SidebarSelect onChange={OptionHandleChange}>
@@ -112,7 +126,42 @@ const AddToCart = ({ onClose}) => {
                     <p>Total {selectOptions?.length} </p>
                     <p>${selectOptions?.price}</p>
                   </MenuTotalSummary>
-                  <ButtonLarges>ADD TO BAG</ButtonLarges>
+                  {options === null ? (
+                    <>
+                      <ButtonLarges 
+                        onClick={ErrorNotify}
+                      >ADD TO BAG</ButtonLarges>
+                      <ToastContainer 
+                        transition={Zoom}
+                        autoClose={1000}
+                        hideProgressBar={false}
+                        closeOnClick={true}
+                        limit={1}
+                        theme='dark' // light, dark, colored
+                        pauseOnHover={true}
+                        // pauseOnFocusLoss={true}
+                        // icon={} // true or false
+                        position='top-center'
+                      /> 
+                    </>
+                  ):(
+                    <>
+                    <ButtonLarges onClick={showCustomToast} >ADD TO BAG</ButtonLarges>
+                    <ToastContainer 
+                      transition={Zoom}
+                      autoClose={1000}
+                      hideProgressBar={false}
+                      closeOnClick={true}
+                      limit={1}
+                      theme='dark' // light, dark, colored
+                      pauseOnHover={true}
+                    // pauseOnFocusLoss={true}
+                    // icon={} // true or false
+                      position='top-center'
+                  /> 
+                  </>
+                  )}
+              
                 </SidebarMenuBottom>
           </SidebarMenuKinds>
         </form>

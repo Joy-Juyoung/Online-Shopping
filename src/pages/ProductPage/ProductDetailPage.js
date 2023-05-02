@@ -58,6 +58,7 @@ import TestAddToCart from './AddToCart';
 
 import DetailSlider from './DetailSlider';
 import Skeleton from '@mui/material/Skeleton';
+
 // import Skeleton from './Skeleton';
 // import { Rating } from '@mui/material';
 
@@ -90,6 +91,8 @@ const ProductDetailPage = ({
   const [rating, setRating] = useState('');
   const [isEdit, setIsEdit] = useState(false);
   // const [fav, setFav] = useState(false);
+ 
+
 
   useEffect(() => {
     setChangeReviews(itemsDetail.reviews);
@@ -286,7 +289,7 @@ const ProductDetailPage = ({
   useEffect(() => {
     setTimeout(() => {
       setLoadings(false)
-    }, 3000)
+    }, 700)
   }, [])
  
   if (loading)
@@ -300,31 +303,28 @@ const ProductDetailPage = ({
     <DetailContainer>
       <DetailWrapperOne>
         <DetailSlider />
-        {/* <DetailLeftInfo>
-          <img src={itemsDetail.photos?.[0].picture} alt='' />
-        </DetailLeftInfo> */}
         <DetailRightInfo>
-          <DetailRightInfoTop>
-            {loadings ? (
-              <Skeleton sx={{ color: 'red.900' }} animation='wave' width={450} height={500}/>
-            ):(
-              <DetailName>{itemsDetail.name}</DetailName>
-            )}
-              <DetailProductName>
-                <DetailTitle>{itemsDetail.detail}</DetailTitle>
-                <DetailPrice>${itemsDetail.price}</DetailPrice>
-                {/* <DetailPrice>${itemsDetail.price}</DetailPrice> */}
-                <DetailCoupon>
-                  <p>
-                    Shop on our App and Enjoy 10% off
-                    <br />
-                    Use code
-                    <strong>APPFW22</strong>
-                  </p>
-                </DetailCoupon>
-                <DetailStock>
-                  InStock: {itemsDetail?.in_stock?.toLocaleString()}
-                </DetailStock>
+          {loadings ? (
+            <Skeleton sx={{ color: 'red.900' }} animation='wave' width={450} height={500}/>
+              ):(
+                <>
+                  <DetailRightInfoTop>
+                    <DetailName>{itemsDetail.name}</DetailName>
+                  <DetailProductName>
+                    <DetailTitle>{itemsDetail.detail}</DetailTitle>
+                    <DetailPrice>${itemsDetail.price}</DetailPrice>
+                  <DetailCoupon>
+                    <p>
+                      Shop on our App and Enjoy 10% off
+                      <br />
+                      Use code
+                      <strong>APPFW22</strong>
+                    </p>
+                  </DetailCoupon>
+                  <DetailStock>
+                    InStock: {itemsDetail?.in_stock?.toLocaleString()}
+                  </DetailStock>
+         
               </DetailProductName>
             </DetailRightInfoTop>
 
@@ -356,6 +356,8 @@ const ProductDetailPage = ({
               )}
               {isOpen && <AddToCart onClose={() => setIsOpen(false)} />}
             </DetailRightInfoBottom>
+            </>
+              )}
         </DetailRightInfo>
       </DetailWrapperOne>
       <DetailWrapperTwo>
