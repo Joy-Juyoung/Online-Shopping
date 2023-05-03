@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+
+
 export const ModalContainer = styled.div`
   /* position: fixed; */
   /* top: 0;
@@ -241,38 +243,21 @@ export const ModalBodyHeader = styled.header`
 
 export const ModalBodyParagraph = styled.ol`
   counter-reset: item 0;
-  /* opacity: 0;
-  animation-delay: 0.3s;
-  animation: 0.3s ease 0s 1 normal forwards running test1, 1s ease-out 0s 1 normal forwards running test2;
-  @keyframes test1 {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  } 
-  @keyframes test2 {
-    0% {
-      transform: translate(15px, 0px);
-    }
-    100% {
-      transform: translate(0px, 0px);
-    }
-  }  */
-  transform-origin: top;
+
+
+  /* transform-origin: top;
   animation: popularMenu 0.9s ease-in-out 0s forwards running;
   @keyframes popularMenu {
     0% {
       transform: rotateX(-90deg);
     }
-    /* 70% {
+    70% {
       transform: rotateX(20deg);
-    } */
+    }
     100% {
       transform: rotateX(0deg);
     }
-  }
+  } */
 `;
 
 export const ModalBodyPList = styled.li`
@@ -281,13 +266,25 @@ export const ModalBodyPList = styled.li`
   align-items: center;
   overflow: hidden;
   margin-bottom: 10px;
-  p {
-    width: 100%;
-    line-height: 24px;
-    font-size: 15px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+
+  animation-duration: 0.9s;
+  animation-name: slidein;
+  animation-iteration-count: 1;
+  transition-timing-function: ease;
+  @keyframes slidein {
+    from {
+      opacity:0;
+      /* margin-top: 100%; */
+      transform: translateY(-200%);
+      }
+    50% {
+      opacity:0.5;
+   }
+    to {
+      opacity:1;
+      /* margin-top: 0%; */
+      transform: translateY(0%);
+      }
   }
   ::before {
     content: counter(item);
@@ -297,6 +294,15 @@ export const ModalBodyPList = styled.li`
     font-weight: bold;
     vertical-align: top;
     counter-increment: item 1;
+  }
+  
+  p {
+    width: 100%;
+    line-height: 24px;
+    font-size: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 `;
 

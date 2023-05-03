@@ -57,6 +57,9 @@ import Loading from '../../components/Loading';
 import TestAddToCart from './AddToCart';
 
 import DetailSlider from './DetailSlider';
+import Skeleton from '@mui/material/Skeleton';
+
+// import Skeleton from './Skeleton';
 // import { Rating } from '@mui/material';
 
 // const PRODUCTDETAILS_URL = '/products/${id}';
@@ -74,6 +77,7 @@ const ProductDetailPage = ({
   const { id } = useParams();
   const [addLiked, setAddLiked] = useState();
   const [loading, setLoading] = useState(false);
+  const [loadings, setLoadings] = useState(true);
   const ref = useRef();
   const [isOpen, setIsOpen] = useState(false);
   const [shipReturn, setShipReturn] = useState([]);
@@ -87,6 +91,8 @@ const ProductDetailPage = ({
   const [rating, setRating] = useState('');
   const [isEdit, setIsEdit] = useState(false);
   // const [fav, setFav] = useState(false);
+ 
+
 
   useEffect(() => {
     setChangeReviews(itemsDetail.reviews);
@@ -279,6 +285,13 @@ const ProductDetailPage = ({
     };
   }, [isOpen]);
 
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoadings(false)
+    }, 700)
+  }, [])
+ 
   if (loading)
     return (
       <div>
@@ -290,58 +303,61 @@ const ProductDetailPage = ({
     <DetailContainer>
       <DetailWrapperOne>
         <DetailSlider />
-        {/* <DetailLeftInfo>
-          <img src={itemsDetail.photos?.[0].picture} alt='' />
-        </DetailLeftInfo> */}
         <DetailRightInfo>
-          <DetailRightInfoTop>
-            <DetailName>{itemsDetail.name}</DetailName>
-            <DetailProductName>
-              <DetailTitle>{itemsDetail.detail}</DetailTitle>
-              <DetailPrice>${itemsDetail.price}</DetailPrice>
-              {/* <DetailPrice>${itemsDetail.price}</DetailPrice> */}
-              <DetailCoupon>
-                <p>
-                  Shop on our App and Enjoy 10% off
-                  <br />
-                  Use code
-                  <strong>APPFW22</strong>
-                </p>
-              </DetailCoupon>
-              <DetailStock>
-                InStock: {itemsDetail?.in_stock?.toLocaleString()}
-              </DetailStock>
-            </DetailProductName>
-          </DetailRightInfoTop>
+          {loadings ? (
+            <Skeleton sx={{ color: 'red.900' }} animation='wave' width={450} height={500}/>
+              ):(
+                <>
+                  <DetailRightInfoTop>
+                    <DetailName>{itemsDetail.name}</DetailName>
+                  <DetailProductName>
+                    <DetailTitle>{itemsDetail.detail}</DetailTitle>
+                    <DetailPrice>${itemsDetail.price}</DetailPrice>
+                  <DetailCoupon>
+                    <p>
+                      Shop on our App and Enjoy 10% off
+                      <br />
+                      Use code
+                      <strong>APPFW22</strong>
+                    </p>
+                  </DetailCoupon>
+                  <DetailStock>
+                    InStock: {itemsDetail?.in_stock?.toLocaleString()}
+                  </DetailStock>
+         
+              </DetailProductName>
+            </DetailRightInfoTop>
 
-          <DetailRightInfoBottom>
-            <LikeBtnWrapper>
-              {meData && (
-                <LikeBtn
-                  onClick={(e) => {
-                    handleLiked();
-                  }}
-                >
-                  {itemsDetail.is_liked ? (
-                    <FavoriteIcon fontSize='medium' sx={{ color: '#e20000' }} />
-                  ) : (
-                    <FavoriteBorderIcon fontSize='medium' color='disabled' />
-                  )}
-                </LikeBtn>
+            <DetailRightInfoBottom>
+              <LikeBtnWrapper>
+                {meData && (
+                  <LikeBtn
+                    onClick={(e) => {
+                      handleLiked();
+                    }}
+                  >
+                    {itemsDetail.is_liked ? (
+                      <FavoriteIcon fontSize='medium' sx={{ color: '#e20000' }} />
+                    ) : (
+                      <FavoriteBorderIcon fontSize='medium' color='disabled' />
+                    )}
+                  </LikeBtn>
+                )}
+              </LikeBtnWrapper>
+
+              {itemsDetail?.in_stock === 0 ? (
+                <ButtonLarges style={{ background: 'gray' }} disabled>
+                  Sold out
+                </ButtonLarges>
+              ) : (
+                <ButtonLarges onClick={() => setIsOpen(true)}>
+                  Add to Cart
+                </ButtonLarges>
               )}
-            </LikeBtnWrapper>
-
-            {itemsDetail?.in_stock === 0 ? (
-              <ButtonLarges style={{ background: 'gray' }} disabled>
-                Sold out
-              </ButtonLarges>
-            ) : (
-              <ButtonLarges onClick={() => setIsOpen(true)}>
-                Add to Cart
-              </ButtonLarges>
-            )}
-            {isOpen && <AddToCart onClose={() => setIsOpen(false)} />}
-          </DetailRightInfoBottom>
+              {isOpen && <AddToCart onClose={() => setIsOpen(false)} />}
+            </DetailRightInfoBottom>
+            </>
+              )}
         </DetailRightInfo>
       </DetailWrapperOne>
       <DetailWrapperTwo>
