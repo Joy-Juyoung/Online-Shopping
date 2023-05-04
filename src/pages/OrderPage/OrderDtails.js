@@ -3,23 +3,15 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from '../../api/axios';
-import { ButtonSmall, ButtonUtils } from '../../components/ButtonElements';
 import Loading from '../../components/Loading';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import AddIcon from '@mui/icons-material/Add';
+
 import RateReviewIcon from '@mui/icons-material/RateReview';
 
 import {
-  DetailDescription,
-  DetailName,
-  DetailOption,
   ExtraInfo,
   ItemTotalPrice,
-  ListsDetails,
-  ListsItemDetails,
   PaymentPsersonalInfo,
   PaymentInfoDetails,
-  DetailPrice,
   TotalTitle,
   ItemSummary,
   PaymentContainer,
@@ -39,7 +31,6 @@ import {
   Td,
   PaymentStatusInfo,
   ReviewBtn,
-  ReviewLink,
 } from './OrderDetailsElements';
 
 const OrderDtails = ({ meData }) => {

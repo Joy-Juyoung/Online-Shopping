@@ -66,9 +66,9 @@ const Header = ({ meData, catData }) => {
   const ref = useRef();
   const searchRef = useRef();
 
-  const handleAddBalance = () => {
-    toggleBalance(!balanceShown);
-  };
+  // const handleAddBalance = () => {
+  //   toggleBalance(!balanceShown);
+  // };
 
   // console.log('Header Me', me);
 
@@ -90,7 +90,7 @@ const Header = ({ meData, catData }) => {
   useEffect(() => {
     setLoading(true);
     getAllCart();
-      // setCheckNewList(carts)
+    // setCheckNewList(carts)
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
 
@@ -110,7 +110,7 @@ const Header = ({ meData, catData }) => {
     setLogout(loggedOut?.data);
     setMe('');
     navigate('/');
-    window.location.reload('/');
+    // window.location.reload('/');
     setLoading(false);
   };
 
@@ -124,14 +124,6 @@ const Header = ({ meData, catData }) => {
       if (clickAccount && ref.current && !ref.current.contains(e.target)) {
         setClickAccount(false);
       }
-      // if (
-      //   isModalOpen &&
-      //   searchRef.current &&
-      //   !searchRef.current.contains(e.target)
-      // )
-      // {
-      //   setIsModalOpen(false);
-      // }
     };
     document.addEventListener('click', checkIfClickedOutside);
     return () => {
@@ -183,12 +175,11 @@ const Header = ({ meData, catData }) => {
               </MidLink>
             </MiddleSide>
             <RightSide>
-
               {!me && logout !== null ? (
                 <>
                   <RightIcon>
                     <FlagBtn>
-                      <img src="https://static.msscdn.net/global/country/flag/CA.svg" />
+                      <img src='https://static.msscdn.net/global/country/flag/CA.svg' />
                     </FlagBtn>
                   </RightIcon>
 
@@ -261,7 +252,7 @@ const Header = ({ meData, catData }) => {
                 <>
                   <RightIcon>
                     <FlagBtn>
-                      <img src="https://static.msscdn.net/global/country/flag/CA.svg" />
+                      <img src='https://static.msscdn.net/global/country/flag/CA.svg' />
                     </FlagBtn>
                   </RightIcon>
                   <RightIcon>
@@ -272,12 +263,12 @@ const Header = ({ meData, catData }) => {
                   {carts.length === 0 ? (
                     <>
                       <RightIcon>
-                      <CartLink to='/carts'>
-                        <AddShoppingCartIcon fontSize='medium' />
-                      </CartLink>
-                    </RightIcon>
+                        <CartLink to='/carts'>
+                          <AddShoppingCartIcon fontSize='medium' />
+                        </CartLink>
+                      </RightIcon>
                     </>
-                  ):(
+                  ) : (
                     <>
                       <RightIcon>
                         <CartLink to='/carts'>

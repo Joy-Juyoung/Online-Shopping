@@ -1,22 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../../api/axios';
-import { ButtonUtils } from '../../components/ButtonElements';
-import { PesnalContainer, PesnalWrapper } from '../CommonElements';
+
 import {
-  ListTotal,
-  ListView,
   OrderContainer,
-  OrderEachStatus,
   OrderList,
-  OrderListEmpty,
-  OrderListTable,
-  OrderListTop,
   OrderListWrap,
-  OrderMenuBy,
-  OrderMenuByStatus,
   OrderWrap,
   OrderWrapper,
-  StatusBox,
   Table,
   Tbody,
   Td,
@@ -26,14 +16,10 @@ import {
 } from '../OrderPage/OrderElements';
 import Loading from '../../components/Loading';
 import { Link } from 'react-router-dom';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
+import { ReviewListEmpty } from './ReviewsElements';
 import { ReviewBtn } from '../OrderPage/OrderDetailsElements';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import DeleteIcon from '@mui/icons-material/Delete';
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import { ReviewListEmpty } from './ReviewsElements';
 
 const MyReviews = ({ meData }) => {
   const [loading, setLoading] = useState(false);

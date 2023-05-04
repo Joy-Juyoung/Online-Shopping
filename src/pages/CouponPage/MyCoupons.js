@@ -1,22 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from '../../api/axios';
-import { ButtonUtils } from '../../components/ButtonElements';
-import { PesnalContainer, PesnalWrapper } from '../CommonElements';
 import {
-  ListTotal,
-  ListView,
   OrderContainer,
-  OrderEachStatus,
   OrderList,
-  OrderListEmpty,
-  OrderListTable,
-  OrderListTop,
   OrderListWrap,
-  OrderMenuBy,
-  OrderMenuByStatus,
   OrderWrap,
   OrderWrapper,
-  StatusBox,
   Table,
   Tbody,
   Td,
@@ -24,19 +13,31 @@ import {
   Thead,
   Tr,
 } from '../OrderPage/OrderElements';
-import { ReviewBtn } from '../OrderPage/OrderDetailsElements';
-import { ReviewListEmpty } from './MyCouponsElements';
+import {
+  Circle,
+  CircleLast,
+  CouponBackFrame,
+  CouponBackInfo,
+  CouponBackInside,
+  CouponBackP,
+  CouponBackSide,
+  CouponExpired,
+  CouponFrame,
+  CouponH,
+  CouponHeader,
+  CouponInfo,
+  CouponInside,
+  CouponListWrap,
+  CouponP,
+  CouponRate,
+  Line,
+  ReviewListEmpty,
+  ViewDetails,
+} from './MyCouponsElements';
 import Loading from '../../components/Loading';
-import { Link } from 'react-router-dom';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
-import RateReviewIcon from '@mui/icons-material/RateReview';
-import DeleteIcon from '@mui/icons-material/Delete';
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import { useRef } from 'react';
+import PageviewIcon from '@mui/icons-material/Pageview';
+import Modal from '../../components/Modal';
+import DiscountIcon from '@mui/icons-material/Discount';
 
 const MyCoupons = ({ meData }) => {
   let ref = useRef();
@@ -46,6 +47,10 @@ const MyCoupons = ({ meData }) => {
   const [couponDetails, setCouponDetails] = useState([]);
   const [isDrop, setIsDrop] = useState(false);
   const [selected, setSelected] = useState();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalShown, toggleModal] = useState(false);
+  const [indexEven, setIndexEven] = useState(false);
 
   const getCoupons = async () => {
     const couponList = await axios.get('/coupons/', {
@@ -58,15 +63,16 @@ const MyCoupons = ({ meData }) => {
     setLoading(false);
   };
 
-  const getCouponById = async (pk) => {
+  const handleOpenCoupon = async (pk) => {
     const couponEachList = await axios.get(`/coupons/${pk}`, {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    // console.log('couponEachList', couponEachList?.data);
+    console.log('couponEachList', couponEachList?.data);
     setCouponEach(couponEachList?.data);
     setSelected(couponEach.pk);
     setIsDrop(!isDrop);
+    // setIndexEven(!indexEven);
 
     if (!isDrop) {
       setCouponDetails([...couponDetails, couponEach]);
@@ -82,6 +88,10 @@ const MyCoupons = ({ meData }) => {
     getCoupons();
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
+
+  // const handleOpenCoupon = (pk) => {
+
+  // }
 
   if (loading)
     return (
@@ -100,55 +110,90 @@ const MyCoupons = ({ meData }) => {
                 <span>No coupons found.</span>
               </ReviewListEmpty>
             ) : (
-              <OrderListWrap>
-                <Table>
-                  <Thead>
-                    <Tr>
-                      <Th>No.</Th>
-                      <Th>Discount rate</Th>
-                      <Th>Expire Date</Th>
-                      <Th></Th>
-                    </Tr>
-                  </Thead>
-                  <Tbody>
-                    {coupons?.map((coupon, index) => {
-                      return (
-                        <>
-                          <Tr key={coupon?.pk} ref={ref}>
-                            <Td>{index + 1}</Td>
+              <CouponListWrap>
+                {coupons?.map((coupon, index) => {
+                  return (
+                    <CouponFrame key={index} ref={ref}>
+                      <Circle></Circle>
+                      {/* {coupon?.discount_rate === 50 &&}
+                      {coupon?.discount_rate === 30 &&}
+                      {coupon?.discount_rate === 15 &&} */}
+                      <CouponInside
+                        style={{
+                          backgroundColor: index % 2 ? '#FEE599' : '#529292',
+                          // border: index % 2 ? '' : '2px solid #f8931f'#CFCFCF #FDBF1E,
+                        }}
+                      >
+                        <CouponHeader>
+                          <span>COUPON</span>
+                        </CouponHeader>
+                        <CouponInfo>
+                          <CouponRate
+                            style={{
+                              color: index % 2 ? '#000' : '#fff',
+                            }}
+                          >
+                            <CouponH>{coupon?.discount_rate}</CouponH>
+                            <CouponP>
+                              <span className='one'>%</span>
+                              <span className='two'>OFF</span>
+                            </CouponP>
+                          </CouponRate>
+                        </CouponInfo>
 
-                            <Td>{coupon?.discount_rate}%</Td>
-                            <Td>
-                              {new Date(coupon.end_date).toLocaleDateString()}
-                            </Td>
-                            <Td onClick={() => getCouponById(coupon?.pk)}>
-                              {isDrop && selected === coupon?.pk ? (
-                                <ArrowDropUpIcon />
-                              ) : (
-                                <>
-                                  <ArrowDropDownIcon />
-                                </>
-                              )}
-                            </Td>
-                          </Tr>
-                          {isDrop && selected === coupon?.pk && (
-                            <Tr>
-                              <Td colSpan={2}>{couponDetails[0]?.name}</Td>
-                              <Td colSpan={2}>
-                                {couponDetails[0]?.description}
-                              </Td>
-                            </Tr>
-                          )}
-                        </>
-                      );
-                    })}
-                  </Tbody>
-                </Table>
-              </OrderListWrap>
+                        <ViewDetails
+                          onClick={(e) => {
+                            handleOpenCoupon(coupon?.pk);
+                          }}
+                        >
+                          <PageviewIcon
+                            style={{
+                              color: index % 2 ? '#000' : '#fff',
+                            }}
+                            onClick={() => {
+                              toggleModal(!modalShown);
+                            }}
+                          />
+                        </ViewDetails>
+                      </CouponInside>
+                      <CircleLast></CircleLast>
+                    </CouponFrame>
+                  );
+                })}
+              </CouponListWrap>
             )}
           </OrderList>
         </OrderWrap>
       </OrderWrapper>
+      <Modal
+        className='coupon'
+        shown={modalShown}
+        close={() => {
+          toggleModal(false);
+        }}
+      >
+        <CouponBackFrame>
+          <Circle></Circle>
+          <CouponBackInside>
+            {/* <CouponBackInside>
+            <CouponBackInfo> */}
+            <CouponBackInfo>
+              <CouponBackP className='name'>{couponEach?.name}</CouponBackP>
+              <CouponBackP className='description'>
+                {couponEach?.description}
+              </CouponBackP>
+              <CouponBackP className='expire'>
+                from {new Date(couponEach?.start_date).toLocaleDateString()}
+                to {new Date(couponEach?.end_date).toLocaleDateString()}
+              </CouponBackP>
+            </CouponBackInfo>
+          </CouponBackInside>
+          {/* </CouponBackInfo>
+          </CouponBackInside>
+          <CircleLast></CircleLast> */}
+          <CircleLast></CircleLast>
+        </CouponBackFrame>
+      </Modal>
     </OrderContainer>
   );
 };
