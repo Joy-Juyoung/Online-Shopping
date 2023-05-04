@@ -46,8 +46,9 @@ function App() {
     <>
       <Router>
         {/* <Header meData={meData} /> */}
+        <Header meData={meData} catData={catData} />
         <Home meData={meData} catData={catData} />
-        {/* <Footer /> */}
+        <Footer />
       </Router>
     </>
   );

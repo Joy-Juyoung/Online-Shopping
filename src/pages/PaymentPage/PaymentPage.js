@@ -126,7 +126,7 @@ const PaymentPage = ({ meData }, props) => {
     }
   };
 
-  const handleDeleteCart = async () => {
+  const handleDeleteCart = () => {
     const deleteItem = carts.map((c) => {
       axios.delete(`/carts/${c.pk}`, {
         headers: { 'Content-Type': 'application/json' },

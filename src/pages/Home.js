@@ -39,7 +39,7 @@ import MyCoupons from './CouponPage/MyCoupons';
 const Home = ({ meData, catData }) => {
   return (
     <>
-      <Header meData={meData} catData={catData} />
+      {/* <Header meData={meData} catData={catData} /> */}
       <Container>
         <Routes>
           <Route path='/coupon' element={<MyCoupons />} exact={true} />
@@ -164,7 +164,7 @@ const Home = ({ meData, catData }) => {
           />
         </Routes>
       </Container>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

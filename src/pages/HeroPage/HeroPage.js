@@ -31,6 +31,7 @@ import FourthImage from '../../asset/pic24.jpg';
 
 import Loading from '../../components/Loading';
 import Slider from './Slider';
+import { Link } from 'react-router-dom';
 
 const HeroPage = () => {
   const [loading, setLoading] = useState(false);
@@ -78,7 +79,9 @@ const HeroPage = () => {
             <Slider />
           </SectionProducts>
           <SectionButton>
-            <ButtonSmall>Shop now</ButtonSmall>
+            <Link to='/products/all'>
+              <ButtonSmall>Shop now</ButtonSmall>
+            </Link>
           </SectionButton>
         </MidInfo>
         <MidInfo>
