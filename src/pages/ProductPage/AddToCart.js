@@ -20,11 +20,13 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Bounce, ToastContainer, Zoom, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const AddToCart = ({ onClose}) => {
+const AddToCart = ({ onClose,  onSuccess}) => {
   const [selectOptions, setSelectOptions] = useState([]);
   const [options, setOptions] = useState(null);
   const ref = useRef();
   const { id } = useParams();
+
+  // const [success, setSuccess] = useState(false)
   
   const ErrorNotify = () => toast.warn("Please make sure to select an option.")
 
@@ -43,9 +45,6 @@ const AddToCart = ({ onClose}) => {
       if (ref.current && !ref.current.contains(e.target)) {
         onClose();
       }
-      // if (ref.current.contains(e.target)) {
-      //   onClose();
-      // }
     };
     document.addEventListener('click', checkIfClickedOutside);
     return () => {
@@ -69,7 +68,6 @@ const AddToCart = ({ onClose}) => {
   
   const OptionHandleChange = (e) => {
     setOptions(e.target.value);
-    // setSelectOptions(e.target.value);
     console.log('options', options);
   };
 
@@ -88,7 +86,10 @@ const AddToCart = ({ onClose}) => {
       }
       );
       console.log('test', addToCart.data);
-      window.location.reload(`/products/${id}`);
+      // setSuccess(!isSuccess);
+      onClose();
+      onSuccess()
+      // window.location.reload(`/products/${id}`);
     };
 
 
@@ -146,8 +147,11 @@ const AddToCart = ({ onClose}) => {
                     </>
                   ):(
                     <>
-                    <ButtonLarges onClick={showCustomToast} >ADD TO BAG</ButtonLarges>
-                    <ToastContainer 
+                    <ButtonLarges 
+                      // onClick={() => isSuccess}
+                      // onClick={showCustomToast} 
+                      >ADD TO BAG</ButtonLarges>
+                    {/* <ToastContainer 
                       transition={Zoom}
                       autoClose={1000}
                       hideProgressBar={false}
@@ -158,7 +162,7 @@ const AddToCart = ({ onClose}) => {
                     // pauseOnFocusLoss={true}
                     // icon={} // true or false
                       position='top-center'
-                  /> 
+                  />  */}
                   </>
                   )}
               
