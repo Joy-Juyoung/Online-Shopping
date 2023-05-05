@@ -102,7 +102,7 @@ const HeroPage = () => {
         <MidInfo>
           <SectionTitle>New Arrival</SectionTitle>
           <SectionProducts>
-            <Slider />
+            <Slider show={3} infiniteLoop={true} />
           </SectionProducts>
           <SectionButton>
             <ButtonSmall>Shop now</ButtonSmall>

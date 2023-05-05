@@ -1,16 +1,7 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@material-ui/icons';
 import { useState } from 'react';
 import styled from 'styled-components';
-// import { sliderItems } from "../data";
-// import { mobile } from '../responsive';
 
-// import Image1 from '../../asset/pic12.jpg';
-// import Image2 from '../../asset/pic3.jpg';
-// import Image3 from '../../asset/pic22.jpg';
-// import Image4 from '../../asset/pic26.jpg';
-// import Image5 from '../../asset/pic18.jpg';
-// import Image6 from '../../asset/pic19.jpg';
-// import Image7 from '../../asset/pic27.jpg';
 import Image1 from '../../asset/Hoodie017.jpg';
 import Image2 from '../../asset/jeans01.jpg';
 import Image3 from '../../asset/short-top03.jpg';
@@ -58,22 +49,34 @@ const Wrapper = styled.div`
   grid-gap: 20px; */
   /* height: 90%; */
   transition: all 1s ease;
-  transform: translateX(${(props) => props.slideIndex * -68}vw);
+  /* transform: translateX(${(props) => props.slideIndex * -100}vw); */
+  transform: translateX(${(props) => props.slideIndex * -315}px);
 
   @media screen and (max-width: 1024px) {
-    transform: translateX(${(props) => props.slideIndex * -77}vw);
+    /* transform: translateX(${(props) => props.slideIndex * -315}vw); */
   }
+
+  @keyframes scroll {
+    0% {
+      left: 0;
+    }
+    100% {
+      left: -100%;
+    }
+  }
+
+  /* animation: scroll 15s linear infinite; */
 `;
 
 const Slide = styled.div`
-  width: 20em;
-  height: 80%;
+  width: 315px;
+  height: 400px;
   display: flex;
   flex-direction: column;
   /* align-items: center; */
   background-color: #${(props) => props.bg};
   /* margin-right: 20px; */
-  padding-right: 40px;
+  padding: 0 20px;
 
   @media screen and (max-width: 1024px) {
     width: 12.3em;
@@ -157,10 +160,15 @@ const sliderItems = [
 const Slider = () => {
   const [slideIndex, setSlideIndex] = useState(0);
   const handleClick = (direction) => {
+    // if (direction === 'left') {
+    //   setSlideIndex(slideIndex > 0 ? slideIndex - 1 : 2);
+    // } else {
+    //   setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 1);
+    // }
     if (direction === 'left') {
-      setSlideIndex(slideIndex > 0 ? slideIndex - 1 : 2);
+      setSlideIndex(sliderItems > 0 && slideIndex - 1);
     } else {
-      setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
+      setSlideIndex(slideIndex < sliderItems.length / 2 && slideIndex + 1);
     }
   };
 

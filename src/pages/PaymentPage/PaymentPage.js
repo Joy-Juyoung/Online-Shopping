@@ -39,6 +39,7 @@ import AddBalance from '../../components/AddBalance';
 import { useRef } from 'react';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import SuccessPayment from './SuccessPayment';
+import AddCoupon from './AddCoupon';
 
 const CARTS_URL = '/carts';
 
@@ -54,6 +55,7 @@ const PaymentPage = ({ meData }, props) => {
   const [disableAddress, setDisableAddress] = useState(false);
   const [disableBalance, setDisableBalance] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [couponModalShown, toggleCouponModal] = useState(false);
 
   const PriceForBill = carts.reduce((total, item) => {
     return total + item?.total_price;
@@ -65,7 +67,7 @@ const PaymentPage = ({ meData }, props) => {
 
   const location = useLocation();
   const propsData = location.state;
-  console.log("test2",propsData);
+  console.log('test2', propsData);
 
   const getAllCart = async () => {
     const cartList = await axios.get(CARTS_URL, {
@@ -146,6 +148,8 @@ const PaymentPage = ({ meData }, props) => {
       setDisableBalance(!disableBalance);
     }
   };
+
+  const handleCoupon = () => {};
 
   if (loading)
     return (
@@ -267,6 +271,25 @@ const PaymentPage = ({ meData }, props) => {
                     Duties amd Taxes
                     <span>${Taxes.toLocaleString()}</span>
                   </ItemSummary>
+                  <ItemSummary>
+                    {/* Couopon */}
+                    <button
+                      onClick={() => {
+                        toggleCouponModal(!couponModalShown);
+                      }}
+                    >
+                      + Add Coupon
+                    </button>
+                    {/* const [couponModalShown, toggleCouponModal] = useState(false); */}
+                  </ItemSummary>
+                  <Modal
+                    shown={couponModalShown}
+                    close={() => {
+                      toggleCouponModal(false);
+                    }}
+                  >
+                    <AddCoupon meData={meData} />
+                  </Modal>
                   <ItemSummary>
                     Discounts
                     <span>${Discounts.toLocaleString()}</span>

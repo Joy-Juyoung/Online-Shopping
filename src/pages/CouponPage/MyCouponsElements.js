@@ -180,7 +180,7 @@ export const CouponBackFrame = styled.div`
   border-radius: 5px;
   width: 100%;
   height: 100%;
-  padding: 30px 15px;
+  padding: 0 15px 15px;
   margin: 0 auto;
   position: relative;
 
@@ -197,6 +197,10 @@ export const CouponBackFrame = styled.div`
     100% {
       transform: rotateY(0);
     }
+  }
+
+  h3 {
+    margin: 10px 0;
   }
 `;
 
@@ -239,4 +243,26 @@ export const CouponBackP = styled.div`
     font-size: 11px;
     margin: 15px 0 0;
   }
+`;
+
+export const BackCircle = styled.div`
+  background: #fff;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+
+  position: absolute;
+  top: 50%;
+  left: 0;
+`;
+
+export const BackCircleLast = styled.div`
+  background: #fff;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+
+  position: absolute;
+  top: 50%;
+  right: 0;
 `;

@@ -35,13 +35,14 @@ import {
   Line,
   ReviewListEmpty,
   ViewDetails,
-} from './MyCouponsElements';
+} from '../CouponPage/MyCouponsElements';
 import Loading from '../../components/Loading';
 import PageviewIcon from '@mui/icons-material/Pageview';
 import Modal from '../../components/Modal';
 import DiscountIcon from '@mui/icons-material/Discount';
+import { ButtonSmall } from '../../components/ButtonElements';
 
-const MyCoupons = ({ meData }) => {
+const AddCoupon = ({ meData }) => {
   let ref = useRef();
   const [loading, setLoading] = useState(false);
   const [coupons, setCoupons] = useState([]);
@@ -100,7 +101,7 @@ const MyCoupons = ({ meData }) => {
   return (
     <OrderContainer>
       <OrderWrapper>
-        <h1>My Coupons</h1>
+        <h1>Your Coupons</h1>
         <OrderWrap>
           <OrderList>
             {coupons?.length === 0 ? (
@@ -108,57 +109,37 @@ const MyCoupons = ({ meData }) => {
                 <span>No coupons found.</span>
               </ReviewListEmpty>
             ) : (
-              <CouponListWrap>
+              <div>
                 {coupons?.map((coupon, index) => {
                   return (
-                    <CouponFrame key={index} ref={ref}>
-                      <Circle></Circle>
-                      {/* {coupon?.discount_rate === 50 &&}
-                      {coupon?.discount_rate === 30 &&}
-                      {coupon?.discount_rate === 15 &&} */}
-                      <CouponInside
-                        style={{
-                          backgroundColor: index % 2 ? '#FEE599' : '#529292',
-                          // border: index % 2 ? '' : '2px solid #f8931f'#CFCFCF #FDBF1E,
-                        }}
-                      >
-                        <CouponHeader>
-                          <span>COUPON</span>
-                        </CouponHeader>
-                        <CouponInfo>
-                          <CouponRate
-                            style={{
-                              color: index % 2 ? '#000' : '#fff',
-                            }}
-                          >
-                            <CouponH>{coupon?.discount_rate}</CouponH>
-                            <CouponP>
-                              <span className='one'>%</span>
-                              <span className='two'>OFF</span>
-                            </CouponP>
-                          </CouponRate>
-                        </CouponInfo>
+                    <ul key={index} ref={ref}>
+                      <li style={{ display: 'flex' }}>
+                        <input type='radio' name='selectedCoupon' />
+                        <div>
+                          <div>{coupon?.discount_rate}</div>
+                          <div>
+                            <span className='one'>%</span>
+                            <span className='two'>OFF</span>
+                          </div>
+                        </div>
 
                         <ViewDetails
-                          onClick={(e) => {
+                          onClick={() => {
                             handleOpenCoupon(coupon?.pk);
                           }}
                         >
                           <PageviewIcon
-                            style={{
-                              color: index % 2 ? '#000' : '#fff',
-                            }}
                             onClick={() => {
                               toggleModal(!modalShown);
                             }}
                           />
                         </ViewDetails>
-                      </CouponInside>
-                      <CircleLast></CircleLast>
-                    </CouponFrame>
+                      </li>
+                    </ul>
                   );
                 })}
-              </CouponListWrap>
+                <ButtonSmall>Apply Coupon</ButtonSmall>
+              </div>
             )}
           </OrderList>
         </OrderWrap>
@@ -171,7 +152,7 @@ const MyCoupons = ({ meData }) => {
         }}
       >
         <CouponBackFrame>
-          <h3>Your Coupon Is,</h3>
+          <h3>{couponEach?.discount_rate}% Coupon</h3>
           <BackCircle></BackCircle>
           <CouponBackInside>
             {/* <CouponBackInside>
@@ -197,4 +178,4 @@ const MyCoupons = ({ meData }) => {
   );
 };
 
-export default MyCoupons;
+export default AddCoupon;
