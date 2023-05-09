@@ -86,7 +86,6 @@ const AddToCart = ({ onClose,  onSuccess}) => {
       }
       );
       console.log('test', addToCart.data);
-      // setSuccess(!isSuccess);
       onClose();
       onSuccess()
       // window.location.reload(`/products/${id}`);
@@ -147,22 +146,7 @@ const AddToCart = ({ onClose,  onSuccess}) => {
                     </>
                   ):(
                     <>
-                    <ButtonLarges 
-                      // onClick={() => isSuccess}
-                      // onClick={showCustomToast} 
-                      >ADD TO BAG</ButtonLarges>
-                    {/* <ToastContainer 
-                      transition={Zoom}
-                      autoClose={1000}
-                      hideProgressBar={false}
-                      closeOnClick={true}
-                      limit={1}
-                      theme='dark' // light, dark, colored
-                      pauseOnHover={true}
-                    // pauseOnFocusLoss={true}
-                    // icon={} // true or false
-                      position='top-center'
-                  />  */}
+                    <ButtonLarges>ADD TO BAG</ButtonLarges>
                   </>
                   )}
               

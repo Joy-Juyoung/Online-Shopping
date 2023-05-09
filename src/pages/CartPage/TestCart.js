@@ -64,10 +64,7 @@ const CARTS_URL = '/carts';
 const TestCart = () => {
   const [loading, setLoading] = useState(false);
   const [carts, setCarts] = useState([]);
-
   const [isChecked, setIsChecked] = useState(false);
-
-
   const [checkList, setCheckList] = useState([]);
   const [IdList, setIdList] = useState([]);
   const [checkNewList, setCheckNewList] = useState([]);
@@ -82,7 +79,7 @@ const TestCart = () => {
     setLoading(false);
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setLoading(true);
     getAllCart();
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -142,9 +139,21 @@ const TestCart = () => {
     //   setIsChecked(!isChecked)     
     // }
     
-    if(isChecked === false) {
+    if(isChecked === false) { 
       setCheckList(IdList)
       setIsChecked(true) 
+      IdList.map(async(i) =>  {
+        console.log("i", i);
+        //setCheckList([...checkList, i]);
+        const check = await axios.get(`/carts/${i}`, {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        });     
+        setCheckNewList([...checkNewList, check.data]);
+        console.log("checkNewList", checkNewList);
+        // console.log("check", check.data);
+      }    
+      )
     } else {
       setCheckList([])
       setIsChecked(false) 
@@ -232,7 +241,7 @@ const onChangeEach = async (e, id) => {
                       <ListsCheckBox>
                         <input
                           type='checkbox'
-                          onChange={(e) => onChangeEach(e, cart?.pk)} 
+                          onClick={(e) => onChangeEach(e, cart?.pk)} 
                           checked={checkList.includes(cart?.pk) } 
                           />
                       </ListsCheckBox>
@@ -248,7 +257,6 @@ const onChangeEach = async (e, id) => {
                             {cart?.product?.detail}
                           </DetailDescription>
                           <DetailOption>
-                            {/* <span>{cart?.product_option?.name}</span> */}
                             {cart?.product_option === null ? (
                               <>Free</>
                             ) : (
@@ -258,27 +266,6 @@ const onChangeEach = async (e, id) => {
                         </ItemDetailOne>
                         <ItemDetailTwo>
                           <CountButton cart={cart} getAllCart={getAllCart} carts={carts}/>
-                          {/* <ItemDetailTwoWrap>
-                            <ItemDecreaseBtn
-                              onClick={(e) => {
-                                e.preventDefault();
-                                handleDecrease(cart?.pk);
-                              }}
-                            >
-                              <RemoveIcon fontSize='small' color='action' />
-                            </ItemDecreaseBtn>
-                            <ItemNumberInput>
-                              {cart?.number_of_product}
-                            </ItemNumberInput>
-                            <ItemIncreaseBtn
-                              onClick={(e) => {
-                                e.preventDefault(); 
-                                handleIncrease(cart?.pk);
-                              }}
-                            >
-                              <AddIcon fontSize='small' color='action' />
-                            </ItemIncreaseBtn>
-                          </ItemDetailTwoWrap> */}
                         </ItemDetailTwo>
                         <ItemDetailThree>
                           <strong>${cart?.total_price?.toLocaleString()}</strong>

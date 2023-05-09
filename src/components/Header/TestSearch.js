@@ -48,6 +48,7 @@ const TestSearch = ({ onClose }) => {
     });
     console.log('dataList', dataList?.data);
     setSearchData(dataList?.data);
+    // setKeywords(dataList?.data);
   };
 
   useEffect(() => {
@@ -85,9 +86,6 @@ const TestSearch = ({ onClose }) => {
     };
   }, [onClose]);
 
-//   const searched = searchData.filter((item) =>
-//   item.kind.name.toLowerCase().includes(keywords)
-// );
   return (
     <ModalContainer>
       <ModalContainerSkin>
@@ -96,6 +94,7 @@ const TestSearch = ({ onClose }) => {
           <ModalHeader>
             <SearchBar 
               onAddKeyword={handleAddKeyword}
+              onClose={onClose}
             />
             <ModalCloseBtn onClick={onClose}>
               <CloseIcon fontSize='large' />
@@ -108,38 +107,14 @@ const TestSearch = ({ onClose }) => {
                         <ModalBodyHeader>
                             <h3>Popular</h3>
                         </ModalBodyHeader>
-                        <ModalBodyParagraph>
-                            <ModalBodyPList>
-                            <p>Top</p>
-                            </ModalBodyPList>
-                            <ModalBodyPList>
-                            <p>Button</p>
-                            </ModalBodyPList>
-                            <ModalBodyPList>
-                            <p>Outer</p>
-                            </ModalBodyPList>
-                            <ModalBodyPList>
-                            <p>Shoes</p>
-                            </ModalBodyPList>
-                            <ModalBodyPList>
-                            <p>Accessories</p>
-                            </ModalBodyPList>
-                            <ModalBodyPList>
-                            <p>육회</p>
-                            </ModalBodyPList>
-                            <ModalBodyPList>
-                            <p>해물찜</p>
-                            </ModalBodyPList>
-                            <ModalBodyPList>
-                            <p>누룽지탕</p>
-                            </ModalBodyPList>
-                            <ModalBodyPList>
-                            <p>문어숙회</p>
-                            </ModalBodyPList>
-                            <ModalBodyPList>
-                            <p>나도줘</p>
-                            </ModalBodyPList>
-                        </ModalBodyParagraph>
+                        {/* {keywords.slice(0,10).map((l) => ( */}
+                        {searchData.slice(0,10).map((l) => (
+                          <ModalBodyParagraph key={l.id} >
+                              <ModalBodyPList>
+                              <p>{l.name}</p>
+                              </ModalBodyPList>
+                          </ModalBodyParagraph>
+                      ))}
                     </ModalBodyWrap>
                 ):(
                   <>
@@ -153,8 +128,8 @@ const TestSearch = ({ onClose }) => {
                             )}
                         </ResultHeader>
                         <ResultList>
-                            {keywords.map((k) => (
-                                <ResultDetail key={k.id}>
+                            {keywords.slice(0,10).map((k) => (
+                              <ResultDetail key={k.id}>
                                     <ResultLink>
                                         <AccessTimeIcon sx={{ width: 24, height: 25 }} color='disabled' fontSize='small' />
                                         <p>{k.text}</p> 
@@ -164,7 +139,7 @@ const TestSearch = ({ onClose }) => {
                                         <CloseIcon sx={{ width: 14, height:14 }} color='disabled' fontSize='small' />
                                     </DetailDelete>
                                 </ResultDetail>
-                                ))
+                            ))                                
                             } 
                         </ResultList>
                     </SearchResult> 
@@ -172,39 +147,15 @@ const TestSearch = ({ onClose }) => {
                       <ModalBodyHeader>
                           <h3>Popular</h3>
                       </ModalBodyHeader>
-                      <ModalBodyParagraph>
-                          <ModalBodyPList>
-                          <p>Top</p>
-                          </ModalBodyPList>
-                          <ModalBodyPList>
-                          <p>Button</p>
-                          </ModalBodyPList>
-                          <ModalBodyPList>
-                          <p>Outer</p>
-                          </ModalBodyPList>
-                          <ModalBodyPList>
-                          <p>Shoes</p>
-                          </ModalBodyPList>
-                          <ModalBodyPList>
-                          <p>Accessories</p>
-                          </ModalBodyPList>
-                          <ModalBodyPList>
-                          <p>육회</p>
-                          </ModalBodyPList>
-                          <ModalBodyPList>
-                          <p>해물찜</p>
-                          </ModalBodyPList>
-                          <ModalBodyPList>
-                          <p>누룽지탕</p>
-                          </ModalBodyPList>
-                          <ModalBodyPList>
-                          <p>문어숙회</p>
-                          </ModalBodyPList>
-                          <ModalBodyPList>
-                          <p>나도줘</p>
-                          </ModalBodyPList>
-                      </ModalBodyParagraph>
-                  </ModalBodyWrap>
+                      {keywords.slice(0,10).map((l) => (
+                      //{searchData.slice(0,10).map((l) => (  
+                        <ModalBodyParagraph key={l.id} >
+                            <ModalBodyPList>
+                            <p>{l.text}</p>
+                            </ModalBodyPList>
+                        </ModalBodyParagraph>
+                        ))}
+                      </ModalBodyWrap>
                 </>
             )}        
            </ModalBody>
