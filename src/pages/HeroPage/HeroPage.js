@@ -31,9 +31,10 @@ import FourthImage from '../../asset/pic24.jpg';
 
 import Loading from '../../components/Loading';
 import Slider from './Slider';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-const HeroPage = () => {
+const HeroPage = ({ meData }) => {
+  // const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {

@@ -56,6 +56,7 @@ const CARTS_URL = '/carts';
 const Header = ({ meData, catData }) => {
   const navigate = useNavigate();
   const [me, setMe] = useState(null);
+  const [cat, setCat] = useState(null);
   const [logout, setLogout] = useState();
   const [clickAccount, setClickAccount] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -74,6 +75,7 @@ const Header = ({ meData, catData }) => {
 
   useEffect(() => {
     setMe(meData);
+    setCat(catData);
   }, [meData]);
 
   const getAllCart = async () => {
@@ -327,7 +329,7 @@ const Header = ({ meData, catData }) => {
                   </DropdownButton>
                 </DropMenuParents>
               </DropMenuList>
-              {catData.map((category) => {
+              {cat?.map((category) => {
                 return (
                   <DropMenuList key={category.pk}>
                     {/* <DropMenuWrap></DropMenuWrap> */}

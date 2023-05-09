@@ -41,7 +41,7 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 const LOGIN_URL = '/users/log-in';
 
-const LoginPage = () => {
+const LoginPage = ({ meData }) => {
   const userRef = useRef();
   const errRef = useRef();
   const navigate = useNavigate();
@@ -124,8 +124,12 @@ const LoginPage = () => {
       setUsername(username);
       setPwd(pwd);
       setLoginSuccess(true);
-      navigate('/');
-      window.location.reload('/');
+      if (meData?.type === 'admin_user') {
+        navigate('/admin');
+      } else {
+        navigate('/');
+        window.location.reload('/');
+      }
       setLoading(false);
     }
   };

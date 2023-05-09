@@ -35,136 +35,170 @@ import { useState } from 'react';
 import axios from '../api/axios';
 import { useEffect } from 'react';
 import MyCoupons from './CouponPage/MyCoupons';
+import AdminHome from './AdminHome';
+import AdminHeader from '../components/Header/AdminHeader';
 
 const Home = ({ meData, catData }) => {
+  // const [catData, setCatData] = useState([]);
+
+  // console.log('meData', meData);
+  // console.log('catData', catData);
+
+  // const getCategory = async () => {
+  //   const categoryData = await axios.get('/products/productAllParentsKinds', {
+  //     headers: { 'Content-Type': 'application/json' },
+  //     withCredentials: true,
+  //   });
+  //   setCatData(categoryData?.data);
+  // };
+  // useEffect(() => {
+  //   if (meData !== undefined) {
+  //     getCategory([]);
+  //   } else getCategory();
+  // }, [meData]);
+
   return (
     <>
-      {/* <Header meData={meData} catData={catData} /> */}
       <Container>
-        <Routes>
-          <Route path='/coupon' element={<MyCoupons />} exact={true} />
+        {/* <Routes> */}
+        {meData?.type === 'admin_user' ? (
+          <>
+            {/* <AdminHeader /> */}
+            <Routes>
+              <Route
+                path='/'
+                element={<AdminHome meData={meData} />}
+                exact={true}
+              />
+            </Routes>
+          </>
+        ) : (
+          <>
+            {/* <Header meData={meData} catData={catData} /> */}
+            <Routes>
+              <Route path='/' element={<HeroPage />} exact={true} />
+              <Route path='/coupon' element={<MyCoupons />} exact={true} />
 
-          <Route path='/' element={<HeroPage />} exact={true} />
+              <Route path='/login' element={<LoginPage />} exact={true} />
+              <Route
+                path='/register'
+                element={<RegisterPage meData={meData} />}
+                exact={true}
+              />
 
-          <Route
-            path='/login'
-            element={<LoginPage meData={meData} />}
-            exact={true}
-          />
-          <Route
-            path='/register'
-            element={<RegisterPage meData={meData} />}
-            exact={true}
-          />
+              <Route
+                path='/userAccount'
+                element={<UserAccountPage meData={meData} />}
+                exact={true}
+              />
 
-          <Route
-            path='/userAccount'
-            element={<UserAccountPage meData={meData} />}
-            exact={true}
-          />
+              <Route
+                path='/myReviews'
+                element={<MyReviews meData={meData} />}
+                exact={true}
+              />
 
-          <Route
-            path='/myReviews'
-            element={<MyReviews meData={meData} />}
-            exact={true}
-          />
+              <Route
+                path='/userOrders'
+                element={<OrderPage meData={meData} />}
+                exact={true}
+              />
+              <Route
+                path='/userOrders/:id'
+                element={<OrderDtails meData={meData} />}
+                exact={true}
+              />
+              {/* <Route
+              path='/userOrders/:orderId/review/:reviewId/:optionPk'
+              element={<NewReview meData={meData} />}
+              exact={true}
+            /> */}
+              <Route
+                path='/review/:reviewId'
+                element={<NewReview meData={meData} />}
+                exact={true}
+              />
 
-          <Route
-            path='/userOrders'
-            element={<OrderPage meData={meData} />}
-            exact={true}
-          />
-          <Route
-            path='/userOrders/:id'
-            element={<OrderDtails meData={meData} />}
-            exact={true}
-          />
-          {/* <Route
-            path='/userOrders/:orderId/review/:reviewId/:optionPk'
-            element={<NewReview meData={meData} />}
-            exact={true}
-          /> */}
-          <Route
-            path='/review/:reviewId'
-            element={<NewReview meData={meData} />}
-            exact={true}
-          />
+              <Route
+                path='/products/all'
+                element={<AllProducts meData={meData} catData={catData} />}
+                exact={true}
+              />
 
-          <Route
-            path='/products/all'
-            element={<AllProducts meData={meData} catData={catData} />}
-            exact={true}
-          />
+              <Route
+                path='/products/:id'
+                element={
+                  <ProductDetailPage meData={meData} catData={catData} />
+                }
+                exact={true}
+              />
 
-          <Route
-            path='/products/:id'
-            element={<ProductDetailPage meData={meData} catData={catData} />}
-            exact={true}
-          />
+              <Route
+                path='/products/productAllChildKinds/:id'
+                element={
+                  <ProductListByCategory meData={meData} catData={catData} />
+                }
+                exact={true}
+              />
 
-          <Route
-            path='/products/productAllChildKinds/:id'
-            element={
-              <ProductListByCategory meData={meData} catData={catData} />
-            }
-            exact={true}
-          />
+              <Route
+                path='/products/category/:pId/:cName/:cId'
+                element={
+                  <ProductListByCategory meData={meData} catData={catData} />
+                }
+                exact={true}
+              />
 
-          <Route
-            path='/products/category/:pId/:cName/:cId'
-            element={
-              <ProductListByCategory meData={meData} catData={catData} />
-            }
-            exact={true}
-          />
+              <Route
+                path='/products/category/:pId'
+                element={<ProductsListPage meData={meData} catData={catData} />}
+                exact={true}
+              />
 
-          <Route
-            path='/products/category/:pId'
-            element={<ProductsListPage meData={meData} catData={catData} />}
-            exact={true}
-          />
+              <Route
+                path='/wishlist'
+                element={<WishlistPage meData={meData} catData={catData} />}
+                exact={true}
+              />
+              {/* <Route
+              path='/carts'
+              element={<CartPage meData={meData} />}
+              exact={true}
+            /> */}
+              <Route
+                path='/carts'
+                element={<TestCart meData={meData} />}
+                exact={true}
+              />
 
-          <Route
-            path='/wishlist'
-            element={<WishlistPage meData={meData} catData={catData} />}
-            exact={true}
-          />
-          {/* <Route
-            path='/carts'
-            element={<CartPage meData={meData} />}
-            exact={true}
-          /> */}
-          <Route
-            path='/carts'
-            element={<TestCart meData={meData} />}
-            exact={true}
-          />
+              <Route
+                path='/carts/payment'
+                element={<PaymentPage meData={meData} />}
+                exact={true}
+              />
+              {/* <Route
+              path='/carts/payment/:orderId'
+              element={<SuccessPayment meData={meData} />}
+              exact={true}
+            /> */}
 
-          <Route
-            path='/carts/payment'
-            element={<PaymentPage meData={meData} />}
-            exact={true}
-          />
-          {/* <Route
-            path='/carts/payment/:orderId'
-            element={<SuccessPayment meData={meData} />}
-            exact={true}
-          /> */}
+              <Route
+                path='/userBalance'
+                element={<AddBalance meData={meData} />}
+                exact={true}
+              />
 
-          <Route
-            path='/userBalance'
-            element={<AddBalance meData={meData} />}
-            exact={true}
-          />
-
-          <Route
-            path='/helpcenter'
-            element={<HelpCenterPage meData={meData} />}
-            exact={true}
-          />
-        </Routes>
+              <Route
+                path='/helpcenter'
+                element={<HelpCenterPage meData={meData} />}
+                exact={true}
+              />
+            </Routes>
+            <Footer />
+          </>
+        )}
+        {/* </Routes> */}
       </Container>
-      {/* <Footer /> */}
     </>
   );
 };
