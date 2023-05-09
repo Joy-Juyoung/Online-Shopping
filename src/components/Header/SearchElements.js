@@ -243,8 +243,7 @@ export const ModalBodyHeader = styled.header`
 
 export const ModalBodyParagraph = styled.ol`
   counter-reset: item 0;
-
-
+  /* counter-increment: item 1; */
   /* transform-origin: top;
   animation: popularMenu 0.9s ease-in-out 0s forwards running;
   @keyframes popularMenu {

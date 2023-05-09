@@ -35,6 +35,7 @@ import { useState } from 'react';
 import axios from '../api/axios';
 import { useEffect } from 'react';
 import MyCoupons from './CouponPage/MyCoupons';
+import ResearchResult from './ProductPage/ResearchResult';
 
 const Home = ({ meData, catData }) => {
   return (
@@ -93,6 +94,12 @@ const Home = ({ meData, catData }) => {
           <Route
             path='/products/all'
             element={<AllProducts meData={meData} catData={catData} />}
+            exact={true}
+          />
+
+          <Route
+            path='/products/search/:searchValue'
+            element={<ResearchResult meData={meData} catData={catData} />}
             exact={true}
           />
 
