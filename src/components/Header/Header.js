@@ -51,7 +51,7 @@ import Modal from '../Modal';
 import SearchIcon from '@mui/icons-material/Search';
 import AddBalance from '../AddBalance';
 
-const CARTS_URL = '/carts';
+const CARTS_URL = '/carts/';
 
 const Header = ({ meData, catData }) => {
   const navigate = useNavigate();
@@ -66,12 +66,6 @@ const Header = ({ meData, catData }) => {
   const ref = useRef();
   const searchRef = useRef();
 
-  // const handleAddBalance = () => {
-  //   toggleBalance(!balanceShown);
-  // };
-
-  // console.log('Header Me', me);
-
   useEffect(() => {
     setMe(meData);
   }, [meData]);
@@ -84,7 +78,7 @@ const Header = ({ meData, catData }) => {
     console.log('cartList', cartList.data);
     setCarts(cartList?.data);
     setLoading(false);
-    // setCheckItems(new Array(cartList?.length).fill(true));
+
   };
 
   useEffect(() => {

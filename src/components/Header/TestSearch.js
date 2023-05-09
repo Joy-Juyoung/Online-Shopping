@@ -95,7 +95,6 @@ const TestSearch = ({ onClose }) => {
             <SearchBar 
               onAddKeyword={handleAddKeyword}
               onClose={onClose}
-
             />
             <ModalCloseBtn onClick={onClose}>
               <CloseIcon fontSize='large' />
@@ -134,7 +133,6 @@ const TestSearch = ({ onClose }) => {
                                     <ResultLink>
                                         <AccessTimeIcon sx={{ width: 24, height: 25 }} color='disabled' fontSize='small' />
                                         <p>{k.text}</p> 
-                                        {/* <p>{k.name}</p>  */}
                                         <span>Keyword</span>
                                     </ResultLink>
                                     <DetailDelete className="removeBtn" type="button" onClick={() => handleRemoveKeyword(k.id)}>

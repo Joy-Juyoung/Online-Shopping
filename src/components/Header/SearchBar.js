@@ -36,7 +36,6 @@ const SearchBar = ({ onAddKeyword,onClose }) => {
         navigate(`/products/search/${searchValue}`);
       }
       // onClose();
-      // setLoading(false);
     },
     [searchValue,onAddKeyword]
   )

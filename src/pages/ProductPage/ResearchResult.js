@@ -88,9 +88,11 @@ const ResearchResult = ({ meData, catData }) => {
     }
     // }
   }, [selectOption, sortProducts]);
-  // const  filtered = !searchValue 
-  //                     ? items 
-  //                     : items.filter(())
+  const  filtered = !searchValue 
+                      ? items 
+                      : items.filter((list) =>
+                      list.name.toLowerCase().includes(searchValue.toLowerCase())
+                      )
   if (loading)
     return (
       <div>
@@ -129,7 +131,8 @@ const ResearchResult = ({ meData, catData }) => {
 
             <ListMidWrap>
               <ListMid>
-                {items?.map((all) => {
+                {/* {items?.map((all) => { */}
+                {filtered?.map((all) => { 
                   return (
                     <ProductsCard
                       key={all.pk}
