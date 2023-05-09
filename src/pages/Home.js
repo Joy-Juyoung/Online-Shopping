@@ -1,6 +1,12 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Container } from './CommonElements';
+import {
+  AdminBg,
+  AdminContainer,
+  AdminGlobal,
+  AdminSideContainer,
+} from '../pages/Admin/AdminCommonElements';
+
 import HeroPage from './HeroPage/HeroPage';
 import LoginPage from './LoginPage/LoginPage';
 import ProductDetailPage from './ProductPage/ProductDetailPage';
@@ -35,51 +41,116 @@ import { useState } from 'react';
 import axios from '../api/axios';
 import { useEffect } from 'react';
 import MyCoupons from './CouponPage/MyCoupons';
-import AdminHome from './AdminHome';
-import AdminHeader from '../components/Header/AdminHeader';
 
-const Home = ({ meData, catData }) => {
-  // const [catData, setCatData] = useState([]);
+// import AdminHeader from '../components/AdminComponents/AdminHeader';
+import Dashboard from './Admin/Dashboard/Dashboard';
+import CustomersManage from './Admin/CustomersManage/CustomersManage';
+import CouponManage from './Admin/CouponManage/CouponManage';
+import CategoryManage from './Admin/CategoryManage/CategoryManage';
+import ItemManage from './Admin/ItemManage/ItemManage';
+import OrderManage from './Admin/OrderManage/OrderManage';
+import FeedbackManage from './Admin/FeedbackManage/FeedbackManage';
 
-  // console.log('meData', meData);
-  // console.log('catData', catData);
+import AdminSidebar from '../components/AdminComponents/AdminSidebar';
+import AdminHeader from '../components/AdminComponents/AdminHeader';
+import { Container } from './CommonElements';
+import HeaderBackup from '../components/Header/HeaderBackup';
 
-  // const getCategory = async () => {
-  //   const categoryData = await axios.get('/products/productAllParentsKinds', {
-  //     headers: { 'Content-Type': 'application/json' },
-  //     withCredentials: true,
-  //   });
-  //   setCatData(categoryData?.data);
-  // };
+const Home = () => {
+  const [meData, setMeData] = useState();
+  const [catData, setCatData] = useState([]);
+
+  const getMe = async () => {
+    try {
+      const me = await axios.get('/users/me', {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      });
+      setMeData(me?.data);
+    } catch (err) {
+      return null;
+    }
+  };
+  const getCategory = async () => {
+    const categoryData = await axios.get('/products/productAllParentsKinds', {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+    setCatData(categoryData?.data);
+  };
+
+  useEffect(() => {
+    getMe();
+    getCategory();
+  }, []);
+
   // useEffect(() => {
-  //   if (meData !== undefined) {
-  //     getCategory([]);
-  //   } else getCategory();
-  // }, [meData]);
+  //   getCategory();
+  // }, []);
 
   return (
     <>
-      <Container>
-        {/* <Routes> */}
-        {meData?.type === 'admin_user' ? (
-          <>
-            {/* <AdminHeader /> */}
+      {meData?.type === 'admin_user' ? (
+        <AdminGlobal>
+          <AdminBg>
+            <AdminSideContainer>
+              <AdminSidebar meData={meData} />
+            </AdminSideContainer>
+            <AdminContainer>
+              <AdminHeader meData={meData} />
+              <Routes>
+                <Route path='/' element={<Dashboard />} exact={true} />
+                <Route
+                  path='/manage/customers'
+                  element={<CustomersManage />}
+                  exact={true}
+                />
+                <Route
+                  path='/manage/coupons'
+                  element={<CouponManage />}
+                  exact={true}
+                />
+                <Route
+                  path='/manage/items'
+                  element={<ItemManage />}
+                  exact={true}
+                />
+                <Route
+                  path='/manage/orders'
+                  element={<OrderManage />}
+                  exact={true}
+                />
+                <Route
+                  path='/manage/categories'
+                  element={<CategoryManage />}
+                  exact={true}
+                />
+                <Route
+                  path='/manage/feedbacks'
+                  element={<FeedbackManage />}
+                  exact={true}
+                />
+              </Routes>
+            </AdminContainer>
+          </AdminBg>
+        </AdminGlobal>
+      ) : (
+        <>
+          {/* <Header meData={meData} catData={catData} /> */}
+          <HeaderBackup meData={meData} catData={catData} />
+          <Container>
             <Routes>
               <Route
                 path='/'
-                element={<AdminHome meData={meData} />}
+                element={<HeroPage catData={catData} />}
                 exact={true}
               />
-            </Routes>
-          </>
-        ) : (
-          <>
-            {/* <Header meData={meData} catData={catData} /> */}
-            <Routes>
-              <Route path='/' element={<HeroPage />} exact={true} />
-              <Route path='/coupon' element={<MyCoupons />} exact={true} />
 
-              <Route path='/login' element={<LoginPage />} exact={true} />
+              <Route
+                path='/login'
+                element={<LoginPage meData={meData} />}
+                exact={true}
+              />
               <Route
                 path='/register'
                 element={<RegisterPage meData={meData} />}
@@ -98,6 +169,8 @@ const Home = ({ meData, catData }) => {
                 exact={true}
               />
 
+              <Route path='/coupon' element={<MyCoupons />} exact={true} />
+
               <Route
                 path='/userOrders'
                 element={<OrderPage meData={meData} />}
@@ -109,10 +182,10 @@ const Home = ({ meData, catData }) => {
                 exact={true}
               />
               {/* <Route
-              path='/userOrders/:orderId/review/:reviewId/:optionPk'
-              element={<NewReview meData={meData} />}
-              exact={true}
-            /> */}
+            path='/userOrders/:orderId/review/:reviewId/:optionPk'
+            element={<NewReview meData={meData} />}
+            exact={true}
+          /> */}
               <Route
                 path='/review/:reviewId'
                 element={<NewReview meData={meData} />}
@@ -161,10 +234,10 @@ const Home = ({ meData, catData }) => {
                 exact={true}
               />
               {/* <Route
-              path='/carts'
-              element={<CartPage meData={meData} />}
-              exact={true}
-            /> */}
+            path='/carts'
+            element={<CartPage meData={meData} />}
+            exact={true}
+          /> */}
               <Route
                 path='/carts'
                 element={<TestCart meData={meData} />}
@@ -177,10 +250,10 @@ const Home = ({ meData, catData }) => {
                 exact={true}
               />
               {/* <Route
-              path='/carts/payment/:orderId'
-              element={<SuccessPayment meData={meData} />}
-              exact={true}
-            /> */}
+            path='/carts/payment/:orderId'
+            element={<SuccessPayment meData={meData} />}
+            exact={true}
+          /> */}
 
               <Route
                 path='/userBalance'
@@ -194,11 +267,10 @@ const Home = ({ meData, catData }) => {
                 exact={true}
               />
             </Routes>
-            <Footer />
-          </>
-        )}
-        {/* </Routes> */}
-      </Container>
+          </Container>
+          <Footer />
+        </>
+      )}
     </>
   );
 };

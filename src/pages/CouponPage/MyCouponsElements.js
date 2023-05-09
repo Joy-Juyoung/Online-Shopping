@@ -180,7 +180,8 @@ export const CouponBackFrame = styled.div`
   border-radius: 5px;
   width: 100%;
   height: 100%;
-  padding: 0 15px 15px;
+  padding: 15px;
+  /* margin: 10px; */
   margin: 0 auto;
   position: relative;
 
@@ -229,7 +230,7 @@ export const CouponBackInfo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 25px;
 `;
 export const CouponBackP = styled.div`
   &.name {
@@ -252,7 +253,7 @@ export const BackCircle = styled.div`
   height: 25px;
 
   position: absolute;
-  top: 50%;
+  top: 43%;
   left: 0;
 `;
 
@@ -263,6 +264,29 @@ export const BackCircleLast = styled.div`
   height: 25px;
 
   position: absolute;
-  top: 50%;
+  top: 43%;
   right: 0;
+`;
+
+export const CloseCircle = styled.div`
+  background: #000;
+  color: #fff;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  /* text-align: center; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  position: absolute;
+  top: -19%;
+  right: -10%;
+
+  &:hover {
+    background: #fff;
+    color: #000;
+    border: 1px solid #000;
+  }
 `;

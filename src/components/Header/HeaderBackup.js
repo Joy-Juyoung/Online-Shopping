@@ -33,8 +33,6 @@ import {
   DropChildWrap,
   ModalBtnWrap,
   ModalBtnDetail,
-  FlagBtn,
-  ItemCount,
 } from './HeaderElements';
 import FlagIcon from '@mui/icons-material/Flag';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -49,26 +47,20 @@ import DropUser from './DropUser';
 import { ButtonSmall, ButtonUtils } from '../ButtonElements';
 import Modal from '../Modal';
 import SearchIcon from '@mui/icons-material/Search';
-import AddBalance from '../AddBalance';
 
-const CARTS_URL = '/carts';
-
-const Header = ({ meData, catData }) => {
+const HeaderBackup = ({ meData }) => {
   const navigate = useNavigate();
+
+  const [categories, setCategories] = useState([]);
   const [me, setMe] = useState(null);
   const [logout, setLogout] = useState();
   const [clickAccount, setClickAccount] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalShown, toggleModal] = useState(false);
-  const [balanceShown, toggleBalance] = useState(false);
-  const [carts, setCarts] = useState([]);
+
   const ref = useRef();
   const searchRef = useRef();
-
-  // const handleAddBalance = () => {
-  //   toggleBalance(!balanceShown);
-  // };
 
   // console.log('Header Me', me);
 
@@ -76,23 +68,18 @@ const Header = ({ meData, catData }) => {
     setMe(meData);
   }, [meData]);
 
-  const getAllCart = async () => {
-    const cartList = await axios.get(CARTS_URL, {
+  const getCategory = async () => {
+    const categoryData = await axios.get('/products/productAllParentsKinds', {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    console.log('cartList', cartList.data);
-    setCarts(cartList?.data);
-    setLoading(false);
-    // setCheckItems(new Array(cartList?.length).fill(true));
+    // console.log('Header Load Me', meData);
+    setCategories(categoryData?.data);
   };
 
   useEffect(() => {
-    setLoading(true);
-    getAllCart();
-    // setCheckNewList(carts)
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  }, []);
+    getCategory();
+  }, [me]);
 
   const handleLogout = async () => {
     setLoading(true);
@@ -110,7 +97,7 @@ const Header = ({ meData, catData }) => {
     setLogout(loggedOut?.data);
     setMe('');
     navigate('/');
-    // window.location.reload('/');
+    window.location.reload('/');
     setLoading(false);
   };
 
@@ -124,6 +111,14 @@ const Header = ({ meData, catData }) => {
       if (clickAccount && ref.current && !ref.current.contains(e.target)) {
         setClickAccount(false);
       }
+      // if (
+      //   isModalOpen &&
+      //   searchRef.current &&
+      //   !searchRef.current.contains(e.target)
+      // )
+      // {
+      //   setIsModalOpen(false);
+      // }
     };
     document.addEventListener('click', checkIfClickedOutside);
     return () => {
@@ -170,19 +165,17 @@ const Header = ({ meData, catData }) => {
                     behavior: 'smooth',
                   })}
                 >
-                  BlankCloset
+                  BlanketCLoset
                 </div>
               </MidLink>
             </MiddleSide>
             <RightSide>
+              <RightIcon>
+                <FlagIcon fontSize='medium' />
+              </RightIcon>
+
               {!me && logout !== null ? (
                 <>
-                  <RightIcon>
-                    <FlagBtn>
-                      <img src='https://static.msscdn.net/global/country/flag/CA.svg' />
-                    </FlagBtn>
-                  </RightIcon>
-
                   <RightIcon>
                     <FaLink>
                       <FavoriteBorderIcon
@@ -251,34 +244,15 @@ const Header = ({ meData, catData }) => {
               ) : (
                 <>
                   <RightIcon>
-                    <FlagBtn>
-                      <img src='https://static.msscdn.net/global/country/flag/CA.svg' />
-                    </FlagBtn>
-                  </RightIcon>
-                  <RightIcon>
                     <FaLink to='/wishlist'>
                       <FavoriteBorderIcon fontSize='medium' />
                     </FaLink>
                   </RightIcon>
-                  {carts.length === 0 ? (
-                    <>
-                      <RightIcon>
-                        <CartLink to='/carts'>
-                          <AddShoppingCartIcon fontSize='medium' />
-                        </CartLink>
-                      </RightIcon>
-                    </>
-                  ) : (
-                    <>
-                      <RightIcon>
-                        <CartLink to='/carts'>
-                          <ItemCount>{carts.length}</ItemCount>
-                          {/* <span>1</span> */}
-                          <AddShoppingCartIcon fontSize='medium' />
-                        </CartLink>
-                      </RightIcon>
-                    </>
-                  )}
+                  <RightIcon>
+                    <CartLink to='/carts'>
+                      <AddShoppingCartIcon fontSize='medium' />
+                    </CartLink>
+                  </RightIcon>
                   <RightIcon>
                     {!isModalOpen && (
                       <>
@@ -289,20 +263,7 @@ const Header = ({ meData, catData }) => {
                             ref={ref}
                           />
                         </PermLink>
-                        {clickAccount && (
-                          <DropUser
-                            meData={meData}
-                            shown={() => toggleBalance(!balanceShown)}
-                          />
-                        )}
-                        <Modal
-                          shown={balanceShown}
-                          close={() => {
-                            toggleBalance(false);
-                          }}
-                        >
-                          <AddBalance meData={meData} />
-                        </Modal>
+                        {clickAccount && <DropUser meData={meData} />}
                       </>
                     )}
                   </RightIcon>
@@ -327,7 +288,7 @@ const Header = ({ meData, catData }) => {
                   </DropdownButton>
                 </DropMenuParents>
               </DropMenuList>
-              {catData.map((category) => {
+              {categories.map((category) => {
                 return (
                   <DropMenuList key={category.pk}>
                     {/* <DropMenuWrap></DropMenuWrap> */}
@@ -370,4 +331,4 @@ const Header = ({ meData, catData }) => {
   );
 };
 
-export default Header;
+export default HeaderBackup;

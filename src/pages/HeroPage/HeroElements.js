@@ -3,7 +3,16 @@ import styled from 'styled-components';
 export const MainContainer = styled.div`
   /* min-height: 100%; */
   margin: 0 auto;
-  padding: 1em 0;
+  padding: 0.7em 10px;
+
+  a {
+    text-decoration: none;
+    color: #0a0f18;
+  }
+
+  @media screen and (max-width: 1024px) {
+    /* padding: 0.3em auto; */
+  }
 `;
 
 export const MainWrapper = styled.div`
@@ -32,36 +41,21 @@ export const SectionWrap = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
-  /* grid-template-areas: 'col1 col2'; */
 
   button {
-    /* width: 30%; */
     margin: 40px 0;
   }
 
   @media screen and (max-width: 1024px) {
     grid-template-columns: 1fr;
-    /* padding: 0 10px; */
-    /* &.start__left {
-      grid-template-areas: 'col1' 'col2';
-    }
-
-    &.start__right {
-      grid-template-areas: 'col2' 'col1';
-    } */
   }
 `;
 
 export const SectionInfoLeft = styled.div`
   width: 100%;
-  /* height: 100%; */
-  /* height: 800px; */
-
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* object-fit: cover; */
-  /* grid-area: col1; */
 
   @media screen and (max-width: 1024px) {
     align-items: center;
@@ -74,7 +68,6 @@ export const SectionInfoRight = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* grid-area: col2; */
 
   @media screen and (max-width: 1024px) {
   }
@@ -83,12 +76,16 @@ export const SectionInfoRight = styled.div`
 export const FirstImg = styled.img`
   width: 100%;
   /* height: 90%; */
-  /* height: 70vh; */
+  height: 75vh;
   object-fit: cover;
+  object-position: top;
 
   @media screen and (max-width: 1024px) {
     /* width: 80%; */
-    height: 80%;
+    /* height: 80%; */
+    /* width: 100%; */
+    height: 700px;
+    /* object-position: top; */
     /* object-fit: contain; */
   }
 `;
@@ -143,7 +140,7 @@ export const SectionTitle = styled.h1`
 `;
 
 export const SectionButton = styled.div`
-  margin: 0px auto;
+  margin: 20px auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -187,15 +184,31 @@ export const SectionCategories = styled.div`
 `;
 
 export const CategoriesWrap = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 20px; */
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
   width: 100%;
-  grid-gap: 20px;
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    text-decoration: none;
+    color: #0a0f18;
+  }
+
+  /* margin: 0 10px; */
 
   span {
+    width: 90%;
     border: 1px solid black;
     border-radius: 5px;
     padding: 15px;
+    /* margin: 0 10px; */
     text-align: center;
     font-size: 24px;
     cursor: pointer;

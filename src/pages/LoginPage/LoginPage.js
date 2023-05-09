@@ -124,12 +124,12 @@ const LoginPage = ({ meData }) => {
       setUsername(username);
       setPwd(pwd);
       setLoginSuccess(true);
-      if (meData?.type === 'admin_user') {
-        navigate('/admin');
-      } else {
-        navigate('/');
-        window.location.reload('/');
-      }
+      // if (meData?.type === 'admin_user') {
+      //   navigate('/admin');
+      // } else {
+      navigate('/');
+      window.location.reload('/');
+      // }
       setLoading(false);
     }
   };

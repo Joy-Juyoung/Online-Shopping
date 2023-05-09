@@ -1,6 +1,12 @@
 // import React from 'react';
 // import { Routes, Route } from 'react-router-dom';
-// import { Container } from './CommonElements';
+// import {
+//   AdminBg,
+//   AdminContainer,
+//   AdminGlobal,
+//   AdminSideContainer,
+// } from '../pages/Admin/AdminCommonElements';
+
 // import HeroPage from './HeroPage/HeroPage';
 // import LoginPage from './LoginPage/LoginPage';
 // import ProductDetailPage from './ProductPage/ProductDetailPage';
@@ -35,40 +41,112 @@
 // import axios from '../api/axios';
 // import { useEffect } from 'react';
 // import MyCoupons from './CouponPage/MyCoupons';
-// import AdminHome from './AdminHome';
 
-// const Home = ({ meData, catData }) => {
-//   const [isAdmin, setIsAdmin] = useState(false);
+// // import AdminHeader from '../components/AdminComponents/AdminHeader';
+// import Dashboard from './Admin/Dashboard/Dashboard';
+// import CustomersManage from './Admin/CustomersManage/CustomersManage';
+// import CouponManage from './Admin/CouponManage/CouponManage';
+// import CategoryManage from './Admin/CategoryManage/CategoryManage';
+// import ItemManage from './Admin/ItemManage/ItemManage';
+// import OrderManage from './Admin/OrderManage/OrderManage';
+// import FeedbackManage from './Admin/FeedbackManage/FeedbackManage';
+
+// import AdminSidebar from '../components/AdminComponents/AdminSidebar';
+// import AdminHeader from '../components/AdminComponents/AdminHeader';
+// import { Container } from './CommonElements';
+
+// const Home = () => {
+//   const [meData, setMeData] = useState();
+//   const [catData, setCatData] = useState([]);
+
+//   const getMe = async () => {
+//     try {
+//       const me = await axios.get('/users/me', {
+//         headers: { 'Content-Type': 'application/json' },
+//         withCredentials: true,
+//       });
+//       setMeData(me?.data);
+//     } catch (err) {
+//       return null;
+//     }
+//   };
+//   const getCategory = async () => {
+//     const categoryData = await axios.get('/products/productAllParentsKinds', {
+//       headers: { 'Content-Type': 'application/json' },
+//       withCredentials: true,
+//     });
+//     setCatData(categoryData?.data);
+//   };
 
 //   useEffect(() => {
-//     if (meData?.type === 'admin_user') {
-//       setIsAdmin(true);
-//     }
+//     getMe();
+//     getCategory();
 //   }, []);
+
+//   // useEffect(() => {
+//   //   getCategory();
+//   // }, []);
 
 //   return (
 //     <>
-//       {isAdmin ? (
-//         // <AdminHome />
-//         <Routes>
-//           <Route
-//             path='/admin'
-//             element={<AdminHome meData={meData} />}
-//             exact={true}
-//           />
-//         </Routes>
+//       {meData?.type === 'admin_user' ? (
+//         <AdminGlobal>
+//           <AdminBg>
+//             <AdminSideContainer>
+//               <AdminSidebar meData={meData} />
+//             </AdminSideContainer>
+//             <AdminContainer>
+//               <AdminHeader meData={meData} />
+//               <Routes>
+//                 <Route path='/' element={<Dashboard />} exact={true} />
+//                 <Route
+//                   path='/manage/customers'
+//                   element={<CustomersManage />}
+//                   exact={true}
+//                 />
+//                 <Route
+//                   path='/manage/coupons'
+//                   element={<CouponManage />}
+//                   exact={true}
+//                 />
+//                 <Route
+//                   path='/manage/items'
+//                   element={<ItemManage />}
+//                   exact={true}
+//                 />
+//                 <Route
+//                   path='/manage/orders'
+//                   element={<OrderManage />}
+//                   exact={true}
+//                 />
+//                 <Route
+//                   path='/manage/categories'
+//                   element={<CategoryManage />}
+//                   exact={true}
+//                 />
+//                 <Route
+//                   path='/manage/feedbacks'
+//                   element={<FeedbackManage />}
+//                   exact={true}
+//                 />
+//               </Routes>
+//             </AdminContainer>
+//           </AdminBg>
+//         </AdminGlobal>
 //       ) : (
 //         <>
 //           <Header meData={meData} catData={catData} />
 //           <Container>
 //             <Routes>
-//               <Route path='/coupon' element={<MyCoupons />} exact={true} />
-
-//               <Route path='/' element={<HeroPage />} exact={true} />
+//               <Route
+//                 path='/'
+//                 element={<HeroPage catData={catData} />}
+//                 exact={true}
+//               />
 
 //               <Route
 //                 path='/login'
-//                 element={<LoginPage meData={meData} isAdmin={isAdmin} />}
+//                 element={<LoginPage meData={meData} />}
 //                 exact={true}
 //               />
 //               <Route
@@ -88,6 +166,8 @@
 //                 element={<MyReviews meData={meData} />}
 //                 exact={true}
 //               />
+
+//               <Route path='/coupon' element={<MyCoupons />} exact={true} />
 
 //               <Route
 //                 path='/userOrders'
