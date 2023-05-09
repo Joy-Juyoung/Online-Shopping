@@ -50,12 +50,13 @@ import {
 
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import CloseIcon from '@mui/icons-material/Close';
-import RemoveIcon from '@mui/icons-material/Remove';
-import AddIcon from '@mui/icons-material/Add';
+// import RemoveIcon from '@mui/icons-material/Remove';
+// import AddIcon from '@mui/icons-material/Add';
 import axios from '../../api/axios';
 import Loading from '../../components/Loading';
 import { Link } from 'react-router-dom';
 import { ButtonLarge } from '../../components/ButtonElements';
+import CountButton from './CountButton';
 
 
 const CARTS_URL = '/carts';
@@ -63,6 +64,10 @@ const CARTS_URL = '/carts';
 const TestCart = () => {
   const [loading, setLoading] = useState(false);
   const [carts, setCarts] = useState([]);
+
+  const [isChecked, setIsChecked] = useState(false);
+
+
   const [checkList, setCheckList] = useState([]);
   const [IdList, setIdList] = useState([]);
   const [checkNewList, setCheckNewList] = useState([]);
@@ -119,46 +124,6 @@ const TestCart = () => {
     window.location.reload('/carts');
   };
 
-  const handleIncrease = async (pk) => {
-    const addQty =  carts.map((i) => {
-      if (pk === i?.pk && i.number_of_product < 10000) {
-        axios.put(
-          `/carts/${pk}`,
-          {
-            number_of_product: i.number_of_product + 1,
-          },
-          {
-            headers: { 'Content-Type': 'application/json' },
-            withCredentials: true,
-          }
-        );
-      }
-    });
-    setCarts(addQty);
-    getAllCart();
-  };
-
-  const handleDecrease = async (pk) => {
-    const minusQty = await carts.map((i) => {
-      if (pk === i?.pk && i.number_of_product > 1) {
-         axios.put(
-
-          `/carts/${pk}`,
-          {
-            pk: i?.pk,
-            number_of_product: i.number_of_product - 1,
-          },
-          {
-            headers: { 'Content-Type': 'application/json' },
-            withCredentials: true,
-          }
-        );
-      }
-    });
-    setCarts(minusQty);
-    getAllCart();
-  };
-  
   useEffect(() => {
     let ids = []
     carts?.map((item, i) => {
@@ -168,17 +133,26 @@ const TestCart = () => {
     // console.log("ids", ids);
 }, [carts])
 
-  const onChangeAll = (e) => {
-    setCheckList(e.target.checked ? IdList : [])
-    // // setIsCheckAll(!isCheckAll);
-    // // setIsCheck(carts.map(li => li?.pk));
-    // // if (isCheckAll) {
-    // //   setIsCheck([]);
-    // // }
- }
+//
+  const onChangeAll = () => {
+    // setCheckList(IdList)
+    // setIsChecked(!isChecked)
+    // if(isChecked){
+    //   setCheckList([])
+    //   setIsChecked(!isChecked)     
+    // }
+    
+    if(isChecked === false) {
+      setCheckList(IdList)
+      setIsChecked(true) 
+    } else {
+      setCheckList([])
+      setIsChecked(false) 
+    }
+}
 
+ // carts에서 가져와서 변경
 const onChangeEach = async (e, id) => {
-  // console.log("id",id);
     if (e.target.checked) {
         setCheckList([...checkList, id]);
         const check = await axios.get(`/carts/${id}`, {
@@ -186,14 +160,11 @@ const onChangeEach = async (e, id) => {
           withCredentials: true,
         });
         setCheckNewList([...checkNewList, check.data]);
-        // setItemPrice(checkList.total_price);
     } else {
        setCheckList(checkList.filter((checkedId) => checkedId !== id));
        setCheckNewList(checkNewList.filter((checked) => checked?.pk !== id));
     }
-
   };
-
 
   const PriceForBill = checkNewList.reduce((total, item) => {
     return total + item?.total_price;
@@ -203,8 +174,7 @@ const onChangeEach = async (e, id) => {
 
   const Taxes = PriceForBill * 0.05;
   const Discounts = 0;
-  // console.log('total: ', PriceForBill);
-  const TotalPriceTag = PriceForBill + ShippingFee + Taxes + Discounts;
+   const TotalPriceTag = PriceForBill + ShippingFee + Taxes + Discounts;
 
   if (loading)
     return (
@@ -239,20 +209,14 @@ const onChangeEach = async (e, id) => {
             <CartLeftInfo>
               <CartLeftCheckBar>
                 <CheckBarWrap>
-                  <OrderCheckBox>
+                  <OrderCheckBox onClick={() => onChangeAll()}>
                     <input
                       type='checkbox'
-                      onChange={onChangeAll}
-                      // onClick={handleCheckAll}
                       checked={checkList.length === IdList.length}
-                      // onChange={onChangeAll}
-                      // checked={isCheckAll}
                     />
                     <label>All</label>
                   </OrderCheckBox>
                   <DeleteBtn
-                      // onClick={() => handleAllDeleteCart()
-                      // }
                     onClick={(e) => {
                       e.preventDefault();
                       handleAllDeleteCart();
@@ -268,14 +232,9 @@ const onChangeEach = async (e, id) => {
                       <ListsCheckBox>
                         <input
                           type='checkbox'
-
                           onChange={(e) => onChangeEach(e, cart?.pk)} 
                           checked={checkList.includes(cart?.pk) } 
-                          // onChange={(e) => onChangeEach(cart?.pk)}
-                          // checked={isCheck.includes(cart?.pk)}
-                         />
-
-                        {/* <label/> */}
+                          />
                       </ListsCheckBox>
                       <ListsItemImg>
                         <ListsImgLink to={`/products/${cart?.product?.pk}`}>
@@ -298,7 +257,8 @@ const onChangeEach = async (e, id) => {
                           </DetailOption>
                         </ItemDetailOne>
                         <ItemDetailTwo>
-                          <ItemDetailTwoWrap>
+                          <CountButton cart={cart} getAllCart={getAllCart} carts={carts}/>
+                          {/* <ItemDetailTwoWrap>
                             <ItemDecreaseBtn
                               onClick={(e) => {
                                 e.preventDefault();
@@ -318,7 +278,7 @@ const onChangeEach = async (e, id) => {
                             >
                               <AddIcon fontSize='small' color='action' />
                             </ItemIncreaseBtn>
-                          </ItemDetailTwoWrap>
+                          </ItemDetailTwoWrap> */}
                         </ItemDetailTwo>
                         <ItemDetailThree>
                           <strong>${cart?.total_price?.toLocaleString()}</strong>

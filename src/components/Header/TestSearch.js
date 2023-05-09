@@ -28,16 +28,32 @@ import CloseIcon from '@mui/icons-material/Close';
 import SearchIcon from '@mui/icons-material/Search';
 import SearchBar from './SearchBar';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import axios from '../../api/axios';
 
 const TestSearch = ({ onClose }) => {
   const [keywords, setKeywords] = useState(
     JSON.parse(localStorage.getItem('keywords') || '[]')
-  );
+    );
+
+  const [searchData, setSearchData] = useState([])
 
   useEffect(() => {
     localStorage.setItem('keywords', JSON.stringify(keywords));
   }, [keywords]);
 
+  const getSearchData = async () => {
+    const dataList = await axios.get('/products/', {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+    console.log('dataList', dataList?.data);
+    setSearchData(dataList?.data);
+  };
+
+  useEffect(() => {
+    getSearchData();
+  },[]);
+  
   const handleAddKeyword = (text) => {
     console.log('text', text);
     const newKeyword = {
@@ -69,6 +85,9 @@ const TestSearch = ({ onClose }) => {
     };
   }, [onClose]);
 
+//   const searched = searchData.filter((item) =>
+//   item.kind.name.toLowerCase().includes(keywords)
+// );
   return (
     <ModalContainer>
       <ModalContainerSkin>

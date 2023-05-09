@@ -51,18 +51,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Avatar from '@mui/material/Avatar';
 import { useParams } from 'react-router-dom';
 import SizeImage from '../../asset/size.png';
-
 import AddToCart from './AddToCart';
 import Loading from '../../components/Loading';
-import TestAddToCart from './AddToCart';
-
 import DetailSlider from './DetailSlider';
 import Skeleton from '@mui/material/Skeleton';
+import { ToastContainer, Zoom, toast } from 'react-toastify';
 
-// import Skeleton from './Skeleton';
-// import { Rating } from '@mui/material';
 
-// const PRODUCTDETAILS_URL = '/products/${id}';
 const SHIPPING_RETURN_URL = '/settings/all';
 const REVIEWS_URL = '/reviews/';
 
@@ -90,9 +85,8 @@ const ProductDetailPage = ({
   const [payload, setPayload] = useState('');
   const [rating, setRating] = useState('');
   const [isEdit, setIsEdit] = useState(false);
-  // const [fav, setFav] = useState(false);
- 
 
+  const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
     setChangeReviews(itemsDetail.reviews);
@@ -121,7 +115,6 @@ const ProductDetailPage = ({
       const reviewsInfo = await axios.put(
         `/reviews/${id}`,
         {
-          // id:id,
           payload: payload,
           rating: rating,
         },
@@ -144,16 +137,6 @@ const ProductDetailPage = ({
       setIsEdit(false);
     }
   };
-
-  // useEffect(() => {
-  //   setLoading(true);
-  //   const loadData = async () => {
-  //     await new Promise((r) => setTimeout(r, 1000));
-  //     setLoading(false);
-  //   };
-  //   loadData();
-  //   window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  // }, []);
   console.log('me', meData);
 
   const getProduct = async () => {
@@ -168,16 +151,15 @@ const ProductDetailPage = ({
   useEffect(() => {
     getProduct();
   }, [id, addLiked]);
-  // console.log('id', id);
 
   const getShipReturn = async () => {
     const shipData = await axios.get(SHIPPING_RETURN_URL, {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    // console.log('shipData', shipData?.data);
     setShipReturn(shipData?.data);
   };
+
   const handleDeleteReview = async (pk) => {
     alert('Are you sure you want to remove the reviews?');
     var tempReviews = itemsDetail.reviews;
@@ -250,11 +232,6 @@ const ProductDetailPage = ({
     }
   };
 
-  // useEffect(() => {
-  //   setFav(itemsDetail.is_liked);
-  // }, []);
-  // console.log('itemsDetail', itemsDetail);
-
   const handleLiked = () => {
     itemsDetail.is_liked = !itemsDetail.is_Liked;
     // setFav(!fav);
@@ -269,10 +246,25 @@ const ProductDetailPage = ({
       }
     );
     setAddLiked(addLike);
-    // window.location.reload(`/products/${id}`);
-    // navigate(`/products/productAllParentsKinds/${itemAllKinds.pk}`);
     setItemsDetail(itemsDetail);
   };
+
+  const SuccessNotify = ({text}) => (
+    <div>
+     <p className="text">{text}</p>
+    {/* <button className="button1" onClick={() => toast.dismiss()}>Ok!</button> */}
+    </div>
+  );
+  const showCustomToast = () => {
+    toast.success(<SuccessNotify text="Success" />)
+  }
+  const handleSuccess = () => {
+      setIsSuccess(true);
+      showCustomToast()
+  }
+
+  console.log("isSuccess",isSuccess);
+
   useEffect(() => {
     const checkIfClickedOutside = (e) => {
       if (isOpen && ref.current && !ref.current.contains(e.target)) {
@@ -287,10 +279,11 @@ const ProductDetailPage = ({
 
 
   useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setLoadings(false)
-    }, 700)
-  }, [])
+    }, 680);
+    return () => clearTimeout(timer);
+  }, []);
  
   if (loading)
     return (
@@ -299,13 +292,19 @@ const ProductDetailPage = ({
       </div>
     );
 
+
+
   return (
     <DetailContainer>
       <DetailWrapperOne>
         <DetailSlider />
         <DetailRightInfo>
           {loadings ? (
-            <Skeleton sx={{ color: 'red.900' }} animation='wave' width={450} height={500}/>
+            <Skeleton 
+              variant="rect" 
+              animation="wave" 
+              width={450} 
+              height={500}/>
               ):(
                 <>
                   <DetailRightInfoTop>
@@ -350,11 +349,30 @@ const ProductDetailPage = ({
                   Sold out
                 </ButtonLarges>
               ) : (
-                <ButtonLarges onClick={() => setIsOpen(true)}>
+                // <ButtonLarges onClick={showCustomToast}>
+              <ButtonLarges onClick={() => setIsOpen(true)}>
                   Add to Cart
                 </ButtonLarges>
+
               )}
-              {isOpen && <AddToCart onClose={() => setIsOpen(false)} />}
+              {isOpen && <AddToCart 
+                            isSuccess={isSuccess} 
+                            // onClose={handleAddtoBag} 
+                            onSuccess={handleSuccess}
+                            onClose={() => setIsOpen(false)}
+                            />}
+              {isSuccess && <ToastContainer 
+                transition={Zoom}
+                autoClose={1000}
+                hideProgressBar={false}
+                closeOnClick={true}
+                limit={1}
+                theme='dark' // light, dark, colored
+                pauseOnHover={true}
+              // pauseOnFocusLoss={true}
+              // icon={} // true or false
+                position='top-center'
+                />}
             </DetailRightInfoBottom>
             </>
               )}
