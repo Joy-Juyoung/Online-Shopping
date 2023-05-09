@@ -3,57 +3,40 @@ import axios from '../../api/axios';
 import {
   OrderContainer,
   OrderList,
-  OrderListWrap,
   OrderWrap,
   OrderWrapper,
-  Table,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
 } from '../OrderPage/OrderElements';
 import {
   BackCircle,
   BackCircleLast,
-  Circle,
-  CircleLast,
+  CloseCircle,
   CouponBackFrame,
   CouponBackInfo,
   CouponBackInside,
   CouponBackP,
-  CouponBackSide,
-  CouponExpired,
-  CouponFrame,
-  CouponH,
-  CouponHeader,
-  CouponInfo,
-  CouponInside,
-  CouponListWrap,
-  CouponP,
-  CouponRate,
-  Line,
   ReviewListEmpty,
   ViewDetails,
 } from '../CouponPage/MyCouponsElements';
-import Loading from '../../components/Loading';
+import CloseIcon from '@mui/icons-material/Close';
 import PageviewIcon from '@mui/icons-material/Pageview';
 import Modal from '../../components/Modal';
 import DiscountIcon from '@mui/icons-material/Discount';
 import { ButtonSmall } from '../../components/ButtonElements';
 
-const AddCoupon = ({ meData }) => {
+const AddCoupon = ({ meData, onClose }) => {
   let ref = useRef();
-  const [loading, setLoading] = useState(false);
   const [coupons, setCoupons] = useState([]);
   const [couponEach, setCouponEach] = useState([]);
   const [couponDetails, setCouponDetails] = useState([]);
   const [isDrop, setIsDrop] = useState(false);
   const [selected, setSelected] = useState();
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalShown, toggleModal] = useState(false);
-  const [indexEven, setIndexEven] = useState(false);
+
+  const [selectedOption, setSelectedOption] = useState();
+  const [savedCp, setSavedCp] = useState([]);
+  // const [getCp, setGetCp] = useState(
+  //   JSON.parse(localStorage.getItem('getCoupon'))
+  // );
 
   const getCoupons = async () => {
     const couponList = await axios.get('/coupons/', {
@@ -63,7 +46,6 @@ const AddCoupon = ({ meData }) => {
     console.log('couponList', couponList?.data);
     setCoupons(couponList?.data);
     setSelected(coupons.pk);
-    setLoading(false);
   };
 
   const handleOpenCoupon = async (pk) => {
@@ -75,7 +57,6 @@ const AddCoupon = ({ meData }) => {
     setCouponEach(couponEachList?.data);
     setSelected(couponEach.pk);
     setIsDrop(!isDrop);
-    // setIndexEven(!indexEven);
 
     if (!isDrop) {
       setCouponDetails([...couponDetails, couponEach]);
@@ -83,43 +64,99 @@ const AddCoupon = ({ meData }) => {
       setCouponDetails([]);
     }
   };
-  // console.log('couponEach', couponEach);
   console.log('couponDetails', couponDetails);
 
   useEffect(() => {
-    setLoading(true);
     getCoupons();
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
 
-  if (loading)
-    return (
-      <div>
-        <Loading />
-      </div>
-    );
+  const selectedCoupon = (pk) => {
+    setSelectedOption(pk);
+
+    coupons?.forEach((c) => {
+      if (c?.pk === pk) {
+        setSavedCp([c]);
+      }
+    });
+  };
+
+  console.log('selectedOption', selectedOption);
+
+  const handleApply = () => {
+    onClose();
+  };
+
+  useEffect(() => {
+    localStorage.setItem('getCoupon', JSON.stringify(savedCp));
+  }, [savedCp, selectedOption]);
+
   return (
     <OrderContainer>
       <OrderWrapper>
-        <h1>Your Coupons</h1>
+        <h1 style={{ margin: '0' }}>Your Coupons</h1>
         <OrderWrap>
-          <OrderList>
+          <div style={{ margin: '10px 0' }}>
             {coupons?.length === 0 ? (
               <ReviewListEmpty>
                 <span>No coupons found.</span>
               </ReviewListEmpty>
             ) : (
               <div>
-                {coupons?.map((coupon, index) => {
-                  return (
-                    <ul key={index} ref={ref}>
-                      <li style={{ display: 'flex' }}>
-                        <input type='radio' name='selectedCoupon' />
-                        <div>
-                          <div>{coupon?.discount_rate}</div>
-                          <div>
-                            <span className='one'>%</span>
-                            <span className='two'>OFF</span>
+                <ul>
+                  <li
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      border: '1px dashed #000',
+                      borderRadius: '5px',
+                      margin: '5px 0',
+                      padding: '10px 10px',
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <input
+                        type='radio'
+                        name='selectedCoupon'
+
+                        // checked={selectedOption === coupon?.pk}
+                        // onChange={(e) => {
+                        //   e.preventDefault();
+                        //   selectedCoupon(coupon?.pk);
+                        // }}
+                      />
+                      <div style={{ marginLeft: '5px' }}>none</div>
+                    </div>
+                  </li>
+                  {coupons?.map((coupon, index) => {
+                    return (
+                      <li
+                        key={index}
+                        ref={ref}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          border: '1px dashed #000',
+                          borderRadius: '5px',
+                          margin: '5px 0',
+                          paddingLeft: '10px',
+                        }}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                          <input
+                            type='radio'
+                            name='selectedCoupon'
+                            id={coupon?.pk}
+                            value={coupon?.pk}
+                            checked={selectedOption === coupon?.pk}
+                            onChange={(e) => {
+                              // e.preventDefault();
+                              selectedCoupon(coupon?.pk);
+                            }}
+                          />
+                          <div style={{ marginLeft: '5px' }}>
+                            {coupon?.discount_rate}%OFF
                           </div>
                         </div>
 
@@ -135,13 +172,18 @@ const AddCoupon = ({ meData }) => {
                           />
                         </ViewDetails>
                       </li>
-                    </ul>
-                  );
-                })}
-                <ButtonSmall>Apply Coupon</ButtonSmall>
+                    );
+                  })}
+                </ul>
+                <ButtonSmall
+                  onClick={handleApply}
+                  style={{ margin: '15px auto' }}
+                >
+                  Apply Coupon
+                </ButtonSmall>
               </div>
             )}
-          </OrderList>
+          </div>
         </OrderWrap>
       </OrderWrapper>
       <Modal
@@ -152,11 +194,16 @@ const AddCoupon = ({ meData }) => {
         }}
       >
         <CouponBackFrame>
-          <h3>{couponEach?.discount_rate}% Coupon</h3>
+          <CloseCircle
+            onClick={() => {
+              toggleModal(false);
+            }}
+          >
+            <CloseIcon />
+          </CloseCircle>
+          {/* <p>Your Coupon Is,</p> */}
           <BackCircle></BackCircle>
           <CouponBackInside>
-            {/* <CouponBackInside>
-            <CouponBackInfo> */}
             <CouponBackInfo>
               <CouponBackP className='name'>{couponEach?.name}</CouponBackP>
               <CouponBackP className='description'>
@@ -168,9 +215,7 @@ const AddCoupon = ({ meData }) => {
               </CouponBackP>
             </CouponBackInfo>
           </CouponBackInside>
-          {/* </CouponBackInfo>
-          </CouponBackInside>
-          <CircleLast></CircleLast> */}
+
           <BackCircleLast></BackCircleLast>
         </CouponBackFrame>
       </Modal>

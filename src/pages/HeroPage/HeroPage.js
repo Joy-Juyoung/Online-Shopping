@@ -31,10 +31,27 @@ import FourthImage from '../../asset/pic24.jpg';
 
 import Loading from '../../components/Loading';
 import Slider from './Slider';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from '../../api/axios';
 
-const HeroPage = () => {
+const HeroPage = ({ meData, catData }) => {
+  // const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [items, setItems] = useState([]);
+
+  const getItems = async () => {
+    const itemsList = await axios.get('/products/', {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+    setItems(itemsList?.data);
+  };
+
+  useEffect(() => {
+    getItems();
+  }, []);
+
+  console.log('category', catData);
 
   useEffect(() => {
     setLoading(true);
@@ -68,7 +85,9 @@ const HeroPage = () => {
                   and brighter colors. Get a head start on your spring wardrobe
                   with 12 brand new styles from trending K-brands.
                 </ParagraghBody>
-                <ButtonSmall to='/products'>Shop Now</ButtonSmall>
+                <Link to='/products/all'>
+                  <ButtonSmall>Shop Now</ButtonSmall>
+                </Link>
               </ParagraphWrap>
             </SectionInfoRight>
           </SectionWrap>
@@ -76,36 +95,37 @@ const HeroPage = () => {
         <MidInfo>
           <SectionTitle>Most Popular</SectionTitle>
           <SectionProducts>
-            <Slider />
+            <Slider items={items.filter((item, idx) => idx < 9)} />
           </SectionProducts>
           <SectionButton>
             <Link to='/products/all'>
-              <ButtonSmall>Shop now</ButtonSmall>
+              <ButtonSmall>Shop Now</ButtonSmall>
             </Link>
           </SectionButton>
         </MidInfo>
         <MidInfo>
           <SectionTitle>Top Categories</SectionTitle>
           <SectionCategories>
-            <CategoriesWrap>
-              <span>Hoodies</span>
-              <span>Coats</span>
-              <span>Boots</span>
-              <span>Jeans</span>
-              <span>Watch</span>
-              <span>Joggers</span>
-              <span>Jackets</span>
-              <span>Sneakers</span>
-            </CategoriesWrap>
+            {catData?.map((cat) => {
+              return (
+                <CategoriesWrap key={cat?.pk}>
+                  <Link to={`/products/category/${cat.pk}`}>
+                    <span>{cat?.productKinds[1].name}</span>
+                  </Link>
+                </CategoriesWrap>
+              );
+            })}
           </SectionCategories>
         </MidInfo>
         <MidInfo>
           <SectionTitle>New Arrival</SectionTitle>
           <SectionProducts>
-            <Slider show={3} infiniteLoop={true} />
+            <Slider items={items.reverse().filter((item, idx) => idx < 9)} />
           </SectionProducts>
           <SectionButton>
-            <ButtonSmall>Shop now</ButtonSmall>
+            <Link to='/products/all'>
+              <ButtonSmall>Shop now</ButtonSmall>
+            </Link>
           </SectionButton>
         </MidInfo>
         <MidInfo>
