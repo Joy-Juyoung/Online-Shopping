@@ -113,7 +113,7 @@ export const RightIcon = styled.div`
 
 export const FlagBtn = styled.button`
   border: 0px;
-  background: none; 
+  background: none;
   cursor: pointer;
 
   img {
@@ -122,7 +122,6 @@ export const FlagBtn = styled.button`
     border: 2px solid rgb(228, 231, 236);
     border-radius: 100%;
   }
-
 `;
 
 export const FaLink = styled(Link)`

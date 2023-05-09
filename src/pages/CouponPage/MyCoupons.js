@@ -18,6 +18,7 @@ import {
   BackCircleLast,
   Circle,
   CircleLast,
+  CloseCircle,
   CouponBackFrame,
   CouponBackInfo,
   CouponBackInside,
@@ -36,6 +37,7 @@ import {
   ReviewListEmpty,
   ViewDetails,
 } from './MyCouponsElements';
+import CloseIcon from '@mui/icons-material/Close';
 import Loading from '../../components/Loading';
 import PageviewIcon from '@mui/icons-material/Pageview';
 import Modal from '../../components/Modal';
@@ -171,7 +173,14 @@ const MyCoupons = ({ meData }) => {
         }}
       >
         <CouponBackFrame>
-          <h3>Your Coupon Is,</h3>
+          <CloseCircle
+            onClick={() => {
+              toggleModal(false);
+            }}
+          >
+            <CloseIcon />
+          </CloseCircle>
+          {/* <p>Your Coupon Is,</p> */}
           <BackCircle></BackCircle>
           <CouponBackInside>
             {/* <CouponBackInside>
@@ -187,9 +196,7 @@ const MyCoupons = ({ meData }) => {
               </CouponBackP>
             </CouponBackInfo>
           </CouponBackInside>
-          {/* </CouponBackInfo>
-          </CouponBackInside>
-          <CircleLast></CircleLast> */}
+
           <BackCircleLast></BackCircleLast>
         </CouponBackFrame>
       </Modal>

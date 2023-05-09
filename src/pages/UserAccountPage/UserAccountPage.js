@@ -41,12 +41,8 @@ import Avatar, { ConfigProvider } from 'react-avatar';
 import { useLocation } from 'react-router-dom';
 
 const UserAccountPage = ({ meData }) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-
-  // console.log('meData', meData);
-
-  // const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
@@ -54,12 +50,14 @@ const UserAccountPage = ({ meData }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [reviews, setReviews] = useState([]);
 
+  console.log('meData', meData);
+
   const getReviews = async () => {
     const reviewsList = await axios.get('/reviews/', {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    console.log('reviewsList', reviewsList?.data);
+    // console.log('reviewsList', reviewsList?.data);
     setReviews(reviewsList?.data);
     // setLoading(false);
   };
@@ -87,7 +85,7 @@ const UserAccountPage = ({ meData }) => {
     setPhone(meData?.phone_number);
   }, [meData]);
 
-  console.log('name', address);
+  // console.log('name', address);
 
   const handleInputChange = (e) => {
     // console.log('name', e.target.value);
@@ -105,16 +103,16 @@ const UserAccountPage = ({ meData }) => {
     setChangeUserInfo(tempChangeUserInfo);
   };
 
-  const handleDeleteUser = async () => {
-    alert('Are you sure you want to delete this account?');
+  // const handleDeleteUser = async () => {
+  //   alert('Are you sure you want to delete this account?');
 
-    axios.delete('/users/me', {
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true,
-    });
-    navigate('/');
-    window.location.reload();
-  };
+  //   axios.delete('/users/me', {
+  //     headers: { 'Content-Type': 'application/json' },
+  //     withCredentials: true,
+  //   });
+  //   navigate('/');
+  //   window.location.reload();
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();

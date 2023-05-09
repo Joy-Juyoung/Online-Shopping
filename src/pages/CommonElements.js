@@ -1,12 +1,15 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  max-width: 1250px;
+  /* max-width: 1250px;
   min-height: 100vh;
   height: 100%;
   margin: 40px auto;
-  /* padding: 0 20px; */
-  color: #0a0f18;
+  color: #0a0f18; */
+  max-width: 1250px;
+  min-height: 100vh;
+  height: 100%;
+  margin: 0 auto;
 `;
 
 export const PesnalContainer = styled.div`

@@ -26,10 +26,15 @@ import {
   PaymentSuccessMsg,
 } from './PaymentElements';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 import AddIcon from '@mui/icons-material/Add';
 import axios from '../../api/axios';
 import Loading from '../../components/Loading';
-import { ButtonLarge, ButtonSmall } from '../../components/ButtonElements';
+import {
+  ButtonLarge,
+  ButtonSmall,
+  ButtonUtils,
+} from '../../components/ButtonElements';
 import PaypalIcon from '../../asset/paypal.svg';
 import MastercardIcon from '../../asset/mastercard.svg';
 import VisaIcon from '../../asset/visa.svg';
@@ -57,17 +62,23 @@ const PaymentPage = ({ meData }, props) => {
   const [success, setSuccess] = useState(false);
   const [couponModalShown, toggleCouponModal] = useState(false);
 
+  const [getCp, setGetCp] = useState(
+    JSON.parse(localStorage.getItem('getCoupon'))
+  );
+  // console.log('getCp', getCp[0]);
+
   const PriceForBill = carts.reduce((total, item) => {
     return total + item?.total_price;
   }, 0);
   const ShippingFee = 15;
   const Taxes = PriceForBill * 0.05;
-  const Discounts = 0;
-  const TotalPriceTag = PriceForBill + ShippingFee + Taxes + Discounts;
+  const Discounts =
+    PriceForBill * (getCp[0] ? getCp[0]?.discount_rate * 0.01 : 0);
+  const TotalPriceTag = PriceForBill - Discounts + ShippingFee + Taxes;
 
-  const location = useLocation();
-  const propsData = location.state;
-  console.log('test2', propsData);
+  // const location = useLocation();
+  // const propsData = location.state;
+  // console.log('test2', propsData);
 
   const getAllCart = async () => {
     const cartList = await axios.get(CARTS_URL, {
@@ -84,7 +95,7 @@ const PaymentPage = ({ meData }, props) => {
     getAllCart();
     setTotalPrice(TotalPriceTag);
   }, [meData]);
-  console.log('carts', carts);
+  // console.log('carts', carts);
 
   const payOrder = async () => {
     if (window.confirm('Are you sure you want to pay?')) {
@@ -149,7 +160,7 @@ const PaymentPage = ({ meData }, props) => {
     }
   };
 
-  const handleCoupon = () => {};
+  // const handleCoupon = () => {};
 
   if (loading)
     return (
@@ -255,7 +266,6 @@ const PaymentPage = ({ meData }, props) => {
               <PaymentRightInfo>
                 <PaymentRightTop>
                   <TotalTitle>Summary</TotalTitle>
-                  {/* <span>${TotalPriceTag.toLocaleString()}</span> */}
                 </PaymentRightTop>
 
                 <PaymentSummaryInfo>
@@ -264,23 +274,34 @@ const PaymentPage = ({ meData }, props) => {
                     <span>${PriceForBill.toLocaleString()}</span>
                   </ItemSummary>
                   <ItemSummary>
-                    Shipping fee
-                    <span>${ShippingFee.toLocaleString()}</span>
-                  </ItemSummary>
-                  <ItemSummary>
-                    Duties amd Taxes
-                    <span>${Taxes.toLocaleString()}</span>
-                  </ItemSummary>
-                  <ItemSummary>
-                    {/* Couopon */}
-                    <button
-                      onClick={() => {
-                        toggleCouponModal(!couponModalShown);
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
                       }}
                     >
-                      + Add Coupon
-                    </button>
-                    {/* const [couponModalShown, toggleCouponModal] = useState(false); */}
+                      Coupon
+                      <ButtonUtils
+                        onClick={() => {
+                          toggleCouponModal(!couponModalShown);
+                        }}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          padding: '3px 5px',
+                          marginLeft: '3px',
+                          cursor: 'pointer',
+                          border: 'none',
+                        }}
+                      >
+                        <AddIcon fontSize='13px' /> Add Coupon
+                      </ButtonUtils>
+                    </div>
+                    {getCp[0] ? (
+                      <span>{getCp[0]?.discount_rate}%OFF</span>
+                    ) : (
+                      <span>0%OFF</span>
+                    )}
                   </ItemSummary>
                   <Modal
                     shown={couponModalShown}
@@ -288,12 +309,24 @@ const PaymentPage = ({ meData }, props) => {
                       toggleCouponModal(false);
                     }}
                   >
-                    <AddCoupon meData={meData} />
+                    <AddCoupon
+                      meData={meData}
+                      onClose={() => toggleCouponModal(false)}
+                    />
                   </Modal>
                   <ItemSummary>
                     Discounts
                     <span>${Discounts.toLocaleString()}</span>
                   </ItemSummary>
+                  <ItemSummary>
+                    Shipping fee
+                    <span>${ShippingFee.toLocaleString()}</span>
+                  </ItemSummary>
+                  <ItemSummary>
+                    Duties and Taxes
+                    <span>${Taxes.toLocaleString()}</span>
+                  </ItemSummary>
+
                   <ItemTotalPrice>
                     Total
                     <span>${TotalPriceTag.toLocaleString()}</span>
@@ -311,8 +344,6 @@ const PaymentPage = ({ meData }, props) => {
                     I agree to the terms and conditions, order information, and
                     payment terms.
                   </p>
-                  {/* <ButtonLarge onClick={payOrder}> */}
-
                   {meData?.balance < TotalPriceTag ||
                   !meData?.address ||
                   !meData?.phone_number ? (
