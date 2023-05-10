@@ -66,27 +66,22 @@ const Header = ({ meData, catData }) => {
   const ref = useRef();
   const searchRef = useRef();
 
-  useEffect(() => {
-    setMe(meData);
-  }, [meData]);
-
   const getAllCart = async () => {
-    const cartList = await axios.get(CARTS_URL, {
+    const cartList = await axios.get('/carts/', {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    console.log('cartList', cartList.data);
+    console.log('userList', cartList.data);
     setCarts(cartList?.data);
-    setLoading(false);
-
   };
 
   useEffect(() => {
-    setLoading(true);
-    getAllCart();
-    // setCheckNewList(carts)
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  }, []);
+    setMe(meData);
+
+    if (meData) {
+      getAllCart();
+    }
+  }, [meData]);
 
   const handleLogout = async () => {
     setLoading(true);
@@ -267,7 +262,6 @@ const Header = ({ meData, catData }) => {
                       <RightIcon>
                         <CartLink to='/carts'>
                           <ItemCount>{carts.length}</ItemCount>
-                          {/* <span>1</span> */}
                           <AddShoppingCartIcon fontSize='medium' />
                         </CartLink>
                       </RightIcon>

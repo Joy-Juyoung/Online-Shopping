@@ -174,8 +174,8 @@ const Home = () => {
         </AdminGlobal>
       ) : (
         <>
-          {/* <Header meData={meData} catData={catData} /> */}
-          <HeaderBackup meData={meData} catData={catData} />
+          <Header meData={meData} catData={catData} />
+          {/* <HeaderBackup meData={meData} catData={catData} /> */}
           <Container>
             <Routes>
               <Route
@@ -236,19 +236,19 @@ const Home = () => {
                 exact={true}
               />
 
+              <Route
+                path='/products/search/:searchValue'
+                element={<ResearchResult meData={meData} catData={catData} />}
+                exact={true}
+              />
 
-          <Route
-            path='/products/search/:searchValue'
-            element={<ResearchResult meData={meData} catData={catData} />}
-            exact={true}
-          />
-
-          <Route
-            path='/products/:id'
-            element={<ProductDetailPage meData={meData} catData={catData} />}
-            exact={true}
-          />
-
+              <Route
+                path='/products/:id'
+                element={
+                  <ProductDetailPage meData={meData} catData={catData} />
+                }
+                exact={true}
+              />
 
               <Route
                 path='/products/productAllChildKinds/:id'
