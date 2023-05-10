@@ -1,14 +1,14 @@
 import React from 'react';
 import { AdContainer } from '../AdminCommonElements';
 
-const OrderManage = ({ meData }) => {
+const SubCategory = ({ meData }) => {
   console.log('me', meData);
 
   return (
     <AdContainer>
-      <h1>Orders</h1>
+      <h1>Sub Categories</h1>
     </AdContainer>
   );
 };
 
-export default OrderManage;
+export default SubCategory;

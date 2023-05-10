@@ -1,14 +1,14 @@
 import React from 'react';
 import { AdContainer } from '../AdminCommonElements';
 
-const OrderManage = ({ meData }) => {
+const OrderList = ({ meData }) => {
   console.log('me', meData);
 
   return (
     <AdContainer>
-      <h1>Orders</h1>
+      <h1>All Orders</h1>
     </AdContainer>
   );
 };
 
-export default OrderManage;
+export default OrderList;

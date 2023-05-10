@@ -6,7 +6,7 @@ const CouponManage = ({ meData }) => {
 
   return (
     <AdContainer>
-      <h1>CouponManage</h1>
+      <h1>Coupons</h1>
     </AdContainer>
   );
 };

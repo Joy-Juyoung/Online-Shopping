@@ -3,12 +3,12 @@ import { AdContainer } from '../AdminCommonElements';
 import axios from '../../../api/axios';
 import Loading from '../../../components/Loading';
 
-const ItemManage = ({ meData }) => {
+const ItemReviews = ({ meData }) => {
   return (
     <AdContainer>
-      <h1>Products</h1>
+      <h1>Products Reviews</h1>
     </AdContainer>
   );
 };
 
-export default ItemManage;
+export default ItemReviews;

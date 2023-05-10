@@ -48,8 +48,15 @@ import Dashboard from './Admin/Dashboard/Dashboard';
 import CustomersManage from './Admin/CustomersManage/CustomersManage';
 import CouponManage from './Admin/CouponManage/CouponManage';
 import CategoryManage from './Admin/CategoryManage/CategoryManage';
+import HeadCategory from './Admin/CategoryManage/HeadCategory';
+import SubCategory from './Admin/CategoryManage/SubCategory';
 import ItemManage from './Admin/ItemManage/ItemManage';
+import ItemList from './Admin/ItemManage/ItemList';
+import ItemReviews from './Admin/ItemManage/ItemReviews';
 import OrderManage from './Admin/OrderManage/OrderManage';
+import OrderList from './Admin/OrderManage/OrderList';
+import OrderPending from './Admin/OrderManage/OrderPending';
+
 import FeedbackManage from './Admin/FeedbackManage/FeedbackManage';
 
 import AdminSidebar from '../components/AdminComponents/AdminSidebar';
@@ -107,8 +114,18 @@ const Home = () => {
                   exact={true}
                 />
                 <Route
-                  path='/manage/coupons'
-                  element={<CouponManage />}
+                  path='/manage/categories'
+                  element={<CategoryManage />}
+                  exact={true}
+                />
+                <Route
+                  path='/manage/categories/head'
+                  element={<HeadCategory />}
+                  exact={true}
+                />
+                <Route
+                  path='/manage/categories/:headName/sub'
+                  element={<SubCategory />}
                   exact={true}
                 />
                 <Route
@@ -117,13 +134,33 @@ const Home = () => {
                   exact={true}
                 />
                 <Route
+                  path='/manage/items/all'
+                  element={<ItemList />}
+                  exact={true}
+                />
+                <Route
+                  path='/manage/items/:id/review'
+                  element={<ItemReviews />}
+                  exact={true}
+                />
+                <Route
                   path='/manage/orders'
                   element={<OrderManage />}
                   exact={true}
                 />
                 <Route
-                  path='/manage/categories'
-                  element={<CategoryManage />}
+                  path='/manage/orders/all'
+                  element={<OrderList />}
+                  exact={true}
+                />
+                <Route
+                  path='/manage/orders/pending'
+                  element={<OrderPending />}
+                  exact={true}
+                />
+                <Route
+                  path='/manage/coupons'
+                  element={<CouponManage />}
                   exact={true}
                 />
                 <Route
