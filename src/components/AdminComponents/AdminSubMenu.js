@@ -28,8 +28,8 @@ const SideLink = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px;
-  height: 50px;
+  padding: 15px;
+  height: 40px;
 
   border-radius: 7px;
 

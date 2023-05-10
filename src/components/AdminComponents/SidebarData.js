@@ -13,6 +13,8 @@ import WorkspacesIcon from '@mui/icons-material/Workspaces';
 import GroupWorkIcon from '@mui/icons-material/GroupWork';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import RateReviewIcon from '@mui/icons-material/RateReview';
+import ReceiptIcon from '@mui/icons-material/Receipt';
+import PendingIcon from '@mui/icons-material/Pending';
 
 export const SidebarData = [
   {
@@ -27,40 +29,40 @@ export const SidebarData = [
   },
   {
     title: 'Categories',
-    // path: '/manage/categories',
-    path: '',
+    path: '/manage/categories',
+    // path: '',
     icon: <CategoryIcon />,
     iconClosed: <ExpandMoreIcon />,
     iconOpened: <ExpandLessIcon />,
     subNav: [
       {
         title: 'Categories',
-        path: '/manage/categories',
+        path: '/manage/categories/head',
         icon: <GroupWorkIcon />,
       },
       {
         title: 'Sub Categories',
-        path: '/manage/customers',
+        path: '/manage/categories/:headName/sub',
         icon: <WorkspacesIcon />,
       },
     ],
   },
   {
     title: 'Products',
-    // path: '/manage/items',
-    path: '',
+    path: '/manage/items',
+    // path: '',
     icon: <ShoppingCartIcon />,
     iconClosed: <ExpandMoreIcon />,
     iconOpened: <ExpandLessIcon />,
     subNav: [
       {
-        title: 'Products List',
-        path: '/manage/items',
-        icon: <ShoppingBagIcon />,
+        title: 'All Products',
+        path: '/manage/items/all',
+        icon: <ReceiptIcon />,
       },
       {
         title: 'Product Reviews',
-        path: '/manage/items/reviews',
+        path: '/manage/items/:id/review',
         icon: <RateReviewIcon />,
       },
     ],
@@ -69,6 +71,20 @@ export const SidebarData = [
     title: 'Orders',
     path: '/manage/orders',
     icon: <MonetizationOnIcon />,
+    iconClosed: <ExpandMoreIcon />,
+    iconOpened: <ExpandLessIcon />,
+    subNav: [
+      {
+        title: 'All Orders',
+        path: '/manage/orders/all',
+        icon: <ShoppingBagIcon />,
+      },
+      {
+        title: 'Pending Order',
+        path: '/manage/orders/pending',
+        icon: <PendingIcon />,
+      },
+    ],
   },
   {
     title: 'Coupons',

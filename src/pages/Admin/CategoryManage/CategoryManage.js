@@ -6,7 +6,7 @@ const CategoryManage = ({ meData }) => {
 
   return (
     <AdContainer>
-      <h1>CategoryManage</h1>
+      <h1>Categories</h1>
     </AdContainer>
   );
 };

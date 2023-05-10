@@ -6,7 +6,7 @@ const FeedbackManage = ({ meData }) => {
 
   return (
     <AdContainer>
-      <h1>FeedbackManage</h1>
+      <h1>Feedback Lists</h1>
     </AdContainer>
   );
 };

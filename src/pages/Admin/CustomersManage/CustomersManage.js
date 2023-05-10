@@ -32,7 +32,7 @@ const CustomersManage = ({ meData }) => {
     );
   return (
     <AdContainer>
-      <h1>CustomersManage</h1>
+      <h1>Customers</h1>
       <div>
         <div>user List</div>
       </div>
