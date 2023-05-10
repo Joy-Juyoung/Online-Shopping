@@ -41,6 +41,7 @@ import { useState } from 'react';
 import axios from '../api/axios';
 import { useEffect } from 'react';
 import MyCoupons from './CouponPage/MyCoupons';
+import ResearchResult from './ProductPage/ResearchResult';
 
 // import AdminHeader from '../components/AdminComponents/AdminHeader';
 import Dashboard from './Admin/Dashboard/Dashboard';
@@ -235,13 +236,19 @@ const Home = () => {
                 exact={true}
               />
 
-              <Route
-                path='/products/:id'
-                element={
-                  <ProductDetailPage meData={meData} catData={catData} />
-                }
-                exact={true}
-              />
+
+          <Route
+            path='/products/search/:searchValue'
+            element={<ResearchResult meData={meData} catData={catData} />}
+            exact={true}
+          />
+
+          <Route
+            path='/products/:id'
+            element={<ProductDetailPage meData={meData} catData={catData} />}
+            exact={true}
+          />
+
 
               <Route
                 path='/products/productAllChildKinds/:id'
