@@ -74,7 +74,11 @@ export const SideIcon = styled.div`
   cursor: pointer;
 `;
 
-export const ListSub = styled.div``;
+export const ListSub = styled.div`
+  li {
+    cursor: pointer;
+  }
+`;
 
 // -------------------
 
