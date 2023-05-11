@@ -299,83 +299,112 @@ const ProductDetailPage = ({
       <DetailWrapperOne>
         <DetailSlider />
         <DetailRightInfo>
-          {loadings ? (
-            <Skeleton 
-              variant="rect" 
-              animation="wave" 
-              width={450} 
-              height={500}/>
-              ):(
-                <>
-                  <DetailRightInfoTop>
-                    <DetailName>{itemsDetail.name}</DetailName>
-                  <DetailProductName>
-                    <DetailTitle>{itemsDetail.detail}</DetailTitle>
-                    <DetailPrice>${itemsDetail.price}</DetailPrice>
-                  <DetailCoupon>
+          <DetailRightInfoTop>
+            <DetailName>
+              {loadings ? (
+                <Skeleton 
+                  variant="rect" 
+                  duration={2}
+                  width={450} 
+                  height={60}/>
+                  ):(
+                      <>                    
+                        {itemsDetail.name}
+                      </>
+                     )}
+            </DetailName>
+            <DetailProductName>
+              <DetailTitle>
+                {loadings ? (
+                  <Skeleton 
+                    variant="rect" 
+                    width={450} 
+                    height={30}/>
+                    ):(
+                      <>
+                        {itemsDetail.detail}
+                       </>
+                      )}
+              </DetailTitle>
+              <DetailPrice>
+              {loadings ? (
+                  <Skeleton 
+                    variant="rect" 
+                    width={450} 
+                    height={30}/>
+                    ):(
+                      <>
+                        ${itemsDetail.price}
+                      </>
+                      )}
+              </DetailPrice>
+              {loadings ? (
+              <Skeleton 
+                variant="rect" 
+                width={450} 
+                height={50}/>
+                ):(
+                  <DetailCoupon>                   
                     <p>
                       Shop on our App and Enjoy 10% off
                       <br />
                       Use code
-                      <strong>APPFW22</strong>
+                      <strong>APPFW22</strong>                  
                     </p>
                   </DetailCoupon>
+                      )}
                   <DetailStock>
                     InStock: {itemsDetail?.in_stock?.toLocaleString()}
-                  </DetailStock>
-         
-              </DetailProductName>
-            </DetailRightInfoTop>
+                  </DetailStock>         
+            </DetailProductName>
+          </DetailRightInfoTop>
+          <DetailRightInfoBottom>
+                    <LikeBtnWrapper>
+                      {meData && (
+                        <LikeBtn
+                          onClick={(e) => {
+                            handleLiked();
+                          }}
+                        >
+                          {itemsDetail.is_liked ? (
+                            <FavoriteIcon fontSize='medium' sx={{ color: '#e20000' }} />
+                          ) : (
+                            <FavoriteBorderIcon fontSize='medium' color='disabled' />
+                          )}
+                        </LikeBtn>
+                      )}
+                    </LikeBtnWrapper>
 
-            <DetailRightInfoBottom>
-              <LikeBtnWrapper>
-                {meData && (
-                  <LikeBtn
-                    onClick={(e) => {
-                      handleLiked();
-                    }}
-                  >
-                    {itemsDetail.is_liked ? (
-                      <FavoriteIcon fontSize='medium' sx={{ color: '#e20000' }} />
+                    {itemsDetail?.in_stock === 0 ? (
+                      <ButtonLarges style={{ background: 'gray' }} disabled>
+                        Sold out
+                      </ButtonLarges>
                     ) : (
-                      <FavoriteBorderIcon fontSize='medium' color='disabled' />
+                      // <ButtonLarges onClick={showCustomToast}>
+                    <ButtonLarges onClick={() => setIsOpen(true)}>
+                        Add to Cart
+                      </ButtonLarges>
+
                     )}
-                  </LikeBtn>
-                )}
-              </LikeBtnWrapper>
-
-              {itemsDetail?.in_stock === 0 ? (
-                <ButtonLarges style={{ background: 'gray' }} disabled>
-                  Sold out
-                </ButtonLarges>
-              ) : (
-                // <ButtonLarges onClick={showCustomToast}>
-              <ButtonLarges onClick={() => setIsOpen(true)}>
-                  Add to Cart
-                </ButtonLarges>
-
-              )}
-              {isOpen && <AddToCart 
-                            isSuccess={isSuccess} 
-                            // onClose={handleAddtoBag} 
-                            onSuccess={handleSuccess}
-                            onClose={() => setIsOpen(false)}
-                            />}
-              {isSuccess && <ToastContainer 
-                transition={Zoom}
-                autoClose={1000}
-                hideProgressBar={false}
-                closeOnClick={true}
-                limit={1}
-                theme='dark' // light, dark, colored
-                pauseOnHover={true}
-              // pauseOnFocusLoss={true}
-              // icon={} // true or false
-                position='top-center'
-                />}
-            </DetailRightInfoBottom>
-            </>
-              )}
+                    {isOpen && <AddToCart 
+                                  isSuccess={isSuccess} 
+                                  // onClose={handleAddtoBag} 
+                                  onSuccess={handleSuccess}
+                                  onClose={() => setIsOpen(false)}
+                                  />}
+                    {isSuccess && <ToastContainer 
+                      transition={Zoom}
+                      autoClose={1000}
+                      hideProgressBar={false}
+                      closeOnClick={true}
+                      limit={1}
+                      theme='dark' // light, dark, colored
+                      pauseOnHover={true}
+                    // pauseOnFocusLoss={true}
+                    // icon={} // true or false
+                      position='top-center'
+                      />}
+          </DetailRightInfoBottom>
         </DetailRightInfo>
       </DetailWrapperOne>
       <DetailWrapperTwo>

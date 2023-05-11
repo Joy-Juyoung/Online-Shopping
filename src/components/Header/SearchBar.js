@@ -38,7 +38,7 @@ const SearchBar = ({ onAddKeyword,onClose }) => {
       // onClose();
     },
     [searchValue,onAddKeyword]
-  )
+    )
 
   if (loading)
     return (
@@ -55,12 +55,14 @@ const SearchBar = ({ onAddKeyword,onClose }) => {
                     color='disabled'
                     fontSize='medium' />
             </span>
-          <form onSubmit={onSubmit}>
+          <form 
+              // onClick={onClose} 
+              onSubmit={onSubmit}>
                 <ModalHeaderInput  
                     type="search" 
                     value={searchValue} 
                     onChange={onChangeSearch} 
-                    placeholder='Seach'
+                    placeholder='Search'
                 />
           </form>
         </ModalHeaderSearch>

@@ -181,13 +181,15 @@ export const ItemDetailTwo = styled.div`
   margin-bottom: 8px;
   flex-grow: 1;
   flex-direction: column;
+  width: 100px;
 `;
 
 export const ItemDetailTwoWrap = styled.div`
   display: flex;
   align-items: center;
-  width: 76px;
+  width: 73px;
   height: 24px;
+  position: fixed;
 `;
 
 export const ItemDecreaseBtn = styled.button`
@@ -217,11 +219,11 @@ export const ItemIncreaseBtn = styled.button`
 `;
 
 export const ItemNumberInput = styled.div`
-  width: 100%;
+  width: 25px;
   font-weight: 700;
   text-align: center;
-  border: 0px;
-  border-radius: 0px;
+  /* border: 0px;
+  border-radius: 0px; */
   color: rgb(10, 15, 24);
   vertical-align: middle;
   outline: none;
@@ -233,11 +235,16 @@ export const ItemDetailThree = styled.div`
   flex-grow: 1;
   flex-direction: column;
   align-items: center;
+  text-align:center;
+  width: 70px;
+  /* height: 26px; */
 
   strong {
     display: inline-block;
+     height: 27px;
     font-size: 18px;
     font-weight: 700;
+    text-align:center;
   }
 `;
 
