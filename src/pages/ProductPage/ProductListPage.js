@@ -41,13 +41,6 @@ const ProductsListPage = ({ meData, catData }) => {
   const [selectOption, setSelectOption] = useState();
   const [sortList, setSortList] = useState([]);
 
-  // useEffect(() => {
-  //   const loadData = async () => {
-  //     await new Promise((r) => setTimeout(r, 1000));
-  //   };
-  //   loadData();
-  // }, []);
-
   const getAllKindsProduct = async () => {
     const { data } = await axios.get(
       `/products/productAllParentsKinds/${pId}`,
@@ -57,8 +50,7 @@ const ProductsListPage = ({ meData, catData }) => {
       }
     );
     setGetAllKinds(data);
-    // console.log('getAllKinds', getAllKinds);
-    // setKindEach(getAllKinds.productKinds);
+    console.log('getAllKinds', getAllKinds);
     setLoading(false);
   };
 
@@ -72,8 +64,6 @@ const ProductsListPage = ({ meData, catData }) => {
   useEffect(() => {
     getAllKindsProduct();
   }, [addLiked]);
-
-  console.log('getAllKinds', getAllKinds);
 
   if (loading)
     return (
@@ -94,31 +84,6 @@ const ProductsListPage = ({ meData, catData }) => {
         <ProductsListWrapper>
           {!isChileOpen ? (
             <ProductsList>
-              {/* <ListTop>
-                <TotalCountWrap>
-                  <TotalCount style={{ fontSize: '13px' }}>
-                    Total {getAllKinds?.productKinds?.length}
-                  </TotalCount>
-                </TotalCountWrap>
-                <SelectWrap>
-                  <select
-                    // onChange={handleOptionChange}
-                    name='category-list'
-                    id='category-list'
-                  >
-                    {sort.map((option, index) => (
-                      <option
-                        key={index}
-                        value={option.value}
-                        // onClick={handleSort}
-                      >
-                        {option.text}
-                      </option>
-                    ))}
-                  </select>
-                </SelectWrap>
-              </ListTop> */}
-
               <ListAllMidWrap>
                 {getAllKinds?.productKinds?.map((item) => {
                   return (

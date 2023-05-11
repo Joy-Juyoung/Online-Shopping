@@ -38,6 +38,8 @@ const ProductListByCategory = ({ meData, catData }) => {
   const [selectOption, setSelectOption] = useState();
   const [sortList, setSortList] = useState([]);
   const [sortProducts, setSortProducts] = useState([]);
+  const [priceRange, setPriceRange] = useState();
+  const [itemsByPrice, setItemsByPrice] = useState([]);
 
   // console.log('pId', pId);
   // console.log('pName', pName);
@@ -57,6 +59,7 @@ const ProductListByCategory = ({ meData, catData }) => {
 
   useEffect(() => {
     getAllKindsProduct();
+    setPriceRange('none');
   }, []);
 
   const getKindsProduct = async () => {
@@ -112,6 +115,39 @@ const ProductListByCategory = ({ meData, catData }) => {
     }
   }, [selectOption, sortProducts]);
 
+  useEffect(() => {
+    setItemsByPrice(itemKinds.products);
+
+    if (priceRange === 0) {
+      const rangeItems = itemKinds.products?.filter(
+        (range) => range?.price <= 50
+      );
+      setItemsByPrice(rangeItems);
+    } else if (priceRange === 1) {
+      const rangeItems = itemKinds.products?.filter(
+        (range) => 50 < range?.price && range?.price <= 100
+      );
+      setItemsByPrice(rangeItems);
+    } else if (priceRange === 2) {
+      const rangeItems = itemKinds.products?.filter(
+        (range) => 100 < range?.price && range?.price <= 150
+      );
+      setItemsByPrice(rangeItems);
+    } else if (priceRange === 3) {
+      const rangeItems = itemKinds.products?.filter(
+        (range) => 150 < range?.price && range?.price <= 200
+      );
+      setItemsByPrice(rangeItems);
+    } else if (priceRange === 4) {
+      const rangeItems = itemKinds.products?.filter(
+        (range) => 200 < range?.price
+      );
+      setItemsByPrice(rangeItems);
+    } else {
+      setItemsByPrice(itemKinds.products);
+    }
+  }, [priceRange]);
+
   if (loading)
     return (
       <div>
@@ -131,6 +167,14 @@ const ProductListByCategory = ({ meData, catData }) => {
           cId={cId}
           cName={cName}
           catData={catData}
+          itemKinds={itemKinds}
+          rangeNone={() => setPriceRange('none')}
+          range0={() => setPriceRange(0)}
+          range1={() => setPriceRange(1)}
+          range2={() => setPriceRange(2)}
+          range3={() => setPriceRange(3)}
+          range4={() => setPriceRange(4)}
+          priceRange={priceRange}
         />
         <ProductsListWrapper>
           <ProductsList>
@@ -157,18 +201,33 @@ const ProductListByCategory = ({ meData, catData }) => {
 
             <ListMidWrap>
               <ListMid>
-                {itemKinds.products?.map((all) => {
-                  return (
-                    <ProductsCard
-                      key={all.pk}
-                      all={all}
-                      // kindEach={kindEach}
-                      meData={meData}
-                      itemKinds={itemKinds}
-                      // getAllKinds={getAllKinds}
-                    />
-                  );
-                })}
+                {priceRange === 'none' ? (
+                  <>
+                    {itemKinds.products?.map((all) => {
+                      return (
+                        <ProductsCard
+                          key={all.pk}
+                          all={all}
+                          meData={meData}
+                          itemKinds={itemKinds}
+                        />
+                      );
+                    })}
+                  </>
+                ) : (
+                  <>
+                    {itemsByPrice?.map((all) => {
+                      return (
+                        <ProductsCard
+                          key={all.pk}
+                          all={all}
+                          meData={meData}
+                          itemKinds={itemKinds}
+                        />
+                      );
+                    })}
+                  </>
+                )}
               </ListMid>
             </ListMidWrap>
           </ProductsList>

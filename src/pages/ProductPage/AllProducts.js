@@ -1,38 +1,21 @@
 import React, { Children, useEffect, useState } from 'react';
 import axios from '../../api/axios';
 import {
-  AllEachTitle,
-  FavIcon,
-  ListAllMidWrap,
   ListMid,
   ListMidWrap,
-  ListMidWrapper,
   ListTop,
-  ProductCategories,
-  ProductDesc,
-  ProductEachDetails,
-  ProductEachPhoto,
-  ProductLike,
-  ProductPrice,
-  ProductsEach,
   ProductsList,
   ProductsListContainer,
   ProductsListWrapper,
   ProductsWrap,
-  ProductTitle,
-  ProdutsListContainer,
   SelectWrap,
-  ToggleLike,
   TotalCount,
   TotalCountWrap,
 } from './ProductListElements';
 import ProductsCard from './ProductCard';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Link, useParams } from 'react-router-dom';
 import Category from './Category';
 import SideFilter from './SideFilter';
-import ProductListByCategory from './ProductListByCategory';
 import Loading from '../../components/Loading';
 
 const sort = [
@@ -43,20 +26,22 @@ const sort = [
 ];
 const AllProducts = ({ meData, catData }) => {
   const [items, setItems] = useState([]);
+
   const [loading, setLoading] = useState(false);
-  // const [getAllKinds, setGetAllKinds] = useState([]);
   const { pId } = useParams();
   const [selectOption, setSelectOption] = useState();
   const [sortList, setSortList] = useState([]);
   const [sortProducts, setSortProducts] = useState([]);
   const [addLiked, setAddLiked] = useState();
+  const [priceRange, setPriceRange] = useState();
+  const [itemsByPrice, setItemsByPrice] = useState([]);
 
   const getItems = async () => {
     const itemsList = await axios.get('/products/', {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    // console.log('ProductList', itemsList?.data);
+    console.log('ProductList', itemsList?.data);
     setItems(itemsList?.data);
     setLoading(false);
   };
@@ -64,6 +49,7 @@ const AllProducts = ({ meData, catData }) => {
   useEffect(() => {
     setLoading(true);
     getItems();
+    setPriceRange('none');
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
 
@@ -77,28 +63,54 @@ const AllProducts = ({ meData, catData }) => {
 
   useEffect(() => {
     console.log('selectedOptionnnn', selectOption);
-    // if (itemKinds.name === cName) {
     switch (selectOption) {
       case 'LowToHigh':
         const priceLToH = items.sort((a, b) => a.price - b.price);
         setSortList(priceLToH);
-        // setSortProducts(...sortList);
         return setSortProducts(...sortList);
       case 'HighToLow':
         const priceHToL = items.sort((a, b) => b.price - a.price);
         setSortList(priceHToL);
-        // setSortProducts(sortList);
         return setSortProducts(...sortList);
-      case 'Newest':
-        const uploadNewest = items.sort((a, b) => a.created_at - b.created_at);
-        setSortList(uploadNewest);
-        // setSortProducts(sortList);
-        return setSortProducts(...sortList);
+      // case 'Newest':
+      //   const uploadNewest = items.sort((a, b) => a.created_at - b.created_at);
+      //   setSortList(uploadNewest);
+      //   return setSortProducts(...sortList);
       default:
         return setSortList(sortProducts);
     }
-    // }
   }, [selectOption, sortProducts]);
+
+  useEffect(() => {
+    setItemsByPrice(items);
+
+    if (priceRange === 0) {
+      const rangeItems = items?.filter((range) => range?.price <= 50);
+      setItemsByPrice(rangeItems);
+    } else if (priceRange === 1) {
+      const rangeItems = items?.filter(
+        (range) => 50 < range?.price && range?.price <= 100
+      );
+      setItemsByPrice(rangeItems);
+    } else if (priceRange === 2) {
+      const rangeItems = items?.filter(
+        (range) => 100 < range?.price && range?.price <= 150
+      );
+      setItemsByPrice(rangeItems);
+    } else if (priceRange === 3) {
+      const rangeItems = items?.filter(
+        (range) => 150 < range?.price && range?.price <= 200
+      );
+      setItemsByPrice(rangeItems);
+    } else if (priceRange === 4) {
+      const rangeItems = items?.filter((range) => 200 < range?.price);
+      setItemsByPrice(rangeItems);
+    } else {
+      setItemsByPrice(items);
+    }
+  }, [priceRange]);
+
+  console.log('priceRange', priceRange);
 
   if (loading)
     return (
@@ -109,11 +121,20 @@ const AllProducts = ({ meData, catData }) => {
 
   return (
     <ProductsListContainer>
-      {/* <h1>{items?.name}</h1> */}
       <h1>All Products</h1>
       <Category items={items} />
       <ProductsWrap>
-        <SideFilter items={items} catData={catData} />
+        <SideFilter
+          items={items}
+          catData={catData}
+          rangeNone={() => setPriceRange('none')}
+          range0={() => setPriceRange(0)}
+          range1={() => setPriceRange(1)}
+          range2={() => setPriceRange(2)}
+          range3={() => setPriceRange(3)}
+          range4={() => setPriceRange(4)}
+          priceRange={priceRange}
+        />
         <ProductsListWrapper>
           <ProductsList>
             <ListTop>
@@ -139,17 +160,33 @@ const AllProducts = ({ meData, catData }) => {
 
             <ListMidWrap>
               <ListMid>
-                {items?.map((all) => {
-                  return (
-                    <ProductsCard
-                      key={all.pk}
-                      all={all}
-                      meData={meData}
-                      items={items}
-                      // getAllKinds={getAllKinds}
-                    />
-                  );
-                })}
+                {priceRange === 'none' ? (
+                  <>
+                    {items?.map((all) => {
+                      return (
+                        <ProductsCard
+                          key={all.pk}
+                          all={all}
+                          meData={meData}
+                          items={items}
+                        />
+                      );
+                    })}
+                  </>
+                ) : (
+                  <>
+                    {itemsByPrice?.map((all) => {
+                      return (
+                        <ProductsCard
+                          key={all.pk}
+                          all={all}
+                          meData={meData}
+                          items={items}
+                        />
+                      );
+                    })}
+                  </>
+                )}
               </ListMid>
             </ListMidWrap>
           </ProductsList>
