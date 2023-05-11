@@ -255,6 +255,10 @@ export const ReviewListTwo = styled.div`
   display: flex;
   margin-bottom: 10px;
   color: #000;
+
+  span{
+    margin: 0;
+  }
 `;
 export const StyledRating = styled(Rating)({
   '& .MuiRating-iconFilled': {
@@ -270,6 +274,7 @@ export const StyledRating = styled(Rating)({
 
 export const RatingWrap = styled.div`
   margin-left: 15px;
+
 `;
 
 export const ReviewListThree = styled.div`
@@ -282,12 +287,17 @@ export const ReviewListThree = styled.div`
   span {
     color: #000;
     font-size: 14px;
+    margin: 0;
   }
 `;
 
 export const ReviewListFour = styled.div`
   color: #565959;
   font-size: 14px;
+
+  span{
+    margin: 0;
+  }
 `;
 
 export const ListDetailBody = styled.dl`

@@ -53,16 +53,14 @@ const ButtonPrev = styled.button`
       padding-top: 5px;
       background:none;
       vertical-align: middle;
+      cursor: pointer;
       
       svg {
         width: 40px;
         height: 40px;
+        cursor: pointer;
       }
 
-      /* &:hover {
-        left: 0;
-        transition: left 0.5s;
-      } */
 
 `;
 
@@ -75,35 +73,17 @@ const ButtonNext = styled.button`
       right: 5px;
       border: none;
       transition: all ease 0.5s;
+      cursor: pointer;
 
       svg {
         width: 40px;
         height: 40px;
+        cursor: pointer;
       }
-
-      /* &:hover {
-        right: 0;
-        transition: right 0.5s;
-      } */
 
 `;
  
-// const PaginationBox = styled.div`
-//   position: relative;
-//   display: grid;
-//   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-//   width: 100%;
-//   grid-column-gap: 1px;
 
-//   picture {
-//     width: 100%;
-
-//     img {
-//       width: 100%;
-//       cursor: pointer;
-//     }
-//   }
-// `;
 const TOTAL_SLIDES = 2;
 const DetailSlider = () => {
     const [slideIndex, setSlideIndex] = useState([]);

@@ -130,9 +130,12 @@ const TestSearch = ({ onClose }) => {
                         <ResultList>
                             {keywords.slice(0,10).map((k) => (
                               <ResultDetail key={k.id}>
-                                    <ResultLink>
+                                    <ResultLink 
+                                      onClick={onClose}
+                                      to={`/products/search/${k.text}`}
+                                      >
                                         <AccessTimeIcon sx={{ width: 24, height: 25 }} color='disabled' fontSize='small' />
-                                        <p>{k.text}</p> 
+                                        <p>{k.text}</p>
                                         <span>Keyword</span>
                                     </ResultLink>
                                     <DetailDelete className="removeBtn" type="button" onClick={() => handleRemoveKeyword(k.id)}>
@@ -147,12 +150,16 @@ const TestSearch = ({ onClose }) => {
                       <ModalBodyHeader>
                           <h3>Popular</h3>
                       </ModalBodyHeader>
-                      {keywords.slice(0,10).map((l) => (
+                      {keywords.slice(0,10).map((l,index) => (
                       //{searchData.slice(0,10).map((l) => (  
-                        <ModalBodyParagraph key={l.id} >
+                        <ModalBodyParagraph key={l.id} >                          
                             <ModalBodyPList>
+                            {/* <strong> */}
+                              <span>{index +1}</span>
+                            {/* </strong> */}
                             <p>{l.text}</p>
                             </ModalBodyPList>
+                            
                         </ModalBodyParagraph>
                         ))}
                       </ModalBodyWrap>
