@@ -100,7 +100,7 @@ const CouponManage = ({ meData }) => {
         </AdListSearch>
         <AdListUtils>
           <ButtonSmall>Add</ButtonSmall>
-          <ButtonSmall>Delete</ButtonSmall>
+          {/* <ButtonSmall>Delete</ButtonSmall> */}
         </AdListUtils>
       </AdListTop>
 
