@@ -92,9 +92,9 @@ const ResearchResult = ({ meData, catData }) => {
   const  filtered = !searchValue 
                       ? items 
                       : items.filter((list) =>             
-                        list.kind.name.toLowerCase()
-                        .includes(searchValue.toLowerCase()) || 
-                        list.detail.toLowerCase()
+                        list.name.toLowerCase()
+                        .includes(searchValue.toLowerCase()) 
+                        || list.detail.toLowerCase()
                         .includes(searchValue.toLowerCase())
                         //  list.name.toLowerCase().indexOf(searchValue) !== -1
                        // list.name.toLowerCase().match(searchValue)   

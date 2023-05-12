@@ -84,14 +84,16 @@ const ButtonNext = styled.button`
 `;
  
 
-const TOTAL_SLIDES = 2;
 const DetailSlider = () => {
-    const [slideIndex, setSlideIndex] = useState([]);
-    const [slideInd, setSlideInd] = useState(0);
-    const { id } = useParams();
-    const slideRef = useRef(null);
-    const IMG_WIDTH = 500;
-    const slideRange = slideInd * IMG_WIDTH;
+  const [slideIndex, setSlideIndex] = useState([]);
+  const [slideInd, setSlideInd] = useState(0);
+  const { id } = useParams();
+  const slideRef = useRef(null);
+  const IMG_WIDTH = 500;
+  const slideRange = slideInd * IMG_WIDTH;
+  
+  const TOTAL_SLIDES = slideIndex.length;
+
 
     useEffect(() => {
       slideRef.current.style.transition = "all 0.5s ease-in-out";
