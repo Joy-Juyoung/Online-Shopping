@@ -88,11 +88,24 @@ const ResearchResult = ({ meData, catData }) => {
     }
     // }
   }, [selectOption, sortProducts]);
+  
   const  filtered = !searchValue 
                       ? items 
-                      : items.filter((list) =>
-                      list.name.toLowerCase().includes(searchValue.toLowerCase())
+                      : items.filter((list) =>             
+                        list.kind.name.toLowerCase()
+                        .includes(searchValue.toLowerCase()) || 
+                        list.detail.toLowerCase()
+                        .includes(searchValue.toLowerCase())
+                        //  list.name.toLowerCase().indexOf(searchValue) !== -1
+                       // list.name.toLowerCase().match(searchValue)   
                       )
+
+  // useEffect(() => {
+  //   setItems(
+  //     items.filter(list => list.name.indexOf(searchValue) == -1)
+  //   );
+  // }, [searchValue]);
+
   if (loading)
     return (
       <div>

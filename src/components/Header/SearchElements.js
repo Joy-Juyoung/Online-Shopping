@@ -82,7 +82,7 @@ export const ModalHeaderSearch = styled.div`
   span {
     position: absolute;
     top: 50%;
-    left: 8px;
+    left: -8px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -166,7 +166,8 @@ export const ResultDetail = styled.li`
   overflow: hidden;
   white-space: nowrap;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 8.5px;
+  align-items: center;
   /* margin-bottom: 56px; */
 `;
 
@@ -191,10 +192,16 @@ export const ResultLink = styled(Link)`
   font-size: 14px;
   color: rgb(10, 15, 24);
   text-decoration: none;
+  cursor: pointer;
+
   svg{
     margin-right: 8px;
+    display: flex;
+  align-items: center;
   }
   p {
+    display: flex;
+    align-items: center;
     font-size: 15px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -242,7 +249,7 @@ export const ModalBodyHeader = styled.header`
 `;
 
 export const ModalBodyParagraph = styled.ol`
-  counter-reset: item 0;
+  /* counter-reset: item 0; */
   /* counter-increment: item 1; */
   /* transform-origin: top;
   animation: popularMenu 0.9s ease-in-out 0s forwards running;
@@ -285,17 +292,15 @@ export const ModalBodyPList = styled.li`
       transform: translateY(0%);
       }
   }
-  ::before {
-    content: counter(item);
-    min-width: 16px;
-    margin-right: 8px;
-    font-size: 14px;
+  span{
+    margin:0px;
     font-weight: bold;
-    vertical-align: top;
-    counter-increment: item 1;
+    min-width: 16px;
+    /* margin-right: 8px; */
+    font-size: 14px;
   }
-  
   p {
+    margin-left: 15px;
     width: 100%;
     line-height: 24px;
     font-size: 15px;
