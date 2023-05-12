@@ -23,12 +23,26 @@ import { ButtonSmall } from '../../../components/ButtonElements';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import Modal from '../../../components/Modal';
+import {
+  CouponContents,
+  CouponExDuration,
+  CouponModalBottom,
+  CouponModalMain,
+  CouponModalTop,
+  CouponModalUsers,
+  CouponModalUsersList,
+  CouponModalWrap,
+} from './CouponStyle';
 
 const CouponManage = ({ meData }) => {
   const [loading, setLoading] = useState(false);
   const [coupons, setCoupons] = useState();
   const [couponEach, setCouponEach] = useState([]);
   const [couponDetails, setCouponDetails] = useState([]);
+  const [selected, setSelected] = useState();
+  const [isDrop, setIsDrop] = useState(false);
+  const [modalShown, toggleModal] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(8);
@@ -40,35 +54,32 @@ const CouponManage = ({ meData }) => {
     });
     console.log('couponList', couponList?.data);
     setCoupons(couponList?.data);
+    setSelected(coupons?.pk);
     setLoading(false);
   };
 
   useEffect(() => {
     setLoading(true);
     getCoupons();
-    getCouponEach();
   }, [meData]);
 
-  const getCouponEach = () => {
-    let result;
-    coupons?.map(
-      async (cp) =>
-        await axios
-          .get(`/coupons/${cp.pk}`, {
-            headers: { 'Content-Type': 'application/json' },
-            withCredentials: true,
-          })
-          .then((response) => {
-            result = response.data;
-            setCouponEach(result);
-            // console.log('result', result);
-          })
-    );
+  const handleOpenCoupon = async (pk) => {
+    toggleModal(!modalShown);
+    const couponEachList = await axios.get(`/coupons/${pk}`, {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+    console.log('couponEachList', couponEachList?.data);
+    setCouponEach(couponEachList?.data);
+    setSelected(couponEach.pk);
+    setIsDrop(!isDrop);
 
-    // setCouponDetails([...couponDetails, couponEach]);
+    if (!isDrop) {
+      setCouponDetails([...couponDetails, couponEach]);
+    } else {
+      setCouponDetails([]);
+    }
   };
-  console.log('couponEachList', couponEach);
-  // console.log('couponDetails', couponDetails);
 
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
@@ -82,7 +93,7 @@ const CouponManage = ({ meData }) => {
     );
   return (
     <AdContainer>
-      <h1>Custoemrs</h1>
+      <h1>Coupons</h1>
       <AdListTop>
         <AdListSearch>
           <input type='text' placeholder='Search' />
@@ -128,7 +139,12 @@ const CouponManage = ({ meData }) => {
                     {new Date(coupon?.created_at).toLocaleString('en-ca')}
                   </AdTBodyCell>
                   <AdTBodyCell className='details'>
-                    <ArrowForwardIosIcon fontSize='15px' />
+                    <ArrowForwardIosIcon
+                      fontSize='15px'
+                      onClick={(e) => {
+                        handleOpenCoupon(coupon?.pk);
+                      }}
+                    />
                   </AdTBodyCell>
                 </AdTBodyRow>
               </AdTBody>
@@ -144,6 +160,46 @@ const CouponManage = ({ meData }) => {
           currentPage={currentPage}
         />
       </AdListBottom>
+      <Modal
+        className='coupon'
+        shown={modalShown}
+        close={() => {
+          toggleModal(false);
+        }}
+      >
+        <CouponModalWrap>
+          <CouponModalTop>
+            <CouponContents>
+              <h2>{couponEach?.name?.toUpperCase()}</h2>
+              <p>{couponEach?.description}</p>
+            </CouponContents>
+            <CouponExDuration>
+              <p>
+                {new Date(couponEach?.start_date).toDateString()} -{' '}
+                {new Date(couponEach?.end_date).toDateString()}
+              </p>
+            </CouponExDuration>
+          </CouponModalTop>
+          <CouponModalMain>
+            <CouponModalUsers>
+              <strong>USERS</strong> total {couponEach?.users?.length}
+            </CouponModalUsers>
+            <CouponModalUsersList>
+              {couponEach?.users?.map((cpUser, index) => {
+                return (
+                  <ul key={index}>
+                    <li className='num'>{index + 1}</li>
+                    <li className='usrname'>{cpUser?.username}</li>
+                  </ul>
+                );
+              })}
+            </CouponModalUsersList>
+          </CouponModalMain>
+          <CouponModalBottom>
+            {/* <ButtonSmall>Close</ButtonSmall> */}
+          </CouponModalBottom>
+        </CouponModalWrap>
+      </Modal>
     </AdContainer>
   );
 };

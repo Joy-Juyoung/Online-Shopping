@@ -111,6 +111,7 @@ export const AdTBody = styled.tbody`
 export const AdTBodyRow = styled.tr``;
 
 export const AdTBodyCell = styled.td`
+  /* itemList */
   &.check {
     padding-left: 15px;
     width: 5%;
@@ -143,6 +144,16 @@ export const AdTBodyCell = styled.td`
 
   &.createAt {
     width: 25%;
+  }
+
+  /* couponList */
+  &.details {
+    cursor: pointer;
+
+    svg {
+      display: flex;
+      align-items: center;
+    }
   }
 `;
 

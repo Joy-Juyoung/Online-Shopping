@@ -57,7 +57,7 @@ const CustomersManage = ({ meData }) => {
     );
   return (
     <AdContainer>
-      <h1>Custoemrs</h1>
+      <h1>Customers</h1>
       <AdListTop>
         <AdListSearch>
           <input type='text' placeholder='Search' />
