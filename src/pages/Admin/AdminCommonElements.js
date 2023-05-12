@@ -33,6 +33,7 @@ export const AdminContainer = styled.div`
   color: #0a0f18;
 `;
 
+//List Page
 export const AdContainer = styled.div`
   margin-top: -46px;
 
@@ -41,4 +42,120 @@ export const AdContainer = styled.div`
     margin-bottom: 20px;
     border-bottom: 1px solid #cbccd3;
   }
+`;
+
+export const AdListTop = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 40px;
+`;
+
+export const AdListSearch = styled.div`
+  input {
+    display: flex;
+    align-items: center;
+    padding: 5px 15px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+  }
+`;
+
+export const AdListUtils = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  button {
+    margin-left: 5px;
+  }
+`;
+
+export const AdListMid = styled.div`
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+`;
+
+export const AdListBottom = styled.div``;
+
+// Table
+export const AdTable = styled.table`
+  width: 100%;
+  height: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+`;
+
+export const AdTHead = styled.thead`
+  text-align: left;
+  border-bottom: 2px solid #afafaf;
+`;
+
+export const AdTHeadeRow = styled.tr``;
+
+export const AdTHeadCell = styled.th`
+  padding: 7px 0;
+  &.check {
+    padding-left: 15px;
+  }
+`;
+
+export const AdTBody = styled.tbody`
+  border-bottom: 0.5px solid #afafaf;
+  height: 55px;
+`;
+
+export const AdTBodyRow = styled.tr``;
+
+export const AdTBodyCell = styled.td`
+  &.check {
+    padding-left: 15px;
+    width: 5%;
+  }
+
+  &.id {
+    width: 5%;
+  }
+
+  &.phto {
+    width: 10%;
+    height: 40px;
+  }
+
+  &.name {
+    width: 30%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding-right: 10px;
+  }
+
+  &.price {
+    width: 10%;
+  }
+
+  &.sub {
+    width: 15%;
+  }
+
+  &.createAt {
+    width: 25%;
+  }
+`;
+
+export const CheckInput = styled.input`
+  display: flex;
+  align-items: center;
+`;
+
+export const BodyImg = styled.img`
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
 `;

@@ -101,7 +101,7 @@ export const AdRightSide = styled.div`
 export const AdRightIcon = styled.div`
   display: flex;
   align-items: center;
-  cursor: pointer;
+  cursor: default;
 `;
 
 export const AdPermLink = styled(Link)`

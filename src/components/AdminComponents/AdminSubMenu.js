@@ -1,27 +1,20 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-// import { SideShowLi } from './SidebarElements';
-// import { ItemCount } from '../Header/HeaderElements';
+import { Link, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const SideShowLi = styled.li`
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* padding: 8px 0px 8px 16px; */
   padding: 8px;
   list-style: none;
-  /* height: 60px; */
   width: 100%;
-
-  /* svg {
-    display: flex;
-    align-items: center;
-  } */
 `;
 
 const SideLink = styled(Link)`
   text-decoration: none;
+  background: transparent;
   color: #f5f5f5;
   font-size: 18px;
   width: 95%;
@@ -34,17 +27,9 @@ const SideLink = styled(Link)`
   border-radius: 7px;
 
   &:hover {
-    background: #404447;
+    background: #404447 !important;
+    color: #f5f5f5 !important;
   }
-
-  /* span {
-    padding: 0 8px;
-  } */
-
-  /* svg {
-    display: flex;
-    align-items: center;
-  } */
 `;
 
 const DropdownLink = styled(Link)`
@@ -53,20 +38,50 @@ const DropdownLink = styled(Link)`
   padding-left: 1rem;
   display: flex;
   align-items: center;
-  /* text-align: left; */
   text-decoration: none;
   color: #a5a5a5;
   font-size: 15px;
   border-radius: 7px;
+  margin-top: 7px;
 
   &:hover {
-    background: #404447;
-    color: #f5f5f5;
+    background: #404447 !important;
+    color: #f5f5f5 !important;
   }
+
+  span {
+    margin: 0 10px;
+  }
+`;
+
+const SideIcon = styled.div`
+  display: flex;
+  align-items: center;
+  span {
+    margin: 0 10px;
+  }
+`;
+
+const SideArrow = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const AdminSubMenu = ({ item }) => {
   const [subnav, setSubnav] = useState(false);
+  const location = useLocation();
+  const [navBg, setNavBg] = useState('transparent');
+  const [navCorlor, setNavCorlor] = useState('#f5f5f5');
+
+  useEffect(() => {
+    if (window.location.pathname === item.path) {
+      setNavBg('#404447');
+      setNavCorlor('#f5f5f5');
+    } else {
+      setNavBg('transparent');
+      setNavCorlor('#f5f5f5');
+    }
+  }, [location]);
 
   const showSubnave = () => {
     setSubnav(!subnav);
@@ -74,23 +89,35 @@ const AdminSubMenu = ({ item }) => {
 
   return (
     <SideShowLi>
-      <SideLink to={item.path} onClick={item.subNav && showSubnave}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+      <SideLink
+        to={item.path}
+        onClick={item.subNav && showSubnave}
+        style={{ backgroundColor: navBg, color: navCorlor }}
+      >
+        <SideIcon>
           {item.icon}
           <span>{item.title}</span>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        </SideIcon>
+        <SideArrow>
           {item.subNav && subnav
             ? item.iconOpened
             : item.subNav
             ? item.iconClosed
             : null}
-        </div>
+        </SideArrow>
       </SideLink>
       {subnav &&
         item.subNav.map((item, index) => {
           return (
-            <DropdownLink to={item.path} key={index}>
+            <DropdownLink
+              to={item.path}
+              key={index}
+              style={
+                window.location.pathname === item.path
+                  ? { backgroundColor: '#404447', color: '#f5f5f5' }
+                  : { backgroundColor: 'transparent', color: '#a5a5a5' }
+              }
+            >
               {item.icon}
               <span>{item.title}</span>
             </DropdownLink>

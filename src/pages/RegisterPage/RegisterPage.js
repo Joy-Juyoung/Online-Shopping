@@ -79,7 +79,7 @@ const RegisterPage = () => {
   };
 
   useEffect(() => {
-    userRef.current.focus();
+    userRef.current?.focus();
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
 
@@ -135,7 +135,7 @@ const RegisterPage = () => {
     if (response?.data.error) {
       setLoading(false);
       setErrMsg('REGISTRATION FAILD');
-      errRef.current.focus();
+      errRef.current?.focus();
     } else {
       setSuccess(true);
       setUsername('');

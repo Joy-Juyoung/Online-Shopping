@@ -15,23 +15,22 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import axios from '../../api/axios';
 import { Link, useParams } from 'react-router-dom';
 
-const SideFilter = ({ meData, getAllKinds, items, catData }) => {
-  // const [categories, setCategories] = useState([]);
+const SideFilter = ({
+  meData,
+  getAllKinds,
+  items,
+  catData,
+  range0,
+  range1,
+  range2,
+  range3,
+  range4,
+  rangeNone,
+  priceRange,
+  itemKinds,
+}) => {
   const [isCategoryDrop, setIsCategoryDrop] = useState(true);
   const [isPriceDrop, setIsPriceDrop] = useState(true);
-  // const { all } = useParams();
-
-  // const getCategory = async () => {
-  //   const categoryData = await axios.get('/products/productAllParentsKinds', {
-  //     headers: { 'Content-Type': 'application/json' },
-  //     withCredentials: true,
-  //   });
-  //   setCategories(categoryData?.data);
-  // };
-
-  // useEffect(() => {
-  //   getCategory();
-  // }, [meData]);
 
   return (
     <SideFilterContainer>
@@ -41,7 +40,7 @@ const SideFilter = ({ meData, getAllKinds, items, catData }) => {
             <SideListDetails>
               <SideListTitle>CATEGORY</SideListTitle>
               <SideIcon onClick={() => setIsCategoryDrop(!isCategoryDrop)}>
-                {isCategoryDrop ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+                {isCategoryDrop ? <ExpandLessIcon /> : <ExpandMoreIcon />}
               </SideIcon>
             </SideListDetails>
             {isCategoryDrop && (
@@ -80,26 +79,110 @@ const SideFilter = ({ meData, getAllKinds, items, catData }) => {
               </>
             )}
           </SideFilterLl>
-          <SideFilterLl>
-            <SideListDetails>
-              <SideListTitle>PRICE</SideListTitle>
-              <SideIcon onClick={() => setIsPriceDrop(!isPriceDrop)}>
-                {isPriceDrop ? <ExpandMoreIcon /> : <ExpandLessIcon />}
-              </SideIcon>
-            </SideListDetails>
-            {isPriceDrop && (
-              <ListSub>
-                <ul>
-                  <li>~$50</li>
-                  <li>$50 ~ $100</li>
-                  <li>$100 ~ $150</li>
-                  <li>$150 ~ $200</li>
-                  <li>$200 ~ $250</li>
-                  <li>$250 ~</li>
-                </ul>
-              </ListSub>
-            )}
-          </SideFilterLl>
+
+          {itemKinds || items ? (
+            <SideFilterLl>
+              <SideListDetails>
+                <SideListTitle>PRICE</SideListTitle>
+                <SideIcon onClick={() => setIsPriceDrop(!isPriceDrop)}>
+                  {isPriceDrop ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                </SideIcon>
+              </SideListDetails>
+              {isPriceDrop && (
+                <ListSub>
+                  <ul>
+                    {priceRange === 'none' ? (
+                      <li
+                        onClick={() => rangeNone()}
+                        style={{
+                          fontWeight: '700',
+                          fontSize: '15px',
+                        }}
+                      >
+                        All
+                      </li>
+                    ) : (
+                      <li onClick={() => rangeNone()}>All</li>
+                    )}
+                    {priceRange === 0 ? (
+                      <li
+                        onClick={() => range0()}
+                        style={{
+                          fontWeight: '700',
+                          fontSize: '15px',
+                        }}
+                      >
+                        $0 ~ $50
+                      </li>
+                    ) : (
+                      <li onClick={() => range0()}>$0 ~ $50</li>
+                    )}
+                    {priceRange === 1 ? (
+                      <li
+                        onClick={() => range1()}
+                        style={{
+                          fontWeight: '700',
+                          fontSize: '15px',
+                        }}
+                      >
+                        $50 ~ $100
+                      </li>
+                    ) : (
+                      <li onClick={() => range1()}>$50 ~ $100</li>
+                    )}
+                    {priceRange === 2 ? (
+                      <li
+                        onClick={() => range2()}
+                        style={{
+                          fontWeight: '700',
+                          fontSize: '15px',
+                        }}
+                      >
+                        $100 ~ $150
+                      </li>
+                    ) : (
+                      <li onClick={() => range2()}>$100 ~ $150</li>
+                    )}
+                    {priceRange === 3 ? (
+                      <li
+                        onClick={() => range3()}
+                        style={{
+                          fontWeight: '700',
+                          fontSize: '15px',
+                        }}
+                      >
+                        $150 ~ $200
+                      </li>
+                    ) : (
+                      <li onClick={() => range3()}>$150 ~ $200</li>
+                    )}
+                    {priceRange === 4 ? (
+                      <li
+                        onClick={() => range4()}
+                        style={{
+                          fontWeight: '700',
+                          fontSize: '15px',
+                        }}
+                      >
+                        $200 ~
+                      </li>
+                    ) : (
+                      <li onClick={() => range4()}>$200 ~</li>
+                    )}
+                  </ul>
+                </ListSub>
+              )}
+            </SideFilterLl>
+          ) : (
+            <SideFilterLl>
+              <SideListDetails>
+                <SideListTitle>PRICE</SideListTitle>
+                <SideIcon onClick={() => setIsPriceDrop(!isPriceDrop)}>
+                  {/* {isPriceDrop ? <ExpandLessIcon /> : <ExpandMoreIcon />} */}
+                </SideIcon>
+              </SideListDetails>
+            </SideFilterLl>
+          )}
         </SideFilterUl>
       </SideFilterWrapper>
     </SideFilterContainer>
