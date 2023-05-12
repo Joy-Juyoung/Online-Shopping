@@ -33,7 +33,7 @@ const Pagination = ({
         setStartNum(startNum + 5);
         setEndNum(endNum + 5);
       }
-    } else {
+    } else if (direction === 'left') {
       setCurrentPage(currentPage - 1);
       if (currentPage === 1) {
         setCurrentPage(currentPage);
@@ -42,8 +42,20 @@ const Pagination = ({
         setStartNum(startNum - 5);
         setEndNum(endNum - 5);
       }
+    } else if (direction === 'rightToEnd') {
+      // console.log('+', 0 + 5 * (pages.length / 5));
+      // console.log('-', 5 + 5 * (pages.length / 5));
+      setCurrentPage(pages.length);
+      setStartNum(-1 + 5 * (pages.length / 5));
+      setEndNum(4 + 5 * (pages.length / 5));
+    } else {
+      setCurrentPage(1);
+      setStartNum(0);
+      setEndNum(5);
     }
   };
+
+  // console.log("pages.length", pages.length)
 
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
     pages.push(i);
@@ -52,9 +64,16 @@ const Pagination = ({
   return (
     <PaginationContainer>
       <PagenationWrap>
+        <ArrowKey
+          direction='leftToFirst'
+          onClick={() => handleClick('leftToFirst')}
+        >
+          <KeyboardDoubleArrowLeftIcon />
+        </ArrowKey>
         <ArrowKey direction='left' onClick={() => handleClick('left')}>
           <KeyboardArrowLeftIcon />
         </ArrowKey>
+
         <PagenationIndex>
           {pages?.slice(startNum, endNum).map((page, index) => {
             return (
@@ -69,10 +88,13 @@ const Pagination = ({
           })}
         </PagenationIndex>
         <ArrowKey direction='right' onClick={() => handleClick('right')}>
-          <KeyboardArrowRightIcon
-          // direction='right'
-          // onClick={() => handleClick('right')}
-          />
+          <KeyboardArrowRightIcon />
+        </ArrowKey>
+        <ArrowKey
+          direction='rightToEnd'
+          onClick={() => handleClick('rightToEnd')}
+        >
+          <KeyboardDoubleArrowRightIcon />
         </ArrowKey>
       </PagenationWrap>
     </PaginationContainer>
