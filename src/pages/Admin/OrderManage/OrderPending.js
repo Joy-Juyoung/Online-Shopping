@@ -38,15 +38,14 @@ const OrderPending = ({ meData }) => {
     });
     console.log('orederList', orederList.data);
     setOrders(orederList?.data);
+    const pendingOrder = orders?.filter((po) => po?.status === 'pending');
+    setPendings(pendingOrder);
     setLoading(false);
   };
 
   useEffect(() => {
     setLoading(true);
     getOrders();
-
-    const pendingOrder = orders?.filter((po) => po?.status === 'pending');
-    setPendings(pendingOrder);
   }, [meData]);
 
   const lastPostIndex = currentPage * postsPerPage;
