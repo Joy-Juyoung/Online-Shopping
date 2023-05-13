@@ -43,8 +43,6 @@ const BoxSpan = styled.span`
 const AddBalance = ({ meData }) => {
   const [changeUserBalance, setChangeUserBalance] = useState('');
   const [balance, setBalance] = useState(0);
-  const [sumBalance, setSumBalance] = useState(balance);
-  const [afterAdd, setAfterAdd] = useState(false);
 
   useEffect(() => {
     setChangeUserBalance(meData);
@@ -70,10 +68,7 @@ const AddBalance = ({ meData }) => {
         }
       );
       setChangeUserBalance(meInfo?.data);
-      // console.log('changed Data', meInfo?.data);
-      // window.close('/userBalance');
       window.location.reload();
-      // setAfterAdd(!afterAdd);
     }
   };
 

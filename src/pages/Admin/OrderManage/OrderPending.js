@@ -22,11 +22,14 @@ import Pagination from '../../../components/AdminComponents//Pagination';
 import { ButtonSmall } from '../../../components/ButtonElements';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import AdminModal from '../../../components/AdminComponents/AdminModal';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const OrderPending = ({ meData }) => {
   const [loading, setLoading] = useState(false);
   const [orders, setOrders] = useState();
   const [pendings, setPendings] = useState();
+  const [modalShown, toggleModal] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(8);
@@ -38,19 +41,23 @@ const OrderPending = ({ meData }) => {
     });
     console.log('orederList', orederList.data);
     setOrders(orederList?.data);
-    const pendingOrder = orders?.filter((po) => po?.status === 'pending');
-    setPendings(pendingOrder);
+    // const pendingOrder = orders?.filter((po) => po?.status === 'pending');
+    // setPendings(orders?.filter((po) => po?.status === 'pending'));
     setLoading(false);
   };
 
   useEffect(() => {
     setLoading(true);
     getOrders();
+    setPendings(orders?.filter((po) => po?.status === 'pending'));
   }, [meData]);
 
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
-  const currentPosts = pendings?.slice(firstPostIndex, lastPostIndex);
+  // const currentPosts = pendings?.slice(firstPostIndex, lastPostIndex);
+  const currentPosts = orders
+    ?.filter((po) => po?.status === 'pending')
+    ?.slice(firstPostIndex, lastPostIndex);
 
   if (loading)
     return (
@@ -65,34 +72,26 @@ const OrderPending = ({ meData }) => {
         <AdListSearch>
           <input type='text' placeholder='Search' />
         </AdListSearch>
-        <AdListUtils>
-          <ButtonSmall>Add</ButtonSmall>
-          <ButtonSmall>Delete</ButtonSmall>
-        </AdListUtils>
+        <AdListUtils>{/* <ButtonSmall>Add</ButtonSmall> */}</AdListUtils>
       </AdListTop>
 
       <AdListMid>
         <AdTable>
           <AdTHead>
             <AdTHeadeRow>
-              <AdTHeadCell className='check'>
-                <input type='checkbox' />
-              </AdTHeadCell>
               <AdTHeadCell className='id'>ID</AdTHeadCell>
               <AdTHeadCell className='username'>NAME</AdTHeadCell>
               <AdTHeadCell className='qty'>QTY</AdTHeadCell>
               <AdTHeadCell className='totalPrice'>TOTAL PRCIE</AdTHeadCell>
               <AdTHeadCell className='date'>ORDER DATE</AdTHeadCell>
               <AdTHeadCell className='status'>STATUS</AdTHeadCell>
+              <AdTHeadCell className='details'></AdTHeadCell>
             </AdTHeadeRow>
           </AdTHead>
           {currentPosts?.map((pendingOrder) => {
             return (
               <AdTBody key={pendingOrder?.pk}>
                 <AdTBodyRow>
-                  <AdTBodyCell className='check'>
-                    <CheckInput type='checkbox' />
-                  </AdTBodyCell>
                   <AdTBodyCell className='id'>{pendingOrder?.pk}</AdTBodyCell>
                   <AdTBodyCell className='username'>
                     {pendingOrder?.user?.username}
@@ -106,8 +105,13 @@ const OrderPending = ({ meData }) => {
                   <AdTBodyCell className='date'>
                     {new Date(pendingOrder?.created_at).toLocaleString('en-ca')}
                   </AdTBodyCell>
-                  <AdTBodyCell className='status'>
-                    {pendingOrder?.status}
+                  <AdTBodyCell>{pendingOrder?.status}</AdTBodyCell>
+                  <AdTBodyCell className='details'>
+                    <ArrowForwardIosIcon
+                      fontSize='15px'
+                      className='details'
+                      onClick={() => toggleModal(!modalShown)}
+                    />
                   </AdTBodyCell>
                 </AdTBodyRow>
               </AdTBody>
@@ -117,12 +121,20 @@ const OrderPending = ({ meData }) => {
       </AdListMid>
       <AdListBottom>
         <Pagination
-          totalPosts={pendings?.length}
+          totalPosts={orders?.filter((po) => po?.status === 'pending').length}
           postsPerPage={postsPerPage}
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}
         />
       </AdListBottom>
+
+      <AdminModal
+        className='coupon'
+        shown={modalShown}
+        close={() => {
+          toggleModal(false);
+        }}
+      ></AdminModal>
     </AdContainer>
   );
 };

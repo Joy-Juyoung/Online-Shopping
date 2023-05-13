@@ -16,6 +16,11 @@ export const ArrowKey = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
+  color: #bbb;
+
+  &:hover {
+    color: #23282c;
+  }
 `;
 
 export const PagenationIndex = styled.div`

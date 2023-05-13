@@ -19,7 +19,6 @@ const Pagination = ({
   currentPage,
 }) => {
   let pages = [];
-  const [slideIndex, setSlideIndex] = useState(0);
   const [startNum, setStartNum] = useState(0);
   const [endNum, setEndNum] = useState(5);
 
@@ -45,9 +44,15 @@ const Pagination = ({
     } else if (direction === 'rightToEnd') {
       // console.log('+', 0 + 5 * (pages.length / 5));
       // console.log('-', 5 + 5 * (pages.length / 5));
-      setCurrentPage(pages.length);
-      setStartNum(-1 + 5 * (pages.length / 5));
-      setEndNum(4 + 5 * (pages.length / 5));
+      if (pages.length / 5 <= 1) {
+        setCurrentPage(pages.length);
+        setStartNum(0);
+        setEndNum(5);
+      } else {
+        setCurrentPage(pages.length);
+        setStartNum(-1 + 5 * (pages.length / 5));
+        setEndNum(4 + 5 * (pages.length / 5));
+      }
     } else {
       setCurrentPage(1);
       setStartNum(0);

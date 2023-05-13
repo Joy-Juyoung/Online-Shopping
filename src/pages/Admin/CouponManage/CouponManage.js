@@ -18,7 +18,7 @@ import {
 } from '../AdminCommonElements';
 import axios from '../../../api/axios';
 import Loading from '../../../components/Loading';
-import Pagination from '../../../components/AdminComponents//Pagination';
+import Pagination from '../../../components/AdminComponents/Pagination';
 import { ButtonSmall } from '../../../components/ButtonElements';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
@@ -34,6 +34,8 @@ import {
   CouponModalUsersList,
   CouponModalWrap,
 } from './CouponStyle';
+import AdminModal from '../../../components/AdminComponents/AdminModal';
+import AddNewCoupon from './AddNewCoupon';
 
 const CouponManage = ({ meData }) => {
   const [loading, setLoading] = useState(false);
@@ -43,6 +45,7 @@ const CouponManage = ({ meData }) => {
   const [selected, setSelected] = useState();
   const [isDrop, setIsDrop] = useState(false);
   const [modalShown, toggleModal] = useState(false);
+  const [addModalShown, toggleAddModal] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(8);
@@ -73,12 +76,6 @@ const CouponManage = ({ meData }) => {
     setCouponEach(couponEachList?.data);
     setSelected(couponEach.pk);
     setIsDrop(!isDrop);
-
-    if (!isDrop) {
-      setCouponDetails([...couponDetails, couponEach]);
-    } else {
-      setCouponDetails([]);
-    }
   };
 
   const lastPostIndex = currentPage * postsPerPage;
@@ -99,20 +96,31 @@ const CouponManage = ({ meData }) => {
           <input type='text' placeholder='Search' />
         </AdListSearch>
         <AdListUtils>
-          <ButtonSmall>Add</ButtonSmall>
+          <ButtonSmall
+            onClick={() => {
+              toggleAddModal(!addModalShown);
+            }}
+          >
+            Add
+          </ButtonSmall>
           {/* <ButtonSmall>Delete</ButtonSmall> */}
         </AdListUtils>
       </AdListTop>
+      <AdminModal
+        className='coupon'
+        shown={addModalShown}
+        close={() => {
+          toggleAddModal(false);
+        }}
+      >
+        <AddNewCoupon />
+      </AdminModal>
 
       <AdListMid>
         <AdTable>
-          <AdTHead>
+          <AdTHead className='coupon'>
             <AdTHeadeRow>
-              <AdTHeadCell className='check'>
-                <input type='checkbox' />
-              </AdTHeadCell>
               <AdTHeadCell className='id'>ID</AdTHeadCell>
-              {/* <AdTHeadCell className='cName'>COUPON</AdTHeadCell> */}
               <AdTHeadCell className='discount'>DISCOUNT</AdTHeadCell>
               <AdTHeadCell className='duration'>DURATION</AdTHeadCell>
               <AdTHeadCell className='createData'>CREATE AT</AdTHeadCell>
@@ -121,13 +129,9 @@ const CouponManage = ({ meData }) => {
           </AdTHead>
           {currentPosts?.map((coupon) => {
             return (
-              <AdTBody key={coupon?.pk}>
+              <AdTBody key={coupon?.pk} className='coupon'>
                 <AdTBodyRow>
-                  <AdTBodyCell className='check'>
-                    <CheckInput type='checkbox' />
-                  </AdTBodyCell>
                   <AdTBodyCell className='id'>{coupon?.pk}</AdTBodyCell>
-                  {/* <AdTBodyCell className='cName'>Coupon name</AdTBodyCell> */}
                   <AdTBodyCell className='discount'>
                     {coupon?.discount_rate}%
                   </AdTBodyCell>
@@ -160,7 +164,7 @@ const CouponManage = ({ meData }) => {
           currentPage={currentPage}
         />
       </AdListBottom>
-      <Modal
+      <AdminModal
         className='coupon'
         shown={modalShown}
         close={() => {
@@ -199,7 +203,7 @@ const CouponManage = ({ meData }) => {
             {/* <ButtonSmall>Close</ButtonSmall> */}
           </CouponModalBottom>
         </CouponModalWrap>
-      </Modal>
+      </AdminModal>
     </AdContainer>
   );
 };
