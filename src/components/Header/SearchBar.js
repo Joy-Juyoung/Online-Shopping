@@ -9,17 +9,6 @@ const SearchBar = ({ onAddKeyword,onClose }) => {
   const [searchValue, setSearchValue] = useState('')
   
   const [loading, setLoading] = useState(false);
-  // const [searchData, setSearchData] = useState([])
-  
-  // const getSearchData = async () => {
-  //   const dataList = await axios.get('/products/', {
-  //     headers: { 'Content-Type': 'application/json' },
-  //     withCredentials: true,
-  //   });
-  //   console.log('dataList', dataList?.data);
-  //   setSearchData(dataList?.data);
-  //   // setKeywords(dataList?.data);
-  // };
 
   const navigate = useNavigate();
 
@@ -33,13 +22,13 @@ const SearchBar = ({ onAddKeyword,onClose }) => {
       onAddKeyword(searchValue)
       setSearchValue('')
       if (searchValue) {
-        navigate(`/products/search/${searchValue}`);
-      }
+        navigate(`/products/search/${searchValue}`);       
+      }      
       // onClose();
     },
     [searchValue,onAddKeyword]
     )
-
+    
   if (loading)
     return (
       <div>

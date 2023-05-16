@@ -82,7 +82,7 @@ const TestCart = () => {
   useEffect(() => {
     setLoading(true);
     getAllCart();
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
   // console.log('carts', carts);
 
@@ -130,16 +130,10 @@ const TestCart = () => {
     // console.log("ids", ids);
 }, [carts])
 
-//
+
   const onChangeAll = () => {
-    // setCheckList(IdList)
-    // setIsChecked(!isChecked)
-    // if(isChecked){
-    //   setCheckList([])
-    //   setIsChecked(!isChecked)     
-    // }
-    
-    if(isChecked === false) { 
+    if(isChecked === false) 
+    { 
       setCheckList(IdList)
       setIsChecked(true) 
       IdList.map(async(i) =>  {
@@ -218,10 +212,12 @@ const onChangeEach = async (e, id) => {
             <CartLeftInfo>
               <CartLeftCheckBar>
                 <CheckBarWrap>
-                  <OrderCheckBox onClick={() => onChangeAll()}>
+                  <OrderCheckBox
+                    onClick={() => onChangeAll()}
+                  >
                     <input
                       type='checkbox'
-                      checked={checkList.length === IdList.length}
+                      checked={checkList.length === IdList.length}                      
                     />
                     <label>All</label>
                   </OrderCheckBox>

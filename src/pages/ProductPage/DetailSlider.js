@@ -84,14 +84,16 @@ const ButtonNext = styled.button`
 `;
  
 
-const TOTAL_SLIDES = 2;
 const DetailSlider = () => {
-    const [slideIndex, setSlideIndex] = useState([]);
-    const [slideInd, setSlideInd] = useState(0);
-    const { id } = useParams();
-    const slideRef = useRef(null);
-    const IMG_WIDTH = 500;
-    const slideRange = slideInd * IMG_WIDTH;
+  const [slideIndex, setSlideIndex] = useState([]);
+  const [slideInd, setSlideInd] = useState(0);
+  const { id } = useParams();
+  const slideRef = useRef(null);
+  const IMG_WIDTH = 500;
+  const slideRange = slideInd * IMG_WIDTH;
+  
+  const TOTAL_SLIDES = slideIndex?.photos?.length -1 ;
+
 
     useEffect(() => {
       slideRef.current.style.transition = "all 0.5s ease-in-out";
@@ -116,22 +118,6 @@ const DetailSlider = () => {
        setSlideInd(slideInd - 1);
       }
     };
-    // const moveToNextSlide = () => {
-    //   if (slideInd === 2) return;
-    //   setSlideInd(slideInd + 1);
-    // };
-  
-    // const moveToPrevSlide = () => {
-    //   if (slideInd === 0) return;
-    //   setSlideInd(slideInd - 1);
-    // };
-
-    // const onChangeImage = (index) => {
-    //   if (slideIndex?.photos?.length <= index) index = 0;
-    //   if (index < 0) index = slideIndex?.photos?.length - 1;
-  
-    //   setSlideInd({ slideInd: index });
-    // };
 
     const getProduct = async () => {
         const { data } = await axios.get(`/products/${id}`, {

@@ -82,7 +82,7 @@ export const ModalHeaderSearch = styled.div`
   span {
     position: absolute;
     top: 50%;
-    left: -8px;
+    left: 8px;
     display: flex;
     align-items: center;
     justify-content: center;

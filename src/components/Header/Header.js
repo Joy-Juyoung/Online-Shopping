@@ -143,11 +143,9 @@ const Header = ({ meData, catData }) => {
                   </ModalBtnDetail>
                 </ModalBtn>
               </ModalBtnWrap>
-              {/* {isModalOpen && <Search onClose={() => setIsModalOpen(false)} />} */}
               {isModalOpen && (
                 <TestSearch onClose={() => setIsModalOpen(false)} />
               )}
-              {/* <TestSearch onClose={() => setIsModalOpen(false)} /> */}
             </LeftSide>
 
             <MiddleSide>

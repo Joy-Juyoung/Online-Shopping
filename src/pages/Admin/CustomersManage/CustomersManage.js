@@ -22,6 +22,7 @@ import Pagination from '../../../components/AdminComponents//Pagination';
 import { ButtonSmall } from '../../../components/ButtonElements';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import AddCustomers from './AddCustomers';
 
 const CustomersManage = ({ meData }) => {
   const [loading, setLoading] = useState(false);
@@ -29,6 +30,13 @@ const CustomersManage = ({ meData }) => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(8);
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const [userInput, setUserInput] = useState("");
+
+  const [modalOpen, setModalOpen] = useState(false);
+  // const keys = ["username", "phone_number", "address", "pk", "balance","type"];
 
   const getCustomers = async () => {
     const userList = await axios.get('/users/', {
@@ -45,9 +53,16 @@ const CustomersManage = ({ meData }) => {
     getCustomers();
   }, [meData]);
 
+
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
   const currentPosts = customers?.slice(firstPostIndex, lastPostIndex);
+
+  const test = () => {
+    currentPosts.filter((list) => {
+      console.log("pk",list.pk.toString())
+    })
+  }
 
   if (loading)
     return (
@@ -57,13 +72,19 @@ const CustomersManage = ({ meData }) => {
     );
   return (
     <AdContainer>
+
       <h1>Customers</h1>
       <AdListTop>
         <AdListSearch>
-          <input type='text' placeholder='Search' />
+          <input 
+            type='text' 
+            placeholder='Search' 
+            onChange={(e) => setUserInput(e.target.value)}
+            />
         </AdListSearch>
         <AdListUtils>
-          <ButtonSmall>Add</ButtonSmall>
+          <ButtonSmall onClick={() => {setIsModalOpen(true)}}>Add</ButtonSmall>
+          {isModalOpen && (<AddCustomers onClose={() => setIsModalOpen(false)} />)}
           <ButtonSmall>Delete</ButtonSmall>
         </AdListUtils>
       </AdListTop>
@@ -76,14 +97,23 @@ const CustomersManage = ({ meData }) => {
                 <input type='checkbox' />
               </AdTHeadCell>
               <AdTHeadCell className='id'>ID</AdTHeadCell>
-              <AdTHeadCell className='type'>TYPE</AdTHeadCell>
+              {/* <AdTHeadCell className='type'>TYPE</AdTHeadCell> */}
               <AdTHeadCell className='username'>NAME</AdTHeadCell>
               <AdTHeadCell className='address'>ADDRESS</AdTHeadCell>
               <AdTHeadCell className='phone'>PHONE</AdTHeadCell>
               <AdTHeadCell className='balance'>BALANCE</AdTHeadCell>
+              <AdTHeadCell className='type'>TYPE</AdTHeadCell>
             </AdTHeadeRow>
           </AdTHead>
-          {currentPosts?.map((user) => {
+          {currentPosts?.filter((list) =>
+            list.username.toLowerCase().includes(userInput.toLowerCase())
+            || list.type.toLowerCase().includes(userInput.toLowerCase())            
+            || list.pk.toString().includes(userInput)
+            || list.balance.toString().includes(userInput)
+            || list.address.toString().includes(userInput)
+            || list.phone_number.toString().includes(userInput)
+            )
+          .map((user) => {
             return (
               <AdTBody key={user?.pk}>
                 <AdTBodyRow>
@@ -91,7 +121,7 @@ const CustomersManage = ({ meData }) => {
                     <CheckInput type='checkbox' />
                   </AdTBodyCell>
                   <AdTBodyCell className='id'>{user?.pk}</AdTBodyCell>
-                  <AdTBodyCell className='type'>{user?.type}</AdTBodyCell>
+                  {/* <AdTBodyCell className='type'>{user?.type}</AdTBodyCell> */}
                   <AdTBodyCell className='username'>
                     {user?.username}
                   </AdTBodyCell>
@@ -99,7 +129,11 @@ const CustomersManage = ({ meData }) => {
                   <AdTBodyCell className='phone'>
                     {user?.phone_number}
                   </AdTBodyCell>
-                  <AdTBodyCell className='balance'>{user?.balance}</AdTBodyCell>
+                  <AdTBodyCell className='balance'>${user?.balance?.toLocaleString()}</AdTBodyCell>
+                  {/* <select onChange={handleSelect} defaultValue={user?.type}>
+                    <option value={user?.type}>{user?.type}</option>
+                  </select> */}
+                  <AdTBodyCell className='type'>{user?.type}</AdTBodyCell>
                 </AdTBodyRow>
               </AdTBody>
             );

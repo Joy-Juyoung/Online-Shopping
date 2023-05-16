@@ -108,9 +108,10 @@ const TestSearch = ({ onClose }) => {
                             <h3>Popular</h3>
                         </ModalBodyHeader>
                         {/* {keywords.slice(0,10).map((l) => ( */}
-                        {searchData.slice(0,10).map((l) => (
+                        {searchData.slice(0,10).map((l, index) => (
                           <ModalBodyParagraph key={l.id} >
                               <ModalBodyPList>
+                              <span>{index +1}</span>
                               <p>{l.name}</p>
                               </ModalBodyPList>
                           </ModalBodyParagraph>
@@ -148,16 +149,13 @@ const TestSearch = ({ onClose }) => {
                     </SearchResult> 
                     <ModalBodyWrap>
                       <ModalBodyHeader>
-                          <h3>Popular</h3>
+                        <h3>Popular</h3>
                       </ModalBodyHeader>
-                      {keywords.slice(0,10).map((l,index) => (
-                      //{searchData.slice(0,10).map((l) => (  
+                        {searchData.slice(0,10).map((l, index) => (  
                         <ModalBodyParagraph key={l.id} >                          
                             <ModalBodyPList>
-                            {/* <strong> */}
-                              <span>{index +1}</span>
-                            {/* </strong> */}
-                            <p>{l.text}</p>
+                            <span>{index +1}</span>                    
+                            <p>{l.name}</p>
                             </ModalBodyPList>
                             
                         </ModalBodyParagraph>
