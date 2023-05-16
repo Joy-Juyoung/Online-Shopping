@@ -11,37 +11,6 @@ import HelpCenterPage from './pages/HelpCenterPage/HelpCenter';
 // import Loading from './components/Loading';
 
 function App() {
-  // const [meData, setMeData] = useState();
-  // const [catData, setCatData] = useState([]);
-
-  // const getMe = async () => {
-  //   try {
-  //     const me = await axios.get('/users/me', {
-  //       headers: { 'Content-Type': 'application/json' },
-  //       withCredentials: true,
-  //     });
-  //     setMeData(me?.data);
-  //   } catch (err) {
-  //     return null;
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getMe();
-  // }, []);
-
-  // const getCategory = async () => {
-  //   const categoryData = await axios.get('/products/productAllParentsKinds', {
-  //     headers: { 'Content-Type': 'application/json' },
-  //     withCredentials: true,
-  //   });
-  //   setCatData(categoryData?.data);
-  // };
-
-  // useEffect(() => {
-  //   getCategory();
-  // }, [meData]);
-
   return (
     <>
       <Router>
