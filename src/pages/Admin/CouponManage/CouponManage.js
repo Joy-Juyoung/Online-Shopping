@@ -18,17 +18,34 @@ import {
 } from '../AdminCommonElements';
 import axios from '../../../api/axios';
 import Loading from '../../../components/Loading';
-import Pagination from '../../../components/AdminComponents//Pagination';
+import Pagination from '../../../components/AdminComponents/Pagination';
 import { ButtonSmall } from '../../../components/ButtonElements';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import Modal from '../../../components/Modal';
+import {
+  CouponContents,
+  CouponExDuration,
+  CouponModalBottom,
+  CouponModalMain,
+  CouponModalTop,
+  CouponModalUsers,
+  CouponModalUsersList,
+  CouponModalWrap,
+} from './CouponStyle';
+import AdminModal from '../../../components/AdminComponents/AdminModal';
+import AddNewCoupon from './AddNewCoupon';
 
 const CouponManage = ({ meData }) => {
   const [loading, setLoading] = useState(false);
   const [coupons, setCoupons] = useState();
   const [couponEach, setCouponEach] = useState([]);
   const [couponDetails, setCouponDetails] = useState([]);
+  const [selected, setSelected] = useState();
+  const [isDrop, setIsDrop] = useState(false);
+  const [modalShown, toggleModal] = useState(false);
+  const [addModalShown, toggleAddModal] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(8);
@@ -40,35 +57,26 @@ const CouponManage = ({ meData }) => {
     });
     console.log('couponList', couponList?.data);
     setCoupons(couponList?.data);
+    setSelected(coupons?.pk);
     setLoading(false);
   };
 
   useEffect(() => {
     setLoading(true);
     getCoupons();
-    getCouponEach();
   }, [meData]);
 
-  const getCouponEach = () => {
-    let result;
-    coupons?.map(
-      async (cp) =>
-        await axios
-          .get(`/coupons/${cp.pk}`, {
-            headers: { 'Content-Type': 'application/json' },
-            withCredentials: true,
-          })
-          .then((response) => {
-            result = response.data;
-            setCouponEach(result);
-            // console.log('result', result);
-          })
-    );
-
-    // setCouponDetails([...couponDetails, couponEach]);
+  const handleOpenCoupon = async (pk) => {
+    toggleModal(!modalShown);
+    const couponEachList = await axios.get(`/coupons/${pk}`, {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+    console.log('couponEachList', couponEachList?.data);
+    setCouponEach(couponEachList?.data);
+    setSelected(couponEach.pk);
+    setIsDrop(!isDrop);
   };
-  console.log('couponEachList', couponEach);
-  // console.log('couponDetails', couponDetails);
 
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
@@ -82,26 +90,37 @@ const CouponManage = ({ meData }) => {
     );
   return (
     <AdContainer>
-      <h1>Custoemrs</h1>
+      <h1>Coupons</h1>
       <AdListTop>
         <AdListSearch>
           <input type='text' placeholder='Search' />
         </AdListSearch>
         <AdListUtils>
-          <ButtonSmall>Add</ButtonSmall>
-          <ButtonSmall>Delete</ButtonSmall>
+          <ButtonSmall
+            onClick={() => {
+              toggleAddModal(!addModalShown);
+            }}
+          >
+            Add
+          </ButtonSmall>
+          {/* <ButtonSmall>Delete</ButtonSmall> */}
         </AdListUtils>
       </AdListTop>
+      <AdminModal
+        className='coupon'
+        shown={addModalShown}
+        close={() => {
+          toggleAddModal(false);
+        }}
+      >
+        <AddNewCoupon />
+      </AdminModal>
 
       <AdListMid>
         <AdTable>
-          <AdTHead>
+          <AdTHead className='coupon'>
             <AdTHeadeRow>
-              <AdTHeadCell className='check'>
-                <input type='checkbox' />
-              </AdTHeadCell>
               <AdTHeadCell className='id'>ID</AdTHeadCell>
-              {/* <AdTHeadCell className='cName'>COUPON</AdTHeadCell> */}
               <AdTHeadCell className='discount'>DISCOUNT</AdTHeadCell>
               <AdTHeadCell className='duration'>DURATION</AdTHeadCell>
               <AdTHeadCell className='createData'>CREATE AT</AdTHeadCell>
@@ -110,13 +129,9 @@ const CouponManage = ({ meData }) => {
           </AdTHead>
           {currentPosts?.map((coupon) => {
             return (
-              <AdTBody key={coupon?.pk}>
+              <AdTBody key={coupon?.pk} className='coupon'>
                 <AdTBodyRow>
-                  <AdTBodyCell className='check'>
-                    <CheckInput type='checkbox' />
-                  </AdTBodyCell>
                   <AdTBodyCell className='id'>{coupon?.pk}</AdTBodyCell>
-                  {/* <AdTBodyCell className='cName'>Coupon name</AdTBodyCell> */}
                   <AdTBodyCell className='discount'>
                     {coupon?.discount_rate}%
                   </AdTBodyCell>
@@ -128,7 +143,12 @@ const CouponManage = ({ meData }) => {
                     {new Date(coupon?.created_at).toLocaleString('en-ca')}
                   </AdTBodyCell>
                   <AdTBodyCell className='details'>
-                    <ArrowForwardIosIcon fontSize='15px' />
+                    <ArrowForwardIosIcon
+                      fontSize='15px'
+                      onClick={(e) => {
+                        handleOpenCoupon(coupon?.pk);
+                      }}
+                    />
                   </AdTBodyCell>
                 </AdTBodyRow>
               </AdTBody>
@@ -144,6 +164,46 @@ const CouponManage = ({ meData }) => {
           currentPage={currentPage}
         />
       </AdListBottom>
+      <AdminModal
+        className='coupon'
+        shown={modalShown}
+        close={() => {
+          toggleModal(false);
+        }}
+      >
+        <CouponModalWrap>
+          <CouponModalTop>
+            <CouponContents>
+              <h2>{couponEach?.name?.toUpperCase()}</h2>
+              <p>{couponEach?.description}</p>
+            </CouponContents>
+            <CouponExDuration>
+              <p>
+                {new Date(couponEach?.start_date).toDateString()} -{' '}
+                {new Date(couponEach?.end_date).toDateString()}
+              </p>
+            </CouponExDuration>
+          </CouponModalTop>
+          <CouponModalMain>
+            <CouponModalUsers>
+              <strong>USERS</strong> total {couponEach?.users?.length}
+            </CouponModalUsers>
+            <CouponModalUsersList>
+              {couponEach?.users?.map((cpUser, index) => {
+                return (
+                  <ul key={index}>
+                    <li className='num'>{index + 1}</li>
+                    <li className='usrname'>{cpUser?.username}</li>
+                  </ul>
+                );
+              })}
+            </CouponModalUsersList>
+          </CouponModalMain>
+          <CouponModalBottom>
+            {/* <ButtonSmall>Close</ButtonSmall> */}
+          </CouponModalBottom>
+        </CouponModalWrap>
+      </AdminModal>
     </AdContainer>
   );
 };
