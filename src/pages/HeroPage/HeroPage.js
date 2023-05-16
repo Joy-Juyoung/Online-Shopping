@@ -110,7 +110,7 @@ const HeroPage = ({ meData, catData }) => {
               return (
                 <CategoriesWrap key={cat?.pk}>
                   <Link to={`/products/category/${cat.pk}`}>
-                    <span>{cat?.productKinds[1].name}</span>
+                    <span>{cat?.productKinds[1]?.name}</span>
                   </Link>
                 </CategoriesWrap>
               );

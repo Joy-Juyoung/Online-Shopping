@@ -33,6 +33,8 @@ const OrderList = ({ meData }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(8);
 
+  const [orderById, setOrderById] = useState();
+
   const getOrders = async () => {
     const orederList = await axios.get('/orders/', {
       headers: { 'Content-Type': 'application/json' },
@@ -51,6 +53,18 @@ const OrderList = ({ meData }) => {
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
   const currentPosts = orders?.slice(firstPostIndex, lastPostIndex);
+
+  const handleOrderDetails = async (pk) => {
+    toggleModal(!modalShown);
+    console.log('pk', pk);
+
+    const orderedData = await axios.get(`/orders/${pk}`, {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+    console.log('orderedData', orderedData?.data);
+    setOrderById(orderedData?.data);
+  };
 
   if (loading)
     return (
@@ -103,7 +117,11 @@ const OrderList = ({ meData }) => {
                     <ArrowForwardIosIcon
                       fontSize='15px'
                       className='details'
-                      onClick={() => toggleModal(!modalShown)}
+                      // 모달오픈하는거
+                      // onClick={() => toggleModal(!modalShown)}
+                      onClick={(e) => {
+                        handleOrderDetails(order?.pk);
+                      }}
                     />
                   </AdTBodyCell>
                 </AdTBodyRow>
@@ -122,11 +140,28 @@ const OrderList = ({ meData }) => {
       </AdListBottom>
       <AdminModal
         className='coupon'
+        // 모달에
         shown={modalShown}
         close={() => {
           toggleModal(false);
         }}
-      ></AdminModal>
+      >
+        <div>
+          {/* {orderById?.soldProduct?.map((sold) => {
+            return (
+              <div key={sold?.pk}>
+                {sold?.product?.map((sp) => {
+                  return (
+                    <ul key={sp?.pk}>
+                      <li style={{ color: '#000' }}>{sp?.name}</li>
+                    </ul>
+                  );
+                })}
+              </div>
+            );
+          })} */}
+        </div>
+      </AdminModal>
     </AdContainer>
   );
 };

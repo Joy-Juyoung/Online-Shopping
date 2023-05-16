@@ -16,16 +16,17 @@ import {
   PopupBox,
 } from './CouponStyle';
 
-const AddNewCoupon = ({ meData, coupons }) => {
-  const [getUserPk, setGetUserPk] = useState();
-  const [getUsername, setGetUsername] = useState();
+const AddNewCoupon = ({ coupons }) => {
   const [newCoupone, setNewCoupon] = useState();
 
+  const [checkedUser, setCheckedUser] = useState('');
   const [addUser, setAddUser] = useState([]);
+
   const [addCouponName, setAddCouponName] = useState('');
-  const [addCouponDes, setAddCouponDes] = useState('');
+  const [addCouponDesc, setAddCouponDesc] = useState('');
   const [addDiscount, setAddDiscount] = useState(0);
   const [isNext, setIsNext] = useState(false);
+  const [validNext, setValidNext] = useState(false);
 
   const [customers, setCustomers] = useState();
 
@@ -41,31 +42,47 @@ const AddNewCoupon = ({ meData, coupons }) => {
   useEffect(() => {
     getCustomers();
     setNewCoupon(coupons);
-    setGetUsername(meData?.username);
-    setGetUserPk(meData?.pk);
   }, [coupons]);
 
   const handleAddNewCoupon = (e) => {
-    // setAddUser(e.target.value);
-    // setAddCouponName(e.target.value);
-    // setAddCouponDes(e.target.value);
-    // setAddDiscount(e.target.value);
+    if (e.target.id === 'couponName') {
+      setAddCouponName(e.target.value);
+    }
+    if (e.target.id === 'couponDesc') {
+      setAddCouponDesc(e.target.value);
+    }
+    if (e.target.id === 'couponRate') {
+      setAddDiscount(e.target.value);
+    }
   };
+
+  const handleAddNewUser = (e) => {
+    setCheckedUser({ ...checkedUser, [e.target.value]: e.target.checked });
+  };
+
+  useEffect(() => {
+    setAddUser(
+      Object.entries(checkedUser)
+        .filter(([key, value]) => value)
+        .map((added, index) => added[0])
+    );
+  }, [checkedUser]);
+
+  console.log('added', addUser);
+  console.log('checkedUser', checkedUser);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // setValidNext()
+
     const newCoupon = await axios.post(
       '/coupons/',
       {
-        // users: addUser,
-        // name: addCouponName,
-        // description: addCouponDes,
-        // discount_rate: addDiscount,
-        users: [6],
-        name: 'test coupon',
-        description: 'test coupondes',
-        discount_rate: 80,
+        users: addUser,
+        name: addCouponName,
+        description: addCouponDesc,
+        discount_rate: addDiscount,
       },
       {
         headers: { 'Content-Type': 'application/json' },
@@ -89,6 +106,7 @@ const AddNewCoupon = ({ meData, coupons }) => {
                   <Input
                     type='text'
                     placeholder='Coupon name'
+                    id='couponName'
                     onChange={handleAddNewCoupon}
                   />
                 </BoxSpan>
@@ -96,19 +114,28 @@ const AddNewCoupon = ({ meData, coupons }) => {
                   <Input
                     type='text'
                     placeholder='Coupon description'
+                    id='couponDesc'
                     onChange={handleAddNewCoupon}
                   />
                 </BoxSpan>
                 <BoxSpan>
                   <Input
-                    type='text'
+                    type='number'
                     placeholder='Discount rate %'
+                    id='couponRate'
                     onChange={handleAddNewCoupon}
                   />
                 </BoxSpan>
               </BoxLi>
             </BoxUl>
             <BoxBtn className='prev'>
+              {/* {!addCouponName || !addCouponDesc || !addDiscount ? (
+                <ButtonSmall disabled>Next</ButtonSmall>
+              ) : (
+                <ButtonSmall onClick={() => setIsNext(!isNext)}>
+                  Next
+                </ButtonSmall>
+              )} */}
               <ButtonSmall onClick={() => setIsNext(!isNext)}>Next</ButtonSmall>
             </BoxBtn>
           </Box>
@@ -123,6 +150,14 @@ const AddNewCoupon = ({ meData, coupons }) => {
                 {customers?.map((user) => {
                   return (
                     <BoxListLine key={user.pk}>
+                      <input
+                        type='checkbox'
+                        name='couponpUser'
+                        id='couponpUser'
+                        value={user.pk}
+                        onChange={(e) => handleAddNewUser(e)}
+                        checked={checkedUser[user?.pk] || ''}
+                      />
                       <p>{user.pk}</p>
                       <span>{user.username}</span>
                     </BoxListLine>
