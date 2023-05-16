@@ -25,6 +25,7 @@ const Pagination = ({
   const handleClick = (direction) => {
     if (direction === 'right') {
       setCurrentPage(currentPage + 1);
+      console.log('currentPage', currentPage);
       if (currentPage === pages.length) {
         setCurrentPage(currentPage);
       }
@@ -32,10 +33,11 @@ const Pagination = ({
         setStartNum(startNum + 5);
         setEndNum(endNum + 5);
       }
-    } else if (direction === 'left') {
+    } else if (direction === 'left' && currentPage > 1) {
       setCurrentPage(currentPage - 1);
+      // console.log('currentPage', currentPage);
       if (currentPage === 1) {
-        setCurrentPage(currentPage);
+        setCurrentPage(1);
       }
       if (currentPage === startNum + 1) {
         setStartNum(startNum - 5);
@@ -50,8 +52,8 @@ const Pagination = ({
         setEndNum(5);
       } else {
         setCurrentPage(pages.length);
-        setStartNum(-1 + 5 * (pages.length / 5));
-        setEndNum(4 + 5 * (pages.length / 5));
+        setStartNum(-4 + 5 * (pages.length / 5));
+        setEndNum(+1 + 5 * (pages.length / 5));
       }
     } else {
       setCurrentPage(1);
