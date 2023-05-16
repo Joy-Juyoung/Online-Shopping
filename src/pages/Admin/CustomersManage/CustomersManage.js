@@ -58,12 +58,6 @@ const CustomersManage = ({ meData }) => {
   const firstPostIndex = lastPostIndex - postsPerPage;
   const currentPosts = customers?.slice(firstPostIndex, lastPostIndex);
 
-  const test = () => {
-    currentPosts.filter((list) => {
-      console.log("pk",list.pk.toString())
-    })
-  }
-
   if (loading)
     return (
       <div>
@@ -72,8 +66,7 @@ const CustomersManage = ({ meData }) => {
     );
   return (
     <AdContainer>
-
-      <h1>Customers</h1>
+      <h1>Custoemrs</h1>
       <AdListTop>
         <AdListSearch>
           <input 
