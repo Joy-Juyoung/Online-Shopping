@@ -331,7 +331,7 @@ const ProductDetailPage = ({
                   <Skeleton 
                     variant="rect" 
                     width={450} 
-                    height={30}/>
+                    height={40}/>
                     ):(
                       <>
                         ${itemsDetail.price}
