@@ -92,6 +92,12 @@ export const AdTable = styled.table`
 export const AdTHead = styled.thead`
   text-align: left;
   border-bottom: 2px solid #afafaf;
+
+  /* coupon */
+  &.coupon {
+    text-align: center;
+    padding-left: 20px;
+  }
 `;
 
 export const AdTHeadeRow = styled.tr``;
@@ -106,11 +112,17 @@ export const AdTHeadCell = styled.th`
 export const AdTBody = styled.tbody`
   border-bottom: 0.5px solid #afafaf;
   height: 55px;
+
+  /* coupon */
+  &.coupon {
+    text-align: center;
+  }
 `;
 
 export const AdTBodyRow = styled.tr``;
 
 export const AdTBodyCell = styled.td`
+  /* itemList */
   &.check {
     padding-left: 15px;
     width: 5%;
@@ -143,6 +155,30 @@ export const AdTBodyCell = styled.td`
 
   &.createAt {
     width: 25%;
+  }
+
+  /* couponList */
+
+  &.discount {
+    width: 20%;
+    /* text-align: center; */
+  }
+
+  &.duration {
+  }
+
+  &.details {
+    cursor: pointer;
+
+    svg {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  /* order */
+  &.status {
+    cursor: pointer;
   }
 `;
 

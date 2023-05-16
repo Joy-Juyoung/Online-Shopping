@@ -35,7 +35,7 @@ const ItemList = ({ meData }) => {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    console.log('itemList', itemList.data);
+    // console.log('itemList', itemList.data);
     setProducts(itemList?.data);
     setLoading(false);
   };

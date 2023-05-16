@@ -7,6 +7,27 @@ export const PaginationContainer = styled.div`
   margin-top: 1.5rem;
 `;
 
+export const PagenationWrap = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const ArrowKey = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: #bbb;
+
+  &:hover {
+    color: #23282c;
+  }
+`;
+
+export const PagenationIndex = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 export const PageBtn = styled.div`
   width: 30px;
   height: 30px;

@@ -72,7 +72,8 @@ const CustomersManage = ({ meData }) => {
     );
   return (
     <AdContainer>
-      <h1 onClick={test}>Custoemrs</h1>
+
+      <h1>Customers</h1>
       <AdListTop>
         <AdListSearch>
           <input 
