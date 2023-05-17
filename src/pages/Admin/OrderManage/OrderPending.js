@@ -16,6 +16,20 @@ import {
   BodyImg,
   CheckInput,
 } from '../AdminCommonElements';
+import {
+  DeliveredCheck,
+  DeliveredInput,
+  DeliveredLabel,
+  DeliveredSlider,
+  DeliveredToggle,
+  ReviewBtn,
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from './OrderStyle';
 import axios from '../../../api/axios';
 import Loading from '../../../components/Loading';
 import Pagination from '../../../components/AdminComponents//Pagination';
@@ -24,12 +38,18 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import AdminModal from '../../../components/AdminComponents/AdminModal';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import MoreIcon from '@mui/icons-material/More';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const OrderPending = ({ meData }) => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [orders, setOrders] = useState();
   const [pendings, setPendings] = useState();
+  const [inprogress, setInprogress] = useState();
   const [modalShown, toggleModal] = useState(false);
+  const [orderById, setOrderById] = useState();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(8);
@@ -41,8 +61,6 @@ const OrderPending = ({ meData }) => {
     });
     console.log('orederList', orederList.data);
     setOrders(orederList?.data);
-    // const pendingOrder = orders?.filter((po) => po?.status === 'pending');
-    // setPendings(orders?.filter((po) => po?.status === 'pending'));
     setLoading(false);
   };
 
@@ -50,6 +68,7 @@ const OrderPending = ({ meData }) => {
     setLoading(true);
     getOrders();
     setPendings(orders?.filter((po) => po?.status === 'pending'));
+    setInprogress(orders?.filter((po) => po?.status === 'inprogress'));
   }, [meData]);
 
   const lastPostIndex = currentPage * postsPerPage;
@@ -59,6 +78,52 @@ const OrderPending = ({ meData }) => {
     ?.filter((po) => po?.status === 'pending')
     ?.slice(firstPostIndex, lastPostIndex);
 
+  const handleDetails = async (pk) => {
+    toggleModal(!modalShown);
+    console.log('pk', pk);
+
+    const orderedData = await axios.get(`/orders/${pk}`, {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+    console.log('orderedData', orderedData?.data);
+    setOrderById(orderedData?.data);
+  };
+
+  const handleCancel = async (pk) => {
+    // console.log('pk', pk);
+
+    const statusChange = await axios.put(
+      `/orders/${pk}`,
+      {
+        status: 'cancelled',
+      },
+      {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      }
+    );
+    console.log('statusChange', statusChange?.data);
+    navigate('/manage/orders/all');
+  };
+
+  const handleAccept = async (pk) => {
+    // console.log('pk', pk);
+
+    const statusChange = await axios.put(
+      `/orders/${pk}`,
+      {
+        status: 'inprogress',
+      },
+      {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      }
+    );
+    console.log('statusChange', statusChange?.data);
+    navigate('/manage/orders/all');
+  };
+
   if (loading)
     return (
       <div>
@@ -67,7 +132,7 @@ const OrderPending = ({ meData }) => {
     );
   return (
     <AdContainer>
-      <h1>Custoemrs</h1>
+      <h1>Manage Status</h1>
       <AdListTop>
         <AdListSearch>
           <input type='text' placeholder='Search' />
@@ -96,8 +161,18 @@ const OrderPending = ({ meData }) => {
                   <AdTBodyCell className='username'>
                     {pendingOrder?.user?.username}
                   </AdTBodyCell>
-                  <AdTBodyCell className='qty'>
+                  <AdTBodyCell
+                    className='qty'
+                    // style={{ display: 'flex' }}
+                  >
                     {pendingOrder?.total_products}
+                    <MoreIcon
+                      onClick={(e) => {
+                        handleDetails(pendingOrder?.pk);
+                      }}
+                      fontSize='13px'
+                      style={{ margin: '0 5px', cursor: 'pointer' }}
+                    />
                   </AdTBodyCell>
                   <AdTBodyCell className='totalPrice'>
                     {pendingOrder?.total_price}
@@ -107,11 +182,12 @@ const OrderPending = ({ meData }) => {
                   </AdTBodyCell>
                   <AdTBodyCell>{pendingOrder?.status}</AdTBodyCell>
                   <AdTBodyCell className='details'>
-                    <ArrowForwardIosIcon
-                      fontSize='15px'
-                      className='details'
-                      onClick={() => toggleModal(!modalShown)}
-                    />
+                    <button onClick={() => handleCancel(pendingOrder?.pk)}>
+                      Cancel
+                    </button>
+                    <button onClick={() => handleAccept(pendingOrder?.pk)}>
+                      Accept
+                    </button>
                   </AdTBodyCell>
                 </AdTBodyRow>
               </AdTBody>
@@ -134,7 +210,39 @@ const OrderPending = ({ meData }) => {
         close={() => {
           toggleModal(false);
         }}
-      ></AdminModal>
+      >
+        <Table>
+          <Thead>
+            <Tr>
+              <Th>Product Name</Th>
+              <Th>Product Dtail</Th>
+              <Th>Product Qty</Th>
+              <Th>Product Price</Th>
+            </Tr>
+          </Thead>
+          {orderById?.soldProduct?.map((sold) => {
+            return (
+              <Tbody key={sold?.pk}>
+                <Tr>
+                  <Td>
+                    <Link to={`/products/${sold?.product?.pk}`}>
+                      {sold?.product.name.toUpperCase()}
+                    </Link>
+                  </Td>
+                  {sold?.product_option === null ? (
+                    <Td>Free</Td>
+                  ) : (
+                    <Td>{sold?.product_option?.name}</Td>
+                  )}
+
+                  <Td>{sold?.number_of_product}</Td>
+                  <Td>${sold?.product?.price * sold?.number_of_product}</Td>
+                </Tr>
+              </Tbody>
+            );
+          })}
+        </Table>
+      </AdminModal>
     </AdContainer>
   );
 };
