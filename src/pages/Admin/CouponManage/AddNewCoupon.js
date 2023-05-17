@@ -21,6 +21,7 @@ const AddNewCoupon = ({ coupons }) => {
 
   const [checkedUser, setCheckedUser] = useState('');
   const [addUser, setAddUser] = useState([]);
+  const [addedUsers, setAddedUsers] = useState([]);
 
   const [addCouponName, setAddCouponName] = useState('');
   const [addCouponDesc, setAddCouponDesc] = useState('');
@@ -66,10 +67,32 @@ const AddNewCoupon = ({ coupons }) => {
         .filter(([key, value]) => value)
         .map((added, index) => added[0])
     );
+
+    // setAddedUsers([
+    //   ...addedUsers,
+    //   customers?.filter((cf) => {
+    //     if (cf?.pk === addUser) {
+    //       console.log('cf', cf);
+    //     }
+    //   }),
+    // ]);
   }, [checkedUser]);
 
-  console.log('added', addUser);
-  console.log('checkedUser', checkedUser);
+  useEffect(() => {
+    customers?.map((c) => {
+      if (addUser?.includes(c?.pk.toString())) {
+        if (!addedUsers?.includes(c?.username)) {
+          setAddedUsers([...addedUsers, c?.username]);
+        } else {
+          setAddedUsers([]);
+        }
+      }
+    });
+  }, [addUser]);
+
+  // console.log('test', test);
+  console.log('addUser', addUser);
+  console.log('addedUsers', addedUsers);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -163,6 +186,12 @@ const AddNewCoupon = ({ coupons }) => {
                     </BoxListLine>
                   );
                 })}
+              </BoxUserList>
+            </BoxUsers>
+            <BoxUsers>
+              <p>Added Users</p>
+              <BoxUserList>
+                <BoxListLine>{addedUsers}</BoxListLine>
               </BoxUserList>
             </BoxUsers>
             <BoxBtn className='next'>

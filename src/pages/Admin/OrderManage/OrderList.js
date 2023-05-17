@@ -24,11 +24,32 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import AdminModal from '../../../components/AdminComponents/AdminModal';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import {
+  DeliveredCheck,
+  DeliveredInput,
+  DeliveredLabel,
+  DeliveredSlider,
+  DeliveredToggle,
+  ReviewBtn,
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from './OrderStyle';
+import { Link } from 'react-router-dom';
+
+import MoreIcon from '@mui/icons-material/More';
 
 const OrderList = ({ meData }) => {
   const [loading, setLoading] = useState(false);
   const [orders, setOrders] = useState();
   const [modalShown, toggleModal] = useState(false);
+  const [isSwitch, setIsSwitch] = useState(false);
+
+  const [isSelected, setIsSelected] = useState(false);
+  const [selectedOption, setSelectedOption] = useState();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(8);
@@ -64,6 +85,41 @@ const OrderList = ({ meData }) => {
     });
     console.log('orderedData', orderedData?.data);
     setOrderById(orderedData?.data);
+  };
+
+  const handleSwitch = () => {
+    setIsSwitch(!isSwitch);
+  };
+
+  const statusOptionData = ['pending', 'inprogress', 'delivered', 'cancelled'];
+
+  const handelStatusOption = async (e, pk) => {
+    console.log(e.target.value);
+    setSelectedOption(e.target.value);
+  };
+  const handelUpdateOption = async (pk) => {
+    try {
+      const statusChange = await axios.put(
+        `/orders/${pk}`,
+        {
+          status: selectedOption,
+        },
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        }
+      );
+      console.log('statusChange', statusChange?.data);
+      window.location.reload('');
+    } catch (err) {
+      if (err.response?.status === 400) {
+        // console.log('400 error');
+        setLoading(false);
+      } else {
+        console.log('Error page or empty page');
+        setLoading(false);
+      }
+    }
   };
 
   if (loading)
@@ -114,7 +170,7 @@ const OrderList = ({ meData }) => {
                   </AdTBodyCell>
                   <AdTBodyCell className='status'>{order?.status}</AdTBodyCell>
                   <AdTBodyCell className='details'>
-                    <ArrowForwardIosIcon
+                    {/* <ArrowForwardIosIcon
                       fontSize='15px'
                       className='details'
                       // 모달오픈하는거
@@ -122,7 +178,14 @@ const OrderList = ({ meData }) => {
                       onClick={(e) => {
                         handleOrderDetails(order?.pk);
                       }}
-                    />
+                    /> */}
+                    <button
+                      onClick={(e) => {
+                        handleOrderDetails(order?.pk);
+                      }}
+                    >
+                      View
+                    </button>
                   </AdTBodyCell>
                 </AdTBodyRow>
               </AdTBody>
@@ -140,26 +203,101 @@ const OrderList = ({ meData }) => {
       </AdListBottom>
       <AdminModal
         className='coupon'
-        // 모달에
         shown={modalShown}
         close={() => {
           toggleModal(false);
         }}
       >
         <div>
-          {/* {orderById?.soldProduct?.map((sold) => {
-            return (
-              <div key={sold?.pk}>
-                {sold?.product?.map((sp) => {
-                  return (
-                    <ul key={sp?.pk}>
-                      <li style={{ color: '#000' }}>{sp?.name}</li>
-                    </ul>
-                  );
-                })}
-              </div>
-            );
-          })} */}
+          <Table>
+            <Thead>
+              <Tr>
+                <Th>Product Name</Th>
+                <Th>Product Dtail</Th>
+                <Th>Product Qty</Th>
+                <Th>Product Price</Th>
+              </Tr>
+            </Thead>
+            {orderById?.soldProduct?.map((sold) => {
+              return (
+                <Tbody key={sold?.pk}>
+                  <Tr>
+                    <Td>
+                      <Link to={`/products/${sold?.product?.pk}`}>
+                        {sold?.product.name.toUpperCase()}
+                      </Link>
+                    </Td>
+                    {sold?.product_option === null ? (
+                      <Td>Free</Td>
+                    ) : (
+                      <Td>{sold?.product_option?.name}</Td>
+                    )}
+
+                    <Td>{sold?.number_of_product}</Td>
+                    <Td>${sold?.product?.price * sold?.number_of_product}</Td>
+                  </Tr>
+                </Tbody>
+              );
+            })}
+          </Table>
+          <div>
+            <div style={{ display: 'flex' }}>
+              Order Status:
+              <select
+                name='status'
+                id='status'
+                onChange={handelStatusOption}
+                defaultValue={orderById?.status}
+              >
+                {statusOptionData?.map((optionData, index) => (
+                  <>
+                    {orderById?.status === optionData && (
+                      <option key={index} value={optionData || ''} selected>
+                        {optionData}
+                      </option>
+                    )}
+                    {orderById?.status !== optionData && (
+                      <option key={index} value={optionData || ''}>
+                        {optionData}
+                      </option>
+                    )}
+                  </>
+                ))}
+              </select>
+              <button onClick={() => handelUpdateOption(orderById?.pk)}>
+                Update
+              </button>
+            </div>
+          </div>
+
+          <DeliveredToggle>
+            Is this order delevered?
+            <DeliveredCheck>
+              <DeliveredInput
+                type='checkbox'
+                id='toggleSwitch'
+                onChange={handleSwitch}
+              />
+              {isSwitch === false ? (
+                // {orderById?.status === 'delivered' && isSwitch === false ? (
+                <DeliveredLabel htmlFor='toggleSwitch'>
+                  <div>Yes</div>
+                  <div style={{ opacity: '0' }}>No</div>
+                  <DeliveredSlider
+                    style={{ transform: 'translateX(0)' }}
+                  ></DeliveredSlider>
+                </DeliveredLabel>
+              ) : (
+                <DeliveredLabel htmlFor='toggleSwitch'>
+                  <div style={{ opacity: '0' }}>Yes</div>
+                  <div>No</div>
+                  <DeliveredSlider
+                    style={{ transform: 'translateX(-32px)' }}
+                  ></DeliveredSlider>
+                </DeliveredLabel>
+              )}
+            </DeliveredCheck>
+          </DeliveredToggle>
         </div>
       </AdminModal>
     </AdContainer>

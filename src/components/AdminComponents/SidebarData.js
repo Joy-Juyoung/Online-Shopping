@@ -75,12 +75,12 @@ export const SidebarData = [
     iconOpened: <ExpandLessIcon />,
     subNav: [
       {
-        title: 'All Orders',
+        title: 'Order History',
         path: '/manage/orders/all',
         icon: <ShoppingBagIcon />,
       },
       {
-        title: 'Pending Order',
+        title: 'Manage Status',
         path: '/manage/orders/pending',
         icon: <PendingIcon />,
       },
