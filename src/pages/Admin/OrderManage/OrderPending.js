@@ -51,6 +51,9 @@ const OrderPending = ({ meData }) => {
   const [modalShown, toggleModal] = useState(false);
   const [orderById, setOrderById] = useState();
 
+  const [searchedList, setSearchedList] = useState();
+  const [searchValue, setSearchValue] = useState();
+
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(8);
 
@@ -124,6 +127,32 @@ const OrderPending = ({ meData }) => {
     navigate('/manage/orders/all');
   };
 
+  const handleSearch = (e) => {
+    setSearchValue(e.target.value);
+  };
+  console.log('searchValue', searchValue);
+
+  useEffect(() => {
+    setSearchedList(
+      !searchValue
+        ? currentPosts
+        : currentPosts?.filter((search, index) => {
+            return (
+              search?.user?.name
+                .toLowerCase()
+                .indexOf(searchValue.toLowerCase()) === index ||
+              search?.status
+                .toLowerCase()
+                .indexOf(searchValue.toLowerCase()) === index ||
+              search?.pk
+                ?.toString()
+                .toLowerCase()
+                .indexOf(searchValue.toString().toLowerCase()) === index
+            );
+          })
+    );
+  }, [searchValue]);
+
   if (loading)
     return (
       <div>
@@ -135,7 +164,7 @@ const OrderPending = ({ meData }) => {
       <h1>Manage Status</h1>
       <AdListTop>
         <AdListSearch>
-          <input type='text' placeholder='Search' />
+          <input type='text' placeholder='Search' onChange={handleSearch} />
         </AdListSearch>
         <AdListUtils>{/* <ButtonSmall>Add</ButtonSmall> */}</AdListUtils>
       </AdListTop>
@@ -153,7 +182,8 @@ const OrderPending = ({ meData }) => {
               <AdTHeadCell className='details'></AdTHeadCell>
             </AdTHeadeRow>
           </AdTHead>
-          {currentPosts?.map((pendingOrder) => {
+          {/* {currentPosts?.map((pendingOrder) => { */}
+          {searchedList?.map((pendingOrder) => {
             return (
               <AdTBody key={pendingOrder?.pk}>
                 <AdTBodyRow>
@@ -211,37 +241,40 @@ const OrderPending = ({ meData }) => {
           toggleModal(false);
         }}
       >
-        <Table>
-          <Thead>
-            <Tr>
-              <Th>Product Name</Th>
-              <Th>Product Dtail</Th>
-              <Th>Product Qty</Th>
-              <Th>Product Price</Th>
-            </Tr>
-          </Thead>
-          {orderById?.soldProduct?.map((sold) => {
-            return (
-              <Tbody key={sold?.pk}>
-                <Tr>
-                  <Td>
-                    <Link to={`/products/${sold?.product?.pk}`}>
-                      {sold?.product.name.toUpperCase()}
-                    </Link>
-                  </Td>
-                  {sold?.product_option === null ? (
-                    <Td>Free</Td>
-                  ) : (
-                    <Td>{sold?.product_option?.name}</Td>
-                  )}
+        <div>
+          <h2>Order Details</h2>
+          <div>
+            <div>Order number: {orderById?.pk}</div>
+            <div>Order User: {orderById?.soldProduct[0]?.user?.username}</div>
+          </div>
+          <Table>
+            <Thead>
+              <Tr>
+                <Th>Product Name</Th>
+                <Th>Option</Th>
+                <Th>Qty</Th>
+                <Th>Price</Th>
+              </Tr>
+            </Thead>
+            {orderById?.soldProduct?.map((sold, index) => {
+              return (
+                <Tbody key={sold?.pk}>
+                  <Tr>
+                    <Td>{sold?.product.name.toUpperCase()}</Td>
+                    {sold?.product_option === null ? (
+                      <Td>Free</Td>
+                    ) : (
+                      <Td>{sold?.product_option?.name}</Td>
+                    )}
 
-                  <Td>{sold?.number_of_product}</Td>
-                  <Td>${sold?.product?.price * sold?.number_of_product}</Td>
-                </Tr>
-              </Tbody>
-            );
-          })}
-        </Table>
+                    <Td>{sold?.number_of_product}</Td>
+                    <Td>${sold?.product?.price * sold?.number_of_product}</Td>
+                  </Tr>
+                </Tbody>
+              );
+            })}
+          </Table>
+        </div>
       </AdminModal>
     </AdContainer>
   );

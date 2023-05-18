@@ -47,6 +47,9 @@ const CouponManage = ({ meData }) => {
   const [modalShown, toggleModal] = useState(false);
   const [addModalShown, toggleAddModal] = useState(false);
 
+  const [searchedList, setSearchedList] = useState();
+  const [searchValue, setSearchValue] = useState();
+
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(8);
 
@@ -82,6 +85,30 @@ const CouponManage = ({ meData }) => {
   const firstPostIndex = lastPostIndex - postsPerPage;
   const currentPosts = coupons?.slice(firstPostIndex, lastPostIndex);
 
+  const handleSearch = (e) => {
+    setSearchValue(e.target.value);
+  };
+  console.log('searchValue', searchValue);
+
+  useEffect(() => {
+    setSearchedList(
+      !searchValue
+        ? currentPosts
+        : currentPosts?.filter((search, index) => {
+            return (
+              search?.discount_rate
+                ?.toString()
+                .toLowerCase()
+                .indexOf(searchValue.toString().toLowerCase()) === index ||
+              search?.pk
+                ?.toString()
+                .toLowerCase()
+                .indexOf(searchValue.toString().toLowerCase()) === index
+            );
+          })
+    );
+  }, [searchValue]);
+
   if (loading)
     return (
       <div>
@@ -93,7 +120,7 @@ const CouponManage = ({ meData }) => {
       <h1>Coupons</h1>
       <AdListTop>
         <AdListSearch>
-          <input type='text' placeholder='Search' />
+          <input type='text' placeholder='Search' onChange={handleSearch} />
         </AdListSearch>
         <AdListUtils>
           <ButtonSmall
@@ -129,7 +156,8 @@ const CouponManage = ({ meData }) => {
           </AdTHead>
           {/* .sort((start, end) => start.created_at - end.created_at) */}
           {/* .reverse() */}
-          {currentPosts?.map((coupon) => {
+          {/* {currentPosts?.map((coupon) => { */}
+          {searchedList?.map((coupon) => {
             return (
               <AdTBody key={coupon?.pk} className='coupon'>
                 <AdTBodyRow>

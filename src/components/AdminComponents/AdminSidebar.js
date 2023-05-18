@@ -15,26 +15,23 @@ import {
 import { Link } from 'react-router-dom';
 import { SidebarData } from './SidebarData';
 // import './Navbar.css';
-import MenuIcon from '@mui/icons-material/Menu';
-import * as FaIcons from 'react-icons/fa';
-import * as AiIcons from 'react-icons/ai';
-import { IconContext } from 'react-icons';
-import AdminHeader from './AdminHeader';
+// import MenuIcon from '@mui/icons-material/Menu';
+// import * as FaIcons from 'react-icons/fa';
+// import * as AiIcons from 'react-icons/ai';
+// import { IconContext } from 'react-icons';
+// import AdminHeader from './AdminHeader';
 import AdminSubMenu from './AdminSubMenu';
 
 const AdminSidebar = ({ meData }) => {
-  const [sidebar, setSidebar] = useState(true);
+  // const [sidebar, setSidebar] = useState(true);
 
-  const showSidebar = () => setSidebar(!sidebar);
+  // const showSidebar = () => setSidebar(!sidebar);
 
   return (
     <SideContainer>
-      {/* <IconContext.Provider value={{ color: '#fff' }}> */}
       <SideNav>
-        {/* <SideHeader>Blank Closet</SideHeader> */}
         <SideShow>
           <SideLink>
-            {/* <FaIcons.FaBars onClick={showSidebar} /> */}
             <h1>Blank Closet</h1>
           </SideLink>
           <SideShowUl>
@@ -43,9 +40,7 @@ const AdminSidebar = ({ meData }) => {
             })}
           </SideShowUl>
         </SideShow>
-        {/* )} */}
       </SideNav>
-      {/* </IconContext.Provider> */}
     </SideContainer>
   );
 };

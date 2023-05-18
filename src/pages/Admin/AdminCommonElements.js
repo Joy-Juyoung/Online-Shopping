@@ -6,8 +6,8 @@ export const AdminGlobal = styled.div`
   margin: 0px auto;
   display: flex;
   align-items: center;
-  background: #cbccd3;
-  /* background: #ffe9c9; */
+  background: #f4f4f4;
+  /* background: #dbd7d0; */
 `;
 
 export const AdminBg = styled.div`
@@ -18,7 +18,7 @@ export const AdminBg = styled.div`
   margin: 0 auto;
   border-radius: 20px;
   overflow: hidden;
-  background: #f5f5f5;
+  background: #f7f7f7;
   box-shadow: 0 8px 15px 0 rgba(0, 0, 0, 0.3);
 `;
 
@@ -31,6 +31,7 @@ export const AdminContainer = styled.div`
   margin: 0px auto;
   padding: 25px 40px;
   color: #0a0f18;
+  background: #fffff7;
 `;
 
 //List Page
@@ -55,10 +56,11 @@ export const AdListSearch = styled.div`
   input {
     display: flex;
     align-items: center;
-    padding: 5px 15px;
+    padding: 10px 50px 10px 15px;
     border-radius: 10px;
     border: none;
     cursor: pointer;
+    background: #efeae1;
   }
 `;
 

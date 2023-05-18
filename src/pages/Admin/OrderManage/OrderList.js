@@ -51,6 +51,9 @@ const OrderList = ({ meData }) => {
   const [isSelected, setIsSelected] = useState(false);
   const [selectedOption, setSelectedOption] = useState();
 
+  const [searchedList, setSearchedList] = useState();
+  const [searchValue, setSearchValue] = useState();
+
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(8);
 
@@ -122,6 +125,33 @@ const OrderList = ({ meData }) => {
     }
   };
 
+  const handleSearch = (e) => {
+    setSearchValue(e.target.value);
+  };
+  console.log('searchValue', searchValue);
+
+  useEffect(() => {
+    setSearchedList(
+      !searchValue
+        ? currentPosts
+        : currentPosts?.filter((search, index) => {
+            return (
+              search?.user?.name
+                .toLowerCase()
+                .indexOf(searchValue.toLowerCase()) === index ||
+              search?.status
+                .toLowerCase()
+                .indexOf(searchValue.toLowerCase()) === index ||
+              search?.pk
+                ?.toString()
+                .toLowerCase()
+                .indexOf(searchValue.toString().toLowerCase()) === index
+            );
+          })
+    );
+  }, [searchValue]);
+  // console.log('searchedList', searchedList);
+
   if (loading)
     return (
       <div>
@@ -133,7 +163,7 @@ const OrderList = ({ meData }) => {
       <h1>Orders</h1>
       <AdListTop>
         <AdListSearch>
-          <input type='text' placeholder='Search' />
+          <input type='text' placeholder='Search' onChange={handleSearch} />
         </AdListSearch>
         <AdListUtils>{/* <ButtonSmall>Add</ButtonSmall> */}</AdListUtils>
       </AdListTop>
@@ -143,7 +173,7 @@ const OrderList = ({ meData }) => {
           <AdTHead>
             <AdTHeadeRow>
               <AdTHeadCell className='id'>ID</AdTHeadCell>
-              <AdTHeadCell className='username'>NAME</AdTHeadCell>
+              <AdTHeadCell className='username'>ORDER USER</AdTHeadCell>
               <AdTHeadCell className='qty'>QTY</AdTHeadCell>
               <AdTHeadCell className='totalPrice'>TOTAL PRCIE</AdTHeadCell>
               <AdTHeadCell className='date'>ORDER DATE</AdTHeadCell>
@@ -151,7 +181,8 @@ const OrderList = ({ meData }) => {
               <AdTHeadCell className='details'></AdTHeadCell>
             </AdTHeadeRow>
           </AdTHead>
-          {currentPosts?.map((order) => {
+          {/* {currentPosts?.map((order) => { */}
+          {searchedList?.map((order) => {
             return (
               <AdTBody key={order?.pk}>
                 <AdTBodyRow>
@@ -209,24 +240,25 @@ const OrderList = ({ meData }) => {
         }}
       >
         <div>
+          <h2>Order Details</h2>
+          <div>
+            <div>Order number: {orderById?.pk}</div>
+            <div>Order User: {orderById?.soldProduct[0]?.user?.username}</div>
+          </div>
           <Table>
             <Thead>
               <Tr>
                 <Th>Product Name</Th>
-                <Th>Product Dtail</Th>
-                <Th>Product Qty</Th>
-                <Th>Product Price</Th>
+                <Th>Option</Th>
+                <Th>Qty</Th>
+                <Th>Price</Th>
               </Tr>
             </Thead>
-            {orderById?.soldProduct?.map((sold) => {
+            {orderById?.soldProduct?.map((sold, index) => {
               return (
                 <Tbody key={sold?.pk}>
                   <Tr>
-                    <Td>
-                      <Link to={`/products/${sold?.product?.pk}`}>
-                        {sold?.product.name.toUpperCase()}
-                      </Link>
-                    </Td>
+                    <Td>{sold?.product.name.toUpperCase()}</Td>
                     {sold?.product_option === null ? (
                       <Td>Free</Td>
                     ) : (
@@ -270,7 +302,7 @@ const OrderList = ({ meData }) => {
             </div>
           </div>
 
-          <DeliveredToggle>
+          {/* <DeliveredToggle>
             Is this order delevered?
             <DeliveredCheck>
               <DeliveredInput
@@ -279,7 +311,6 @@ const OrderList = ({ meData }) => {
                 onChange={handleSwitch}
               />
               {isSwitch === false ? (
-                // {orderById?.status === 'delivered' && isSwitch === false ? (
                 <DeliveredLabel htmlFor='toggleSwitch'>
                   <div>Yes</div>
                   <div style={{ opacity: '0' }}>No</div>
@@ -297,7 +328,7 @@ const OrderList = ({ meData }) => {
                 </DeliveredLabel>
               )}
             </DeliveredCheck>
-          </DeliveredToggle>
+          </DeliveredToggle> */}
         </div>
       </AdminModal>
     </AdContainer>

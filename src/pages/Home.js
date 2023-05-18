@@ -139,7 +139,7 @@ const Home = () => {
                   exact={true}
                 />
                 <Route
-                  path='/manage/items/:id/review'
+                  path='/manage/items/reviews'
                   element={<ItemReviews />}
                   exact={true}
                 />
