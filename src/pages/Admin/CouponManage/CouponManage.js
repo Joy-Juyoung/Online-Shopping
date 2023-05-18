@@ -99,15 +99,15 @@ const CouponManage = ({ meData }) => {
               search?.discount_rate
                 ?.toString()
                 .toLowerCase()
-                .indexOf(searchValue.toString().toLowerCase()) === index ||
+                .includes(searchValue.toString().toLowerCase()) ||
               search?.pk
                 ?.toString()
                 .toLowerCase()
-                .indexOf(searchValue.toString().toLowerCase()) === index
+                .includes(searchValue.toString().toLowerCase())
             );
           })
     );
-  }, [searchValue]);
+  }, [currentPosts, searchValue]);
 
   if (loading)
     return (
@@ -156,8 +156,8 @@ const CouponManage = ({ meData }) => {
           </AdTHead>
           {/* .sort((start, end) => start.created_at - end.created_at) */}
           {/* .reverse() */}
-          {currentPosts?.map((coupon) => {
-            // {searchedList?.map((coupon) => {
+          {/* {currentPosts?.map((coupon) => { */}
+          {searchedList?.map((coupon) => {
             return (
               <AdTBody key={coupon?.pk} className='coupon'>
                 <AdTBodyRow>
