@@ -138,20 +138,20 @@ const OrderPending = ({ meData }) => {
         ? currentPosts
         : currentPosts?.filter((search, index) => {
             return (
-              search?.user?.name
+              search?.user?.username
                 .toLowerCase()
-                .indexOf(searchValue.toLowerCase()) === index ||
+                .includes(searchValue.toLowerCase()) ||
               search?.status
                 .toLowerCase()
-                .indexOf(searchValue.toLowerCase()) === index ||
+                .includes(searchValue.toLowerCase()) ||
               search?.pk
                 ?.toString()
                 .toLowerCase()
-                .indexOf(searchValue.toString().toLowerCase()) === index
+                .includes(searchValue.toString().toLowerCase())
             );
           })
     );
-  }, [searchValue]);
+  }, [currentPosts, searchValue]);
 
   if (loading)
     return (
@@ -182,8 +182,8 @@ const OrderPending = ({ meData }) => {
               <AdTHeadCell className='details'></AdTHeadCell>
             </AdTHeadeRow>
           </AdTHead>
-          {currentPosts?.map((pendingOrder) => {
-            // {searchedList?.map((pendingOrder) => {
+          {/* {currentPosts?.map((pendingOrder) => { */}
+          {searchedList?.map((pendingOrder) => {
             return (
               <AdTBody key={pendingOrder?.pk}>
                 <AdTBodyRow>

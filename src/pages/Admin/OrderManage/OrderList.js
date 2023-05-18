@@ -41,6 +41,7 @@ import {
 import { Link } from 'react-router-dom';
 
 import MoreIcon from '@mui/icons-material/More';
+import { Filter } from '@material-ui/icons';
 
 const OrderList = ({ meData }) => {
   const [loading, setLoading] = useState(false);
@@ -136,20 +137,20 @@ const OrderList = ({ meData }) => {
         ? currentPosts
         : currentPosts?.filter((search, index) => {
             return (
-              search?.user?.name
+              search?.user?.username
                 .toLowerCase()
-                .indexOf(searchValue.toLowerCase()) === index ||
+                .includes(searchValue.toLowerCase()) ||
               search?.status
                 .toLowerCase()
-                .indexOf(searchValue.toLowerCase()) === index ||
+                .includes(searchValue.toLowerCase()) ||
               search?.pk
                 ?.toString()
                 .toLowerCase()
-                .indexOf(searchValue.toString().toLowerCase()) === index
+                .includes(searchValue.toString().toLowerCase())
             );
           })
     );
-  }, [searchValue]);
+  }, [currentPosts, searchValue]);
   console.log('searchedList', searchedList);
 
   if (loading)
@@ -163,9 +164,13 @@ const OrderList = ({ meData }) => {
       <h1>Orders</h1>
       <AdListTop>
         <AdListSearch>
-          <input type='text' placeholder='Search' onChange={handleSearch} />
+          <input
+            type='text'
+            placeholder='Search'
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
         </AdListSearch>
-        <AdListUtils>{/* <ButtonSmall>Add</ButtonSmall> */}</AdListUtils>
+        <AdListUtils></AdListUtils>
       </AdListTop>
 
       <AdListMid>
@@ -181,8 +186,9 @@ const OrderList = ({ meData }) => {
               <AdTHeadCell className='details'></AdTHeadCell>
             </AdTHeadeRow>
           </AdTHead>
-          {currentPosts?.map((order) => {
-            // {searchedList?.map((order) => {
+          {/* ?.filter((list) => '' || list?.pk.toString().includes(searchValue)) */}
+          {/* {currentPosts?.map((order) => { */}
+          {searchedList?.map((order) => {
             return (
               <AdTBody key={order?.pk}>
                 <AdTBodyRow>
