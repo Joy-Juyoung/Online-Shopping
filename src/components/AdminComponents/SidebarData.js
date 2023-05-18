@@ -62,7 +62,7 @@ export const SidebarData = [
       },
       {
         title: 'Product Reviews',
-        path: '/manage/items/:id/review',
+        path: '/manage/items/reviews',
         icon: <RateReviewIcon />,
       },
     ],

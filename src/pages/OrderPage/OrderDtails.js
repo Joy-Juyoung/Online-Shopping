@@ -133,7 +133,7 @@ const OrderDtails = ({ meData }) => {
                 <Thead>
                   <Tr>
                     <Th>Product Name</Th>
-                    <Th>Product Dtail</Th>
+                    <Th>Product Option</Th>
                     <Th>Product Qty</Th>
                     <Th>Product Price</Th>
                     <Th></Th>

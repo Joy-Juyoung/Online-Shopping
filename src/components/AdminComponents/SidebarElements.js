@@ -16,7 +16,8 @@ export const SideNav = styled.div`
 
 export const SideShow = styled.div`
   /* background-color: #16171b; */
-  background: #23282c;
+  /* background: #23282c; */
+  background: #21201e;
   width: 250px;
   height: 80vh;
   display: flex;
@@ -90,10 +91,12 @@ export const AdLeftIcon = styled.div`
 export const AdRightSide = styled.div`
   display: flex;
   align-items: center;
-  background: #6f70ff;
-  /* background: #f78f2e; */
+  /* background: #6f70ff; */
+  background: #ffae00;
   /* background-color: #16171b; */
-  color: #f5f5f5;
+  /* color: #f5f5f5; */
+  color: #21201e;
+  font-weight: 600;
   border-radius: 10px;
   padding: 10px 15px;
 `;
@@ -109,7 +112,8 @@ export const AdPermLink = styled(Link)`
   align-items: center;
   text-decoration: none;
   margin-left: 10px;
-  color: #f5f5f5;
+  color: #21201e;
+  /* font-weight: 900; */
   cursor: pointer;
   /* & :hover {
     color: lightgray;
