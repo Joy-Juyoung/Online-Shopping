@@ -150,7 +150,7 @@ const OrderList = ({ meData }) => {
           })
     );
   }, [searchValue]);
-  // console.log('searchedList', searchedList);
+  console.log('searchedList', searchedList);
 
   if (loading)
     return (
@@ -181,8 +181,8 @@ const OrderList = ({ meData }) => {
               <AdTHeadCell className='details'></AdTHeadCell>
             </AdTHeadeRow>
           </AdTHead>
-          {/* {currentPosts?.map((order) => { */}
-          {searchedList?.map((order) => {
+          {currentPosts?.map((order) => {
+            // {searchedList?.map((order) => {
             return (
               <AdTBody key={order?.pk}>
                 <AdTBodyRow>

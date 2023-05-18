@@ -156,8 +156,8 @@ const CouponManage = ({ meData }) => {
           </AdTHead>
           {/* .sort((start, end) => start.created_at - end.created_at) */}
           {/* .reverse() */}
-          {/* {currentPosts?.map((coupon) => { */}
-          {searchedList?.map((coupon) => {
+          {currentPosts?.map((coupon) => {
+            // {searchedList?.map((coupon) => {
             return (
               <AdTBody key={coupon?.pk} className='coupon'>
                 <AdTBodyRow>

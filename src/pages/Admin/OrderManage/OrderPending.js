@@ -182,8 +182,8 @@ const OrderPending = ({ meData }) => {
               <AdTHeadCell className='details'></AdTHeadCell>
             </AdTHeadeRow>
           </AdTHead>
-          {/* {currentPosts?.map((pendingOrder) => { */}
-          {searchedList?.map((pendingOrder) => {
+          {currentPosts?.map((pendingOrder) => {
+            // {searchedList?.map((pendingOrder) => {
             return (
               <AdTBody key={pendingOrder?.pk}>
                 <AdTBodyRow>

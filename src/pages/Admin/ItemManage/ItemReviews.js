@@ -33,6 +33,7 @@ import {
   AdReviewListWrap,
   AdReviewItemInfo,
   AdReviewMidSide,
+  AdReviewHeader,
 } from './reviewStyle';
 import axios from '../../../api/axios';
 import Loading from '../../../components/Loading';
@@ -46,10 +47,11 @@ const ItemReviews = ({ meData }) => {
   const [loading, setLoading] = useState(false);
   const [reviews, setReviews] = useState();
   const [newList, setNewList] = useState();
-  const [reviewByProduct, setReviewByProduct] = useState();
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(8);
+  const [searchedProductList, setSearchedProductList] = useState();
+  const [searchProductValue, setSearchProductValue] = useState();
+  const [searchedReviewList, setSearchedReviewList] = useState();
+  const [searchReviewValue, setSearchReviewValue] = useState();
 
   const getReviews = async () => {
     const reviewList = await axios.get('/reviews/', {
@@ -67,35 +69,11 @@ const ItemReviews = ({ meData }) => {
     getReviews();
   }, []);
 
-  // const lastPostIndex = currentPage * postsPerPage;
-  // const firstPostIndex = lastPostIndex - postsPerPage;
-  // const currentPosts = reviews?.slice(firstPostIndex, lastPostIndex);
-
-  // useEffect(() => {
-  //   reviews?.map((rv, index) => {
-  //     if (newList.length >= reviews?.length) {
-  //       setNewList(newList);
-  //     } else {
-  //       newList.push({
-  //         product_pk: rv?.product,
-  //         prodct_name: rv?.Product_Name,
-  //       });
-  //     }
-  //   });
-  // setNewList({
-  //   ...newList,
-  //   [index]: {
-  //     product_pk: rv?.product,
-  //     prodct_name: rv?.Product_Name,
-  //   },
-  // });
-  // }, [reviews]);
-
   let uniqueList = reviews?.filter(
     (rv, index) => rv?.Product_Name?.indexOf(rv?.Product_Name) !== index
   );
 
-  // console.log('uniqueList', uniqueList);
+  console.log('uniqueList', uniqueList);
 
   const handleViewReviews = async (pk) => {
     console.log('pk', pk);
@@ -108,7 +86,67 @@ const ItemReviews = ({ meData }) => {
     setNewList(productReview?.data);
     // setReviewByProduct(newList?.reviews?.map((nrv) => nrv));
   };
-  // console.log('newList', newList);
+  console.log('newList', newList);
+
+  const handleProductSearch = (e) => {
+    setSearchProductValue(e.target.value);
+  };
+  console.log('searchProductValue', searchProductValue);
+
+  useEffect(() => {
+    setSearchedProductList(
+      !searchProductValue
+        ? uniqueList
+        : uniqueList.filter((search, index) => {
+            return (
+              search?.Product_Name?.toString()
+                .toLowerCase()
+                .indexOf(searchProductValue.toString().toLowerCase()) ===
+                index ||
+              search?.product
+                ?.toString()
+                .toLowerCase()
+                .indexOf(searchProductValue.toString().toLowerCase()) === index
+            );
+          })
+    );
+  }, [searchProductValue]);
+
+  const handleReviewSearch = (e) => {
+    setSearchProductValue(e.target.value);
+  };
+  console.log('searchProductValue', searchProductValue);
+
+  useEffect(() => {
+    setSearchedReviewList(
+      !searchProductValue
+        ? newList?.reviews
+        : newList?.reviews?.filter((search, index) => {
+            return (
+              search?.Product_Name?.toString()
+                .toLowerCase()
+                .indexOf(searchProductValue.toString().toLowerCase()) ===
+                index ||
+              search?.user?.username
+                .toString()
+                .toLowerCase()
+                .indexOf(searchProductValue.toString().toLowerCase()) ===
+                index ||
+              search?.payload
+                ?.toString()
+                .toLowerCase()
+                .indexOf(searchProductValue.toString().toLowerCase()) ===
+                index ||
+              search?.product
+                ?.toString()
+                .toLowerCase()
+                .indexOf(searchProductValue.toString().toLowerCase()) === index
+            );
+          })
+    );
+  }, [searchProductValue]);
+
+  const handleViewReview = (pk) => {};
 
   if (loading)
     return (
@@ -121,7 +159,14 @@ const ItemReviews = ({ meData }) => {
       <h1>Product Reviews</h1>
       <AdReviewWrap>
         <AdReviewLeftSide>
-          <h2>Select Product</h2>
+          <AdReviewHeader>
+            <h2>Select Product</h2>
+            <input
+              type='text'
+              placeholder='Search'
+              onChange={handleProductSearch}
+            />
+          </AdReviewHeader>
           <AdReviewItemList>
             <AdReviewListWrap>
               <AdReviewTable>
@@ -135,6 +180,7 @@ const ItemReviews = ({ meData }) => {
                 </AdReviewThead>
                 <AdReviewTbody>
                   {uniqueList?.map((un, index) => {
+                    // {searchedProductList?.map((un, index) => {
                     return (
                       <AdReviewBodyTr
                         key={index}
@@ -158,7 +204,14 @@ const ItemReviews = ({ meData }) => {
           <KeyboardDoubleArrowRightIcon />
         </AdReviewMidSide>
         <AdReviewRightSide>
-          <h2>Reviews</h2>
+          <AdReviewHeader>
+            <h2>Reviews</h2>
+            <input
+              type='text'
+              placeholder='Search'
+              onChange={handleReviewSearch}
+            />
+          </AdReviewHeader>
           <AdReviewItemList>
             {newList === undefined ? (
               <AdReviewEmpty>
@@ -188,10 +241,12 @@ const ItemReviews = ({ meData }) => {
                       <AdReviewTh>RATING</AdReviewTh>
                       <AdReviewTh>PAYLOAD</AdReviewTh>
                       <AdReviewTh>UPDATEAT</AdReviewTh>
+                      <AdReviewTh></AdReviewTh>
                     </AdReviewHeadTr>
                   </AdReviewThead>
                   <AdReviewTbody>
                     {newList?.reviews?.map((nrv, index) => {
+                      // {searchedReviewList.map((nrv, index) => {
                       return (
                         <AdReviewBodyTr key={index}>
                           <AdReviewTd
@@ -201,11 +256,17 @@ const ItemReviews = ({ meData }) => {
                           </AdReviewTd>
                           <AdReviewTd>{nrv?.user?.username}</AdReviewTd>
                           <AdReviewTd>{nrv?.rating}</AdReviewTd>
-                          <AdReviewTd style={{ width: '40%' }}>
+                          <AdReviewTd style={{ width: '35%' }}>
                             {nrv?.payload}
                           </AdReviewTd>
                           <AdReviewTd>
                             {new Date(nrv?.updated_at).toLocaleDateString()}
+                          </AdReviewTd>
+                          <AdReviewTd>
+                            <button onClick={() => handleViewReview(nrv?.pk)}>
+                              View
+                            </button>
+                            {/* View modal -> review more and delete */}
                           </AdReviewTd>
                         </AdReviewBodyTr>
                       );

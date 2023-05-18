@@ -16,6 +16,20 @@ export const AdReviewWrap = styled.div`
     padding: 10px;
   }
 `;
+export const AdReviewHeader = styled.div`
+  display: flex;
+  align-items: center;
+
+  input {
+    display: flex;
+    align-items: center;
+    padding: 5px 15px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background: #f3f3eb;
+  }
+`;
 
 export const AdReviewLeftSide = styled.div`
   flex: 1;
@@ -25,6 +39,7 @@ export const AdReviewLeftSide = styled.div`
 export const AdReviewItemList = styled.div`
   /* border: 1px solid #000; */
   border-radius: 10px;
+  margin-top: 10px;
   height: 58vh;
   padding: 15px;
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
