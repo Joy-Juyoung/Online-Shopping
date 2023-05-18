@@ -53,7 +53,7 @@ import AddBalance from '../AddBalance';
 
 const CARTS_URL = '/carts/';
 
-const Header = ({ meData, catData }) => {
+const Header = ({ meData, catData, setIsAdminBoard, isAdminBoard }) => {
   const navigate = useNavigate();
   const [me, setMe] = useState(null);
   const [logout, setLogout] = useState();
@@ -279,6 +279,8 @@ const Header = ({ meData, catData }) => {
                           <DropUser
                             meData={meData}
                             shown={() => toggleBalance(!balanceShown)}
+                            setIsAdminBoard={setIsAdminBoard}
+                            isAdminBoard={isAdminBoard}
                           />
                         )}
                         <Modal

@@ -150,7 +150,7 @@ const OrderList = ({ meData }) => {
             );
           })
     );
-  }, [currentPosts, searchValue]);
+  }, []);
   console.log('searchedList', searchedList);
 
   if (loading)
@@ -187,8 +187,8 @@ const OrderList = ({ meData }) => {
             </AdTHeadeRow>
           </AdTHead>
           {/* ?.filter((list) => '' || list?.pk.toString().includes(searchValue)) */}
-          {/* {currentPosts?.map((order) => { */}
-          {searchedList?.map((order) => {
+          {currentPosts?.map((order) => {
+            // {searchedList?.map((order) => {
             return (
               <AdTBody key={order?.pk}>
                 <AdTBodyRow>

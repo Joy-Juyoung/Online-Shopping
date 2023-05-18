@@ -101,12 +101,11 @@ const ItemReviews = ({ meData }) => {
             return (
               search?.Product_Name?.toString()
                 .toLowerCase()
-                .indexOf(searchProductValue.toString().toLowerCase()) ===
-                index ||
+                .includes(searchProductValue.toString().toLowerCase()) ||
               search?.product
                 ?.toString()
                 .toLowerCase()
-                .indexOf(searchProductValue.toString().toLowerCase()) === index
+                .includes(searchProductValue.toString().toLowerCase())
             );
           })
     );
@@ -125,22 +124,19 @@ const ItemReviews = ({ meData }) => {
             return (
               search?.Product_Name?.toString()
                 .toLowerCase()
-                .indexOf(searchProductValue.toString().toLowerCase()) ===
-                index ||
+                .includes(searchProductValue.toString().toLowerCase()) ||
               search?.user?.username
                 .toString()
                 .toLowerCase()
-                .indexOf(searchProductValue.toString().toLowerCase()) ===
-                index ||
+                .includes(searchProductValue.toString().toLowerCase()) ||
               search?.payload
                 ?.toString()
                 .toLowerCase()
-                .indexOf(searchProductValue.toString().toLowerCase()) ===
-                index ||
+                .includes(searchProductValue.toString().toLowerCase()) ||
               search?.product
                 ?.toString()
                 .toLowerCase()
-                .indexOf(searchProductValue.toString().toLowerCase()) === index
+                .includes(searchProductValue.toString().toLowerCase())
             );
           })
     );
@@ -180,7 +176,9 @@ const ItemReviews = ({ meData }) => {
                 </AdReviewThead>
                 <AdReviewTbody>
                   {uniqueList?.map((un, index) => {
-                    // {searchedProductList?.map((un, index) => {
+                    {
+                      /* {searchedProductList?.map((un, index) => { */
+                    }
                     return (
                       <AdReviewBodyTr
                         key={index}
@@ -246,7 +244,7 @@ const ItemReviews = ({ meData }) => {
                   </AdReviewThead>
                   <AdReviewTbody>
                     {newList?.reviews?.map((nrv, index) => {
-                      // {searchedReviewList.map((nrv, index) => {
+                      // {searchedReviewList?.map((nrv, index) => {
                       return (
                         <AdReviewBodyTr key={index}>
                           <AdReviewTd

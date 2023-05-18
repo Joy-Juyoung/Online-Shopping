@@ -22,7 +22,7 @@ import {
   AdSide,
 } from './SidebarElements';
 
-const AdminHeader = ({ meData }) => {
+const AdminHeader = ({ meData, setIsAdminBoard, isAdminBoard }) => {
   const navigate = useNavigate();
 
   const [me, setMe] = useState(null);
@@ -36,6 +36,7 @@ const AdminHeader = ({ meData }) => {
 
   const handleLogout = async () => {
     setLoading(true);
+
     const loggedOut = await axios.post(
       '/users/log-out',
       {
@@ -49,6 +50,8 @@ const AdminHeader = ({ meData }) => {
     console.log('Header logout Me', loggedOut?.data);
     setLogout(loggedOut?.data);
     setMe('');
+    // setIsAdminBoard(!isAdminBoard);
+    setIsAdminBoard(false);
     navigate('/');
     window.location.reload('/');
     setLoading(false);
@@ -67,6 +70,11 @@ const AdminHeader = ({ meData }) => {
         <h1>Dashboard</h1>
       </AdLeftSide> */}
       <AdRightSide>
+        <AdRightIcon>
+          <Link to='/' onClick={() => setIsAdminBoard(false)}>
+            Go to User Mode
+          </Link>
+        </AdRightIcon>
         <AdRightIcon>{meData?.username.toUpperCase()}</AdRightIcon>
         <AdRightIcon>
           <AdPermLink>

@@ -19,17 +19,17 @@ import PendingIcon from '@mui/icons-material/Pending';
 export const SidebarData = [
   {
     title: 'Dashboard',
-    path: '/',
+    path: '/admin',
     icon: <HomeIcon />,
   },
   {
     title: 'Customers',
-    path: '/manage/customers',
+    path: '/admin/customers',
     icon: <PeopleIcon />,
   },
   {
     title: 'Categories',
-    path: '/manage/categories',
+    path: '/admin/categories',
     // path: '',
     icon: <CategoryIcon />,
     iconClosed: <ExpandMoreIcon />,
@@ -37,19 +37,19 @@ export const SidebarData = [
     subNav: [
       {
         title: 'Categories',
-        path: '/manage/categories/head',
+        path: '/admin/categories/head',
         icon: <GroupWorkIcon />,
       },
       {
         title: 'Sub Categories',
-        path: '/manage/categories/:headName/sub',
+        path: '/admin/categories/:headName/sub',
         icon: <WorkspacesIcon />,
       },
     ],
   },
   {
     title: 'Products',
-    path: '/manage/items',
+    path: '/admin/items',
     // path: '',
     icon: <ShoppingCartIcon />,
     iconClosed: <ExpandMoreIcon />,
@@ -57,43 +57,43 @@ export const SidebarData = [
     subNav: [
       {
         title: 'All Products',
-        path: '/manage/items/all',
+        path: '/admin/items/all',
         icon: <ReceiptIcon />,
       },
       {
         title: 'Product Reviews',
-        path: '/manage/items/reviews',
+        path: '/admin/items/reviews',
         icon: <RateReviewIcon />,
       },
     ],
   },
   {
     title: 'Orders',
-    path: '/manage/orders',
+    path: '/admin/orders',
     icon: <MonetizationOnIcon />,
     iconClosed: <ExpandMoreIcon />,
     iconOpened: <ExpandLessIcon />,
     subNav: [
       {
         title: 'Order History',
-        path: '/manage/orders/all',
+        path: '/admin/orders/all',
         icon: <ShoppingBagIcon />,
       },
       {
         title: 'Manage Status',
-        path: '/manage/orders/pending',
+        path: '/admin/orders/pending',
         icon: <PendingIcon />,
       },
     ],
   },
   {
     title: 'Coupons',
-    path: '/manage/coupons',
+    path: '/admin/coupons',
     icon: <RedeemIcon />,
   },
   {
     title: 'Feedbacks',
-    path: '/manage/feedbacks',
+    path: '/admin/feedbacks',
     icon: <QuestionAnswerIcon />,
   },
 ];
