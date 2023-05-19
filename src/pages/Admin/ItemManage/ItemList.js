@@ -26,7 +26,8 @@ import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 const ItemList = ({ meData }) => {
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState();
-
+  const [searchedList, setSearchedList] = useState();
+  const [searchValue, setSearchValue] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(8);
 
@@ -49,6 +50,33 @@ const ItemList = ({ meData }) => {
   const firstPostIndex = lastPostIndex - postsPerPage;
   const currentPosts = products?.slice(firstPostIndex, lastPostIndex);
 
+  useEffect(() => {
+    setSearchedList(
+      !searchValue
+        ? currentPosts
+        : currentPosts?.filter((search, index) => {
+            return (
+              search?.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+              search?.kind?.name
+                .toLowerCase()
+                .includes(searchValue.toLowerCase()) ||
+              search?.pk
+                ?.toString()
+                .toLowerCase()
+                .includes(searchValue.toString().toLowerCase()) ||
+              search?.price
+                ?.toString()
+                .toLowerCase()
+                .includes(searchValue.toString().toLowerCase()) ||
+              search?.created_at
+                ?.toString()
+                .toLowerCase()
+                .includes(searchValue.toString().toLowerCase())
+            );
+          })
+    );
+  }, [products, searchValue]);
+
   if (loading)
     return (
       <div>
@@ -60,7 +88,11 @@ const ItemList = ({ meData }) => {
       <h1>All Products</h1>
       <AdListTop>
         <AdListSearch>
-          <input type='text' placeholder='Search' />
+          <input
+            type='text'
+            placeholder='Search'
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
         </AdListSearch>
         <AdListUtils>
           <ButtonSmall>Add</ButtonSmall>
@@ -85,6 +117,7 @@ const ItemList = ({ meData }) => {
               <AdTHeadCell className='createAt'>CREATE AT</AdTHeadCell>
             </AdTHeadeRow>
           </AdTHead>
+          {/* {searchedList?.map((product) => {  */}
           {currentPosts?.map((product) => {
             return (
               <AdTBody key={product?.pk}>
