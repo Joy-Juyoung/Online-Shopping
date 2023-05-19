@@ -41,7 +41,7 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 const LOGIN_URL = '/users/log-in';
 
-const LoginPage = ({ meData }) => {
+const LoginPage = ({ meData, setIsAdminBoard, isAdminBoard }) => {
   const userRef = useRef();
   const errRef = useRef();
   const navigate = useNavigate();
@@ -71,7 +71,7 @@ const LoginPage = ({ meData }) => {
   };
 
   useEffect(() => {
-    userRef.current.focus();
+    userRef.current?.focus();
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
 
@@ -114,12 +114,13 @@ const LoginPage = ({ meData }) => {
       }
     );
     console.log('loginData', loginData?.data);
+
     if (loginData.data.error) {
       setLoading(false);
       setErrMsg(
         'Login faild! Please recheck the username and password and try again'
       );
-      errRef.current.focus();
+      errRef.current?.focus();
     } else {
       setUsername(username);
       setPwd(pwd);
@@ -127,6 +128,7 @@ const LoginPage = ({ meData }) => {
       // if (meData?.type === 'admin_user') {
       //   navigate('/admin');
       // } else {
+      setIsAdminBoard(false);
       navigate('/');
       window.location.reload('/');
       // }

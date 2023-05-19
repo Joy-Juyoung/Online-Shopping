@@ -42,6 +42,8 @@ import { ButtonSmall } from '../../../components/ButtonElements';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import QueueIcon from '@mui/icons-material/Queue';
+import ReplyIcon from '@mui/icons-material/Reply';
 
 const ItemReviews = ({ meData }) => {
   const [loading, setLoading] = useState(false);
@@ -101,12 +103,11 @@ const ItemReviews = ({ meData }) => {
             return (
               search?.Product_Name?.toString()
                 .toLowerCase()
-                .indexOf(searchProductValue.toString().toLowerCase()) ===
-                index ||
+                .includes(searchProductValue.toString().toLowerCase()) ||
               search?.product
                 ?.toString()
                 .toLowerCase()
-                .indexOf(searchProductValue.toString().toLowerCase()) === index
+                .includes(searchProductValue.toString().toLowerCase())
             );
           })
     );
@@ -125,22 +126,19 @@ const ItemReviews = ({ meData }) => {
             return (
               search?.Product_Name?.toString()
                 .toLowerCase()
-                .indexOf(searchProductValue.toString().toLowerCase()) ===
-                index ||
+                .includes(searchProductValue.toString().toLowerCase()) ||
               search?.user?.username
                 .toString()
                 .toLowerCase()
-                .indexOf(searchProductValue.toString().toLowerCase()) ===
-                index ||
+                .includes(searchProductValue.toString().toLowerCase()) ||
               search?.payload
                 ?.toString()
                 .toLowerCase()
-                .indexOf(searchProductValue.toString().toLowerCase()) ===
-                index ||
+                .includes(searchProductValue.toString().toLowerCase()) ||
               search?.product
                 ?.toString()
                 .toLowerCase()
-                .indexOf(searchProductValue.toString().toLowerCase()) === index
+                .includes(searchProductValue.toString().toLowerCase())
             );
           })
     );
@@ -180,7 +178,9 @@ const ItemReviews = ({ meData }) => {
                 </AdReviewThead>
                 <AdReviewTbody>
                   {uniqueList?.map((un, index) => {
-                    // {searchedProductList?.map((un, index) => {
+                    {
+                      /* {searchedProductList?.map((un, index) => { */
+                    }
                     return (
                       <AdReviewBodyTr
                         key={index}
@@ -215,7 +215,9 @@ const ItemReviews = ({ meData }) => {
           <AdReviewItemList>
             {newList === undefined ? (
               <AdReviewEmpty>
-                Select a product to view the review list
+                <ReplyIcon />
+                <p>Select a product</p>
+                <p>to view the review list</p>
               </AdReviewEmpty>
             ) : (
               <AdReviewListWrap>
@@ -246,7 +248,7 @@ const ItemReviews = ({ meData }) => {
                   </AdReviewThead>
                   <AdReviewTbody>
                     {newList?.reviews?.map((nrv, index) => {
-                      // {searchedReviewList.map((nrv, index) => {
+                      // {searchedReviewList?.map((nrv, index) => {
                       return (
                         <AdReviewBodyTr key={index}>
                           <AdReviewTd

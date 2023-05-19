@@ -107,7 +107,7 @@ const OrderPending = ({ meData }) => {
       }
     );
     console.log('statusChange', statusChange?.data);
-    navigate('/manage/orders/all');
+    navigate('/admin/orders/all');
   };
 
   const handleAccept = async (pk) => {
@@ -124,7 +124,7 @@ const OrderPending = ({ meData }) => {
       }
     );
     console.log('statusChange', statusChange?.data);
-    navigate('/manage/orders/all');
+    navigate('/admin/orders/all');
   };
 
   const handleSearch = (e) => {
@@ -151,7 +151,7 @@ const OrderPending = ({ meData }) => {
             );
           })
     );
-  }, [currentPosts, searchValue]);
+  }, [searchValue]);
 
   if (loading)
     return (
@@ -182,8 +182,10 @@ const OrderPending = ({ meData }) => {
               <AdTHeadCell className='details'></AdTHeadCell>
             </AdTHeadeRow>
           </AdTHead>
-          {/* {currentPosts?.map((pendingOrder) => { */}
-          {searchedList?.map((pendingOrder) => {
+          {currentPosts?.map((pendingOrder) => {
+            {
+              /* {searchedList?.map((pendingOrder) => { */
+            }
             return (
               <AdTBody key={pendingOrder?.pk}>
                 <AdTBodyRow>

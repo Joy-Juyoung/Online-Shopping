@@ -14,15 +14,19 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { Link, useNavigate } from 'react-router-dom';
 import Loading from '../Loading';
 import {
+  AdInfoIcon,
   AdLeftIcon,
   AdLeftSide,
   AdPermLink,
   AdRightIcon,
   AdRightSide,
   AdSide,
+  AdUserIcon,
+  AdUserLink,
 } from './SidebarElements';
+import PersonIcon from '@mui/icons-material/Person';
 
-const AdminHeader = ({ meData }) => {
+const AdminHeader = ({ meData, setIsAdminBoard, isAdminBoard }) => {
   const navigate = useNavigate();
 
   const [me, setMe] = useState(null);
@@ -36,6 +40,7 @@ const AdminHeader = ({ meData }) => {
 
   const handleLogout = async () => {
     setLoading(true);
+
     const loggedOut = await axios.post(
       '/users/log-out',
       {
@@ -49,6 +54,8 @@ const AdminHeader = ({ meData }) => {
     console.log('Header logout Me', loggedOut?.data);
     setLogout(loggedOut?.data);
     setMe('');
+    // setIsAdminBoard(!isAdminBoard);
+    setIsAdminBoard(false);
     navigate('/');
     window.location.reload('/');
     setLoading(false);
@@ -63,16 +70,21 @@ const AdminHeader = ({ meData }) => {
 
   return (
     <AdSide>
-      {/* <AdLeftSide>
-        <h1>Dashboard</h1>
-      </AdLeftSide> */}
       <AdRightSide>
-        <AdRightIcon>{meData?.username.toUpperCase()}</AdRightIcon>
-        <AdRightIcon>
-          <AdPermLink>
-            <LogoutIcon fontSize='medium' onClick={handleLogout} />
-          </AdPermLink>
-        </AdRightIcon>
+        <AdUserIcon>
+          <AdUserLink to='/' onClick={() => setIsAdminBoard(false)}>
+            Go to User Mode
+            <PersonIcon />
+          </AdUserLink>
+        </AdUserIcon>
+        <AdInfoIcon>
+          <AdRightIcon>{meData?.username.toUpperCase()}</AdRightIcon>
+          <AdRightIcon>
+            <AdPermLink>
+              <LogoutIcon fontSize='medium' onClick={handleLogout} />
+            </AdPermLink>
+          </AdRightIcon>
+        </AdInfoIcon>
       </AdRightSide>
     </AdSide>
   );

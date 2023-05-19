@@ -128,4 +128,17 @@ export const AdReviewRightSide = styled.div`
   margin: 0 20px;
 `;
 
-export const AdReviewEmpty = styled.div``;
+export const AdReviewEmpty = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* margin: 0 auto; */
+  height: 50vh;
+  color: #bfbbb5;
+  font-size: 18px;
+
+  svg {
+    font-size: 80px;
+  }
+`;

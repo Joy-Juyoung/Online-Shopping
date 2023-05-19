@@ -35,6 +35,7 @@ import {
   ModalBtnDetail,
   FlagBtn,
   ItemCount,
+  AdminLink,
 } from './HeaderElements';
 import FlagIcon from '@mui/icons-material/Flag';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -50,10 +51,11 @@ import { ButtonSmall, ButtonUtils } from '../ButtonElements';
 import Modal from '../Modal';
 import SearchIcon from '@mui/icons-material/Search';
 import AddBalance from '../AddBalance';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 
 const CARTS_URL = '/carts/';
 
-const Header = ({ meData, catData }) => {
+const Header = ({ meData, catData, setIsAdminBoard, isAdminBoard }) => {
   const navigate = useNavigate();
   const [me, setMe] = useState(null);
   const [logout, setLogout] = useState();
@@ -237,6 +239,17 @@ const Header = ({ meData, catData }) => {
                 </>
               ) : (
                 <>
+                  {meData?.type === 'admin_user' && (
+                    <RightIcon>
+                      <AdminLink
+                        to='/admin'
+                        onClick={() => setIsAdminBoard(true)}
+                      >
+                        Go to Admin Panel
+                        <ManageAccountsIcon />
+                      </AdminLink>
+                    </RightIcon>
+                  )}
                   <RightIcon>
                     <FlagBtn>
                       <img src='https://static.msscdn.net/global/country/flag/CA.svg' />
@@ -279,6 +292,8 @@ const Header = ({ meData, catData }) => {
                           <DropUser
                             meData={meData}
                             shown={() => toggleBalance(!balanceShown)}
+                            // setIsAdminBoard={setIsAdminBoard}
+                            // isAdminBoard={isAdminBoard}
                           />
                         )}
                         <Modal

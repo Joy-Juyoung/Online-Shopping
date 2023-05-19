@@ -17,7 +17,6 @@ import AddBalance from '../AddBalance';
 
 const DropUser = ({ meData, shown }) => {
   return (
-    // <DropAccountContainer ref={ref}>
     <DropAccountContainer>
       <DropAccountCoverTop></DropAccountCoverTop>
       <DropAccountCoverMain>
@@ -26,9 +25,6 @@ const DropUser = ({ meData, shown }) => {
             <DropUlWrap>
               <LinkAccount to='/userAccount'>
                 <DropLi>
-                  {/* <ConfigProvider colors={['red', 'grey', 'green']}>
-                  <Avatar name={meData.username} round={true} size={30} />
-                </ConfigProvider> */}
                   <ProfileWrap>
                     <span>{meData.username}</span>
                     <ButtonUtils>Setting</ButtonUtils>
@@ -45,6 +41,11 @@ const DropUser = ({ meData, shown }) => {
               <LinkAccount to='/coupon'>
                 <DropLi>My Coupons</DropLi>
               </LinkAccount>
+              {/* {meData?.type === 'admin_user' && (
+                <LinkAccount to='/admin' onClick={() => setIsAdminBoard(true)}>
+                  <DropLi>Go to Admin Board</DropLi>
+                </LinkAccount>
+              )} */}
             </DropUlWrap>
           </DropUl>
         </DropAccountWrap>

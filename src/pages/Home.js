@@ -67,6 +67,7 @@ import HeaderBackup from '../components/Header/HeaderBackup';
 const Home = () => {
   const [meData, setMeData] = useState();
   const [catData, setCatData] = useState([]);
+  const [isAdminBoard, setIsAdminBoard] = useState(false);
 
   const getMe = async () => {
     try {
@@ -93,78 +94,85 @@ const Home = () => {
   }, []);
 
   // useEffect(() => {
-  //   getCategory();
+  //   if(isAdminBoard) {
+
+  //   }
   // }, []);
 
   return (
     <>
-      {meData?.type === 'admin_user' ? (
+      {meData?.type === 'admin_user' && isAdminBoard && (
+        // }
         <AdminGlobal>
           <AdminBg>
             <AdminSideContainer>
               <AdminSidebar meData={meData} />
             </AdminSideContainer>
             <AdminContainer>
-              <AdminHeader meData={meData} />
+              <AdminHeader
+                meData={meData}
+                setIsAdminBoard={setIsAdminBoard}
+                isAdminBoard={isAdminBoard}
+              />
               <Routes>
-                <Route path='/' element={<Dashboard />} exact={true} />
+                <Route path='/admin' element={<Dashboard />} exact={true} />
                 <Route
-                  path='/manage/customers'
+                  path='/admin/customers'
                   element={<CustomersManage />}
                   exact={true}
                 />
                 <Route
-                  path='/manage/categories'
+                  path='/admin/categories'
                   element={<CategoryManage />}
                   exact={true}
                 />
                 <Route
-                  path='/manage/categories/head'
+                  path='/admin/categories/head'
                   element={<HeadCategory />}
                   exact={true}
                 />
                 <Route
-                  path='/manage/categories/:headName/sub'
+                  path='/admin/categories/:headName/sub'
                   element={<SubCategory />}
                   exact={true}
                 />
                 <Route
-                  path='/manage/items'
+                  path='/admin/items'
                   element={<ItemManage />}
                   exact={true}
                 />
                 <Route
-                  path='/manage/items/all'
+                  path='/admin/items/all'
                   element={<ItemList />}
                   exact={true}
                 />
                 <Route
-                  path='/manage/items/reviews'
+                  path='/admin/items/reviews'
                   element={<ItemReviews />}
                   exact={true}
                 />
                 <Route
-                  path='/manage/orders'
+                  path='/admin/orders'
                   element={<OrderManage />}
                   exact={true}
                 />
                 <Route
-                  path='/manage/orders/all'
+                  path='/admin/orders/all'
                   element={<OrderList />}
                   exact={true}
                 />
                 <Route
-                  path='/manage/orders/pending'
+                  path='/admin/orders/pending'
                   element={<OrderPending />}
                   exact={true}
                 />
                 <Route
-                  path='/manage/coupons'
+                  path='/admin/coupons'
                   element={<CouponManage />}
                   exact={true}
                 />
                 <Route
-                  path='/manage/feedbacks'
+                  path='/admin/feedbacks'
                   element={<FeedbackManage />}
                   exact={true}
                 />
@@ -172,10 +180,16 @@ const Home = () => {
             </AdminContainer>
           </AdminBg>
         </AdminGlobal>
-      ) : (
+      )}
+
+      {(meData?.type === 'admin_user' || 'user') && isAdminBoard === false && (
         <>
-          <Header meData={meData} catData={catData} />
-          {/* <HeaderBackup meData={meData} catData={catData} /> */}
+          <Header
+            meData={meData}
+            catData={catData}
+            setIsAdminBoard={setIsAdminBoard}
+            isAdminBoard={isAdminBoard}
+          />
           <Container>
             <Routes>
               <Route
@@ -186,7 +200,13 @@ const Home = () => {
 
               <Route
                 path='/login'
-                element={<LoginPage meData={meData} />}
+                element={
+                  <LoginPage
+                    meData={meData}
+                    setIsAdminBoard={setIsAdminBoard}
+                    isAdminBoard={isAdminBoard}
+                  />
+                }
                 exact={true}
               />
               <Route
@@ -219,11 +239,7 @@ const Home = () => {
                 element={<OrderDtails meData={meData} />}
                 exact={true}
               />
-              {/* <Route
-            path='/userOrders/:orderId/review/:reviewId/:optionPk'
-            element={<NewReview meData={meData} />}
-            exact={true}
-          /> */}
+
               <Route
                 path='/review/:reviewId'
                 element={<NewReview meData={meData} />}
@@ -277,11 +293,7 @@ const Home = () => {
                 element={<WishlistPage meData={meData} catData={catData} />}
                 exact={true}
               />
-              {/* <Route
-            path='/carts'
-            element={<CartPage meData={meData} />}
-            exact={true}
-          /> */}
+
               <Route
                 path='/carts'
                 element={<TestCart meData={meData} />}
@@ -293,11 +305,6 @@ const Home = () => {
                 element={<PaymentPage meData={meData} />}
                 exact={true}
               />
-              {/* <Route
-            path='/carts/payment/:orderId'
-            element={<SuccessPayment meData={meData} />}
-            exact={true}
-          /> */}
 
               <Route
                 path='/userBalance'
