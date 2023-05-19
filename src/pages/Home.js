@@ -1,5 +1,11 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import {
+  Routes,
+  Route,
+  Navigate,
+  useParams,
+  useLocation,
+} from 'react-router-dom';
 import {
   AdminBg,
   AdminContainer,
@@ -68,6 +74,10 @@ const Home = () => {
   const [meData, setMeData] = useState();
   const [catData, setCatData] = useState([]);
   const [isAdminBoard, setIsAdminBoard] = useState(false);
+  // const { admin } = useParams();
+  const location = useLocation();
+
+  console.log('location', location.pathname);
 
   const getMe = async () => {
     try {
@@ -87,114 +97,51 @@ const Home = () => {
     });
     setCatData(categoryData?.data);
   };
+  // console.log('admin', admin);
 
   useEffect(() => {
     getMe();
     getCategory();
+
+    if (
+      location.pathname === '/admin' ||
+      '/admin/customers' ||
+      '/admin/categories' ||
+      '/admin/categories/head' ||
+      '/admin/categories/:headName/sub' ||
+      '/admin/items' ||
+      '/admin/items/all' ||
+      '/admin/items/reviews' ||
+      '/admin/orders' ||
+      '/admin/orders/all' ||
+      '/admin/orders/pending' ||
+      '/admin/coupons' ||
+      '/admin/feedbacks'
+    ) {
+      setIsAdminBoard(true);
+    }
   }, []);
-
-  // useEffect(() => {
-  //   if(isAdminBoard) {
-
-  //   }
-  // }, []);
 
   return (
     <>
-      {meData?.type === 'admin_user' && isAdminBoard && (
-        // }
-        <AdminGlobal>
-          <AdminBg>
-            <AdminSideContainer>
-              <AdminSidebar meData={meData} />
-            </AdminSideContainer>
-            <AdminContainer>
-              <AdminHeader
-                meData={meData}
-                setIsAdminBoard={setIsAdminBoard}
-                isAdminBoard={isAdminBoard}
-              />
-              <Routes>
-                <Route path='/admin' element={<Dashboard />} exact={true} />
-                <Route
-                  path='/admin/customers'
-                  element={<CustomersManage />}
-                  exact={true}
-                />
-                <Route
-                  path='/admin/categories'
-                  element={<CategoryManage />}
-                  exact={true}
-                />
-                <Route
-                  path='/admin/categories/head'
-                  element={<HeadCategory />}
-                  exact={true}
-                />
-                <Route
-                  path='/admin/categories/:headName/sub'
-                  element={<SubCategory />}
-                  exact={true}
-                />
-                <Route
-                  path='/admin/items'
-                  element={<ItemManage />}
-                  exact={true}
-                />
-                <Route
-                  path='/admin/items/all'
-                  element={<ItemList />}
-                  exact={true}
-                />
-                <Route
-                  path='/admin/items/reviews'
-                  element={<ItemReviews />}
-                  exact={true}
-                />
-                <Route
-                  path='/admin/orders'
-                  element={<OrderManage />}
-                  exact={true}
-                />
-                <Route
-                  path='/admin/orders/all'
-                  element={<OrderList />}
-                  exact={true}
-                />
-                <Route
-                  path='/admin/orders/pending'
-                  element={<OrderPending />}
-                  exact={true}
-                />
-                <Route
-                  path='/admin/coupons'
-                  element={<CouponManage />}
-                  exact={true}
-                />
-                <Route
-                  path='/admin/feedbacks'
-                  element={<FeedbackManage />}
-                  exact={true}
-                />
-              </Routes>
-            </AdminContainer>
-          </AdminBg>
-        </AdminGlobal>
-      )}
-
-      {(meData?.type === 'admin_user' || 'user') && isAdminBoard === false && (
+      {isAdminBoard === false && (meData?.type === 'admin_user' || 'user') && (
         <>
           <Header
             meData={meData}
             catData={catData}
             setIsAdminBoard={setIsAdminBoard}
-            isAdminBoard={isAdminBoard}
           />
           <Container>
             <Routes>
+              {/* <Route path='/admin' element={<Dashboard />} exact={true} /> */}
               <Route
                 path='/'
-                element={<HeroPage catData={catData} />}
+                element={
+                  <HeroPage
+                    catData={catData}
+                    setIsAdminBoard={setIsAdminBoard}
+                  />
+                }
                 exact={true}
               />
 
@@ -204,7 +151,6 @@ const Home = () => {
                   <LoginPage
                     meData={meData}
                     setIsAdminBoard={setIsAdminBoard}
-                    isAdminBoard={isAdminBoard}
                   />
                 }
                 exact={true}
@@ -321,6 +267,82 @@ const Home = () => {
           </Container>
           <Footer />
         </>
+      )}
+      {isAdminBoard === true && meData?.type === 'admin_user' && (
+        <AdminGlobal>
+          <AdminBg>
+            <AdminSideContainer>
+              <AdminSidebar meData={meData} />
+            </AdminSideContainer>
+            <AdminContainer>
+              <AdminHeader meData={meData} setIsAdminBoard={setIsAdminBoard} />
+              <Routes>
+                <Route path='/admin' element={<Dashboard />} exact={true} />
+
+                <Route
+                  path='/admin/customers'
+                  element={<CustomersManage />}
+                  exact={true}
+                />
+                <Route
+                  path='/admin/categories'
+                  element={<CategoryManage />}
+                  exact={true}
+                />
+                <Route
+                  path='/admin/categories/head'
+                  element={<HeadCategory />}
+                  exact={true}
+                />
+                <Route
+                  path='/admin/categories/:headName/sub'
+                  element={<SubCategory />}
+                  exact={true}
+                />
+                <Route
+                  path='/admin/items'
+                  element={<ItemManage />}
+                  exact={true}
+                />
+                <Route
+                  path='/admin/items/all'
+                  element={<ItemList />}
+                  exact={true}
+                />
+                <Route
+                  path='/admin/items/reviews'
+                  element={<ItemReviews />}
+                  exact={true}
+                />
+                <Route
+                  path='/admin/orders'
+                  element={<OrderManage />}
+                  exact={true}
+                />
+                <Route
+                  path='/admin/orders/all'
+                  element={<OrderList />}
+                  exact={true}
+                />
+                <Route
+                  path='/admin/orders/pending'
+                  element={<OrderPending />}
+                  exact={true}
+                />
+                <Route
+                  path='/admin/coupons'
+                  element={<CouponManage />}
+                  exact={true}
+                />
+                <Route
+                  path='/admin/feedbacks'
+                  element={<FeedbackManage />}
+                  exact={true}
+                />
+              </Routes>
+            </AdminContainer>
+          </AdminBg>
+        </AdminGlobal>
       )}
     </>
   );

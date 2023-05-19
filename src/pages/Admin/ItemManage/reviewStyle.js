@@ -103,10 +103,10 @@ export const AdReviewTh = styled.th`
 
 export const AdReviewTbody = styled.tbody`
   tr:nth-child(odd) {
-    background-color: #fff;
+    background-color: #efeae1;
   }
   tr:nth-child(even) {
-    background-color: #efeae1;
+    background-color: #fff;
   }
 `;
 

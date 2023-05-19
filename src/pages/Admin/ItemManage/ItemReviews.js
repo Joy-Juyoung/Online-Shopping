@@ -1,22 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import {
-  AdContainer,
-  AdListBottom,
-  AdListMid,
-  AdListSearch,
-  AdListTop,
-  AdListUtils,
-  AdTable,
-  AdTBody,
-  AdTBodyCell,
-  AdTBodyRow,
-  AdTHead,
-  AdTHeadCell,
-  AdTHeadeRow,
-  BodyImg,
-  CheckInput,
-} from '../AdminCommonElements';
-
+import { AdContainer } from '../AdminCommonElements';
 import {
   AdReviewWrap,
   AdReviewLeftSide,
@@ -35,20 +18,33 @@ import {
   AdReviewMidSide,
   AdReviewHeader,
 } from './reviewStyle';
+import Avatar from '@mui/material/Avatar';
 import axios from '../../../api/axios';
 import Loading from '../../../components/Loading';
-import Pagination from '../../../components/AdminComponents//Pagination';
-import { ButtonSmall, ButtonUtils } from '../../../components/ButtonElements';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import { ButtonUtils } from '../../../components/ButtonElements';
+
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
-import QueueIcon from '@mui/icons-material/Queue';
 import ReplyIcon from '@mui/icons-material/Reply';
+import AdminModal from '../../../components/AdminComponents/AdminModal';
+import DeleteIcon from '@mui/icons-material/Delete';
+import {
+  ListOneAvatar,
+  ListOneLink,
+  ListOneName,
+  ReviewListDetail,
+  ReviewListFour,
+  ReviewListOne,
+  ReviewListThree,
+  ReviewListTwo,
+  StyledRating,
+} from '../../ProductPage/ProductDetailElements';
 
 const ItemReviews = ({ meData }) => {
   const [loading, setLoading] = useState(false);
   const [reviews, setReviews] = useState();
   const [newList, setNewList] = useState();
+  const [modalShown, toggleModal] = useState(false);
+  const [reviewByUser, setReviewByUser] = useState();
 
   const [searchedProductList, setSearchedProductList] = useState();
   const [searchProductValue, setSearchProductValue] = useState();
@@ -75,25 +71,25 @@ const ItemReviews = ({ meData }) => {
     (rv, index) => rv?.Product_Name?.indexOf(rv?.Product_Name) !== index
   );
 
-  console.log('uniqueList', uniqueList);
+  // console.log('uniqueList', uniqueList);
 
   const handleViewReviews = async (pk) => {
-    console.log('pk', pk);
+    // console.log('pk', pk);
 
     const productReview = await axios.get(`/products/${pk}`, {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    console.log('newList', productReview.data);
+    // console.log('newList', productReview.data);
     setNewList(productReview?.data);
-    // setReviewByProduct(newList?.reviews?.map((nrv) => nrv));
   };
-  console.log('newList', newList);
+
+  // console.log('newList', newList);
 
   const handleProductSearch = (e) => {
     setSearchProductValue(e.target.value);
   };
-  console.log('searchProductValue', searchProductValue);
+  // console.log('searchProductValue', searchProductValue);
 
   useEffect(() => {
     setSearchedProductList(
@@ -116,7 +112,7 @@ const ItemReviews = ({ meData }) => {
   const handleReviewSearch = (e) => {
     setSearchReviewValue(e.target.value);
   };
-  console.log('searchReviewValue', searchReviewValue);
+  // console.log('searchReviewValue', searchReviewValue);
 
   useEffect(() => {
     setSearchedReviewList(
@@ -144,7 +140,17 @@ const ItemReviews = ({ meData }) => {
     );
   }, [newList, searchedProductList, searchProductValue, searchReviewValue]);
 
-  const handleViewReview = (pk) => {};
+  const handleView = async (pk) => {
+    toggleModal(!modalShown);
+    // console.log('pk', pk);
+
+    const review = await axios.get(`/reviews/${pk}`, {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+    console.log('Review', review.data);
+    setReviewByUser(review.data);
+  };
 
   if (loading)
     return (
@@ -255,17 +261,19 @@ const ItemReviews = ({ meData }) => {
                             {nrv?.user?.pk}
                           </AdReviewTd>
                           <AdReviewTd>{nrv?.user?.username}</AdReviewTd>
-                          <AdReviewTd>{nrv?.rating}</AdReviewTd>
-                          <AdReviewTd style={{ width: '35%' }}>
-                            {nrv?.payload}
+                          <AdReviewTd>{nrv?.rating?.toString()}</AdReviewTd>
+                          <AdReviewTd style={{ width: '30%' }}>
+                            {nrv?.payload?.length > 15 ? (
+                              `${nrv?.payload?.substring(0, 15)}...`
+                            ) : (
+                              <> {nrv?.payload}</>
+                            )}
                           </AdReviewTd>
                           <AdReviewTd>
                             {new Date(nrv?.updated_at).toLocaleDateString()}
                           </AdReviewTd>
                           <AdReviewTd>
-                            <ButtonUtils
-                              onClick={() => handleViewReview(nrv?.pk)}
-                            >
+                            <ButtonUtils onClick={() => handleView(nrv?.pk)}>
                               View
                             </ButtonUtils>
                             {/* View modal -> review more and delete */}
@@ -280,6 +288,65 @@ const ItemReviews = ({ meData }) => {
           </AdReviewItemList>
         </AdReviewRightSide>
       </AdReviewWrap>
+      <AdminModal
+        className='coupon'
+        shown={modalShown}
+        close={() => {
+          toggleModal(false);
+        }}
+      >
+        <div>
+          {/* <h2>Review details</h2> */}
+          <span style={{ fontSize: '15px' }}>
+            <strong>{reviewByUser?.Product_Name}</strong>
+          </span>
+          <div>
+            {/* <div>{reviewByUser?.Product_Name}</div>
+            <div>{reviewByUser?.payload}</div> */}
+            <ReviewListDetail>
+              <ReviewListOne>
+                <ListOneLink>
+                  <ListOneAvatar>
+                    <Avatar sx={{ width: 30, height: 30 }}>C</Avatar>
+                  </ListOneAvatar>
+                  <ListOneName>
+                    <span>{reviewByUser?.user?.username}</span>
+                  </ListOneName>
+                </ListOneLink>
+                <StyledRating
+                  size='small'
+                  value={reviewByUser?.rating?.toString() || ''}
+                  readOnly
+                />
+              </ReviewListOne>
+              <ReviewListTwo>
+                {/* <StyledRating
+                  size='small'
+                  value={reviewByUser?.rating}
+                  readOnly
+                /> */}
+                {/* <RatingWrap>
+                  <span style={{ fontSize: '15px' }}>
+                    <strong>{reviewByUser?.Product_Name}</strong>
+                  </span>
+                </RatingWrap> */}
+              </ReviewListTwo>
+              <ReviewListFour>
+                <span>
+                  Reviewed on{' '}
+                  {new Date(reviewByUser?.updated_at).toLocaleString('en-ca')}
+                </span>
+              </ReviewListFour>
+              <ReviewListThree>
+                <span>{reviewByUser?.payload}</span>
+              </ReviewListThree>
+            </ReviewListDetail>
+          </div>
+          <div>
+            <button>Delete</button>
+          </div>
+        </div>
+      </AdminModal>
     </AdContainer>
   );
 };

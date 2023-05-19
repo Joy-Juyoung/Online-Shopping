@@ -44,7 +44,7 @@ import PermIdentityRoundedIcon from '@mui/icons-material/PermIdentityRounded';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Search from './Search';
 import TestSearch from './TestSearch';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import Loading from '../../components/Loading';
 import DropUser from './DropUser';
 import { ButtonSmall, ButtonUtils } from '../ButtonElements';
@@ -55,7 +55,7 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 
 const CARTS_URL = '/carts/';
 
-const Header = ({ meData, catData, setIsAdminBoard, isAdminBoard }) => {
+const Header = ({ meData, catData, setIsAdminBoard }) => {
   const navigate = useNavigate();
   const [me, setMe] = useState(null);
   const [logout, setLogout] = useState();
@@ -73,7 +73,6 @@ const Header = ({ meData, catData, setIsAdminBoard, isAdminBoard }) => {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    console.log('userList', cartList.data);
     setCarts(cartList?.data);
   };
 
@@ -84,6 +83,8 @@ const Header = ({ meData, catData, setIsAdminBoard, isAdminBoard }) => {
       getAllCart();
     }
   }, [meData]);
+
+  console.log('me', me);
 
   const handleLogout = async () => {
     setLoading(true);

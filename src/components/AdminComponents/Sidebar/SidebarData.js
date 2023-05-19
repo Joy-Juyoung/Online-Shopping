@@ -30,7 +30,6 @@ export const SidebarData = [
   {
     title: 'Categories',
     path: '/admin/categories',
-    // path: '',
     icon: <CategoryIcon />,
     iconClosed: <ExpandMoreIcon />,
     iconOpened: <ExpandLessIcon />,
@@ -50,7 +49,6 @@ export const SidebarData = [
   {
     title: 'Products',
     path: '/admin/items',
-    // path: '',
     icon: <ShoppingCartIcon />,
     iconClosed: <ExpandMoreIcon />,
     iconOpened: <ExpandLessIcon />,
@@ -80,7 +78,7 @@ export const SidebarData = [
         icon: <ShoppingBagIcon />,
       },
       {
-        title: 'Manage Status',
+        title: 'Pending Orders',
         path: '/admin/orders/pending',
         icon: <PendingIcon />,
       },
@@ -91,9 +89,9 @@ export const SidebarData = [
     path: '/admin/coupons',
     icon: <RedeemIcon />,
   },
-  {
-    title: 'Feedbacks',
-    path: '/admin/feedbacks',
-    icon: <QuestionAnswerIcon />,
-  },
+  // {
+  //   title: 'Feedbacks',
+  //   path: '/admin/feedbacks',
+  //   icon: <QuestionAnswerIcon />,
+  // },
 ];
