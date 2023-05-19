@@ -87,7 +87,8 @@ const Home = () => {
       });
       setMeData(me?.data);
     } catch (err) {
-      return null;
+      // setMeData('null');
+      return console.log('Load me error');
     }
   };
   const getCategory = async () => {
@@ -120,11 +121,14 @@ const Home = () => {
     ) {
       setIsAdminBoard(true);
     }
+    setIsAdminBoard(false);
   }, []);
 
   return (
     <>
-      {isAdminBoard === false && (meData?.type === 'admin_user' || 'user') && (
+      {(!meData ||
+        (isAdminBoard === false &&
+          (meData?.type === 'admin_user' || 'user'))) && (
         <>
           <Header
             meData={meData}
