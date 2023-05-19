@@ -4,26 +4,7 @@ import Loading from '../../../components/Loading';
 import { AdContainer } from '../AdminCommonElements';
 
 const Dashboard = ({ meData }) => {
-  // console.log('me', meData);
   const [loading, setLoading] = useState(false);
-
-  // const handleClick = async () => {
-  //   const welcomeCoupon = await axios.post(
-  //     '/coupons/',
-  //     {
-  //       users: [6],
-  //       name: '20% Welcome Coupon',
-  //       description: 'Your First Coupon',
-  //       discount_rate: 20,
-  //     },
-  //     {
-  //       headers: { 'Content-Type': 'application/json' },
-  //       withCredentials: true,
-  //     }
-  //   );
-
-  //   console.log('welcomeCoupon', welcomeCoupon);
-  // };
 
   useEffect(() => {
     setLoading(true);

@@ -26,13 +26,15 @@ import {
 } from './Sidebar/SidebarElements';
 import PersonIcon from '@mui/icons-material/Person';
 
-const AdminHeader = ({ meData, setIsAdminBoard, isAdminBoard }) => {
+const AdminHeader = ({ meData, setIsAdminBoard }) => {
   const navigate = useNavigate();
 
   const [me, setMe] = useState(null);
   const [logout, setLogout] = useState();
 
   const [loading, setLoading] = useState(false);
+
+  console.log('me', me);
 
   useEffect(() => {
     setMe(meData);

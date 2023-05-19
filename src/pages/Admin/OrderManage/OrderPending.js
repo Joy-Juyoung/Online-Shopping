@@ -165,7 +165,7 @@ const OrderPending = ({ meData }) => {
     );
   return (
     <AdContainer>
-      <h1>Manage Status</h1>
+      <h1>Pending Orders</h1>
       <AdListTop>
         <AdListSearch>
           <input type='text' placeholder='Search' onChange={handleSearch} />

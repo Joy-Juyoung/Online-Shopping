@@ -38,13 +38,14 @@ import {
   Thead,
   Tr,
 } from './OrderStyle';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import MoreIcon from '@mui/icons-material/More';
 import { Filter } from '@material-ui/icons';
 import { AdButtonUtils } from '../../../components/AdminComponents/AdminButtons';
 
-const OrderList = ({ meData }) => {
+const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [orders, setOrders] = useState();
   const [modalShown, toggleModal] = useState(false);
@@ -115,7 +116,9 @@ const OrderList = ({ meData }) => {
         }
       );
       console.log('statusChange', statusChange?.data);
-      window.location.reload('');
+      // window.location.reload();
+      window.location.reload();
+      // navigate('/admin/orders/all');
     } catch (err) {
       if (err.response?.status === 400) {
         // console.log('400 error');
@@ -126,11 +129,6 @@ const OrderList = ({ meData }) => {
       }
     }
   };
-
-  const handleSearch = (e) => {
-    setSearchValue(e.target.value);
-  };
-  console.log('searchValue', searchValue);
 
   useEffect(() => {
     setSearchedList(
