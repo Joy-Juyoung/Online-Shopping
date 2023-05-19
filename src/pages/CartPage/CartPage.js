@@ -176,13 +176,13 @@ const handleCheckAll = () => {
   };
 
   const handleIncrease = async (pk) => {
-    const addQty = carts.map((i) => {
-      if (pk === i.pk && i.number_of_product < 10000) {
+    const addQty = carts?.map((i) => {
+      if (pk === i?.pk && i?.number_of_product < 10000) {
         axios.put(
           `/carts/${pk}`,
           {
             // pk: cart.pk,
-            number_of_product: i.number_of_product + 1,
+            number_of_product: i?.number_of_product + 1,
           },
           {
             headers: { 'Content-Type': 'application/json' },
