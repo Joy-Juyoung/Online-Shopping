@@ -14,13 +14,17 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { Link, useNavigate } from 'react-router-dom';
 import Loading from '../Loading';
 import {
+  AdInfoIcon,
   AdLeftIcon,
   AdLeftSide,
   AdPermLink,
   AdRightIcon,
   AdRightSide,
   AdSide,
+  AdUserIcon,
+  AdUserLink,
 } from './SidebarElements';
+import PersonIcon from '@mui/icons-material/Person';
 
 const AdminHeader = ({ meData, setIsAdminBoard, isAdminBoard }) => {
   const navigate = useNavigate();
@@ -66,21 +70,21 @@ const AdminHeader = ({ meData, setIsAdminBoard, isAdminBoard }) => {
 
   return (
     <AdSide>
-      {/* <AdLeftSide>
-        <h1>Dashboard</h1>
-      </AdLeftSide> */}
       <AdRightSide>
-        <AdRightIcon>
-          <Link to='/' onClick={() => setIsAdminBoard(false)}>
+        <AdUserIcon>
+          <AdUserLink to='/' onClick={() => setIsAdminBoard(false)}>
             Go to User Mode
-          </Link>
-        </AdRightIcon>
-        <AdRightIcon>{meData?.username.toUpperCase()}</AdRightIcon>
-        <AdRightIcon>
-          <AdPermLink>
-            <LogoutIcon fontSize='medium' onClick={handleLogout} />
-          </AdPermLink>
-        </AdRightIcon>
+            <PersonIcon />
+          </AdUserLink>
+        </AdUserIcon>
+        <AdInfoIcon>
+          <AdRightIcon>{meData?.username.toUpperCase()}</AdRightIcon>
+          <AdRightIcon>
+            <AdPermLink>
+              <LogoutIcon fontSize='medium' onClick={handleLogout} />
+            </AdPermLink>
+          </AdRightIcon>
+        </AdInfoIcon>
       </AdRightSide>
     </AdSide>
   );

@@ -15,7 +15,7 @@ import { ButtonUtils } from '../ButtonElements';
 import Modal from '../Modal';
 import AddBalance from '../AddBalance';
 
-const DropUser = ({ meData, shown, setIsAdminBoard, isAdminBoard }) => {
+const DropUser = ({ meData, shown }) => {
   return (
     <DropAccountContainer>
       <DropAccountCoverTop></DropAccountCoverTop>
@@ -41,11 +41,11 @@ const DropUser = ({ meData, shown, setIsAdminBoard, isAdminBoard }) => {
               <LinkAccount to='/coupon'>
                 <DropLi>My Coupons</DropLi>
               </LinkAccount>
-              {meData?.type === 'admin_user' && (
+              {/* {meData?.type === 'admin_user' && (
                 <LinkAccount to='/admin' onClick={() => setIsAdminBoard(true)}>
                   <DropLi>Go to Admin Board</DropLi>
                 </LinkAccount>
-              )}
+              )} */}
             </DropUlWrap>
           </DropUl>
         </DropAccountWrap>

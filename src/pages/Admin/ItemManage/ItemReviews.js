@@ -42,6 +42,8 @@ import { ButtonSmall } from '../../../components/ButtonElements';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import QueueIcon from '@mui/icons-material/Queue';
+import ReplyIcon from '@mui/icons-material/Reply';
 
 const ItemReviews = ({ meData }) => {
   const [loading, setLoading] = useState(false);
@@ -213,7 +215,9 @@ const ItemReviews = ({ meData }) => {
           <AdReviewItemList>
             {newList === undefined ? (
               <AdReviewEmpty>
-                Select a product to view the review list
+                <ReplyIcon />
+                <p>Select a product</p>
+                <p>to view the review list</p>
               </AdReviewEmpty>
             ) : (
               <AdReviewListWrap>

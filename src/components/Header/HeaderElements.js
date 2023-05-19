@@ -111,10 +111,38 @@ export const RightIcon = styled.div`
   cursor: pointer;
 `;
 
+export const AdminLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+  /* color: #21201e;
+  background: #ffae00; */
+  background: #fffff7;
+  color: #21201e;
+  border: 2px solid #ffae00;
+  padding: 5px 10px;
+  border-radius: 10px;
+
+  svg {
+    margin-left: 5px;
+  }
+
+  &:hover {
+    /* color: #ffae00;
+    background: #21201e; */
+    background: #21201e;
+    color: #ffae00;
+    border: 2px solid #21201e;
+  }
+`;
+
 export const FlagBtn = styled.button`
   border: 0px;
   background: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
 
   img {
     width: 27px;
@@ -127,39 +155,25 @@ export const FlagBtn = styled.button`
 export const FaLink = styled(Link)`
   text-decoration: none;
   color: black;
+  display: flex;
+  align-items: center;
   cursor: pointer;
-  & :hover {
+  &:hover {
     color: lightgray;
   }
 `;
 
 export const CartLink = styled(Link)`
   position: relative;
+  display: flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
   color: black;
   cursor: pointer;
-  & :hover {
+  &:hover {
     color: lightgray;
   }
-
-  /* span{
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 17px;
-    height: 17px;
-    padding: 0px 5px;
-    border-radius: 17px;
-    box-sizing: border-box;
-    background: rgb(10, 15, 24);
-    font-size: 11px;
-    color: rgb(255, 255, 255);
-  } */
 `;
 
 export const ItemCount = styled.span`
@@ -182,6 +196,8 @@ export const ItemCount = styled.span`
 export const PermLink = styled(Link)`
   text-decoration: none;
   color: black;
+  display: flex;
+  align-items: center;
   cursor: pointer;
   & :hover {
     color: lightgray;

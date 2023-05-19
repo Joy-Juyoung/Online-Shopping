@@ -91,14 +91,55 @@ export const AdLeftIcon = styled.div`
 export const AdRightSide = styled.div`
   display: flex;
   align-items: center;
-  /* background: #6f70ff; */
-  background: #ffae00;
-  /* background-color: #16171b; */
-  /* color: #f5f5f5; */
-  color: #21201e;
   font-weight: 600;
+
+  /* background: #ffae00;
+  color: #21201e;
+  border-radius: 10px;
+  padding: 10px 15px; */
+`;
+
+export const AdUserIcon = styled.div`
+  /* background: #21201e; */
+  /* color: #21201e;
+  text-decoration: none; */
+  border-radius: 10px;
+  /* padding: 10px 15px; */
+  margin-right: 10px;
+
+  /* &:hover {
+    background: #ffae00;
+    color: #21201e;
+  } */
+`;
+
+export const AdUserLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+  background: #fffff7;
+  color: #21201e;
+  border: 2px solid #ffae00;
+
+  padding: 10px 15px;
+  border-radius: 10px;
+
+  &:hover {
+    background: #21201e;
+    color: #ffae00;
+    border: 2px solid #21201e;
+  }
+`;
+
+export const AdInfoIcon = styled.div`
+  display: flex;
+  align-items: center;
+  background: #ffae00;
+  color: #21201e;
   border-radius: 10px;
   padding: 10px 15px;
+  border: 2px solid #ffae00;
 `;
 
 export const AdRightIcon = styled.div`
