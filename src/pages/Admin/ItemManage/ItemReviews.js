@@ -38,7 +38,7 @@ import {
 import axios from '../../../api/axios';
 import Loading from '../../../components/Loading';
 import Pagination from '../../../components/AdminComponents//Pagination';
-import { ButtonSmall } from '../../../components/ButtonElements';
+import { ButtonSmall, ButtonUtils } from '../../../components/ButtonElements';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
@@ -111,38 +111,38 @@ const ItemReviews = ({ meData }) => {
             );
           })
     );
-  }, [searchProductValue]);
+  }, [reviews, searchProductValue]);
 
   const handleReviewSearch = (e) => {
-    setSearchProductValue(e.target.value);
+    setSearchReviewValue(e.target.value);
   };
-  console.log('searchProductValue', searchProductValue);
+  console.log('searchReviewValue', searchReviewValue);
 
   useEffect(() => {
     setSearchedReviewList(
-      !searchProductValue
+      !searchReviewValue
         ? newList?.reviews
         : newList?.reviews?.filter((search, index) => {
             return (
               search?.Product_Name?.toString()
                 .toLowerCase()
-                .includes(searchProductValue.toString().toLowerCase()) ||
+                .includes(searchReviewValue.toString().toLowerCase()) ||
               search?.user?.username
                 .toString()
                 .toLowerCase()
-                .includes(searchProductValue.toString().toLowerCase()) ||
+                .includes(searchReviewValue.toString().toLowerCase()) ||
               search?.payload
                 ?.toString()
                 .toLowerCase()
-                .includes(searchProductValue.toString().toLowerCase()) ||
+                .includes(searchReviewValue.toString().toLowerCase()) ||
               search?.product
                 ?.toString()
                 .toLowerCase()
-                .includes(searchProductValue.toString().toLowerCase())
+                .includes(searchReviewValue.toString().toLowerCase())
             );
           })
     );
-  }, [searchProductValue]);
+  }, [newList, searchedProductList, searchProductValue, searchReviewValue]);
 
   const handleViewReview = (pk) => {};
 
@@ -177,10 +177,8 @@ const ItemReviews = ({ meData }) => {
                   </AdReviewHeadTr>
                 </AdReviewThead>
                 <AdReviewTbody>
-                  {uniqueList?.map((un, index) => {
-                    {
-                      /* {searchedProductList?.map((un, index) => { */
-                    }
+                  {/* {uniqueList?.map((un, index) => { */}
+                  {searchedProductList?.map((un, index) => {
                     return (
                       <AdReviewBodyTr
                         key={index}
@@ -247,8 +245,8 @@ const ItemReviews = ({ meData }) => {
                     </AdReviewHeadTr>
                   </AdReviewThead>
                   <AdReviewTbody>
-                    {newList?.reviews?.map((nrv, index) => {
-                      // {searchedReviewList?.map((nrv, index) => {
+                    {/* {newList?.reviews?.map((nrv, index) => { */}
+                    {searchedReviewList?.map((nrv, index) => {
                       return (
                         <AdReviewBodyTr key={index}>
                           <AdReviewTd
@@ -265,9 +263,11 @@ const ItemReviews = ({ meData }) => {
                             {new Date(nrv?.updated_at).toLocaleDateString()}
                           </AdReviewTd>
                           <AdReviewTd>
-                            <button onClick={() => handleViewReview(nrv?.pk)}>
+                            <ButtonUtils
+                              onClick={() => handleViewReview(nrv?.pk)}
+                            >
                               View
-                            </button>
+                            </ButtonUtils>
                             {/* View modal -> review more and delete */}
                           </AdReviewTd>
                         </AdReviewBodyTr>

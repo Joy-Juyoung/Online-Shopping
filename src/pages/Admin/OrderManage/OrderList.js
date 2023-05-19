@@ -42,6 +42,7 @@ import { Link } from 'react-router-dom';
 
 import MoreIcon from '@mui/icons-material/More';
 import { Filter } from '@material-ui/icons';
+import { AdButtonUtils } from '../../../components/AdminComponents/AdminButtons';
 
 const OrderList = ({ meData }) => {
   const [loading, setLoading] = useState(false);
@@ -150,7 +151,7 @@ const OrderList = ({ meData }) => {
             );
           })
     );
-  }, []);
+  }, [orders, searchValue]);
   console.log('searchedList', searchedList);
 
   if (loading)
@@ -187,8 +188,8 @@ const OrderList = ({ meData }) => {
             </AdTHeadeRow>
           </AdTHead>
           {/* ?.filter((list) => '' || list?.pk.toString().includes(searchValue)) */}
-          {currentPosts?.map((order) => {
-            // {searchedList?.map((order) => {
+          {/* {currentPosts?.map((order) => { */}
+          {searchedList?.map((order) => {
             return (
               <AdTBody key={order?.pk}>
                 <AdTBodyRow>
@@ -206,23 +207,14 @@ const OrderList = ({ meData }) => {
                     {new Date(order?.created_at).toLocaleString('en-ca')}
                   </AdTBodyCell>
                   <AdTBodyCell className='status'>{order?.status}</AdTBodyCell>
-                  <AdTBodyCell className='details'>
-                    {/* <ArrowForwardIosIcon
-                      fontSize='15px'
-                      className='details'
-                      // 모달오픈하는거
-                      // onClick={() => toggleModal(!modalShown)}
-                      onClick={(e) => {
-                        handleOrderDetails(order?.pk);
-                      }}
-                    /> */}
-                    <button
+                  <AdTBodyCell style={{ width: '10%' }}>
+                    <AdButtonUtils
                       onClick={(e) => {
                         handleOrderDetails(order?.pk);
                       }}
                     >
                       View
-                    </button>
+                    </AdButtonUtils>
                   </AdTBodyCell>
                 </AdTBodyRow>
               </AdTBody>

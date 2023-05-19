@@ -23,7 +23,7 @@ import {
   AdSide,
   AdUserIcon,
   AdUserLink,
-} from './SidebarElements';
+} from './Sidebar/SidebarElements';
 import PersonIcon from '@mui/icons-material/Person';
 
 const AdminHeader = ({ meData, setIsAdminBoard, isAdminBoard }) => {

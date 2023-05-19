@@ -59,7 +59,7 @@ import OrderPending from './Admin/OrderManage/OrderPending';
 
 import FeedbackManage from './Admin/FeedbackManage/FeedbackManage';
 
-import AdminSidebar from '../components/AdminComponents/AdminSidebar';
+import AdminSidebar from '../components/AdminComponents/Sidebar/AdminSidebar';
 import AdminHeader from '../components/AdminComponents/AdminHeader';
 import { Container } from './CommonElements';
 import HeaderBackup from '../components/Header/HeaderBackup';
