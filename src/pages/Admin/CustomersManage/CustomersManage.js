@@ -22,7 +22,6 @@ import Pagination from '../../../components/AdminComponents//Pagination';
 import { ButtonSmall } from '../../../components/ButtonElements';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import AddCustomers from './AddCustomers';
 
 const CustomersManage = ({ meData }) => {
   const [loading, setLoading] = useState(false);
@@ -31,12 +30,7 @@ const CustomersManage = ({ meData }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(8);
 
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
   const [userInput, setUserInput] = useState("");
-
-  const [modalOpen, setModalOpen] = useState(false);
-  // const keys = ["username", "phone_number", "address", "pk", "balance","type"];
 
   const getCustomers = async () => {
     const userList = await axios.get('/users/', {
@@ -76,8 +70,6 @@ const CustomersManage = ({ meData }) => {
             />
         </AdListSearch>
         <AdListUtils>
-          <ButtonSmall onClick={() => {setIsModalOpen(true)}}>Add</ButtonSmall>
-          {isModalOpen && (<AddCustomers onClose={() => setIsModalOpen(false)} />)}
           <ButtonSmall>Delete</ButtonSmall>
         </AdListUtils>
       </AdListTop>
@@ -86,9 +78,9 @@ const CustomersManage = ({ meData }) => {
         <AdTable>
           <AdTHead>
             <AdTHeadeRow>
-              <AdTHeadCell className='check'>
+              {/* <AdTHeadCell className='check'>
                 <input type='checkbox' />
-              </AdTHeadCell>
+              </AdTHeadCell> */}
               <AdTHeadCell className='id'>ID</AdTHeadCell>
               {/* <AdTHeadCell className='type'>TYPE</AdTHeadCell> */}
               <AdTHeadCell className='username'>NAME</AdTHeadCell>
@@ -110,9 +102,9 @@ const CustomersManage = ({ meData }) => {
             return (
               <AdTBody key={user?.pk}>
                 <AdTBodyRow>
-                  <AdTBodyCell className='check'>
+                  {/* <AdTBodyCell className='check'>
                     <CheckInput type='checkbox' />
-                  </AdTBodyCell>
+                  </AdTBodyCell> */}
                   <AdTBodyCell className='id'>{user?.pk}</AdTBodyCell>
                   {/* <AdTBodyCell className='type'>{user?.type}</AdTBodyCell> */}
                   <AdTBodyCell className='username'>

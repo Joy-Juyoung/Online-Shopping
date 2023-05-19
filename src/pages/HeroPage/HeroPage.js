@@ -120,7 +120,7 @@ const HeroPage = ({ meData, catData }) => {
         <MidInfo>
           <SectionTitle>New Arrival</SectionTitle>
           <SectionProducts>
-            <Slider items={items.reverse().filter((item, idx) => idx < 9)} />
+            <Slider items={items?.reverse().filter((item, idx) => idx < 9)} />
           </SectionProducts>
           <SectionButton>
             <Link to='/products/all'>
