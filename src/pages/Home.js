@@ -74,7 +74,6 @@ const Home = () => {
   const [meData, setMeData] = useState();
   const [catData, setCatData] = useState([]);
   const [isAdminBoard, setIsAdminBoard] = useState(false);
-  // const { admin } = useParams();
   const location = useLocation();
 
   console.log('location', location.pathname);
@@ -87,7 +86,6 @@ const Home = () => {
       });
       setMeData(me?.data);
     } catch (err) {
-      // setMeData('null');
       return console.log('Load me error');
     }
   };
@@ -106,29 +104,54 @@ const Home = () => {
 
     if (
       location.pathname === '/admin' ||
-      '/admin/customers' ||
-      '/admin/categories' ||
-      '/admin/categories/head' ||
-      '/admin/categories/:headName/sub' ||
-      '/admin/items' ||
-      '/admin/items/all' ||
-      '/admin/items/reviews' ||
-      '/admin/orders' ||
-      '/admin/orders/all' ||
-      '/admin/orders/pending' ||
-      '/admin/coupons' ||
-      '/admin/feedbacks'
+      location.pathname === '/admin/customers' ||
+      location.pathname === '/admin/categories' ||
+      location.pathname === '/admin/categories/head' ||
+      location.pathname === '/admin/categories/:headName/sub' ||
+      location.pathname === '/admin/items' ||
+      location.pathname === '/admin/items/all' ||
+      location.pathname === '/admin/items/reviews' ||
+      location.pathname === '/admin/orders' ||
+      location.pathname === '/admin/orders/all' ||
+      location.pathname === '/admin/orders/pending' ||
+      location.pathname === '/admin/coupons' ||
+      location.pathname === '/admin/feedbacks'
     ) {
       setIsAdminBoard(true);
     }
-    setIsAdminBoard(false);
   }, []);
+
+  // useEffect(() => {
+  //   if (
+  //     location.pathname === '/login' ||
+  //     '/register' ||
+  //     '/userAccount' ||
+  //     '/myReviews' ||
+  //     '/coupon' ||
+  //     '/userOrders' ||
+  //     '/userOrders/:id' ||
+  //     '/review/:reviewId' ||
+  //     '/products/all' ||
+  //     '/products/search/:searchValue' ||
+  //     '/products/:id' ||
+  //     '/products/productAllChildKinds/:id' ||
+  //     '/products/category/:pId/:cName/:cId' ||
+  //     '/products/category/:pId' ||
+  //     '/wishlist' ||
+  //     '/carts' ||
+  //     '/carts/payment' ||
+  //     '/userBalance' ||
+  //     '/helpcenter'
+  //   ) {
+  //     setIsAdminBoard(false);
+  //   }
+  // }, [isAdminBoard]);
 
   return (
     <>
-      {(!meData ||
-        (isAdminBoard === false &&
-          (meData?.type === 'admin_user' || 'user'))) && (
+      {isAdminBoard === false && (
+        // &&
+        //   (meData?.type === 'admin_user' || 'user' || '')
         <>
           <Header
             meData={meData}
