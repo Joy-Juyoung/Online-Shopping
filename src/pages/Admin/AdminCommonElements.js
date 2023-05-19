@@ -124,6 +124,11 @@ export const AdTBody = styled.tbody`
 export const AdTBodyRow = styled.tr``;
 
 export const AdTBodyCell = styled.td`
+  button {
+    /* display: flex;
+    flex-direction: column;
+    align-items: center; */
+  }
   /* itemList */
   &.check {
     padding-left: 15px;

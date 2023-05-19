@@ -41,6 +41,13 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import MoreIcon from '@mui/icons-material/More';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import {
+  AdButtonAccept,
+  AdButtonCancel,
+  AdButtonUtils,
+} from '../../../components/AdminComponents/AdminButtons';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+// import { AdButtonUtils } from '../../../components/AdminComponents/AdminButtons';
 
 const OrderPending = ({ meData }) => {
   const navigate = useNavigate();
@@ -71,7 +78,7 @@ const OrderPending = ({ meData }) => {
     setLoading(true);
     getOrders();
     setPendings(orders?.filter((po) => po?.status === 'pending'));
-    setInprogress(orders?.filter((po) => po?.status === 'inprogress'));
+    // setInprogress(orders?.filter((po) => po?.status === 'inprogress'));
   }, [meData]);
 
   const lastPostIndex = currentPage * postsPerPage;
@@ -83,7 +90,6 @@ const OrderPending = ({ meData }) => {
 
   const handleDetails = async (pk) => {
     toggleModal(!modalShown);
-    console.log('pk', pk);
 
     const orderedData = await axios.get(`/orders/${pk}`, {
       headers: { 'Content-Type': 'application/json' },
@@ -111,8 +117,6 @@ const OrderPending = ({ meData }) => {
   };
 
   const handleAccept = async (pk) => {
-    // console.log('pk', pk);
-
     const statusChange = await axios.put(
       `/orders/${pk}`,
       {
@@ -151,7 +155,7 @@ const OrderPending = ({ meData }) => {
             );
           })
     );
-  }, [searchValue]);
+  }, [orders, searchValue]);
 
   if (loading)
     return (
@@ -174,18 +178,17 @@ const OrderPending = ({ meData }) => {
           <AdTHead>
             <AdTHeadeRow>
               <AdTHeadCell className='id'>ID</AdTHeadCell>
-              <AdTHeadCell className='username'>NAME</AdTHeadCell>
+              <AdTHeadCell className='username'>USER</AdTHeadCell>
               <AdTHeadCell className='qty'>QTY</AdTHeadCell>
-              <AdTHeadCell className='totalPrice'>TOTAL PRCIE</AdTHeadCell>
+              <AdTHeadCell className='qty'></AdTHeadCell>
+              <AdTHeadCell className='totalPrice'>TOTAL</AdTHeadCell>
               <AdTHeadCell className='date'>ORDER DATE</AdTHeadCell>
               <AdTHeadCell className='status'>STATUS</AdTHeadCell>
               <AdTHeadCell className='details'></AdTHeadCell>
             </AdTHeadeRow>
           </AdTHead>
-          {currentPosts?.map((pendingOrder) => {
-            {
-              /* {searchedList?.map((pendingOrder) => { */
-            }
+          {/* {currentPosts?.map((pendingOrder) => { */}
+          {searchedList?.map((pendingOrder) => {
             return (
               <AdTBody key={pendingOrder?.pk}>
                 <AdTBodyRow>
@@ -193,33 +196,36 @@ const OrderPending = ({ meData }) => {
                   <AdTBodyCell className='username'>
                     {pendingOrder?.user?.username}
                   </AdTBodyCell>
-                  <AdTBodyCell
-                    className='qty'
-                    // style={{ display: 'flex' }}
-                  >
+                  <AdTBodyCell className='username'>
                     {pendingOrder?.total_products}
-                    <MoreIcon
+                  </AdTBodyCell>
+                  <AdTBodyCell className='qty'>
+                    <AdButtonUtils
                       onClick={(e) => {
                         handleDetails(pendingOrder?.pk);
                       }}
-                      fontSize='13px'
-                      style={{ margin: '0 5px', cursor: 'pointer' }}
-                    />
+                    >
+                      View
+                    </AdButtonUtils>
                   </AdTBodyCell>
                   <AdTBodyCell className='totalPrice'>
                     {pendingOrder?.total_price}
                   </AdTBodyCell>
-                  <AdTBodyCell className='date'>
+                  <AdTBodyCell style={{ width: '25%' }}>
                     {new Date(pendingOrder?.created_at).toLocaleString('en-ca')}
                   </AdTBodyCell>
                   <AdTBodyCell>{pendingOrder?.status}</AdTBodyCell>
-                  <AdTBodyCell className='details'>
-                    <button onClick={() => handleCancel(pendingOrder?.pk)}>
-                      Cancel
-                    </button>
-                    <button onClick={() => handleAccept(pendingOrder?.pk)}>
-                      Accept
-                    </button>
+                  <AdTBodyCell style={{ width: '18%' }}>
+                    <AdButtonCancel
+                      onClick={() => handleCancel(pendingOrder?.pk)}
+                    >
+                      CANCEL
+                    </AdButtonCancel>
+                    <AdButtonAccept
+                      onClick={() => handleAccept(pendingOrder?.pk)}
+                    >
+                      ACCEPT
+                    </AdButtonAccept>
                   </AdTBodyCell>
                 </AdTBodyRow>
               </AdTBody>
