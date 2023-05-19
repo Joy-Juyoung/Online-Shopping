@@ -91,9 +91,9 @@ export const SidebarData = [
     path: '/admin/coupons',
     icon: <RedeemIcon />,
   },
-  {
-    title: 'Feedbacks',
-    path: '/admin/feedbacks',
-    icon: <QuestionAnswerIcon />,
-  },
+  // {
+  //   title: 'Feedbacks',
+  //   path: '/admin/feedbacks',
+  //   icon: <QuestionAnswerIcon />,
+  // },
 ];

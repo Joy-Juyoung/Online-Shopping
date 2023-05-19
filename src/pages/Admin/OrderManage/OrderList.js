@@ -277,17 +277,26 @@ const OrderList = ({ meData }) => {
                 name='status'
                 id='status'
                 onChange={handelStatusOption}
-                defaultValue={orderById?.status}
+                // defaultValue={orderById?.status}
               >
                 {statusOptionData?.map((optionData, index) => (
                   <>
                     {orderById?.status === optionData && (
-                      <option key={index} value={optionData || ''} selected>
+                      <option
+                        key={index}
+                        value={optionData || ''}
+                        defaultValue={orderById?.status}
+                        selected
+                      >
                         {optionData}
                       </option>
                     )}
                     {orderById?.status !== optionData && (
-                      <option key={index} value={optionData || ''}>
+                      <option
+                        key={index}
+                        value={optionData || ''}
+                        defaultValue={orderById?.status}
+                      >
                         {optionData}
                       </option>
                     )}
