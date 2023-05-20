@@ -185,7 +185,8 @@ export const AdCountText = styled.div`
 `;
 
 export const AdCountIcon = styled.div`
-  display: block;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   /* font-size: 13px; */
@@ -335,4 +336,14 @@ export const ViewAllBtn = styled.div`
       /* border-left: 10px solid #ad8260; */
     }
   }
+`;
+
+export const EmptyList = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 15px;
+  opacity: 0.6;
 `;
