@@ -122,7 +122,7 @@ const OrderManage = ({ meData }) => {
         </AdViewCount>
 
         <AdViewList>
-          <AdViewStatus>
+          <AdViewStatus className='pending'>
             <AdStatus>
               <table>
                 <tr>
@@ -148,12 +148,12 @@ const OrderManage = ({ meData }) => {
                   );
                 })}
               </table>
-              <ViewAllBtn>
+              <ViewAllBtn className='pending'>
                 View All <KeyboardDoubleArrowRightIcon sx={{ fontSize: 15 }} />
               </ViewAllBtn>
             </AdStatus>
           </AdViewStatus>
-          <AdViewStatus>
+          <AdViewStatus className='inprogress'>
             <AdStatus>
               <table>
                 <tr>
@@ -179,12 +179,12 @@ const OrderManage = ({ meData }) => {
                   );
                 })}
               </table>
-              <ViewAllBtn>
+              <ViewAllBtn className='inprogress'>
                 View All <KeyboardDoubleArrowRightIcon sx={{ fontSize: 15 }} />
               </ViewAllBtn>
             </AdStatus>
           </AdViewStatus>
-          <AdViewStatus>
+          <AdViewStatus className='delivered'>
             <AdStatus>
               <table>
                 <tr>
@@ -210,12 +210,12 @@ const OrderManage = ({ meData }) => {
                   );
                 })}
               </table>
-              <ViewAllBtn>
+              <ViewAllBtn className='delivered'>
                 View All <KeyboardDoubleArrowRightIcon sx={{ fontSize: 15 }} />
               </ViewAllBtn>
             </AdStatus>
           </AdViewStatus>
-          <AdViewStatus>
+          <AdViewStatus className='cancel'>
             <AdStatus>
               <table>
                 <tr>
@@ -241,7 +241,7 @@ const OrderManage = ({ meData }) => {
                   );
                 })}
               </table>
-              <ViewAllBtn>
+              <ViewAllBtn className='cancel'>
                 View All <KeyboardDoubleArrowRightIcon sx={{ fontSize: 15 }} />
               </ViewAllBtn>
             </AdStatus>

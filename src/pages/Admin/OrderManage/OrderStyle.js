@@ -206,6 +206,34 @@ export const AdViewStatus = styled.div`
   border-radius: 20px;
   box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.1);
   position: relative;
+
+  &.pending {
+    /* background: #f2b155; */
+    color: #b74a01;
+    border: 1px solid #f2b155;
+    /* border-left: 10px solid #f2b155; */
+  }
+
+  &.inprogress {
+    /* background: #61b9ff; */
+    color: #005260;
+    border: 1px solid #61b9ff;
+    /* border-left: 10px solid #61b9ff; */
+  }
+
+  &.delivered {
+    /* background: #73b748; */
+    color: #006b21;
+    border: 1px solid #73b748;
+    /* border-left: 10px solid #73b748; */
+  }
+
+  &.cancel {
+    /* background: #ad8260; */
+    color: #82591c;
+    border: 1px solid #ad8260;
+    /* border-left: 10px solid #ad8260; */
+  }
 `;
 
 export const AdStatus = styled.div`
@@ -236,20 +264,75 @@ export const ViewAllBtn = styled.div`
   position: absolute;
   bottom: 15px;
   right: 20px;
-  /* width: 100%; */
   display: flex;
   align-items: center;
   font-size: 13px;
-  background: #e9e9e7;
+  /* background: #e9e7e7; */
   padding: 3px 10px;
   border-radius: 10px;
   cursor: pointer;
+  color: #fff;
 
   svg {
     margin-left: 5px;
   }
 
+  &.pending {
+    background: #f2b155;
+    /* color: #b74a01; */
+    border: 1px solid #f2b155;
+    /* border-left: 10px solid #f2b155; */
+  }
+
+  &.inprogress {
+    background: #61b9ff;
+    /* color: #005260; */
+    border: 1px solid #61b9ff;
+    /* border-left: 10px solid #61b9ff; */
+  }
+
+  &.delivered {
+    background: #73b748;
+    /* color: #006b21; */
+    border: 1px solid #73b748;
+    /* border-left: 10px solid #73b748; */
+  }
+
+  &.cancel {
+    background: #ad8260;
+    /* color: #82591c; */
+    border: 1px solid #ad8260;
+    /* border-left: 10px solid #ad8260; */
+  }
+
   &:hover {
-    font-weight: 600;
+    background: #fff;
+    &.pending {
+      /* background: #f2b155; */
+      color: #b74a01;
+      border: 1px solid #f2b155;
+      /* border-left: 10px solid #f2b155; */
+    }
+
+    &.inprogress {
+      /* background: #61b9ff; */
+      color: #005260;
+      border: 1px solid #61b9ff;
+      /* border-left: 10px solid #61b9ff; */
+    }
+
+    &.delivered {
+      /* background: #73b748; */
+      color: #006b21;
+      border: 1px solid #73b748;
+      /* border-left: 10px solid #73b748; */
+    }
+
+    &.cancel {
+      /* background: #ad8260; */
+      color: #82591c;
+      border: 1px solid #ad8260;
+      /* border-left: 10px solid #ad8260; */
+    }
   }
 `;
