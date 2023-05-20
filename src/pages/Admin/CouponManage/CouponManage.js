@@ -19,7 +19,7 @@ import {
 import axios from '../../../api/axios';
 import Loading from '../../../components/Loading';
 import Pagination from '../../../components/AdminComponents/Pagination';
-import { ButtonSmall } from '../../../components/ButtonElements';
+import { ButtonSmall, ButtonUtils } from '../../../components/ButtonElements';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -173,12 +173,13 @@ const CouponManage = ({ meData }) => {
                     {new Date(coupon?.created_at).toLocaleString('en-ca')}
                   </AdTBodyCell>
                   <AdTBodyCell className='details'>
-                    <ArrowForwardIosIcon
-                      fontSize='15px'
+                    <ButtonUtils
                       onClick={(e) => {
                         handleOpenCoupon(coupon?.pk);
                       }}
-                    />
+                    >
+                      View
+                    </ButtonUtils>
                   </AdTBodyCell>
                 </AdTBodyRow>
               </AdTBody>

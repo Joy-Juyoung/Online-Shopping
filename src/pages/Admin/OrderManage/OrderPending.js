@@ -33,12 +33,9 @@ import {
 import axios from '../../../api/axios';
 import Loading from '../../../components/Loading';
 import Pagination from '../../../components/AdminComponents//Pagination';
-import { ButtonSmall } from '../../../components/ButtonElements';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+
 import AdminModal from '../../../components/AdminComponents/AdminModal';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import MoreIcon from '@mui/icons-material/More';
+
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import {
@@ -77,7 +74,7 @@ const OrderPending = ({ meData }) => {
   useEffect(() => {
     setLoading(true);
     getOrders();
-    setPendings(orders?.filter((po) => po?.status === 'pending'));
+    // setPendings(orders?.filter((po) => po?.status === 'pending'));
     // setInprogress(orders?.filter((po) => po?.status === 'inprogress'));
   }, [meData]);
 
@@ -209,7 +206,7 @@ const OrderPending = ({ meData }) => {
                     </AdButtonUtils>
                   </AdTBodyCell>
                   <AdTBodyCell className='totalPrice'>
-                    {pendingOrder?.total_price}
+                    ${pendingOrder?.total_price?.toLocaleString()}
                   </AdTBodyCell>
                   <AdTBodyCell style={{ width: '25%' }}>
                     {new Date(pendingOrder?.created_at).toLocaleString('en-ca')}

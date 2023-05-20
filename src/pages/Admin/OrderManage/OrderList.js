@@ -13,35 +13,14 @@ import {
   AdTHead,
   AdTHeadCell,
   AdTHeadeRow,
-  BodyImg,
-  CheckInput,
 } from '../AdminCommonElements';
 import axios from '../../../api/axios';
 import Loading from '../../../components/Loading';
 import Pagination from '../../../components/AdminComponents//Pagination';
-import { ButtonSmall } from '../../../components/ButtonElements';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import AdminModal from '../../../components/AdminComponents/AdminModal';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import {
-  DeliveredCheck,
-  DeliveredInput,
-  DeliveredLabel,
-  DeliveredSlider,
-  DeliveredToggle,
-  ReviewBtn,
-  Table,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
-} from './OrderStyle';
-import { Link, useNavigate } from 'react-router-dom';
 
-import MoreIcon from '@mui/icons-material/More';
-import { Filter } from '@material-ui/icons';
+import AdminModal from '../../../components/AdminComponents/AdminModal';
+import { Table, Tbody, Td, Th, Thead, Tr } from './OrderStyle';
+import { useNavigate } from 'react-router-dom';
 import { AdButtonUtils } from '../../../components/AdminComponents/AdminButtons';
 
 const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
@@ -93,9 +72,9 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
     setOrderById(orderedData?.data);
   };
 
-  const handleSwitch = () => {
-    setIsSwitch(!isSwitch);
-  };
+  // const handleSwitch = () => {
+  //   setIsSwitch(!isSwitch);
+  // };
 
   const statusOptionData = ['pending', 'inprogress', 'delivered', 'cancelled'];
 
@@ -179,7 +158,7 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
               <AdTHeadCell className='id'>ID</AdTHeadCell>
               <AdTHeadCell className='username'>ORDER USER</AdTHeadCell>
               <AdTHeadCell className='qty'>QTY</AdTHeadCell>
-              <AdTHeadCell className='totalPrice'>TOTAL PRCIE</AdTHeadCell>
+              <AdTHeadCell className='totalPrice'>TOTAL</AdTHeadCell>
               <AdTHeadCell className='date'>ORDER DATE</AdTHeadCell>
               <AdTHeadCell className='status'>STATUS</AdTHeadCell>
               <AdTHeadCell className='details'></AdTHeadCell>
@@ -199,7 +178,7 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
                     {order?.total_products}
                   </AdTBodyCell>
                   <AdTBodyCell className='totalPrice'>
-                    {order?.total_price}
+                    ${order?.total_price?.toLocaleString()}
                   </AdTBodyCell>
                   <AdTBodyCell className='date'>
                     {new Date(order?.created_at).toLocaleString('en-ca')}
