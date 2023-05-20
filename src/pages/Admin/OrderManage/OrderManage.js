@@ -149,7 +149,8 @@ const OrderManage = ({ meData }) => {
                 })}
               </table>
               <ViewAllBtn className='pending'>
-                View All <KeyboardDoubleArrowRightIcon sx={{ fontSize: 15 }} />
+                View All Pending Orders
+                <KeyboardDoubleArrowRightIcon sx={{ fontSize: 15 }} />
               </ViewAllBtn>
             </AdStatus>
           </AdViewStatus>
@@ -180,7 +181,8 @@ const OrderManage = ({ meData }) => {
                 })}
               </table>
               <ViewAllBtn className='inprogress'>
-                View All <KeyboardDoubleArrowRightIcon sx={{ fontSize: 15 }} />
+                View All Inprogress orders
+                <KeyboardDoubleArrowRightIcon sx={{ fontSize: 15 }} />
               </ViewAllBtn>
             </AdStatus>
           </AdViewStatus>
@@ -211,7 +213,8 @@ const OrderManage = ({ meData }) => {
                 })}
               </table>
               <ViewAllBtn className='delivered'>
-                View All <KeyboardDoubleArrowRightIcon sx={{ fontSize: 15 }} />
+                View All Delivered orders
+                <KeyboardDoubleArrowRightIcon sx={{ fontSize: 15 }} />
               </ViewAllBtn>
             </AdStatus>
           </AdViewStatus>
@@ -242,7 +245,8 @@ const OrderManage = ({ meData }) => {
                 })}
               </table>
               <ViewAllBtn className='cancel'>
-                View All <KeyboardDoubleArrowRightIcon sx={{ fontSize: 15 }} />
+                View All Cancelled orders
+                <KeyboardDoubleArrowRightIcon sx={{ fontSize: 15 }} />
               </ViewAllBtn>
             </AdStatus>
           </AdViewStatus>
