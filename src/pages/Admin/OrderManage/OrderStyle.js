@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Table = styled.table`
@@ -261,7 +262,8 @@ export const AdStatus = styled.div`
   }
 `;
 
-export const ViewAllBtn = styled.div`
+export const ViewAllBtn = styled(Link)`
+  text-decoration: none;
   position: absolute;
   bottom: 15px;
   right: 20px;
@@ -273,6 +275,10 @@ export const ViewAllBtn = styled.div`
   border-radius: 10px;
   cursor: pointer;
   color: #fff;
+
+  &:visited {
+    color: #fff;
+  }
 
   svg {
     margin-left: 5px;

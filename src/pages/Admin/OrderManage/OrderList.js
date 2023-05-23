@@ -28,6 +28,7 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
   const [loading, setLoading] = useState(false);
   const [orders, setOrders] = useState();
   const [modalShown, toggleModal] = useState(false);
+  const [cleanupModal, setCleanupModal] = useState(false);
   const [isSwitch, setIsSwitch] = useState(false);
 
   const [isSelected, setIsSelected] = useState(false);
@@ -62,6 +63,7 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
 
   const handleOrderDetails = async (pk) => {
     toggleModal(!modalShown);
+
     console.log('pk', pk);
 
     const orderedData = await axios.get(`/orders/${pk}`, {
@@ -165,8 +167,8 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
             </AdTHeadeRow>
           </AdTHead>
           {/* ?.filter((list) => '' || list?.pk.toString().includes(searchValue)) */}
-          {/* {currentPosts?.map((order) => { */}
-          {searchedList?.map((order) => {
+          {currentPosts?.map((order) => {
+            // {searchedList?.map((order) => {
             return (
               <AdTBody key={order?.pk}>
                 <AdTBodyRow>
@@ -212,6 +214,7 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
         shown={modalShown}
         close={() => {
           toggleModal(false);
+          // setCleanupModal();
         }}
       >
         <div>
@@ -254,31 +257,20 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
                 name='status'
                 id='status'
                 onChange={handelStatusOption}
-                // defaultValue={orderById?.status}
+                defaultValue={orderById?.status}
               >
-                {statusOptionData?.map((optionData, index) => (
-                  <>
-                    {orderById?.status === optionData && (
-                      <option
-                        key={index}
-                        value={optionData || ''}
-                        defaultValue={orderById?.status}
-                        selected
-                      >
-                        {optionData}
-                      </option>
-                    )}
-                    {orderById?.status !== optionData && (
-                      <option
-                        key={index}
-                        value={optionData || ''}
-                        defaultValue={orderById?.status}
-                      >
-                        {optionData}
-                      </option>
-                    )}
-                  </>
-                ))}
+                {statusOptionData?.map((optionData, index) => {
+                  // console.log('optionData', orderById?.status);
+                  return (
+                    <option
+                      key={index}
+                      // value={optionData || ''}
+                      defaultValue={orderById?.status}
+                    >
+                      {optionData}
+                    </option>
+                  );
+                })}
               </select>
               <button onClick={() => handelUpdateOption(orderById?.pk)}>
                 Update
