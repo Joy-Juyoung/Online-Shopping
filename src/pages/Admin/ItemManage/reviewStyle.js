@@ -1,5 +1,6 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-
+import { Rating } from '@mui/material';
 // export const AdListTop = styled.div`
 //   display: flex;
 //   align-items: center;
@@ -141,4 +142,57 @@ export const AdReviewEmpty = styled.div`
   svg {
     font-size: 80px;
   }
+`;
+
+// -----
+export const AdReviewDetailWrap = styled.div`
+  h2 {
+    font-size: 18px;
+  }
+`;
+
+export const AdReviewDetailInfo = styled.div``;
+
+export const AdReviewDetails = styled.div``;
+
+export const AdReviewDetailUserInfo = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+`;
+
+export const AdReviewDetailAvarta = styled.div`
+  margin-right: 10px;
+`;
+
+export const AdReviewDetailUser = styled.div`
+  margin-right: 10px;
+`;
+
+export const AdReviewDetailRating = styled(Rating)({
+  '&.MuiRating-iconFilled': {
+    color: '#ffb41e',
+  },
+  '&.MuiRating-iconHover': {
+    color: '#ffb41e',
+  },
+});
+
+export const AdReviewDetailDate = styled.div`
+  font-size: 13px;
+  span {
+    margin-right: 5px;
+  }
+`;
+
+export const AdReviewDetailPayload = styled.div`
+  margin: 15px 0;
+  font-size: 16px;
+`;
+
+export const AdReviewDetailBtn = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  /* margin-top: 10px; */
+  /* border: none; */
 `;

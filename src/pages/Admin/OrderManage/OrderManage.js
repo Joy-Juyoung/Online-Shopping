@@ -23,10 +23,10 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import DoNotDisturbAltIcon from '@mui/icons-material/DoNotDisturbAlt';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import { Link } from 'react-router-dom';
 
 const OrderManage = ({ meData }) => {
   const [loading, setLoading] = useState(false);
-  const [isEmpty, setIsEmpty] = useState(false);
   const [orders, setOrders] = useState();
 
   const [pendingList, setPendingList] = useState();
@@ -61,10 +61,10 @@ const OrderManage = ({ meData }) => {
     setCancelList(orders?.filter((po) => po?.status === 'cancelled'));
   }, [orders]);
 
-  console.log('pendingList', pendingList);
-  console.log('inprogresList', inprogressList);
-  console.log('deliveredList', deliveredList);
-  console.log('cancelList', cancelList);
+  // console.log('pendingList', pendingList);
+  // console.log('inprogresList', inprogressList);
+  // console.log('deliveredList', deliveredList);
+  // console.log('cancelList', cancelList);
 
   // if (isEmpty)
   //   return (
@@ -141,31 +141,37 @@ const OrderManage = ({ meData }) => {
             ) : (
               <AdStatus>
                 <table>
-                  <tr>
-                    <th>No.</th>
-                    <th>USER</th>
-                    <th>QTY</th>
-                    <th>TOTAL</th>
-                    <th>DATE</th>
-                  </tr>
-                  {pendingList?.slice(0, 5).map((pl) => {
-                    return (
-                      <tr key={pl?.pk}>
-                        <td style={{ width: '10%' }}>{pl?.pk}</td>
-                        <td style={{ width: '20%' }}>{pl?.user?.username}</td>
-                        <td style={{ width: '10%' }}>{pl?.total_products}</td>
-                        <td style={{ width: '20%' }}>
-                          ${pl?.total_price?.toLocaleString()}
-                        </td>
-                        <td>
-                          {new Date(pl?.created_at).toLocaleString('en-ca')}
-                        </td>
-                      </tr>
-                    );
-                  })}
+                  <thead>
+                    <tr>
+                      <th>No.</th>
+                      <th>USER</th>
+                      <th>QTY</th>
+                      <th>TOTAL</th>
+                      <th>DATE</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {pendingList?.slice(0, 5).map((pl) => {
+                      return (
+                        <tr key={pl?.pk}>
+                          <td style={{ width: '10%' }}>{pl?.pk}</td>
+                          <td style={{ width: '20%' }}>{pl?.user?.username}</td>
+                          <td style={{ width: '10%' }}>{pl?.total_products}</td>
+                          <td style={{ width: '20%' }}>
+                            ${pl?.total_price?.toLocaleString()}
+                          </td>
+                          <td>
+                            {new Date(pl?.created_at).toLocaleString('en-ca')}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
                 </table>
-                <ViewAllBtn className='pending'>
+                <ViewAllBtn className='pending' to='/admin/orders/pending'>
+                  {/* <Link to='/admin/orders/pending'> */}
                   View All Pending Orders
+                  {/* </Link> */}
                   <KeyboardDoubleArrowRightIcon sx={{ fontSize: 15 }} />
                 </ViewAllBtn>
               </AdStatus>
@@ -180,30 +186,34 @@ const OrderManage = ({ meData }) => {
             ) : (
               <AdStatus>
                 <table>
-                  <tr>
-                    <th>No.</th>
-                    <th>USER</th>
-                    <th>QTY</th>
-                    <th>TOTAL</th>
-                    <th>DATE</th>
-                  </tr>
-                  {inprogressList?.slice(0, 5).map((il) => {
-                    return (
-                      <tr key={il?.pk}>
-                        <td style={{ width: '10%' }}>{il?.pk}</td>
-                        <td style={{ width: '20%' }}>{il?.user?.username}</td>
-                        <td style={{ width: '10%' }}>{il?.total_products}</td>
-                        <td style={{ width: '20%' }}>
-                          ${il?.total_price?.toLocaleString()}
-                        </td>
-                        <td>
-                          {new Date(il?.created_at).toLocaleString('en-ca')}
-                        </td>
-                      </tr>
-                    );
-                  })}
+                  <thead>
+                    <tr>
+                      <th>No.</th>
+                      <th>USER</th>
+                      <th>QTY</th>
+                      <th>TOTAL</th>
+                      <th>DATE</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {inprogressList?.slice(0, 5).map((il) => {
+                      return (
+                        <tr key={il?.pk}>
+                          <td style={{ width: '10%' }}>{il?.pk}</td>
+                          <td style={{ width: '20%' }}>{il?.user?.username}</td>
+                          <td style={{ width: '10%' }}>{il?.total_products}</td>
+                          <td style={{ width: '20%' }}>
+                            ${il?.total_price?.toLocaleString()}
+                          </td>
+                          <td>
+                            {new Date(il?.created_at).toLocaleString('en-ca')}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
                 </table>
-                <ViewAllBtn className='inprogress'>
+                <ViewAllBtn className='inprogress' to='/admin/orders/all'>
                   View All Inprogress orders
                   <KeyboardDoubleArrowRightIcon sx={{ fontSize: 15 }} />
                 </ViewAllBtn>
@@ -219,30 +229,34 @@ const OrderManage = ({ meData }) => {
             ) : (
               <AdStatus>
                 <table>
-                  <tr>
-                    <th>No.</th>
-                    <th>USER</th>
-                    <th>QTY</th>
-                    <th>TOTAL</th>
-                    <th>DATE</th>
-                  </tr>
-                  {deliveredList?.slice(0, 5).map((dl) => {
-                    return (
-                      <tr key={dl?.pk}>
-                        <td style={{ width: '10%' }}>{dl?.pk}</td>
-                        <td style={{ width: '20%' }}>{dl?.user?.username}</td>
-                        <td style={{ width: '10%' }}>{dl?.total_products}</td>
-                        <td style={{ width: '20%' }}>
-                          ${dl?.total_price?.toLocaleString()}
-                        </td>
-                        <td>
-                          {new Date(dl?.created_at).toLocaleString('en-ca')}
-                        </td>
-                      </tr>
-                    );
-                  })}
+                  <thead>
+                    <tr>
+                      <th>No.</th>
+                      <th>USER</th>
+                      <th>QTY</th>
+                      <th>TOTAL</th>
+                      <th>DATE</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {deliveredList?.slice(0, 5).map((dl) => {
+                      return (
+                        <tr key={dl?.pk}>
+                          <td style={{ width: '10%' }}>{dl?.pk}</td>
+                          <td style={{ width: '20%' }}>{dl?.user?.username}</td>
+                          <td style={{ width: '10%' }}>{dl?.total_products}</td>
+                          <td style={{ width: '20%' }}>
+                            ${dl?.total_price?.toLocaleString()}
+                          </td>
+                          <td>
+                            {new Date(dl?.created_at).toLocaleString('en-ca')}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
                 </table>
-                <ViewAllBtn className='delivered'>
+                <ViewAllBtn className='delivered' to='/admin/orders/all'>
                   View All Delivered orders
                   <KeyboardDoubleArrowRightIcon sx={{ fontSize: 15 }} />
                 </ViewAllBtn>
@@ -258,30 +272,34 @@ const OrderManage = ({ meData }) => {
             ) : (
               <AdStatus>
                 <table>
-                  <tr>
-                    <th>No.</th>
-                    <th>USER</th>
-                    <th>QTY</th>
-                    <th>TOTAL</th>
-                    <th>DATE</th>
-                  </tr>
-                  {cancelList?.slice(0, 5).map((cl) => {
-                    return (
-                      <tr key={cl?.pk}>
-                        <td style={{ width: '10%' }}>{cl?.pk}</td>
-                        <td style={{ width: '20%' }}>{cl?.user?.username}</td>
-                        <td style={{ width: '10%' }}>{cl?.total_products}</td>
-                        <td style={{ width: '20%' }}>
-                          ${cl?.total_price?.toLocaleString()}
-                        </td>
-                        <td>
-                          {new Date(cl?.created_at).toLocaleString('en-ca')}
-                        </td>
-                      </tr>
-                    );
-                  })}
+                  <thead>
+                    <tr>
+                      <th>No.</th>
+                      <th>USER</th>
+                      <th>QTY</th>
+                      <th>TOTAL</th>
+                      <th>DATE</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {cancelList?.slice(0, 5).map((cl) => {
+                      return (
+                        <tr key={cl?.pk}>
+                          <td style={{ width: '10%' }}>{cl?.pk}</td>
+                          <td style={{ width: '20%' }}>{cl?.user?.username}</td>
+                          <td style={{ width: '10%' }}>{cl?.total_products}</td>
+                          <td style={{ width: '20%' }}>
+                            ${cl?.total_price?.toLocaleString()}
+                          </td>
+                          <td>
+                            {new Date(cl?.created_at).toLocaleString('en-ca')}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
                 </table>
-                <ViewAllBtn className='cancel'>
+                <ViewAllBtn className='cancel' to='/admin/orders/all'>
                   View All Cancelled orders
                   <KeyboardDoubleArrowRightIcon sx={{ fontSize: 15 }} />
                 </ViewAllBtn>

@@ -40,67 +40,43 @@ const Footer = ({ click, isNewWindow }) => {
     <FooterContainer>
       <FooterWrapper>
         <FooterLineOne>
-          <AboLink>
-            {/* <a href='https://about.musinsa.com/en'> */}
-            <a href=''>About MUSINSA</a>
-          </AboLink>
-          <TerLink>
-            {/* <a href='https://global.musinsa.com/ca/member/agreement/service'> */}
-            <a href=''>Terms & Conditions</a>
-          </TerLink>
-          <PriLink>
-            {/* <a
-              href='https://global.musinsa.com/ca/member/agreement/privacy-policy'
-              style={{ textDecoration: 'none', color: 'dimgray' }}
-            > */}
-            <a href=''>
-              <strong>Privacy Policy</strong>
-            </a>
-          </PriLink>
+          {/* <AboLink>About BLANKCLOSET</AboLink> */}
+          {/* <TerLink>Terms & Conditions</TerLink> */}
+          {/* <PriLink>
+            <strong>Privacy Policy</strong>
+          </PriLink> */}
         </FooterLineOne>
         <FooterLineTwo>
-          <HelpBtn>
-            <HelpIcon>
-              <Link to='/helpcenter'>Help Center</Link>
-              <ChatBubbleOutlineIcon fontSize='small' />
-            </HelpIcon>
-          </HelpBtn>
-          <DownloadPart>
+          {/* <HelpBtn> */}
+          {/* <HelpIcon> */}
+          {/* <Link to='/helpcenter'>Help Center</Link> */}
+          <ChatBubbleOutlineIcon fontSize='small' />
+          Contact Us
+          <span>Email: blank_dev@google.com</span>
+          <span>Phone: +1 123-456-7890</span>
+          {/* </HelpIcon> */}
+          {/* </HelpBtn> */}
+          {/* <DownloadPart>
             <DownloadTitle>Download the MUSINSA app</DownloadTitle>
             <DownApp>
-              {/* <a href='https://apps.apple.com/app/id1637547116'> */}
-              <a href=''>
-                <AppImg src={AppStore} />
-              </a>
+              <AppImg src={AppStore} />
             </DownApp>
 
             <DownGoo>
-              {/* <a href='https://play.google.com/store/apps/details?id=com.musinsa.global&pli=1'> */}
-              <a href=''>
-                <GooImg src={GooPlay} />
-              </a>
+              <GooImg src={GooPlay} />
             </DownGoo>
-          </DownloadPart>
+          </DownloadPart> */}
           <SocialPart>
             <InstarTab>
-              {/* <a href='https://www.instagram.com/musinsa_global/'> */}
-              <a href=''>
-                <InstarImg src={Instar} />
-              </a>
+              <InstarImg src={Instar} />
             </InstarTab>
 
             <TwitTab>
-              {/* <a href='https://twitter.com/musinsa_global/'> */}
-              <a href=''>
-                <TwitImg src={Twit} />
-              </a>
+              <TwitImg src={Twit} />
             </TwitTab>
 
             <YoutubTab>
-              {/* <a href='https://www.youtube.com/musinsatv/'> */}
-              <a href=''>
-                <YoutubImg src={Youtub} />
-              </a>
+              <YoutubImg src={Youtub} />
             </YoutubTab>
           </SocialPart>
         </FooterLineTwo>

@@ -17,6 +17,18 @@ import {
   AdReviewItemInfo,
   AdReviewMidSide,
   AdReviewHeader,
+  AdReviewDetailWrap,
+  AdReviewDetailName,
+  AdReviewDetailInfo,
+  AdReviewDetails,
+  AdReviewDetailTop,
+  AdReviewDetailAvarta,
+  AdReviewDetailUser,
+  AdReviewDetailRating,
+  AdReviewDetailDate,
+  AdReviewDetailPayload,
+  AdReviewDetailBtn,
+  AdReviewDetailUserInfo,
 } from './reviewStyle';
 import Avatar from '@mui/material/Avatar';
 import axios from '../../../api/axios';
@@ -27,17 +39,7 @@ import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArro
 import ReplyIcon from '@mui/icons-material/Reply';
 import AdminModal from '../../../components/AdminComponents/AdminModal';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {
-  ListOneAvatar,
-  ListOneLink,
-  ListOneName,
-  ReviewListDetail,
-  ReviewListFour,
-  ReviewListOne,
-  ReviewListThree,
-  ReviewListTwo,
-  StyledRating,
-} from '../../ProductPage/ProductDetailElements';
+import { AdButtonUtils } from '../../../components/AdminComponents/AdminButtons';
 
 const ItemReviews = ({ meData }) => {
   const [loading, setLoading] = useState(false);
@@ -71,25 +73,17 @@ const ItemReviews = ({ meData }) => {
     (rv, index) => rv?.Product_Name?.indexOf(rv?.Product_Name) !== index
   );
 
-  // console.log('uniqueList', uniqueList);
-
   const handleViewReviews = async (pk) => {
-    // console.log('pk', pk);
-
     const productReview = await axios.get(`/products/${pk}`, {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    // console.log('newList', productReview.data);
     setNewList(productReview?.data);
   };
-
-  // console.log('newList', newList);
 
   const handleProductSearch = (e) => {
     setSearchProductValue(e.target.value);
   };
-  // console.log('searchProductValue', searchProductValue);
 
   useEffect(() => {
     setSearchedProductList(
@@ -112,7 +106,6 @@ const ItemReviews = ({ meData }) => {
   const handleReviewSearch = (e) => {
     setSearchReviewValue(e.target.value);
   };
-  // console.log('searchReviewValue', searchReviewValue);
 
   useEffect(() => {
     setSearchedReviewList(
@@ -142,14 +135,27 @@ const ItemReviews = ({ meData }) => {
 
   const handleView = async (pk) => {
     toggleModal(!modalShown);
-    // console.log('pk', pk);
-
     const review = await axios.get(`/reviews/${pk}`, {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
     console.log('Review', review.data);
     setReviewByUser(review.data);
+  };
+
+  const handleReviewDelete = async (pk) => {
+    // console.log('pk', pk);
+    if (window.confirm('Are you sure you want to delete this review?')) {
+      const reviewDel = await axios.delete(`/reviews/${pk}`, {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      });
+      console.log('Review', reviewDel.data);
+      window.location.reload();
+    }
+    // else {
+    //   }
+    // setReviewByUser(review.data);
   };
 
   if (loading)
@@ -261,7 +267,7 @@ const ItemReviews = ({ meData }) => {
                             {nrv?.user?.pk}
                           </AdReviewTd>
                           <AdReviewTd>{nrv?.user?.username}</AdReviewTd>
-                          <AdReviewTd>{nrv?.rating?.toString()}</AdReviewTd>
+                          <AdReviewTd>{nrv?.rating}</AdReviewTd>
                           <AdReviewTd style={{ width: '30%' }}>
                             {nrv?.payload?.length > 15 ? (
                               `${nrv?.payload?.substring(0, 15)}...`
@@ -295,57 +301,45 @@ const ItemReviews = ({ meData }) => {
           toggleModal(false);
         }}
       >
-        <div>
-          {/* <h2>Review details</h2> */}
-          <span style={{ fontSize: '15px' }}>
-            <strong>{reviewByUser?.Product_Name}</strong>
-          </span>
-          <div>
-            {/* <div>{reviewByUser?.Product_Name}</div>
-            <div>{reviewByUser?.payload}</div> */}
-            <ReviewListDetail>
-              <ReviewListOne>
-                <ListOneLink>
-                  <ListOneAvatar>
-                    <Avatar sx={{ width: 30, height: 30 }}>C</Avatar>
-                  </ListOneAvatar>
-                  <ListOneName>
-                    <span>{reviewByUser?.user?.username}</span>
-                  </ListOneName>
-                </ListOneLink>
-                <StyledRating
-                  size='small'
-                  value={reviewByUser?.rating?.toString() || ''}
-                  readOnly
-                />
-              </ReviewListOne>
-              <ReviewListTwo>
-                {/* <StyledRating
-                  size='small'
-                  value={reviewByUser?.rating}
-                  readOnly
-                /> */}
-                {/* <RatingWrap>
-                  <span style={{ fontSize: '15px' }}>
-                    <strong>{reviewByUser?.Product_Name}</strong>
-                  </span>
-                </RatingWrap> */}
-              </ReviewListTwo>
-              <ReviewListFour>
-                <span>
-                  Reviewed on{' '}
-                  {new Date(reviewByUser?.updated_at).toLocaleString('en-ca')}
-                </span>
-              </ReviewListFour>
-              <ReviewListThree>
-                <span>{reviewByUser?.payload}</span>
-              </ReviewListThree>
-            </ReviewListDetail>
-          </div>
-          <div>
-            <button>Delete</button>
-          </div>
-        </div>
+        <AdReviewDetailWrap>
+          <h2>
+            {reviewByUser?.product}. {reviewByUser?.Product_Name}
+          </h2>
+          <AdReviewDetailInfo>
+            {/* <AdReviewDetails> */}
+            <AdReviewDetailUserInfo>
+              <AdReviewDetailAvarta>
+                <Avatar sx={{ width: 30, height: 30 }}>
+                  {reviewByUser?.user?.username?.substring(0, 1)}
+                </Avatar>
+              </AdReviewDetailAvarta>
+              <AdReviewDetailUser>
+                <span>{reviewByUser?.user?.username}</span>
+              </AdReviewDetailUser>
+              <AdReviewDetailRating
+                size='small'
+                value={reviewByUser?.rating || 0}
+                readOnly
+              />
+            </AdReviewDetailUserInfo>
+
+            <AdReviewDetailDate>
+              <span>Reviewed on</span>
+              {new Date(reviewByUser?.updated_at).toLocaleString('en-ca')}
+            </AdReviewDetailDate>
+
+            <AdReviewDetailPayload>
+              <span>{reviewByUser?.payload}</span>
+            </AdReviewDetailPayload>
+            {/* </AdReviewDetails> */}
+          </AdReviewDetailInfo>
+
+          <AdReviewDetailBtn>
+            <AdButtonUtils onClick={() => handleReviewDelete(reviewByUser?.pk)}>
+              Delete
+            </AdButtonUtils>
+          </AdReviewDetailBtn>
+        </AdReviewDetailWrap>
       </AdminModal>
     </AdContainer>
   );
