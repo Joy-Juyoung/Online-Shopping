@@ -22,6 +22,8 @@ import Pagination from '../../../components/AdminComponents//Pagination';
 import { ButtonSmall } from '../../../components/ButtonElements';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import AdminModal from '../../../components/AdminComponents/AdminModal';
+import AddNewItem from './AddNewItem';
 
 const ItemList = ({ meData }) => {
   const [loading, setLoading] = useState(false);
@@ -30,6 +32,8 @@ const ItemList = ({ meData }) => {
   const [searchValue, setSearchValue] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(8);
+
+  const [modalShown, toggleModal] = useState(false);
 
   const getProducts = async () => {
     const itemList = await axios.get('/products/', {
@@ -95,10 +99,21 @@ const ItemList = ({ meData }) => {
           />
         </AdListSearch>
         <AdListUtils>
-          <ButtonSmall>Add</ButtonSmall>
+          <ButtonSmall onClick={() => toggleModal(!modalShown)}>
+            Add
+          </ButtonSmall>
           <ButtonSmall>Delete</ButtonSmall>
         </AdListUtils>
       </AdListTop>
+
+      <AdminModal
+        shown={modalShown}
+        close={() => {
+          toggleModal(false);
+        }}
+      >
+        <AddNewItem />
+      </AdminModal>
 
       <AdListMid>
         <AdTable>

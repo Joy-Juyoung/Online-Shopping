@@ -119,8 +119,8 @@ export const AdCount = styled.div`
   width: 100%;
   height: 80px;
 
-  background: #fff;
-  color: #fff;
+  /* background: #fff; */
+  /* color: #fff; */
   border-radius: 20px;
   display: flex;
   align-items: center;
@@ -129,39 +129,42 @@ export const AdCount = styled.div`
 
   box-shadow: 4px 4px 6px 0 rgba(0, 0, 0, 0.1);
 
+  /* color: #21201e;
+  border: 2px solid #21201e;
+  border-left: 10px solid #21201e; */
+
   &.total {
-    /* background: #e05076; */
     color: #93334b;
     border: 2px solid #e05076;
     border-left: 10px solid #e05076;
   }
 
   &.pending {
-    /* background: #f2b155; */
     color: #b74a01;
     border: 2px solid #f2b155;
     border-left: 10px solid #f2b155;
+    /* opacity: 0.7; */
   }
 
   &.inprogress {
-    /* background: #61b9ff; */
     color: #005260;
     border: 2px solid #61b9ff;
     border-left: 10px solid #61b9ff;
+    /* opacity: 0.7; */
   }
 
   &.delivered {
-    /* background: #73b748; */
     color: #006b21;
     border: 2px solid #73b748;
     border-left: 10px solid #73b748;
+    /* opacity: 0.7; */
   }
 
   &.cancel {
-    /* background: #ad8260; */
     color: #82591c;
     border: 2px solid #ad8260;
     border-left: 10px solid #ad8260;
+    /* opacity: 0.7; */
   }
 `;
 
@@ -210,31 +213,23 @@ export const AdViewStatus = styled.div`
   position: relative;
 
   &.pending {
-    /* background: #f2b155; */
     color: #b74a01;
     border: 1px solid #f2b155;
-    /* border-left: 10px solid #f2b155; */
   }
 
   &.inprogress {
-    /* background: #61b9ff; */
     color: #005260;
     border: 1px solid #61b9ff;
-    /* border-left: 10px solid #61b9ff; */
   }
 
   &.delivered {
-    /* background: #73b748; */
     color: #006b21;
     border: 1px solid #73b748;
-    /* border-left: 10px solid #73b748; */
   }
 
   &.cancel {
-    /* background: #ad8260; */
     color: #82591c;
     border: 1px solid #ad8260;
-    /* border-left: 10px solid #ad8260; */
   }
 `;
 
@@ -286,60 +281,44 @@ export const ViewAllBtn = styled(Link)`
 
   &.pending {
     background: #f2b155;
-    /* color: #b74a01; */
     border: 1px solid #f2b155;
-    /* border-left: 10px solid #f2b155; */
   }
 
   &.inprogress {
     background: #61b9ff;
-    /* color: #005260; */
     border: 1px solid #61b9ff;
-    /* border-left: 10px solid #61b9ff; */
   }
 
   &.delivered {
     background: #73b748;
-    /* color: #006b21; */
     border: 1px solid #73b748;
-    /* border-left: 10px solid #73b748; */
   }
 
   &.cancel {
     background: #ad8260;
-    /* color: #82591c; */
     border: 1px solid #ad8260;
-    /* border-left: 10px solid #ad8260; */
   }
 
   &:hover {
     background: #fff;
     &.pending {
-      /* background: #f2b155; */
       color: #b74a01;
       border: 1px solid #f2b155;
-      /* border-left: 10px solid #f2b155; */
     }
 
     &.inprogress {
-      /* background: #61b9ff; */
       color: #005260;
       border: 1px solid #61b9ff;
-      /* border-left: 10px solid #61b9ff; */
     }
 
     &.delivered {
-      /* background: #73b748; */
       color: #006b21;
       border: 1px solid #73b748;
-      /* border-left: 10px solid #73b748; */
     }
 
     &.cancel {
-      /* background: #ad8260; */
       color: #82591c;
       border: 1px solid #ad8260;
-      /* border-left: 10px solid #ad8260; */
     }
   }
 `;
