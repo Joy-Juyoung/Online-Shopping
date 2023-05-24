@@ -173,16 +173,14 @@ const SideFilter = ({
                 </ListSub>
               )}
             </SideFilterLl>
-          ) : (
-            <SideFilterLl>
-              <SideListDetails>
-                <SideListTitle>PRICE</SideListTitle>
-                <SideIcon onClick={() => setIsPriceDrop(!isPriceDrop)}>
-                  {/* {isPriceDrop ? <ExpandLessIcon /> : <ExpandMoreIcon />} */}
-                </SideIcon>
-              </SideListDetails>
-            </SideFilterLl>
-          )}
+          ) : // <SideFilterLl>
+          //   <SideListDetails>
+          //     <SideListTitle>PRICE</SideListTitle>
+          //     <SideIcon onClick={() => setIsPriceDrop(!isPriceDrop)}>
+          //     </SideIcon>
+          //   </SideListDetails>
+          // </SideFilterLl>
+          null}
         </SideFilterUl>
       </SideFilterWrapper>
     </SideFilterContainer>

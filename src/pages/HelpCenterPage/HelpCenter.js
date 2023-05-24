@@ -70,7 +70,7 @@ function HelpCenter() {
   return (
     <HelpCenterContainer>
       <HelpCenterHeaderWrap>
-        <HelpCenterHeaderNav>
+        {/* <HelpCenterHeaderNav>
           <MainLink to='/'>
             <span>BlanketCLoset HelpCenter</span>
           </MainLink>
@@ -85,7 +85,7 @@ function HelpCenter() {
               <span>Submit a request</span>
             </SubmitRequestBtn>
           </SideBtnWrap>
-        </HelpCenterHeaderNav>
+        </HelpCenterHeaderNav> */}
       </HelpCenterHeaderWrap>
       <HelpCenterWrapper>
         <HelpCenterTop>
@@ -107,7 +107,6 @@ function HelpCenter() {
                 <p>Ganadara</p>
                 <p>Help Me</p>
                 <p>Basic</p>
-                <p>How to make 족발</p>
               </DetailThreeLists>
             </TopDetailThree>
           </TopDetailWrap>

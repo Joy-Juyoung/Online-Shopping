@@ -69,6 +69,7 @@ import AdminSidebar from '../components/AdminComponents/Sidebar/AdminSidebar';
 import AdminHeader from '../components/AdminComponents/AdminHeader';
 import { Container } from './CommonElements';
 import HeaderBackup from '../components/Header/HeaderBackup';
+import EmptyPage from './EmptyPage';
 
 const Home = () => {
   const [meData, setMeData] = useState();
@@ -287,9 +288,10 @@ const Home = () => {
 
               <Route
                 path='/helpcenter'
-                element={<HelpCenterPage meData={meData} />}
+                element={<HelpCenterPage />}
                 exact={true}
               />
+              <Route path='/comingsoon' element={<EmptyPage />} exact={true} />
             </Routes>
           </Container>
           <Footer />
@@ -361,11 +363,11 @@ const Home = () => {
                   element={<CouponManage />}
                   exact={true}
                 />
-                <Route
+                {/* <Route
                   path='/admin/feedbacks'
                   element={<FeedbackManage />}
                   exact={true}
-                />
+                /> */}
               </Routes>
             </AdminContainer>
           </AdminBg>

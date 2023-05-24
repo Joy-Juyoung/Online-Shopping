@@ -27,6 +27,7 @@ export const AboLink = styled.div`
   font-size: 12px;
   line-height: 18px;
   display: inline-block;
+  color: #a9a9a9;
   a {
     text-decoration: none;
     color: #a9a9a9;
@@ -51,6 +52,7 @@ export const PriLink = styled.div`
   line-height: 18px;
   display: inline-block;
   font-weight: bold;
+  color: #696969;
   a {
     text-decoration: none;
     color: #696969;
