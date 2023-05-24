@@ -3,31 +3,41 @@ import React, { useEffect, useState } from 'react';
 import axios from '../../../api/axios';
 import { ButtonSmall, ButtonUtils } from '../../../components/ButtonElements';
 import { Input } from '../../../components/InputElements';
+import { VerificationMsg } from '../../LoginPage/LoginElements';
 import {
+  AddNextBtn,
   BoxBtn,
   BoxH2,
   BoxH3,
   BoxLi,
   BoxListLine,
+  BoxListSelecteLine,
+  BoxNotice,
   BoxSpan,
+  BoxSuccess,
   BoxUl,
   BoxUserList,
   BoxUsers,
   PopupBox,
 } from './CouponStyle';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 const AddNewCoupon = ({ coupons }) => {
-  const [newCoupone, setNewCoupon] = useState();
+  const [newCoupon, setNewCoupon] = useState();
 
   const [checkedUser, setCheckedUser] = useState('');
-  const [addUser, setAddUser] = useState([]);
-  const [addedUsers, setAddedUsers] = useState([]);
+  const [addUser, setAddUser] = useState('');
+  const [addedUsers, setAddedUsers] = useState('');
+  const [addCouponStart, setAddCouponStart] = useState();
+  const [addCouponEnd, setAddCouponEnd] = useState();
 
   const [addCouponName, setAddCouponName] = useState('');
   const [addCouponDesc, setAddCouponDesc] = useState('');
   const [addDiscount, setAddDiscount] = useState(0);
   const [isNext, setIsNext] = useState(false);
-  const [validNext, setValidNext] = useState(false);
+  // const [validNext, setValidNext] = useState(false);
+  const [duration, setDuration] = useState(false);
 
   const [customers, setCustomers] = useState();
 
@@ -42,7 +52,9 @@ const AddNewCoupon = ({ coupons }) => {
 
   useEffect(() => {
     getCustomers();
-    setNewCoupon(coupons);
+    // setNewCoupon(coupons);
+    setDuration(false);
+    setIsNext(false);
   }, [coupons]);
 
   const handleAddNewCoupon = (e) => {
@@ -57,6 +69,14 @@ const AddNewCoupon = ({ coupons }) => {
     }
   };
 
+  const handleValidNext = () => {
+    if (!addCouponName || !addCouponDesc || !addDiscount) {
+      setIsNext(false);
+    } else {
+      setIsNext(true);
+    }
+  };
+
   const handleAddNewUser = (e) => {
     setCheckedUser({ ...checkedUser, [e.target.value]: e.target.checked });
   };
@@ -67,59 +87,123 @@ const AddNewCoupon = ({ coupons }) => {
         .filter(([key, value]) => value)
         .map((added, index) => added[0])
     );
-
-    // setAddedUsers([
-    //   ...addedUsers,
-    //   customers?.filter((cf) => {
-    //     if (cf?.pk === addUser) {
-    //       console.log('cf', cf);
-    //     }
-    //   }),
-    // ]);
   }, [checkedUser]);
 
   useEffect(() => {
-    customers?.map((c) => {
-      if (addUser?.includes(c?.pk.toString())) {
-        if (!addedUsers?.includes(c?.username)) {
-          setAddedUsers([...addedUsers, c?.username]);
-        } else {
-          setAddedUsers([]);
-        }
-      }
-    });
+    if (addUser) {
+      // const dupItems = addUser?.filter((item) => customers?.pk?.includes(item));
+      // const dupItems = addUser?.filter((item) => customers?.includes(item));
+      // const dupItems = customers?.filter((item) =>
+      //   addUser?.includes(item?.pk.toString())
+      // );
+      // const output = [
+      //   ...addUser?.filter((item) => !dupItems?.includes(item)),
+      //   ...customers?.filter((item) => !dupItems?.includes(item)),
+      // ];
+      // console.log('dupItems', dupItems);
+      // console.log(output);
+      setAddedUsers(
+        customers?.filter((item) => addUser?.includes(item?.pk.toString()))
+      );
+    }
   }, [addUser]);
 
-  // console.log('test', test);
-  console.log('addUser', addUser);
   console.log('addedUsers', addedUsers);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // setValidNext()
+    if (addedUsers?.length === 0) {
+      console.log('Please select the users');
+      setDuration(false);
+    } else {
+      const newAdded = await axios.post(
+        '/coupons/',
+        {
+          users: addUser,
+          name: addCouponName,
+          description: addCouponDesc,
+          discount_rate: addDiscount,
+        },
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        }
+      );
+      // console.log('newCoupon', newAdded?.data);
+      setNewCoupon(newAdded?.data);
+      setDuration(true);
+      handleDefault(newAdded?.data?.pk);
+    }
+  };
 
-    const newCoupon = await axios.post(
-      '/coupons/',
+  const handleDefault = async (pk) => {
+    var month = '' + (new Date().getMonth() + 1);
+    var day = '' + new Date().getDate();
+    var endDay = '' + (new Date().getDate() + 5);
+    if (month.length < 2) {
+      month = '0' + month;
+    }
+    if (day.length < 2 || endDay.length < 2) {
+      day = '0' + day;
+      endDay = '0' + endDay;
+    }
+    const tempDate = new Date();
+    const defaultStart = tempDate.getFullYear() + '-' + month + '-' + day;
+    const defaultEnd = tempDate.getFullYear() + '-' + month + '-' + endDay;
+    const newCp = await axios.put(
+      `/coupons/${pk}`,
       {
-        users: addUser,
-        name: addCouponName,
-        description: addCouponDesc,
-        discount_rate: addDiscount,
+        start_date: defaultStart,
+        end_date: defaultEnd,
       },
       {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
       }
     );
-    console.log('newCoupon', newCoupon?.data);
+    console.log('newCsss', newCp?.data);
+  };
+
+  const handleAddDate = (e) => {
+    console.log(e.target.value);
+    if (e.target.id === 'couponStart') {
+      setAddCouponStart(e.target.value);
+    }
+    if (e.target.id === 'couponEnd') {
+      setAddCouponEnd(e.target.value);
+    }
+  };
+
+  // console.log('new Date()', new Date() + 1);
+
+  // const today = new Date();
+  // const tomorrow = new Date(today);
+
+  const handleUpdate = async () => {
+    setAddCouponStart(addCouponStart);
+    setAddCouponEnd(addCouponEnd);
+
+    const newCp = await axios.put(
+      `/coupons/${newCoupon?.pk}`,
+      {
+        start_date: addCouponStart,
+        end_date: addCouponEnd,
+      },
+      {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      }
+    );
+
+    console.log('newCoupon', newCp?.data);
     window.location.reload();
   };
 
   return (
     <PopupBox>
       <form onSubmit={handleSubmit}>
-        {!isNext && (
+        {!isNext && !duration && (
           <Box>
             <BoxH2>New Coupon</BoxH2>
             <BoxUl>
@@ -130,6 +214,7 @@ const AddNewCoupon = ({ coupons }) => {
                     type='text'
                     placeholder='Coupon name'
                     id='couponName'
+                    value={addCouponName || ''}
                     onChange={handleAddNewCoupon}
                   />
                 </BoxSpan>
@@ -138,6 +223,7 @@ const AddNewCoupon = ({ coupons }) => {
                     type='text'
                     placeholder='Coupon description'
                     id='couponDesc'
+                    value={addCouponDesc || ''}
                     onChange={handleAddNewCoupon}
                   />
                 </BoxSpan>
@@ -146,29 +232,40 @@ const AddNewCoupon = ({ coupons }) => {
                     type='number'
                     placeholder='Discount rate %'
                     id='couponRate'
+                    value={addDiscount || ''}
                     onChange={handleAddNewCoupon}
                   />
                 </BoxSpan>
               </BoxLi>
             </BoxUl>
+
+            <VerificationMsg
+              id='uidnote'
+              style={{
+                display:
+                  !addCouponName || !addCouponDesc || !addDiscount
+                    ? 'flex'
+                    : 'none',
+                marginBottom: '20px',
+              }}
+            >
+              <ErrorOutlineIcon fontSize='small' style={{ color: 'red' }} />
+              <span>Please fill in all the field.</span>
+            </VerificationMsg>
             <BoxBtn className='prev'>
-              {/* {!addCouponName || !addCouponDesc || !addDiscount ? (
-                <ButtonSmall disabled>Next</ButtonSmall>
-              ) : (
-                <ButtonSmall onClick={() => setIsNext(!isNext)}>
-                  Next
-                </ButtonSmall>
-              )} */}
-              <ButtonSmall onClick={() => setIsNext(!isNext)}>Next</ButtonSmall>
+              <AddNextBtn onClick={handleValidNext}>Next</AddNextBtn>
             </BoxBtn>
           </Box>
         )}
-        {isNext && (
+        {isNext && !duration && (
           <Box>
             <BoxH2>New Coupon</BoxH2>
-            <BoxH3>Select Users</BoxH3>
             <BoxUsers>
-              <p>total {customers?.length}</p>
+              <BoxH3>
+                <h3>Users</h3>
+                <p>total {customers?.length}</p>
+              </BoxH3>
+
               <BoxUserList>
                 {customers?.map((user) => {
                   return (
@@ -181,7 +278,7 @@ const AddNewCoupon = ({ coupons }) => {
                         onChange={(e) => handleAddNewUser(e)}
                         checked={checkedUser[user?.pk] || ''}
                       />
-                      <p>{user.pk}</p>
+                      <p>{user.pk}.</p>
                       <span>{user.username}</span>
                     </BoxListLine>
                   );
@@ -189,18 +286,73 @@ const AddNewCoupon = ({ coupons }) => {
               </BoxUserList>
             </BoxUsers>
             <BoxUsers>
-              <p>Added Users</p>
+              <BoxH3>
+                <h3>Selected Users</h3>
+                <p>total {addedUsers?.length}</p>
+              </BoxH3>
               <BoxUserList>
-                <BoxListLine>{addedUsers}</BoxListLine>
+                {addedUsers &&
+                  addedUsers?.map((added, index) => {
+                    return (
+                      <BoxListSelecteLine key={added.pk}>
+                        <p>{added.pk}.</p>
+                        <span>{added.username}</span>
+                      </BoxListSelecteLine>
+                    );
+                  })}
+                {addedUsers?.length === 0 && (
+                  <BoxListSelecteLine>
+                    <p>Please select the users from above</p>
+                  </BoxListSelecteLine>
+                )}
               </BoxUserList>
             </BoxUsers>
+            <VerificationMsg
+              id='uidnote'
+              style={{
+                display: addedUsers?.length === 0 ? 'flex' : 'none',
+                marginBottom: '20px',
+              }}
+            >
+              <ErrorOutlineIcon fontSize='small' style={{ color: 'red' }} />
+              <span>Please select the users.</span>
+            </VerificationMsg>
             <BoxBtn className='next'>
-              <ButtonSmall onClick={() => setIsNext(!isNext)}>Back</ButtonSmall>
+              <AddNextBtn onClick={() => setIsNext(!isNext)}>Back</AddNextBtn>
               <ButtonSmall>Create</ButtonSmall>
             </BoxBtn>
           </Box>
         )}
       </form>
+      {duration && (
+        <Box>
+          <BoxH2>
+            <BoxSuccess>
+              <CheckCircleOutlineIcon color='success' sx={{ fontSize: 50 }} />
+              SUCCESSFULLY ADDED NEW COUPON!
+            </BoxSuccess>
+          </BoxH2>
+          <BoxUl>
+            <BoxNotice>
+              Please select a date if you want to set the activation date for
+              the coupon you added.
+              <p>*Default date: from today to 5 days later</p>
+            </BoxNotice>
+            <BoxLi>
+              <BoxSpan>
+                <Input type='date' id='couponStart' onChange={handleAddDate} />
+              </BoxSpan>
+              <BoxSpan>
+                <Input type='date' id='couponEnd' onChange={handleAddDate} />
+              </BoxSpan>
+            </BoxLi>
+          </BoxUl>
+
+          <BoxBtn className='prev'>
+            <AddNextBtn onClick={handleUpdate}>Update</AddNextBtn>
+          </BoxBtn>
+        </Box>
+      )}
     </PopupBox>
   );
 };

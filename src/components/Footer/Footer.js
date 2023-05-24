@@ -82,7 +82,7 @@ const Footer = ({ click, isNewWindow }) => {
         </FooterLineTwo>
         <FooterLineThree>
           {/* 추후 드랍다운 */}
-          <LocationInfoBtn>Learn more about MUSINSA Co.,Ltd.</LocationInfoBtn>
+          {/* <LocationInfoBtn>Learn more about MUSINSA Co.,Ltd.</LocationInfoBtn> */}
           <CompanyInfo>
             MUSINSA Co.,Ltd may not be the direct seller but only an
             intermediary for some products. In this case, MUSINSA has limited

@@ -40,7 +40,7 @@ import AddNewCoupon from './AddNewCoupon';
 const CouponManage = ({ meData }) => {
   const [loading, setLoading] = useState(false);
   const [coupons, setCoupons] = useState();
-  const [couponEach, setCouponEach] = useState([]);
+  const [couponEach, setCouponEach] = useState();
   const [couponDetails, setCouponDetails] = useState([]);
   const [selected, setSelected] = useState();
   const [isDrop, setIsDrop] = useState(false);
@@ -52,6 +52,8 @@ const CouponManage = ({ meData }) => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(8);
+
+  // const initialState = { name: null, inStock: null, price: null, type:null }
 
   const getCoupons = async () => {
     const couponList = await axios.get('/coupons/', {
@@ -75,7 +77,7 @@ const CouponManage = ({ meData }) => {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    console.log('couponEachList', couponEachList?.data);
+    // console.log('couponEachList', couponEachList?.data);
     setCouponEach(couponEachList?.data);
     setSelected(couponEach.pk);
     setIsDrop(!isDrop);
@@ -88,7 +90,7 @@ const CouponManage = ({ meData }) => {
   const handleSearch = (e) => {
     setSearchValue(e.target.value);
   };
-  console.log('searchValue', searchValue);
+  // console.log('searchValue', searchValue);
 
   useEffect(() => {
     setSearchedList(
@@ -108,6 +110,18 @@ const CouponManage = ({ meData }) => {
           })
     );
   }, [coupons, searchValue]);
+
+  const handleDeleteCoupon = async (pk) => {
+    if (window.confirm('Are you sure you want to delete this coupon?')) {
+      const coupondel = await axios.delete(`/coupons/${pk}`, {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      });
+      console.log('coupondel', coupondel?.data);
+      window.location.reload();
+      toggleModal(false);
+    }
+  };
 
   if (loading)
     return (
@@ -138,6 +152,7 @@ const CouponManage = ({ meData }) => {
         shown={addModalShown}
         close={() => {
           toggleAddModal(false);
+          window.location.reload();
         }}
       >
         <AddNewCoupon />
@@ -156,8 +171,10 @@ const CouponManage = ({ meData }) => {
           </AdTHead>
           {/* .sort((start, end) => start.created_at - end.created_at) */}
           {/* .reverse() */}
-          {/* {currentPosts?.map((coupon) => { */}
-          {searchedList?.map((coupon) => {
+          {currentPosts?.map((coupon) => {
+            {
+              /* {searchedList?.map((coupon) => { */
+            }
             return (
               <AdTBody key={coupon?.pk} className='coupon'>
                 <AdTBodyRow>
@@ -198,7 +215,9 @@ const CouponManage = ({ meData }) => {
       <AdminModal
         className='coupon'
         shown={modalShown}
+        modalShown
         close={() => {
+          // setCouponEach(couponEach?.reset());
           toggleModal(false);
         }}
       >
@@ -231,7 +250,9 @@ const CouponManage = ({ meData }) => {
             </CouponModalUsersList>
           </CouponModalMain>
           <CouponModalBottom>
-            {/* <ButtonSmall>Close</ButtonSmall> */}
+            <ButtonUtils onClick={() => handleDeleteCoupon(couponEach?.pk)}>
+              Delete Coupon
+            </ButtonUtils>
           </CouponModalBottom>
         </CouponModalWrap>
       </AdminModal>

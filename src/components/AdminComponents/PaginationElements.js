@@ -33,7 +33,7 @@ export const PageBtn = styled.div`
   height: 30px;
   font-weight: 600;
   font-size: 14px;
-  border-radius: 50%;
+  border-radius: 10px;
   margin: 0 5px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -47,7 +47,7 @@ export const PageBtn = styled.div`
   &.active {
     font-weight: 900;
     border-color: #101010;
-    background: #23282c;
+    background: #21201e;
     color: #fff;
   }
 `;

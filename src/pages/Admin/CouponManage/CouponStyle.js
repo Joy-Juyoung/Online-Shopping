@@ -2,7 +2,9 @@ import styled from 'styled-components';
 
 export const CouponModalWrap = styled.div`
   width: 100%;
-  height: 300px;
+  /* height: 300px; */
+  margin: 10px 0;
+  /* padding-bottom: 10px 0; */
 `;
 
 export const CouponModalTop = styled.div``;
@@ -32,6 +34,7 @@ export const CouponModalMain = styled.div`
   height: 200px; */
   /* overflow: scroll; */
   /* overflow: auto; */
+  margin-bottom: 20px;
 `;
 
 export const CouponModalUsers = styled.div`
@@ -51,6 +54,7 @@ export const CouponModalUsersList = styled.div`
   height: 200px;
   /* overflow: auto; */
   overflow-y: scroll;
+  /* margin-bottom: 20px; */
 
   ul {
     display: flex;
@@ -69,9 +73,8 @@ export const CouponModalUsersList = styled.div`
 `;
 
 export const CouponModalBottom = styled.div`
-  button {
-    width: 100px !important;
-  }
+  display: flex;
+  justify-content: flex-end;
 `;
 
 // Add New Coupon Modal
@@ -99,6 +102,42 @@ export const BoxUl = styled.ul`
 
 export const BoxUsers = styled.div`
   margin: 10px 0 20px;
+`;
+
+export const BoxH3 = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  h3 {
+    font-size: 15px;
+  }
+
+  p {
+    font-size: 11px;
+  }
+`;
+
+export const BoxSuccess = styled.div`
+  color: #009605;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 600;
+  margin-right: 10px;
+  margin-top: -10px;
+`;
+
+export const BoxNotice = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: space-between; */
+
+  h3 {
+    font-size: 14px;
+  }
 
   p {
     font-size: 11px;
@@ -121,12 +160,23 @@ export const BoxListLine = styled.div`
   font-size: 14px;
 
   p {
-    margin-right: 20px;
+    margin: 0 10px;
   }
 
   &:hover {
     background: lightgray;
-    /* color: #fff; */
+  }
+`;
+
+export const BoxListSelecteLine = styled.div`
+  display: flex;
+  align-items: center;
+  /* padding: 0 10px; */
+  cursor: pointer;
+  font-size: 14px;
+
+  p {
+    margin: 0 10px;
   }
 `;
 
@@ -135,10 +185,6 @@ export const BoxLi = styled.li`
   flex-direction: column;
   justify-content: center;
   padding: 10px 0;
-`;
-
-export const BoxH3 = styled.h3`
-  font-size: 15px;
 `;
 
 export const BoxSpan = styled.span`
@@ -155,5 +201,27 @@ export const BoxBtn = styled.div`
 
   &.next {
     justify-content: space-between;
+  }
+`;
+
+export const AddNextBtn = styled.div`
+  width: auto;
+  min-width: 130px;
+  height: 44px;
+  border-radius: 6px;
+  background: #fff;
+  color: #0a0f18;
+  padding: 0 16px;
+  font-size: 16px;
+  outline: none;
+  border: 1px solid #a3a9b3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  text-decoration: none;
+
+  &:hover {
+    font-weight: 600;
   }
 `;
