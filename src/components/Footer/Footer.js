@@ -36,6 +36,7 @@ import Twit from '../../asset/twitter.png';
 import { Link } from 'react-router-dom';
 import Modal from '../Modal';
 import Comingsoon from '../Comingsoon';
+import EmailIcon from '@mui/icons-material/Email';
 
 // import Smaile from '../../asset/smaile.svg';
 // import Donuts from '../../asset/donuts.svg';
@@ -58,10 +59,14 @@ const Footer = ({ click, isNewWindow }) => {
         </FooterLineOne>
         <FooterLineTwo>
           <HelpBtn>
-            <Link to='/helpcenter'>
+            <Link to='mailto:dev3blank@gmail.com'>
               <HelpIcon>
-                Help Center
-                <ChatBubbleOutlineIcon fontSize='small' />
+                {/* Help Center
+              <EmailIcon fontSize='small' /> */}
+                <EmailIcon fontSize='small' />
+                <p>Contact Email</p>
+                {/* <span>Calgary, Canada</span> */}
+                <span>dev3blank@gmail.com</span>
               </HelpIcon>
             </Link>
           </HelpBtn>
