@@ -29,13 +29,15 @@ import SearchIcon from '@mui/icons-material/Search';
 import SearchBar from './SearchBar';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import axios from '../../api/axios';
+import { useLocation } from 'react-router-dom';
 
 const TestSearch = ({ onClose }) => {
   const [keywords, setKeywords] = useState(
     JSON.parse(localStorage.getItem('keywords') || '[]')
-    );
+  );
 
-  const [searchData, setSearchData] = useState([])
+  const [searchData, setSearchData] = useState([]);
+  // const location = useLocation();
 
   useEffect(() => {
     localStorage.setItem('keywords', JSON.stringify(keywords));
@@ -46,15 +48,19 @@ const TestSearch = ({ onClose }) => {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    console.log('dataList', dataList?.data);
+    // console.log('dataList', dataList?.data);
     setSearchData(dataList?.data);
     // setKeywords(dataList?.data);
   };
+  // console.log('keywords', '/products/search/' + keywords[0]);
 
   useEffect(() => {
     getSearchData();
-  },[]);
-  
+    // if (location.pathname?.toLowerCase().includes(keywords[0])) {
+    //   onClose();
+    // }
+  }, []);
+
   const handleAddKeyword = (text) => {
     console.log('text', text);
     const newKeyword = {
@@ -78,8 +84,7 @@ const TestSearch = ({ onClose }) => {
     setKeywords([]);
   };
   useEffect(() => {
-    const checkIfClickedOutside = (e) => {
-    };
+    const checkIfClickedOutside = (e) => {};
     document.addEventListener('click', checkIfClickedOutside);
     return () => {
       document.removeEventListener('click', checkIfClickedOutside);
@@ -92,10 +97,7 @@ const TestSearch = ({ onClose }) => {
         {/* <TestModalContainer> */}
         <TestModalWrapper>
           <ModalHeader>
-            <SearchBar 
-              onAddKeyword={handleAddKeyword}
-              onClose={onClose}
-            />
+            <SearchBar onAddKeyword={handleAddKeyword} onClose={onClose} />
             <ModalCloseBtn onClick={onClose}>
               <CloseIcon fontSize='large' />
             </ModalCloseBtn>
@@ -103,67 +105,79 @@ const TestSearch = ({ onClose }) => {
 
           <ModalBody>
             {keywords.length === 0 ? (
-                    <ModalBodyWrap>
-                        <ModalBodyHeader>
-                            <h3>Popular</h3>
-                        </ModalBodyHeader>
-                        {/* {keywords.slice(0,10).map((l) => ( */}
-                        {searchData.slice(0,10).map((l, index) => (
-                          <ModalBodyParagraph key={l.id} >
-                              <ModalBodyPList>
-                              <span>{index +1}</span>
-                              <p>{l.name}</p>
-                              </ModalBodyPList>
-                          </ModalBodyParagraph>
-                      ))}
-                    </ModalBodyWrap>
-                ):(
-                  <>
-                    <SearchResult>
-                        <ResultHeader>
-                            <h3>Recent</h3>
-                            {keywords.length ? (
-                            <HeaderDelete onClick={handleClearKeywords}>Delete History</HeaderDelete>
-                            ) : (
-                                <HeaderDelete />
-                            )}
-                        </ResultHeader>
-                        <ResultList>
-                            {keywords.slice(0,10).map((k) => (
-                              <ResultDetail key={k.id}>
-                                    <ResultLink 
-                                      onClick={onClose}
-                                      to={`/products/search/${k.text}`}
-                                      >
-                                        <AccessTimeIcon sx={{ width: 24, height: 25 }} color='disabled' fontSize='small' />
-                                        <p>{k.text}</p>
-                                        <span>Keyword</span>
-                                    </ResultLink>
-                                    <DetailDelete className="removeBtn" type="button" onClick={() => handleRemoveKeyword(k.id)}>
-                                        <CloseIcon sx={{ width: 14, height:14 }} color='disabled' fontSize='small' />
-                                    </DetailDelete>
-                                </ResultDetail>
-                            ))                                
-                            } 
-                        </ResultList>
-                    </SearchResult> 
-                    <ModalBodyWrap>
-                      <ModalBodyHeader>
-                        <h3>Popular</h3>
-                      </ModalBodyHeader>
-                        {searchData.slice(0,10).map((l, index) => (  
-                        <ModalBodyParagraph key={l.id} >                          
-                            <ModalBodyPList>
-                            <span>{index +1}</span>                    
-                            <p>{l.name}</p>
-                            </ModalBodyPList>
-                            
-                        </ModalBodyParagraph>
-                        ))}
-                      </ModalBodyWrap>
-                </>
-            )}        
-           </ModalBody>
+              <ModalBodyWrap>
+                <ModalBodyHeader>
+                  <h3>Popular</h3>
+                </ModalBodyHeader>
+                {/* {keywords.slice(0,10).map((l) => ( */}
+                {searchData.slice(0, 10).map((l, index) => (
+                  <ModalBodyParagraph key={l.id}>
+                    <ModalBodyPList>
+                      <span>{index + 1}</span>
+                      <p>{l.name}</p>
+                    </ModalBodyPList>
+                  </ModalBodyParagraph>
+                ))}
+              </ModalBodyWrap>
+            ) : (
+              <>
+                <SearchResult>
+                  <ResultHeader>
+                    <h3>Recent</h3>
+                    {keywords.length ? (
+                      <HeaderDelete onClick={handleClearKeywords}>
+                        Delete History
+                      </HeaderDelete>
+                    ) : (
+                      <HeaderDelete />
+                    )}
+                  </ResultHeader>
+                  <ResultList>
+                    {keywords.slice(0, 10).map((k) => (
+                      <ResultDetail key={k.id}>
+                        <ResultLink
+                          onClick={onClose}
+                          to={`/products/search/${k.text}`}
+                        >
+                          <AccessTimeIcon
+                            sx={{ width: 24, height: 25 }}
+                            color='disabled'
+                            fontSize='small'
+                          />
+                          <p>{k.text}</p>
+                          <span>Keyword</span>
+                        </ResultLink>
+                        <DetailDelete
+                          className='removeBtn'
+                          type='button'
+                          onClick={() => handleRemoveKeyword(k.id)}
+                        >
+                          <CloseIcon
+                            sx={{ width: 14, height: 14 }}
+                            color='disabled'
+                            fontSize='small'
+                          />
+                        </DetailDelete>
+                      </ResultDetail>
+                    ))}
+                  </ResultList>
+                </SearchResult>
+                <ModalBodyWrap>
+                  <ModalBodyHeader>
+                    <h3>Popular</h3>
+                  </ModalBodyHeader>
+                  {searchData.slice(0, 10).map((l, index) => (
+                    <ModalBodyParagraph key={l.id}>
+                      <ModalBodyPList>
+                        <span>{index + 1}</span>
+                        <p>{l.name}</p>
+                      </ModalBodyPList>
+                    </ModalBodyParagraph>
+                  ))}
+                </ModalBodyWrap>
+              </>
+            )}
+          </ModalBody>
         </TestModalWrapper>
         <TestModalContainer onClick={onClose}></TestModalContainer>
         {/* </TestModalContainer> */}

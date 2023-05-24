@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 import Loading from '../../components/Loading';
 import axios from '../../api/axios';
 import {
@@ -18,7 +18,6 @@ import ProductsCard from './ProductCard';
 import Category from './Category';
 import SideFilter from './SideFilter';
 
-
 const sort = [
   { value: 'Newest', text: 'Newest first' },
   { value: 'Popular', text: 'Most Popular' },
@@ -26,8 +25,7 @@ const sort = [
   { value: 'LowToHigh', text: 'Price: low to high' },
 ];
 
-
-const ResearchResult = ({ meData, catData }) => {
+const ResearchResult = ({ meData, catData, onClose }) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const { pId } = useParams();
@@ -35,10 +33,15 @@ const ResearchResult = ({ meData, catData }) => {
   const [sortList, setSortList] = useState([]);
   const [sortProducts, setSortProducts] = useState([]);
   const [addLiked, setAddLiked] = useState();
+  const [priceRange, setPriceRange] = useState();
+  const [itemsByPrice, setItemsByPrice] = useState([]);
+  // const location = useLocation();
 
-  const {searchValue} = useParams();
+  // const [isModalOpen, setIsModalOpen] = useState(false);
 
-  console.log("searchValue",searchValue);
+  const { searchValue } = useParams();
+
+  console.log('searchValue', searchValue);
 
   const getItems = async () => {
     const itemsList = await axios.get('/products/', {
@@ -47,13 +50,17 @@ const ResearchResult = ({ meData, catData }) => {
     });
     // console.log('ProductList', itemsList?.data);
     setItems(itemsList?.data);
+    // onClose();
     setLoading(false);
+    // onClose();
   };
 
   useEffect(() => {
     setLoading(true);
     getItems();
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+
+    // if(location.pathname === '/admin')
   }, []);
 
   useEffect(() => {
@@ -64,7 +71,7 @@ const ResearchResult = ({ meData, catData }) => {
     setSelectOption(e.target.value);
   };
 
- useEffect(() => {
+  useEffect(() => {
     console.log('selectedOptionnnn', selectOption);
     // if (itemKinds.name === cName) {
     switch (selectOption) {
@@ -88,17 +95,45 @@ const ResearchResult = ({ meData, catData }) => {
     }
     // }
   }, [selectOption, sortProducts]);
-  
-  const  filtered = !searchValue 
-                      ? items 
-                      : items.filter((list) =>             
-                        list.name.toLowerCase()
-                        .includes(searchValue.toLowerCase()) 
-                        || list.detail.toLowerCase()
-                        .includes(searchValue.toLowerCase())
-                        //  list.name.toLowerCase().indexOf(searchValue) !== -1
-                       // list.name.toLowerCase().match(searchValue)   
-                      )
+
+  useEffect(() => {
+    setItemsByPrice(items);
+
+    if (priceRange === 0) {
+      const rangeItems = items?.filter((range) => range?.price <= 50);
+      setItemsByPrice(rangeItems);
+    } else if (priceRange === 1) {
+      const rangeItems = items?.filter(
+        (range) => 50 < range?.price && range?.price <= 100
+      );
+      setItemsByPrice(rangeItems);
+    } else if (priceRange === 2) {
+      const rangeItems = items?.filter(
+        (range) => 100 < range?.price && range?.price <= 150
+      );
+      setItemsByPrice(rangeItems);
+    } else if (priceRange === 3) {
+      const rangeItems = items?.filter(
+        (range) => 150 < range?.price && range?.price <= 200
+      );
+      setItemsByPrice(rangeItems);
+    } else if (priceRange === 4) {
+      const rangeItems = items?.filter((range) => 200 < range?.price);
+      setItemsByPrice(rangeItems);
+    } else {
+      setItemsByPrice(items);
+    }
+  }, [priceRange]);
+
+  const filtered = !searchValue
+    ? items
+    : items.filter(
+        (list) =>
+          list.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+          list.detail.toLowerCase().includes(searchValue.toLowerCase())
+        //  list.name.toLowerCase().indexOf(searchValue) !== -1
+        // list.name.toLowerCase().match(searchValue)
+      );
 
   // useEffect(() => {
   //   setItems(
@@ -118,7 +153,17 @@ const ResearchResult = ({ meData, catData }) => {
       <h1>Search results for "{searchValue}"</h1>
       <Category items={items} />
       <ProductsWrap>
-        <SideFilter items={items} catData={catData} />
+        <SideFilter
+          items={items}
+          catData={catData}
+          rangeNone={() => setPriceRange('none')}
+          range0={() => setPriceRange(0)}
+          range1={() => setPriceRange(1)}
+          range2={() => setPriceRange(2)}
+          range3={() => setPriceRange(3)}
+          range4={() => setPriceRange(4)}
+          priceRange={priceRange}
+        />
         <ProductsListWrapper>
           <ProductsList>
             <ListTop>
@@ -145,7 +190,7 @@ const ResearchResult = ({ meData, catData }) => {
             <ListMidWrap>
               <ListMid>
                 {/* {items?.map((all) => { */}
-                {filtered?.map((all) => { 
+                {filtered?.map((all) => {
                   return (
                     <ProductsCard
                       key={all.pk}
@@ -162,7 +207,7 @@ const ResearchResult = ({ meData, catData }) => {
         </ProductsListWrapper>
       </ProductsWrap>
     </ProductsListContainer>
-  )
-}
+  );
+};
 
-export default ResearchResult
+export default ResearchResult;
