@@ -34,63 +34,92 @@ import Instar from '../../asset/insta.png';
 import Youtub from '../../asset/youtube.png';
 import Twit from '../../asset/twitter.png';
 import { Link } from 'react-router-dom';
+import Modal from '../Modal';
+import Comingsoon from '../Comingsoon';
+
+// import Smaile from '../../asset/smaile.svg';
+// import Donuts from '../../asset/donuts.svg';
 
 const Footer = ({ click, isNewWindow }) => {
+  const [modalShown, toggleModal] = useState(false);
   return (
     <FooterContainer>
       <FooterWrapper>
         <FooterLineOne>
-          {/* <AboLink>About BLANKCLOSET</AboLink> */}
-          {/* <TerLink>Terms & Conditions</TerLink> */}
-          {/* <PriLink>
-            <strong>Privacy Policy</strong>
-          </PriLink> */}
+          <AboLink onClick={() => toggleModal(!modalShown)}>
+            About BlankCloset
+          </AboLink>
+          <AboLink onClick={() => toggleModal(!modalShown)}>
+            Terms & Conditions
+          </AboLink>
+          <AboLink onClick={() => toggleModal(!modalShown)}>
+            Privacy Policy
+          </AboLink>
         </FooterLineOne>
         <FooterLineTwo>
-          {/* <HelpBtn> */}
-          {/* <HelpIcon> */}
-          {/* <Link to='/helpcenter'>Help Center</Link> */}
-          <ChatBubbleOutlineIcon fontSize='small' />
-          Contact Us
-          <span>Email: blank_dev@google.com</span>
-          <span>Phone: +1 123-456-7890</span>
-          {/* </HelpIcon> */}
-          {/* </HelpBtn> */}
-          {/* <DownloadPart>
-            <DownloadTitle>Download the MUSINSA app</DownloadTitle>
-            <DownApp>
+          <HelpBtn>
+            <Link to='/helpcenter'>
+              <HelpIcon>
+                Help Center
+                <ChatBubbleOutlineIcon fontSize='small' />
+              </HelpIcon>
+            </Link>
+          </HelpBtn>
+          <DownloadPart>
+            <DownloadTitle>Download the BlankCloset app</DownloadTitle>
+            <DownApp onClick={() => toggleModal(!modalShown)}>
+              {/* <Link to='/comingsoon'> */}
               <AppImg src={AppStore} />
+              {/* </Link> */}
             </DownApp>
 
-            <DownGoo>
+            <DownGoo onClick={() => toggleModal(!modalShown)}>
+              {/* <Link to=''> */}
               <GooImg src={GooPlay} />
+              {/* </Link> */}
             </DownGoo>
-          </DownloadPart> */}
+          </DownloadPart>
           <SocialPart>
             <InstarTab>
-              <InstarImg src={Instar} />
+              <Link
+                to='https://instagram.com/dev_blk?igshid=OGQ5ZDc2ODk2ZA=='
+                target='_blank'
+              >
+                <InstarImg src={Instar} />
+              </Link>
             </InstarTab>
 
-            <TwitTab>
+            <TwitTab onClick={() => toggleModal(!modalShown)}>
+              {/* <Link to=''> */}
               <TwitImg src={Twit} />
+              {/* </Link> */}
             </TwitTab>
 
-            <YoutubTab>
+            <YoutubTab onClick={() => toggleModal(!modalShown)}>
+              {/* <Link to=''> */}
               <YoutubImg src={Youtub} />
+              {/* </Link> */}
             </YoutubTab>
           </SocialPart>
         </FooterLineTwo>
         <FooterLineThree>
-          {/* 추후 드랍다운 */}
-          {/* <LocationInfoBtn>Learn more about MUSINSA Co.,Ltd.</LocationInfoBtn> */}
+          {/* <LocationInfoBtn>Learn more about BlankCloset Co.,Ltd.</LocationInfoBtn> */}
           <CompanyInfo>
-            MUSINSA Co.,Ltd may not be the direct seller but only an
-            intermediary for some products. In this case, MUSINSA has limited
-            liability for products, information, and transactions. Please check
-            the product details page of each product.
+            BlankCloset may not be the direct seller but only an intermediary
+            for some products. In this case, BlankCloset has limited liability
+            for products, information, and transactions. Please check the
+            product details page of each product.
           </CompanyInfo>
         </FooterLineThree>
       </FooterWrapper>
+      <Modal
+        shown={modalShown}
+        close={() => {
+          toggleModal(false);
+        }}
+      >
+        <Comingsoon />
+      </Modal>
     </FooterContainer>
   );
 };

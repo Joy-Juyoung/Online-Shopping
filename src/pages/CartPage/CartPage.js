@@ -72,55 +72,54 @@ const CartPage = () => {
   const [isCheckAll, setIsCheckAll] = useState(false);
   const [checkNewList, setCheckNewList] = useState([]);
 
-    useEffect(() => {
-      let ids = []
-      carts.map((item, i) => {
-        ids[i] = item.pk
-      })
-      setIdList(ids)
-      console.log("ids", ids);
-  }, [carts])
+  useEffect(() => {
+    let ids = [];
+    carts.map((item, i) => {
+      ids[i] = item.pk;
+    });
+    setIdList(ids);
+    console.log('ids', ids);
+  }, [carts]);
 
-    const onChangeAll = (e) => {
-      setCheckList(e.target.checked ? IdList : [])
-      // setIsCheckAll(!isCheckAll);
-      // setIsCheck(carts.map(li => li.pk));
-      // if (isCheckAll) {
-      //   setIsCheck([]);
-      // }
-   }
+  const onChangeAll = (e) => {
+    setCheckList(e.target.checked ? IdList : []);
+    // setIsCheckAll(!isCheckAll);
+    // setIsCheck(carts.map(li => li.pk));
+    // if (isCheckAll) {
+    //   setIsCheck([]);
+    // }
+  };
 
-   const onChangeEach = async (e, id) => {
+  const onChangeEach = async (e, id) => {
     // console.log("id",id);
-      if (e.target.checked) {
-          setCheckList([...checkList, id]);
-          const check = await axios.get(`/carts/${id}`, {
-            headers: { 'Content-Type': 'application/json' },
-            withCredentials: true,
-          });
-          setCheckNewList([...checkNewList, check.data]);
-          // setItemPrice(checkList.total_price);
-      } else {
-         setCheckList(checkList.filter((checkedId) => checkedId !== id));
-         setCheckNewList(checkNewList.filter((checked) => checked.pk !== id));
-      }
-      // const checked = e.target;
-      // setIsCheck([...isCheck, id]);
-      // if (!checked) {
-      //   setIsCheck(isCheck.filter(item => item !== id));
-      // }
+    if (e.target.checked) {
+      setCheckList([...checkList, id]);
+      const check = await axios.get(`/carts/${id}`, {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      });
+      setCheckNewList([...checkNewList, check.data]);
+      // setItemPrice(checkList.total_price);
+    } else {
+      setCheckList(checkList.filter((checkedId) => checkedId !== id));
+      setCheckNewList(checkNewList.filter((checked) => checked.pk !== id));
+    }
+    // const checked = e.target;
+    // setIsCheck([...isCheck, id]);
+    // if (!checked) {
+    //   setIsCheck(isCheck.filter(item => item !== id));
+    // }
+  };
+  console.log('each', checkList);
+  console.log('NEW', checkNewList);
 
-    };
-    console.log("each",checkList)
-    console.log("NEW", checkNewList);
-
-const handleCheckAll = () => {
-  setIsCheckAll(!isCheckAll);
-  setCheckList(carts.map(li => li.pk));
-      if (isCheckAll) {
-        setCheckList([]);
-      }
-}
+  const handleCheckAll = () => {
+    setIsCheckAll(!isCheckAll);
+    setCheckList(carts.map((li) => li.pk));
+    if (isCheckAll) {
+      setCheckList([]);
+    }
+  };
 
   const getAllCart = async () => {
     const cartList = await axios.get(CARTS_URL, {
@@ -140,8 +139,6 @@ const handleCheckAll = () => {
   }, []);
   // console.log('carts', carts);
 
-
- 
   // const handleAllDeleteCart = async (pk) => {
   //   alert('Are you sure you want to remove the products?');
   //   // console.log('pk', pk);
@@ -163,7 +160,7 @@ const handleCheckAll = () => {
     alert('Are you sure you want to remove the product?');
     // console.log('pk', pk);
     var tempCart = carts;
-    tempCart.forEach((c) => {
+    tempCart?.forEach((c) => {
       if (c.pk === pk) {
         // console.log('c.pk', c.pk);
         axios.delete(`/carts/${pk}`, {
@@ -258,22 +255,24 @@ const handleCheckAll = () => {
               <CartLeftCheckBar>
                 <CheckBarWrap>
                   <OrderCheckBox>
-                    <input 
+                    <input
                       type='checkbox'
-                      onChange={onChangeAll} 
+                      onChange={onChangeAll}
                       // onClick={handleCheckAll}
-                      checked={checkList.length === IdList.length} 
-                      // onChange={onChangeAll} 
+                      checked={checkList.length === IdList.length}
+                      // onChange={onChangeAll}
                       // checked={isCheckAll}
                     />
                     <label>All</label>
                   </OrderCheckBox>
                   <DeleteBtn
-                    //  onChange={(e) => {
-                    //   e.preventDefault();
-                    //   handleAllDeleteCart(carts.pk);
-                    // }}  
-                  >Delete</DeleteBtn>
+                  //  onChange={(e) => {
+                  //   e.preventDefault();
+                  //   handleAllDeleteCart(carts.pk);
+                  // }}
+                  >
+                    Delete
+                  </DeleteBtn>
                 </CheckBarWrap>
               </CartLeftCheckBar>
               <CartProductLists>
@@ -281,13 +280,13 @@ const handleCheckAll = () => {
                   return (
                     <ListsDetails key={cart?.pk}>
                       <ListsCheckBox>
-                        <input 
+                        <input
                           type='checkbox'
-                          onChange={(e) => onChangeEach(e, cart.pk)} 
-                          checked={checkList.includes(cart.pk)} 
+                          onChange={(e) => onChangeEach(e, cart.pk)}
+                          checked={checkList.includes(cart.pk)}
                           // onChange={(e) => onChangeEach(cart.pk)}
                           // checked={isCheck.includes(cart.pk)}
-                         />
+                        />
                         {/* <label/> */}
                       </ListsCheckBox>
                       <ListsItemImg>
@@ -379,33 +378,23 @@ const handleCheckAll = () => {
                 <CartSummaryInfo>
                   <ItemPriceInfo>
                     Price
-                    <span>
-                      ${PriceForBill?.toLocaleString()}
-                    </span>
+                    <span>${PriceForBill?.toLocaleString()}</span>
                   </ItemPriceInfo>
                   <ItemShippingFee>
                     Shipping fee
-                    <span>
-                      ${ShippingFee?.toLocaleString()}
-                    </span>
+                    <span>${ShippingFee?.toLocaleString()}</span>
                   </ItemShippingFee>
                   <ItemShippingFee>
                     Duties amd Taxes
-                    <span>
-                      ${Taxes?.toLocaleString()}
-                    </span>
+                    <span>${Taxes?.toLocaleString()}</span>
                   </ItemShippingFee>
                   <ItemShippingFee>
                     Discounts
-                    <span>
-                      ${Discounts?.toLocaleString()}
-                    </span>
+                    <span>${Discounts?.toLocaleString()}</span>
                   </ItemShippingFee>
                   <ItemTotalPrice>
                     Total
-                    <span>
-                     ${TotalPriceTag?.toLocaleString()}
-                    </span>
+                    <span>${TotalPriceTag?.toLocaleString()}</span>
                   </ItemTotalPrice>
                   <ExtraInfo>
                     <li>

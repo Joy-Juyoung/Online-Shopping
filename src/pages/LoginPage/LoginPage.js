@@ -26,6 +26,8 @@ import Loading from '../../components/Loading';
 
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
+import Modal from '../../components/Modal';
+import Comingsoon from '../../components/Comingsoon';
 
 // import { GoogleLogin } from 'react-google-login';
 
@@ -33,8 +35,8 @@ import GoogleLogin from 'react-google-login';
 // Validation 조건 충족 에러 넣기
 // Keep~ Forgot~ 이거 나중에 활성화해보기
 
-const GOOGLE_CLIENT_ID =
-  '232888623547-a7ji95besadd8bfain3pemtdovstl9ij.apps.googleusercontent.com';
+// const GOOGLE_CLIENT_ID =
+//   '232888623547-a7ji95besadd8bfain3pemtdovstl9ij.apps.googleusercontent.com';
 
 const USERNAME_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -58,6 +60,8 @@ const LoginPage = ({ meData, setIsAdminBoard, isAdminBoard }) => {
   const [errMsg, setErrMsg] = useState('');
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const [modalShown, toggleModal] = useState(false);
 
   const handlePwdChange = (evnt) => {
     setPwd(evnt.target.value);
@@ -243,26 +247,36 @@ const LoginPage = ({ meData, setIsAdminBoard, isAdminBoard }) => {
 
         <LoginOptions>
           <LoginOptionsLegend>OR</LoginOptionsLegend>
-          <ButtonLarge lightBg={true} darkFont={true}>
+          <ButtonLarge
+            lightBg={true}
+            darkFont={true}
+            onClick={() => toggleModal(!modalShown)}
+          >
             Countinue with Google
-            {/* <GoogleLogin
-              clientId={GOOGLE_CLIENT_ID}
-              buttonText='LOGIN WITH GOOGLE'
-              onSuccess={responseGoogle}
-              onFailure={responseGoogle}
-              // onSuccess={handleSubmit}
-              // onFailure={handleSubmit}
-              cookiePolicy={'single_host_origin'}
-              // style={{ width: '100%' }}
-            /> */}
           </ButtonLarge>
-          <ButtonLarge lightBg={true} darkFont={true}>
+          <ButtonLarge
+            lightBg={true}
+            darkFont={true}
+            onClick={() => toggleModal(!modalShown)}
+          >
             Countinue with Apple
           </ButtonLarge>
-          <ButtonLarge lightBg={true} darkFont={true}>
+          <ButtonLarge
+            lightBg={true}
+            darkFont={true}
+            onClick={() => toggleModal(!modalShown)}
+          >
             Countinue with Facebook
           </ButtonLarge>
         </LoginOptions>
+        <Modal
+          shown={modalShown}
+          close={() => {
+            toggleModal(false);
+          }}
+        >
+          <Comingsoon />
+        </Modal>
 
         <RegisterLink to='/register'>Go to Sign up</RegisterLink>
       </PesnalWrapper>
