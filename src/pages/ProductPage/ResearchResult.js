@@ -33,7 +33,7 @@ const ResearchResult = ({ meData, catData, onClose }) => {
   const [sortList, setSortList] = useState([]);
   const [sortProducts, setSortProducts] = useState([]);
   const [addLiked, setAddLiked] = useState();
-  const [priceRange, setPriceRange] = useState();
+  const [priceRange, setPriceRange] = useState('none');
   const [itemsByPrice, setItemsByPrice] = useState([]);
   // const location = useLocation();
 
@@ -98,6 +98,9 @@ const ResearchResult = ({ meData, catData, onClose }) => {
 
   useEffect(() => {
     setItemsByPrice(items);
+    if (priceRange === 'none') {
+      setItemsByPrice(items);
+    }
 
     if (priceRange === 0) {
       const rangeItems = items?.filter((range) => range?.price <= 50);
@@ -123,17 +126,26 @@ const ResearchResult = ({ meData, catData, onClose }) => {
     } else {
       setItemsByPrice(items);
     }
-  }, [priceRange]);
+  }, [priceRange, searchValue, sortProducts]);
 
   const filtered = !searchValue
     ? items
-    : items.filter(
+    : itemsByPrice.filter(
         (list) =>
           list.name.toLowerCase().includes(searchValue.toLowerCase()) ||
           list.detail.toLowerCase().includes(searchValue.toLowerCase())
         //  list.name.toLowerCase().indexOf(searchValue) !== -1
         // list.name.toLowerCase().match(searchValue)
       );
+
+  // ? items
+  // : items.filter(
+  //     (list) =>
+  //       list.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+  //       list.detail.toLowerCase().includes(searchValue.toLowerCase())
+  //     //  list.name.toLowerCase().indexOf(searchValue) !== -1
+  //     // list.name.toLowerCase().match(searchValue)
+  //   );
 
   // useEffect(() => {
   //   setItems(
@@ -189,18 +201,63 @@ const ResearchResult = ({ meData, catData, onClose }) => {
 
             <ListMidWrap>
               <ListMid>
-                {/* {items?.map((all) => { */}
-                {filtered?.map((all) => {
+                {/* {filtered?.map((all) => {
                   return (
                     <ProductsCard
                       key={all.pk}
                       all={all}
                       meData={meData}
                       items={items}
-                      // getAllKinds={getAllKinds}
                     />
                   );
-                })}
+                })} */}
+                {priceRange === 'none' ? (
+                  <>
+                    {items
+                      ?.filter(
+                        (list) =>
+                          list.name
+                            .toLowerCase()
+                            .includes(searchValue.toLowerCase()) ||
+                          list.detail
+                            .toLowerCase()
+                            .includes(searchValue.toLowerCase())
+                      )
+                      .map((all) => {
+                        return (
+                          <ProductsCard
+                            key={all.pk}
+                            all={all}
+                            meData={meData}
+                            items={items}
+                          />
+                        );
+                      })}
+                  </>
+                ) : (
+                  <>
+                    {itemsByPrice
+                      ?.filter(
+                        (list) =>
+                          list.name
+                            .toLowerCase()
+                            .includes(searchValue.toLowerCase()) ||
+                          list.detail
+                            .toLowerCase()
+                            .includes(searchValue.toLowerCase())
+                      )
+                      .map((all) => {
+                        return (
+                          <ProductsCard
+                            key={all.pk}
+                            all={all}
+                            meData={meData}
+                            items={items}
+                          />
+                        );
+                      })}
+                  </>
+                )}
               </ListMid>
             </ListMidWrap>
           </ProductsList>
