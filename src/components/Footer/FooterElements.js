@@ -68,18 +68,22 @@ export const FooterLineTwo = styled.div`
   margin: 28px 0px;
 `;
 export const HelpBtn = styled.button`
-  width: 236px;
-  height: 40px;
+  /* width: 236px;
+  height: 40px; */
+  /* width: 250px; */
+  /* height: 100px; */
+  padding: 10px 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid black;
-  border-radius: 6px;
-  box-sizing: border-box;
-  font-size: 16px;
-  font-weight: bold;
+  border-radius: 10px;
+  /* box-sizing: border-box; */
+  /* font-size: 16px; */
+  /* font-weight: bold; */
   background-color: white;
   cursor: pointer;
+
   a {
     text-decoration: none;
     color: black;
@@ -89,14 +93,28 @@ export const HelpIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  p {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 10px;
+    /* margin-bottom: 5px;
+    margin-right: 5px; */
+  }
+
+  span {
+    display: flex;
+    align-items: center;
+  }
   /* margin-left: 4px; */
 
-  a {
+  /* a {
     margin-right: 5px;
-  }
+  } */
 `;
 export const DownloadPart = styled.div`
-  margin-top: 28px;
+  margin-top: 10px;
   font-size: 18px;
   padding: 20px 0px;
 `;
