@@ -1,5 +1,11 @@
 import styled from 'styled-components';
 
+export const AdIconDelete = styled.div`
+  /* margin-right: 10px; */
+  cursor: pointer;
+`;
+
+// ---modal
 export const PopupBox = styled.div`
   margin: 10px auto;
   padding: 0 10px;
