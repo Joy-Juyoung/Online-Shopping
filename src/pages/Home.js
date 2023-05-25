@@ -330,7 +330,7 @@ const Home = () => {
                 />
                 <Route
                   path='/admin/items'
-                  element={<ItemManage />}
+                  element={<ItemManage catData={catData} />}
                   exact={true}
                 />
                 <Route

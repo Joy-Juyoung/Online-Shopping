@@ -213,21 +213,28 @@ export const Td = styled.td`
 `;
 
 export const ReviewBtn = styled.button`
-  color: ${({ active }) => (active ? '#0a0f18' : '')};
-  background: ${({ active }) => (active ? '#fff' : '')};
-  border: ${({ active }) => (active ? 'none' : '')};
+  color: #0a0f18;
+  background: #fff;
+  border: none;
   cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+
+  &:hover {
+    background: #0a0f18;
+    color: #fff;
+  }
+`;
+
+export const ReviewDisableBtn = styled.button`
   padding: 5px;
   border-radius: 5px;
   display: flex;
   align-items: center;
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
-  /* font-size: 13px; */
+  margin: 0 auto;
 
-  &:hover {
-    background: ${({ active }) => (active ? '#0a0f18' : '')};
-    color: ${({ active }) => (active ? '#fff' : '')};
-  }
+  cursor: not-allowed;
 `;

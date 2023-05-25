@@ -31,6 +31,7 @@ import {
   Td,
   PaymentStatusInfo,
   ReviewBtn,
+  ReviewDisableBtn,
 } from './OrderDetailsElements';
 
 const OrderDtails = ({ meData }) => {
@@ -159,21 +160,17 @@ const OrderDtails = ({ meData }) => {
                           ${sold?.product?.price * sold?.number_of_product}
                         </Td>
                         <Td>
-                          <Link to={`/review/${sold?.product?.pk}`}>
-                            {ordered?.status === 'delivered' ? (
-                              <ReviewBtn active={true}>
-                                {/* <AddIcon fontSize='11px' /> */}
-                                View
-                                <RateReviewIcon fontSize='small' />
-                              </ReviewBtn>
-                            ) : (
-                              <ReviewBtn disabled>
-                                {/* <AddIcon fontSize='11px' /> */}
-                                View
-                                <RateReviewIcon fontSize='small' />
-                              </ReviewBtn>
-                            )}
-                          </Link>
+                          {/* <Link to={`/review/${sold?.product?.pk}`}> */}
+                          {ordered?.status === 'delivered' ? (
+                            <Link to={`/review/${sold?.product?.pk}`}>
+                              <ReviewBtn>Go to Review</ReviewBtn>
+                            </Link>
+                          ) : (
+                            <ReviewDisableBtn disabled>
+                              Go to Review
+                            </ReviewDisableBtn>
+                          )}
+                          {/* </Link> */}
                         </Td>
                       </Tr>
                     </Tbody>
