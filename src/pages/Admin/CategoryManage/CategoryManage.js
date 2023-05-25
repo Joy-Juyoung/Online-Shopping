@@ -22,7 +22,7 @@ import {
   AdReviewTh,
   AdReviewThead,
   AdReviewWrap,
-} from '../ItemManage/reviewStyle';
+} from './CategoryElements';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import AddIcon from '@mui/icons-material/Add';
 import ReplyIcon from '@mui/icons-material/Reply';
@@ -71,19 +71,20 @@ const CategoryManage = ({ meData }) => {
   //   }
   // };
 
-  const submitAddHandler = async (pk) => {
-    console.log('test');
-    // const addCategory = await axios.post(
-    //   `/products/add_child_kind_to/${pk}`,
-    //   {
-    //     name: addCate,
-    //   },
-    //   {
-    //     headers: { 'Content-Type': 'application/json' },
-    //     withCredentials: true,
-    //   }
-    //   );
-    //   console.log('test1', addCategory.data);
+  const submitAddHandler = async (e) => {
+    e.preventDefault();
+    const addCategory = await axios.post(
+      `/products/add_child_kind_to/${newList?.pk}`,
+      {
+        name: addCate,
+      },
+      {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      }
+    );
+    console.log('test1', addCategory.data);
+    window.location.reload();
   };
 
   const handleViewCategories = async (pk) => {

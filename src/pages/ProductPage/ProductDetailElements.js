@@ -13,6 +13,7 @@ export const DetailWrapperOne = styled.section`
   display: flex;
   justify-content: center;
   padding-top: 40px;
+  height: 600px;
 `;
 
 export const DetailLeftInfo = styled.div`
@@ -137,6 +138,8 @@ export const DetailWrapperTwo = styled.section`
   scroll-margin-top: 300px;
   position: relative;
   background-color: rgb(255, 255, 255);
+  height: 600px;
+
 `;
 
 export const DetailInfoWrap = styled.div`
