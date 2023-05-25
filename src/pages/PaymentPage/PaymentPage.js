@@ -70,7 +70,7 @@ const PaymentPage = ({ meData }, props) => {
   const PriceForBill = carts.reduce((total, item) => {
     return total + item?.total_price;
   }, 0);
-  const ShippingFee = 15;
+  const ShippingFee = PriceForBill >= 200 ? 0 : 15;
   const Taxes = PriceForBill * 0.05;
   const Discounts =
     PriceForBill * (getCp[0] ? getCp[0]?.discount_rate * 0.01 : 0);
@@ -235,7 +235,7 @@ const PaymentPage = ({ meData }, props) => {
                   <PaymentListTitle>Your Balance</PaymentListTitle>
                   <PaymentInfoDetails>
                     <h3 ref={balanceRef}>
-                      Your Current Balances: ${meData?.balance.toLocaleString()}
+                      Your Current Balances: ${meData?.balance.toFixed(2)}
                     </h3>
                     {disableBalance && (
                       <p style={{ color: 'red' }}>
@@ -271,7 +271,7 @@ const PaymentPage = ({ meData }, props) => {
                 <PaymentSummaryInfo>
                   <ItemSummary>
                     Price
-                    <span>${PriceForBill.toLocaleString()}</span>
+                    <span>${PriceForBill.toFixed(2)}</span>
                   </ItemSummary>
                   <ItemSummary>
                     <div
@@ -316,20 +316,20 @@ const PaymentPage = ({ meData }, props) => {
                   </Modal>
                   <ItemSummary>
                     Discounts
-                    <span>${Discounts.toLocaleString()}</span>
+                    <span>${Discounts.toFixed(2)}</span>
                   </ItemSummary>
                   <ItemSummary>
                     Shipping fee
-                    <span>${ShippingFee.toLocaleString()}</span>
+                    <span>${ShippingFee?.toLocaleString()}</span>
                   </ItemSummary>
                   <ItemSummary>
                     Duties and Taxes
-                    <span>${Taxes.toLocaleString()}</span>
+                    <span>${Taxes.toFixed(2)}</span>
                   </ItemSummary>
 
                   <ItemTotalPrice>
                     Total
-                    <span>${TotalPriceTag.toLocaleString()}</span>
+                    <span>${TotalPriceTag.toFixed(2)}</span>
                   </ItemTotalPrice>
                   <ExtraInfo>
                     <li>

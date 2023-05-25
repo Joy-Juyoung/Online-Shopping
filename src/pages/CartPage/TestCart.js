@@ -166,7 +166,7 @@ const TestCart = () => {
     return total + item?.total_price;
   }, 0);
 
-  const ShippingFee = 15;
+  const ShippingFee = PriceForBill >= 200 ? 0 : 15;
 
   const Taxes = PriceForBill * 0.05;
   const Discounts = 0;
@@ -292,7 +292,7 @@ const TestCart = () => {
                 <CartSummaryInfo>
                   <ItemPriceInfo>
                     Price
-                    <span>${PriceForBill?.toLocaleString()}</span>
+                    <span>${PriceForBill?.toFixed(2)}</span>
                   </ItemPriceInfo>
                   <ItemShippingFee>
                     Shipping fee
@@ -304,14 +304,14 @@ const TestCart = () => {
                   </ItemShippingFee>
                   <ItemShippingFee>
                     Duties amd Taxes
-                    <span>${Taxes?.toLocaleString()}</span>
+                    <span>${Taxes?.toFixed(2)}</span>
                   </ItemShippingFee>
                   <ItemTotalPrice>
                     Total
                     {PriceForBill === 0 ? (
                       <span>$0</span>
                     ) : (
-                      <span>${TotalPriceTag?.toLocaleString()}</span>
+                      <span>${TotalPriceTag?.toFixed(2)}</span>
                     )}
                   </ItemTotalPrice>
                   <ExtraInfo>
