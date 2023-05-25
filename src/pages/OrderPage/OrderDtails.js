@@ -39,7 +39,7 @@ const OrderDtails = ({ meData }) => {
   const [ordered, setOrdered] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const ShippingFee = 15;
+  const ShippingFee = ordered?.total_price >= 200 ? 0 : 15;
   const Taxes = ordered?.total_price * 0.05;
   // const TotalPriceTag = ordered?.total_price + ShippingFee + Taxes + Discounts;
   const Discounts =

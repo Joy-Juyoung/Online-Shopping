@@ -91,6 +91,7 @@ const AddBalance = ({ meData }) => {
                   type='number'
                   placeholder='Enter the price you want to add'
                   onChange={ChangeBalance}
+                  min='0'
                   // value={''}
                 />
               </BoxSpan>

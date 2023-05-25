@@ -348,11 +348,11 @@ const PaymentPage = ({ meData }, props) => {
                   !meData?.address ||
                   !meData?.phone_number ? (
                     <ButtonLarge onClick={handlePayDisabled}>
-                      Pay ${TotalPriceTag.toLocaleString()}
+                      Pay ${TotalPriceTag.toFixed(2)}
                     </ButtonLarge>
                   ) : (
                     <ButtonLarge onClick={payOrder}>
-                      Pay ${TotalPriceTag.toLocaleString()}
+                      Pay ${TotalPriceTag.toFixed(2)}
                     </ButtonLarge>
                   )}
                 </PaymentCheckout>

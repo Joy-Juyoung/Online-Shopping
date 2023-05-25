@@ -235,6 +235,7 @@ const AddNewCoupon = ({ coupons }) => {
                     id='couponRate'
                     value={addDiscount || ''}
                     onChange={handleAddNewCoupon}
+                    min='0'
                   />
                 </BoxSpan>
               </BoxLi>
