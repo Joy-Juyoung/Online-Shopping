@@ -66,7 +66,6 @@ const Header = ({ meData, catData, setIsAdminBoard }) => {
   const [balanceShown, toggleBalance] = useState(false);
   const [carts, setCarts] = useState([]);
   const ref = useRef();
-  const searchRef = useRef();
 
   const getAllCart = async () => {
     const cartList = await axios.get('/carts/', {
