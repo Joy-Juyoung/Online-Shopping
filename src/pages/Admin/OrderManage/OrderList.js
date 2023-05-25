@@ -85,6 +85,8 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
     setSelectedOption(e.target.value);
   };
   const handelUpdateOption = async (pk) => {
+    console.log('pk', pk);
+    console.log('selectedOption', selectedOption);
     try {
       const statusChange = await axios.put(
         `/orders/${pk}`,
@@ -97,9 +99,7 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
         }
       );
       console.log('statusChange', statusChange?.data);
-      // window.location.reload();
       window.location.reload();
-      // navigate('/admin/orders/all');
     } catch (err) {
       if (err.response?.status === 400) {
         // console.log('400 error');

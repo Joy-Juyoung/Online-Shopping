@@ -22,8 +22,10 @@ import Pagination from '../../../components/AdminComponents//Pagination';
 import { ButtonSmall } from '../../../components/ButtonElements';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import DeleteIcon from '@mui/icons-material/Delete';
 import AddItemModal from './AddItemModal';
 import AddNewItem from './AddNewItem';
+import { AdIconDelete } from './listStyle';
 
 const ItemList = ({ meData, catData }) => {
   const [loading, setLoading] = useState(false);
@@ -35,6 +37,31 @@ const ItemList = ({ meData, catData }) => {
   // const [isHorizontal, setIsHorizontal] = useState(false);
 
   const [modalShown, toggleModal] = useState(false);
+
+  // const [checkedItem, setCheckedItem] = useState('');
+  // const [selectedItem, setSelectedItem] = useState('');
+
+  // const handleCheckedItems = (e) => {
+  //   setCheckedItem({ ...checkedItem, [e.target.value]: e.target.checked });
+  // };
+  // console.log('checkedItem', checkedItem);
+
+  // useEffect(() => {
+  //   setSelectedItem(
+  //     Object.entries(checkedItem)
+  //       .filter(([key, value]) => value)
+  //       .map((added, index) => added[0])
+  //   );
+  // }, [checkedItem]);
+  // console.log('selectedItem', selectedItem);
+
+  // useEffect(() => {
+  //   if (selectedItem) {
+  //     setSelectedItem(
+  //       products?.filter((item) => selectedItem?.includes(item?.pk.toString()))
+  //     );
+  //   }
+  // }, [selectedItem]);
 
   const getProducts = async () => {
     const itemList = await axios.get('/products/', {
@@ -82,6 +109,18 @@ const ItemList = ({ meData, catData }) => {
     );
   }, [products, searchValue]);
 
+  const handleDeleteItem = async (pk) => {
+    // console.log('pk', pk);
+    if (window.confirm('Are you sure you want to delete this Item?')) {
+      const delItem = await axios.delete(`/products/${pk}`, {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      });
+      console.log('delItem', delItem.data);
+      window.location.reload();
+    }
+  };
+
   if (loading)
     return (
       <div>
@@ -103,7 +142,6 @@ const ItemList = ({ meData, catData }) => {
           <ButtonSmall onClick={() => toggleModal(!modalShown)}>
             Add
           </ButtonSmall>
-          <ButtonSmall>Delete</ButtonSmall>
         </AdListUtils>
       </AdListTop>
 
@@ -121,9 +159,9 @@ const ItemList = ({ meData, catData }) => {
         <AdTable>
           <AdTHead>
             <AdTHeadeRow>
-              <AdTHeadCell className='check'>
+              {/* <AdTHeadCell className='check'>
                 <input type='checkbox' />
-              </AdTHeadCell>
+              </AdTHeadCell> */}
               <AdTHeadCell className='id'>ID</AdTHeadCell>
               <AdTHeadCell className='photo'>PHOTO</AdTHeadCell>
               <AdTHeadCell className='name'>NAME</AdTHeadCell>
@@ -132,6 +170,7 @@ const ItemList = ({ meData, catData }) => {
               <AdTHeadCell className='sub'>SUB CATEGORY</AdTHeadCell>
               {/* <AdTHeadCell>IN STOCK</AdTHeadCell> */}
               <AdTHeadCell className='createAt'>CREATE AT</AdTHeadCell>
+              <AdTHeadCell></AdTHeadCell>
             </AdTHeadeRow>
           </AdTHead>
           {/* {searchedList?.map((product) => {  */}
@@ -139,9 +178,16 @@ const ItemList = ({ meData, catData }) => {
             return (
               <AdTBody key={product?.pk}>
                 <AdTBodyRow>
-                  <AdTBodyCell className='check'>
-                    <CheckInput type='checkbox' />
-                  </AdTBodyCell>
+                  {/* <AdTBodyCell className='check'>
+                    <CheckInput
+                      type='checkbox'
+                      // name='couponpUser'
+                      // id='couponpUser'
+                      // value={product?.pk}
+                      // onChange={(e) => handleCheckedItems(e)}
+                      // checked={checkedItem[product?.pk] || ''}
+                    />
+                  </AdTBodyCell> */}
                   <AdTBodyCell className='id'>{product?.pk}</AdTBodyCell>
                   <AdTBodyCell className='photo'>
                     <BodyImg
@@ -166,6 +212,11 @@ const ItemList = ({ meData, catData }) => {
                   {/* <AdTBodyCell>{product?.instock}</AdTBodyCell> */}
                   <AdTBodyCell className='createAt'>
                     {new Date(product?.created_at).toLocaleString('en-ca')}
+                  </AdTBodyCell>
+                  <AdTBodyCell style={{ width: '5%' }}>
+                    <AdIconDelete onClick={() => handleDeleteItem(product?.pk)}>
+                      <DeleteIcon />
+                    </AdIconDelete>
                   </AdTBodyCell>
                 </AdTBodyRow>
               </AdTBody>
