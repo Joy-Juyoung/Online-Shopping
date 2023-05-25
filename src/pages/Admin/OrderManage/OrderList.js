@@ -99,7 +99,9 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
         }
       );
       console.log('statusChange', statusChange?.data);
+      // window.location.reload();
       window.location.reload();
+      // navigate('/admin/orders/all');
     } catch (err) {
       if (err.response?.status === 400) {
         // console.log('400 error');
@@ -277,34 +279,6 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
               </button>
             </div>
           </div>
-
-          {/* <DeliveredToggle>
-            Is this order delevered?
-            <DeliveredCheck>
-              <DeliveredInput
-                type='checkbox'
-                id='toggleSwitch'
-                onChange={handleSwitch}
-              />
-              {isSwitch === false ? (
-                <DeliveredLabel htmlFor='toggleSwitch'>
-                  <div>Yes</div>
-                  <div style={{ opacity: '0' }}>No</div>
-                  <DeliveredSlider
-                    style={{ transform: 'translateX(0)' }}
-                  ></DeliveredSlider>
-                </DeliveredLabel>
-              ) : (
-                <DeliveredLabel htmlFor='toggleSwitch'>
-                  <div style={{ opacity: '0' }}>Yes</div>
-                  <div>No</div>
-                  <DeliveredSlider
-                    style={{ transform: 'translateX(-32px)' }}
-                  ></DeliveredSlider>
-                </DeliveredLabel>
-              )}
-            </DeliveredCheck>
-          </DeliveredToggle> */}
         </div>
       </AdminModal>
     </AdContainer>

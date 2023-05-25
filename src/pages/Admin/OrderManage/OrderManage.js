@@ -42,11 +42,6 @@ const OrderManage = ({ meData }) => {
     console.log('orederList', orderList.data);
     setOrders(orderList?.data);
     setLoading(false);
-
-    // setPendingList(orders?.filter((po) => po?.status === 'pending'));
-    // setInprogressList(orders?.filter((po) => po?.status === 'inprogress'));
-    // setCancelList(orders?.filter((po) => po?.status === 'cancelled'));
-    // setDeliveredList(orders?.filter((po) => po?.status === 'delivered'));
   };
 
   useEffect(() => {
@@ -60,18 +55,6 @@ const OrderManage = ({ meData }) => {
     setDeliveredList(orders?.filter((po) => po?.status === 'delivered'));
     setCancelList(orders?.filter((po) => po?.status === 'cancelled'));
   }, [orders]);
-
-  // console.log('pendingList', pendingList);
-  // console.log('inprogresList', inprogressList);
-  // console.log('deliveredList', deliveredList);
-  // console.log('cancelList', cancelList);
-
-  // if (isEmpty)
-  //   return (
-  //     <div>
-  //       <FormatListBulletedIcon />
-  //     </div>
-  //   );
 
   if (loading)
     return (
@@ -169,9 +152,7 @@ const OrderManage = ({ meData }) => {
                   </tbody>
                 </table>
                 <ViewAllBtn className='pending' to='/admin/orders/pending'>
-                  {/* <Link to='/admin/orders/pending'> */}
                   View All Pending Orders
-                  {/* </Link> */}
                   <KeyboardDoubleArrowRightIcon sx={{ fontSize: 15 }} />
                 </ViewAllBtn>
               </AdStatus>
