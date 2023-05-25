@@ -67,7 +67,7 @@ const PaymentPage = ({ meData }, props) => {
   );
   // console.log('getCp', getCp[0]);
 
-  const PriceForBill = carts.reduce((total, item) => {
+  const PriceForBill = carts?.reduce((total, item) => {
     return total + item?.total_price;
   }, 0);
   const ShippingFee = PriceForBill >= 200 ? 0 : 15;
@@ -102,17 +102,17 @@ const PaymentPage = ({ meData }, props) => {
   const payOrder = async () => {
     if (window.confirm('Are you sure you want to pay?')) {
       carts.map((cItems) => {
-        if (cItems.product_option === null) {
+        if (cItems?.product_option === null) {
           payList.push({
-            product_id: cItems.product.pk,
-            number_of_product: cItems.number_of_product,
+            product_id: cItems?.product.pk,
+            number_of_product: cItems?.number_of_product,
             product_option: null,
           });
         } else {
-          payList.push({
-            product_id: cItems.product.pk,
-            number_of_product: cItems.number_of_product,
-            product_option: cItems.product_option.pk,
+          payList?.push({
+            product_id: cItems?.product.pk,
+            number_of_product: cItems?.number_of_product,
+            product_option: cItems?.product_option.pk,
           });
         }
       });
@@ -149,7 +149,7 @@ const PaymentPage = ({ meData }, props) => {
   };
 
   const handleDeleteCart = () => {
-    const deleteItem = carts.map((c) => {
+    const deleteItem = carts?.map((c) => {
       axios.delete(`/carts/${c.pk}`, {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
@@ -164,7 +164,7 @@ const PaymentPage = ({ meData }, props) => {
       window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
       setDisableAddress(!disableAddress);
     } else if (meData?.balance < TotalPriceTag) {
-      balanceRef.current.scrollIntoView({ behavior: 'smooth' });
+      balanceRef?.current.scrollIntoView({ behavior: 'smooth' });
       setDisableBalance(!disableBalance);
     }
   };
@@ -211,9 +211,9 @@ const PaymentPage = ({ meData }, props) => {
                   </PaymentListTitle>
                   {carts?.map((cart) => {
                     return (
-                      <ListsDetails key={cart.pk}>
+                      <ListsDetails key={cart?.pk}>
                         <ListsImgLink to={`/products/${cart?.product?.pk}`}>
-                          <img src={cart.product.photos[0].picture} alt='' />
+                          <img src={cart?.product.photos[0].picture} alt='' />
                         </ListsImgLink>
 
                         <ListsItemDetails to={`/products/${cart?.product?.pk}`}>
@@ -234,7 +234,7 @@ const PaymentPage = ({ meData }, props) => {
                               </>
                             )}
                           </DetailOption>
-                          <DetailPrice>${cart.total_price}</DetailPrice>
+                          <DetailPrice>${cart?.total_price}</DetailPrice>
                         </ListsItemDetails>
                       </ListsDetails>
                     );
@@ -280,7 +280,7 @@ const PaymentPage = ({ meData }, props) => {
                 <PaymentSummaryInfo>
                   <ItemSummary>
                     Price
-                    <span>${PriceForBill.toFixed(2)}</span>
+                    <span>${PriceForBill?.toFixed(2)}</span>
                   </ItemSummary>
                   <ItemSummary>
                     <div
@@ -325,7 +325,7 @@ const PaymentPage = ({ meData }, props) => {
                   </Modal>
                   <ItemSummary>
                     Discounts
-                    <span>${Discounts.toFixed(2)}</span>
+                    <span>${Discounts?.toFixed(2)}</span>
                   </ItemSummary>
                   <ItemSummary>
                     Shipping fee
@@ -333,12 +333,12 @@ const PaymentPage = ({ meData }, props) => {
                   </ItemSummary>
                   <ItemSummary>
                     Duties and Taxes
-                    <span>${Taxes.toFixed(2)}</span>
+                    <span>${Taxes?.toFixed(2)}</span>
                   </ItemSummary>
 
                   <ItemTotalPrice>
                     Total
-                    <span>${TotalPriceTag.toFixed(2)}</span>
+                    <span>${TotalPriceTag?.toFixed(2)}</span>
                   </ItemTotalPrice>
                   <ExtraInfo>
                     <li>
@@ -357,11 +357,11 @@ const PaymentPage = ({ meData }, props) => {
                   !meData?.address ||
                   !meData?.phone_number ? (
                     <ButtonLarge onClick={handlePayDisabled}>
-                      Pay ${TotalPriceTag.toFixed(2)}
+                      Pay ${TotalPriceTag?.toFixed(2)}
                     </ButtonLarge>
                   ) : (
                     <ButtonLarge onClick={payOrder}>
-                      Pay ${TotalPriceTag.toFixed(2)}
+                      Pay ${TotalPriceTag?.toFixed(2)}
                     </ButtonLarge>
                   )}
                 </PaymentCheckout>
