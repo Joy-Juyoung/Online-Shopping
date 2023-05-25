@@ -17,9 +17,16 @@ export const AdReviewWrap = styled.div`
     padding: 10px;
   }
 `;
+
 export const AdReviewHeader = styled.div`
   display: flex;
   align-items: center;
+  
+  button {
+    background: none;
+    border: none;
+    cursor:pointer;
+  }
 
   input {
     display: flex;
@@ -30,6 +37,31 @@ export const AdReviewHeader = styled.div`
     cursor: pointer;
     background: #f3f3eb;
   }
+`;
+
+export const AdCategoryForm = styled.form`
+  display: flex;
+  margin-left: 14px;
+  
+  button {
+    background: none;
+    border: none;
+    cursor:pointer;
+  }
+
+`;
+
+export const AdCategoryInput = styled.input`
+  width: 150px;
+  display: flex;
+  align-items: center;
+  align-items: center;
+  padding: 5px 15px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background: #f3f3eb;
+ 
 `;
 
 export const AdReviewLeftSide = styled.div`
@@ -120,6 +152,17 @@ export const AdReviewTd = styled.td`
   width: 20px;
   font-size: 14px;
   padding: 3px 5px;
+  display: flex;
+
+  button { 
+    width: 20px;
+    height: 20px;
+    background: none;
+    border: none;
+    margin-left:10px;
+    cursor:pointer;
+  }
+
 `;
 
 export const AdReviewMidSide = styled.div``;
