@@ -1,4 +1,4 @@
-import { Box } from '@mui/system';
+// import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import axios from '../../../api/axios';
 import { ButtonSmall, ButtonUtils } from '../../../components/ButtonElements';
@@ -6,6 +6,7 @@ import { Input } from '../../../components/InputElements';
 import { VerificationMsg } from '../../LoginPage/LoginElements';
 import {
   AddNextBtn,
+  Box,
   BoxBtn,
   BoxH2,
   BoxH3,

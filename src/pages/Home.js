@@ -335,7 +335,7 @@ const Home = () => {
                 />
                 <Route
                   path='/admin/items/all'
-                  element={<ItemList />}
+                  element={<ItemList catData={catData} />}
                   exact={true}
                 />
                 <Route
