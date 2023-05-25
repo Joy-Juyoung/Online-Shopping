@@ -41,8 +41,9 @@ const OrderDtails = ({ meData }) => {
 
   const ShippingFee = 15;
   const Taxes = ordered?.total_price * 0.05;
-  const Discounts = 0;
-  const TotalPriceTag = ordered?.total_price + ShippingFee + Taxes + Discounts;
+  // const TotalPriceTag = ordered?.total_price + ShippingFee + Taxes + Discounts;
+  const Discounts =
+    ordered?.total_price - ordered?.final_total_price + ShippingFee + Taxes;
 
   const getOrdersById = async () => {
     const orderedData = await axios.get(`/orders/${id}`, {
@@ -205,7 +206,7 @@ const OrderDtails = ({ meData }) => {
               </ItemSummary>
               <ItemTotalPrice>
                 Total
-                <span>${TotalPriceTag.toLocaleString()}</span>
+                <span>${ordered?.final_total_price?.toLocaleString()}</span>
                 {/* <span>${ordered?.final_total_price?.toLocaleString()}</span> */}
               </ItemTotalPrice>
               <ExtraInfo>
