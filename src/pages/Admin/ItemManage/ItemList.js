@@ -22,7 +22,7 @@ import Pagination from '../../../components/AdminComponents//Pagination';
 import { ButtonSmall } from '../../../components/ButtonElements';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import AdminModal from '../../../components/AdminComponents/AdminModal';
+import AddItemModal from './AddItemModal';
 import AddNewItem from './AddNewItem';
 
 const ItemList = ({ meData, catData }) => {
@@ -32,6 +32,7 @@ const ItemList = ({ meData, catData }) => {
   const [searchValue, setSearchValue] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(8);
+  // const [isHorizontal, setIsHorizontal] = useState(false);
 
   const [modalShown, toggleModal] = useState(false);
 
@@ -106,14 +107,15 @@ const ItemList = ({ meData, catData }) => {
         </AdListUtils>
       </AdListTop>
 
-      <AdminModal
+      <AddItemModal
         shown={modalShown}
         close={() => {
           toggleModal(false);
         }}
+        // isHorizontal={true}
       >
         <AddNewItem products={products} catData={catData} />
-      </AdminModal>
+      </AddItemModal>
 
       <AdListMid>
         <AdTable>

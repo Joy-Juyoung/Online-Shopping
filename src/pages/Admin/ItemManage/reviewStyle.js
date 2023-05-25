@@ -21,11 +21,11 @@ export const AdReviewWrap = styled.div`
 export const AdReviewHeader = styled.div`
   display: flex;
   align-items: center;
-  
+
   button {
     background: none;
     border: none;
-    cursor:pointer;
+    cursor: pointer;
   }
 
   input {
@@ -42,13 +42,12 @@ export const AdReviewHeader = styled.div`
 export const AdCategoryForm = styled.form`
   display: flex;
   margin-left: 14px;
-  
+
   button {
     background: none;
     border: none;
-    cursor:pointer;
+    cursor: pointer;
   }
-
 `;
 
 export const AdCategoryInput = styled.input`
@@ -61,7 +60,6 @@ export const AdCategoryInput = styled.input`
   border: none;
   cursor: pointer;
   background: #f3f3eb;
- 
 `;
 
 export const AdReviewLeftSide = styled.div`
@@ -154,15 +152,14 @@ export const AdReviewTd = styled.td`
   padding: 3px 5px;
   display: flex;
 
-  button { 
+  button {
     width: 20px;
     height: 20px;
     background: none;
     border: none;
-    margin-left:10px;
-    cursor:pointer;
+    margin-left: 10px;
+    cursor: pointer;
   }
-
 `;
 
 export const AdReviewMidSide = styled.div``;

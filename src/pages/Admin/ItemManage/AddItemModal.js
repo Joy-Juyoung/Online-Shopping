@@ -1,9 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { ButtonSmall } from '../ButtonElements';
-
-// background: ${({ lightBg }) => (lightBg ? '#fff' : '#0A0F18')};
 
 const ModalBackDrop = styled.div`
   position: fixed;
@@ -21,17 +18,16 @@ const ModalBackDrop = styled.div`
 `;
 
 const ModalContent = styled.div`
-  /* width: 380px; */
-  width: ${({ isHorizontal }) => (isHorizontal ? '500px' : '380px')};
+  width: 500px;
   min-height: 200px;
   background-color: white;
-  /* padding: 20px; */
+  padding: 20px;
   border-radius: 10px;
 
   margin-left: 250px;
 `;
 
-const AdminModal = ({ children, shown, close }) => {
+const AddItemModal = ({ children, shown, close }) => {
   return shown ? (
     <ModalBackDrop
       onClick={() => {
@@ -52,4 +48,4 @@ const AdminModal = ({ children, shown, close }) => {
   ) : null;
 };
 
-export default AdminModal;
+export default AddItemModal;

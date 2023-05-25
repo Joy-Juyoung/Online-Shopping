@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const PopupBox = styled.div`
-  margin: 0 auto;
-  padding: 10px 20px;
+  margin: 10px auto;
+  padding: 0 10px;
   /* border-radius: 5px; */
 
   /* background: #fff;
@@ -14,7 +14,7 @@ export const Box = styled.div`
 `;
 
 export const BoxH2 = styled.h2`
-  margin: 20px 0;
+  margin-bottom: 20px 0;
   text-align: center;
 `;
 
@@ -58,7 +58,6 @@ export const BoxNotice = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: space-between; */
 
   h3 {
     font-size: 14px;
@@ -96,7 +95,6 @@ export const BoxListLine = styled.div`
 export const BoxListSelecteLine = styled.div`
   display: flex;
   align-items: center;
-  /* padding: 0 10px; */
   cursor: pointer;
   font-size: 14px;
 
@@ -151,51 +149,57 @@ export const AddNextBtn = styled.div`
   }
 `;
 
-// ---NExt
+// ---Next
+
+export const BoxCategoryH3 = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
 export const BoxCategory = styled.div`
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
-  /* justify-content: flex-start; */
-  margin: 20px 0;
-  /* padding: 0; */
+  margin: 10px 0 20px 0;
+  border-bottom: 1px solid lightgray;
+
+  height: 263px;
+  overflow-y: scroll;
 `;
 
-export const BoxTable = styled.table`
-  margin: 10px 0;
-  font-size: 14px;
-  /* text-align: center; */
-  border: 1px solid #000;
-  border-radius: 10px;
+export const BoxCatList = styled.div`
   padding: 5px;
 
-  /* height: 125px;
-  overflow-y: scroll; */
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  border-top: 1px solid lightgray;
 `;
 
-export const BoxTr = styled.tr`
-  /* padding: 0; */
+export const BoxCatParents = styled.div`
+  flex: 1;
+  font-size: 13px;
+  text-align: left;
+`;
 
-  th {
-    /* padding-bottom: 5px; */
-    text-align: left;
-    padding-left: 10px;
-    inline-size: 20px;
-    /* writing-mode: horizontal-tb; */
-    /* width: 20px; */
-  }
+export const BoxCatChild = styled.div`
+  padding-right: 5px;
+  flex: 3;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  font-size: 13px;
 
-  td {
-    /* padding-bottom: 5px; */
-    /* padding: 3px 0; */
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+  p {
+    padding: 3px 0;
+    margin: 3px 0;
+    border: 1px solid #000;
+    border-radius: 10px;
 
     &:hover {
       background: #000;
       color: #fff;
+      border: 1px solid #000;
       border-radius: 10px;
       cursor: pointer;
     }
