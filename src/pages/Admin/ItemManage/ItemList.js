@@ -25,7 +25,7 @@ import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import AdminModal from '../../../components/AdminComponents/AdminModal';
 import AddNewItem from './AddNewItem';
 
-const ItemList = ({ meData }) => {
+const ItemList = ({ meData, catData }) => {
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState();
   const [searchedList, setSearchedList] = useState();
@@ -40,7 +40,7 @@ const ItemList = ({ meData }) => {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    console.log('itemList', itemList.data);
+    // console.log('itemList', itemList.data);
     setProducts(itemList?.data);
     setLoading(false);
   };
@@ -112,7 +112,7 @@ const ItemList = ({ meData }) => {
           toggleModal(false);
         }}
       >
-        <AddNewItem />
+        <AddNewItem products={products} catData={catData} />
       </AdminModal>
 
       <AdListMid>

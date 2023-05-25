@@ -34,7 +34,7 @@ const AdminHeader = ({ meData, setIsAdminBoard }) => {
 
   const [loading, setLoading] = useState(false);
 
-  console.log('me', me);
+  // console.log('me', me);
 
   useEffect(() => {
     setMe(meData);
