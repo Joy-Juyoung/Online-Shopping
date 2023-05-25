@@ -387,6 +387,7 @@ export const SummaryWrap = styled.span`
 
 export const CartSummaryInfo = styled.div`
   display: block;
+  font-size: 14px;
 `;
 
 export const ItemPriceInfo = styled.dl`
