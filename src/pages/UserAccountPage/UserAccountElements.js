@@ -50,6 +50,11 @@ export const InfoEach = styled.div`
   padding: 10px 0;
 `;
 
+export const EditInfoEach = styled.div`
+  /* margin-bottom: 15px; */
+  /* padding: 10px 0; */
+`;
+
 export const AccountInputTitle = styled.div`
   font-weight: 600;
   font-size: 15px;
@@ -79,7 +84,7 @@ export const AccountInputLabel = styled.label`
 `;
 
 export const InputEdit = styled.div`
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
 `;
 
 export const DelBtn = styled.div`

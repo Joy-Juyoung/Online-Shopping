@@ -84,6 +84,7 @@ const AddCoupon = ({ meData, onClose }) => {
 
   const handleApply = () => {
     onClose();
+    window.location.reload();
   };
 
   useEffect(() => {

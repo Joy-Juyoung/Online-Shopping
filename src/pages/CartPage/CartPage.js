@@ -351,14 +351,14 @@ const CartPage = () => {
 
             <CartRightInfo>
               <CartRightTop>
-                <TotalTitle>
+                {/* <TotalTitle>
                   <h2>Promo Code</h2>
                   <PromoInfo>
                     <QuestionMark>
                       <HelpOutlineIcon fontSize='small' color='action' />
                     </QuestionMark>
                   </PromoInfo>
-                </TotalTitle>
+                </TotalTitle> */}
                 <CouponInfo>
                   <CouponInputWrap>
                     <CouponInput placeholder='Please enter your promo code' />
