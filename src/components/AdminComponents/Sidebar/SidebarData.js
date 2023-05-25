@@ -31,8 +31,8 @@ export const SidebarData = [
     title: 'Categories',
     path: '/admin/categories',
     icon: <CategoryIcon />,
-    iconClosed: <ExpandMoreIcon />,
-    iconOpened: <ExpandLessIcon />,
+    // iconClosed: <ExpandMoreIcon />,
+    // iconOpened: <ExpandLessIcon />,
     subNav: [
       // {
       //   title: 'Categories',
