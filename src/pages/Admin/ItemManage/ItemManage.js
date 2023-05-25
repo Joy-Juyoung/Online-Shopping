@@ -65,37 +65,37 @@ const ItemManage = ({ meData }) => {
       <h1>Orders</h1>
       <AdOrderOverview>
         <AdViewCount>
-          {/* <AdCountWrap> */}
-          <AdCount className='total'>
-            <AdCountIcon>
-              <ShoppingBagIcon sx={{ fontSize: 45 }} />
-            </AdCountIcon>
-            <AdCountText>
-              <span>{orders?.length}</span>
-              <p>Total</p>
-            </AdCountText>
-          </AdCount>
-          <AdCount className='pending'>
-            <AdCountIcon>
-              <PendingActionsIcon sx={{ fontSize: 45 }} />
-            </AdCountIcon>
-            <AdCountText>
-              <span>{pendingList?.length}</span>
-              <p>Pending</p>
-            </AdCountText>
-          </AdCount>
-          <AdCount className='inprogress'>
-            <AdCountIcon>
-              <RotateRightIcon sx={{ fontSize: 45 }} />
-            </AdCountIcon>
-            <AdCountText>
-              <span>{inprogressList?.length}</span>
-              <p>Inprogress</p>
-            </AdCountText>
-          </AdCount>
-          {/* </AdCountWrap> */}
+          <AdCountWrap>
+            <AdCount className='total'>
+              <AdCountIcon>
+                <ShoppingBagIcon sx={{ fontSize: 35 }} />
+                <p>Total</p>
+              </AdCountIcon>
+              <AdCountText>
+                <span>{orders?.length}</span>
+              </AdCountText>
+            </AdCount>
+            <AdCount className='pending'>
+              <AdCountIcon>
+                <PendingActionsIcon sx={{ fontSize: 35 }} />
+                <p>Pending</p>
+              </AdCountIcon>
+              <AdCountText>
+                <span>{pendingList?.length}</span>
+              </AdCountText>
+            </AdCount>
+            <AdCount className='inprogress'>
+              <AdCountIcon>
+                <RotateRightIcon sx={{ fontSize: 35 }} />
+                <p>Inprogress</p>
+              </AdCountIcon>
+              <AdCountText>
+                <span>{inprogressList?.length}</span>
+              </AdCountText>
+            </AdCount>
+          </AdCountWrap>
+          <AdItemByCatList></AdItemByCatList>
         </AdViewCount>
-        <AdItemByCatList></AdItemByCatList>
 
         <AdViewList>
           <AdViewStatus className='pending'>

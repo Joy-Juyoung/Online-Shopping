@@ -220,21 +220,33 @@ export const AdOrderOverview = styled.div`
 `;
 
 export const AdViewCount = styled.div`
-  display: grid;
+  /* display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-gap: 20px;
-  margin: 40px auto;
+  grid-gap: 20px; */
+  margin: 20px 0 20px;
+  display: flex;
+  align-items: center;
 `;
 
-// export const AdCountWrap = styled.div`
-//   display: flex;
-//   align-items: center;
-//   justify-content: space-between;
-// `;
+export const AdCountWrap = styled.div`
+  /* display: flex;
+  align-items: center;
+  flex-direction: column; */
+  flex: 1;
+  margin-right: 40px;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 25px;
+
+  height: 100%;
+`;
 
 export const AdCount = styled.div`
   width: 100%;
-  height: 80px;
+  height: 65px;
+
+  /* margin: 10px auto; */
 
   /* background: #fff; */
   /* color: #fff; */
@@ -244,7 +256,7 @@ export const AdCount = styled.div`
   justify-content: space-between;
   padding: 0 15px 0 10px;
 
-  box-shadow: 4px 4px 6px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.1);
 
   &.total {
     color: #93334b;
@@ -266,7 +278,7 @@ export const AdCount = styled.div`
 `;
 
 export const AdCountText = styled.div`
-  display: block;
+  display: flex;
   align-items: center;
   justify-content: center;
   font-size: 13px;
@@ -276,19 +288,16 @@ export const AdCountText = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 35px;
+    font-size: 28px;
+    font-weight: 600;
     padding: 0;
     /* margin-top: -10px; */
-  }
-
-  p {
-    margin-top: -5px;
   }
 `;
 
 export const AdCountIcon = styled.div`
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: center;
   justify-content: center;
   /* font-size: 13px; */
@@ -296,16 +305,28 @@ export const AdCountIcon = styled.div`
   svg {
     margin: 0 auto;
   }
-`;
 
+  p {
+    /* margin-top: -5px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+  }
+`;
+// ***
 export const AdItemByCatList = styled.div`
   /* width: 100%;
   height: 250px; */
-  height: 210px;
+  height: 245px;
   border: 2px solid #61b9ff;
   border-radius: 20px;
   margin: 20px 0;
+  flex: 3;
+
+  box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.1);
 `;
+// **
 
 export const AdViewList = styled.div`
   display: grid;
@@ -314,11 +335,11 @@ export const AdViewList = styled.div`
 `;
 
 export const AdViewStatus = styled.div`
-  height: 250px;
+  height: 320px;
   border-radius: 20px;
   box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.1);
   position: relative;
-  margin-top: 20px;
+  /* margin-top: 20px; */
 
   &.pending {
     color: #b74a01;
