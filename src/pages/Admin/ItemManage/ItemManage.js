@@ -27,12 +27,26 @@ import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArro
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { Link } from 'react-router-dom';
 
-const ItemManage = ({ meData }) => {
+const ItemManage = ({ catData }) => {
   const [loading, setLoading] = useState(false);
   const [orders, setOrders] = useState();
 
   const [pendingList, setPendingList] = useState();
   const [inprogressList, setInprogressList] = useState();
+
+  const [products, setProducts] = useState();
+
+  const getProducts = async () => {
+    const itemList = await axios.get('/products/', {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+    // console.log('itemList', itemList.data);
+    setProducts(itemList?.data);
+    setLoading(false);
+  };
+
+  console.log('catData', catData);
 
   const getOrders = async () => {
     const orderList = await axios.get('/orders/', {
@@ -47,7 +61,8 @@ const ItemManage = ({ meData }) => {
   useEffect(() => {
     setLoading(true);
     getOrders();
-  }, [meData]);
+    getProducts();
+  }, [catData]);
 
   useEffect(() => {
     setPendingList(orders?.filter((po) => po?.status === 'pending'));
