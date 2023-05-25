@@ -93,10 +93,10 @@ const CustomersManage = ({ meData }) => {
           {currentPosts?.filter((list) =>
             list.username.toLowerCase().includes(userInput.toLowerCase())
             || list.type.toLowerCase().includes(userInput.toLowerCase())            
-            || list.pk.toString().includes(userInput)
-            || list.balance.toString().includes(userInput)
-            || list.address.toString().includes(userInput)
-            || list.phone_number.toString().includes(userInput)
+            || list.pk?.toString().includes(userInput)
+            || list.balance?.toString().includes(userInput)
+            || list.address?.toString().includes(userInput)
+            || list.phone_number?.toString().includes(userInput)
             )
           .map((user) => {
             return (

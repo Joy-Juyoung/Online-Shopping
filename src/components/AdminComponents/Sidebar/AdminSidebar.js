@@ -29,7 +29,7 @@ const AdminSidebar = ({ meData }) => {
             <h1>Blank Closet</h1>
           </SideLink>
           <SideShowUl>
-            {SidebarData.map((item, index) => {
+            {SidebarData?.map((item, index) => {
               return <AdminSubMenu item={item} key={index} />;
             })}
           </SideShowUl>

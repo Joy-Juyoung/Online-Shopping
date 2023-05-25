@@ -34,16 +34,16 @@ export const SidebarData = [
     iconClosed: <ExpandMoreIcon />,
     iconOpened: <ExpandLessIcon />,
     subNav: [
-      {
-        title: 'Categories',
-        path: '/admin/categories/head',
-        icon: <GroupWorkIcon />,
-      },
-      {
-        title: 'Sub Categories',
-        path: '/admin/categories/:headName/sub',
-        icon: <WorkspacesIcon />,
-      },
+      // {
+      //   title: 'Categories',
+      //   path: '/admin/categories/head',
+      //   icon: <GroupWorkIcon />,
+      // },
+      // {
+      //   title: 'Sub Categories',
+      //   path: '/admin/categories/:headName/sub',
+      //   icon: <WorkspacesIcon />,
+      // },
     ],
   },
   {
