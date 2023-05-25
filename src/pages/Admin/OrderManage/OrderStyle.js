@@ -174,16 +174,16 @@ export const AdCountText = styled.div`
   justify-content: center;
   font-size: 13px;
 
-  p {
-    margin-top: -10px;
-  }
-
   span {
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 35px;
     padding: 0;
+    margin-top: -10px;
+    font-weight: 600;
+  }
+  p {
     margin-top: -10px;
   }
 `;
