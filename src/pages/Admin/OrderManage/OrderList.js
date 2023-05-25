@@ -259,15 +259,15 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
                 name='status'
                 id='status'
                 onChange={handelStatusOption}
-                defaultValue={orderById?.status}
+                // defaultValue={orderById?.status}
               >
                 {statusOptionData?.map((optionData, index) => {
                   // console.log('optionData', orderById?.status);
                   return (
                     <option
                       key={index}
-                      // value={optionData || ''}
-                      defaultValue={orderById?.status}
+                      value={orderById?.status || ''}
+                      // defaultValue={orderById?.status}
                     >
                       {optionData}
                     </option>
