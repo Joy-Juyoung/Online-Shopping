@@ -97,6 +97,8 @@ const PaymentPage = ({ meData }, props) => {
   }, [meData]);
   // console.log('carts', carts);
 
+  // console?.log('TotalPriceTag', Math.round(TotalPriceTag));
+
   const payOrder = async () => {
     if (window.confirm('Are you sure you want to pay?')) {
       carts.map((cItems) => {
@@ -116,26 +118,33 @@ const PaymentPage = ({ meData }, props) => {
       });
       console.log('payList', payList);
 
-      const sendOrder = axios.post(
-        '/orders/',
-        {
-          productsList: payList,
-          address: meData?.address,
-          final_total_price: TotalPriceTag,
-        },
-        {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
+      try {
+        const sendOrder = axios.post(
+          '/orders/',
+          {
+            productsList: payList,
+            address: meData?.address,
+            final_total_price: Math.round(TotalPriceTag),
+          },
+          {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+          }
+        );
+        setSuccess(true);
+        console.log('sendOrder', sendOrder);
+        handleDeleteCart();
+        setPayList([]);
+      } catch (err) {
+        if (err?.response?.status === 400) {
+          setLoading(false);
+          console.log('Error page or empty page');
+        } else {
+          console.log('Error page or empty page');
         }
-      );
-      setSuccess(true);
-      console.log('sendOrder', sendOrder);
-      handleDeleteCart();
-      setPayList([]);
-    }
-    // navigate('/userOrders');
-    else {
-      window.location.reload();
+      }
+    } else {
+      // window.location.reload();
     }
   };
 

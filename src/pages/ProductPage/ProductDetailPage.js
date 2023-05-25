@@ -57,7 +57,6 @@ import DetailSlider from './DetailSlider';
 import Skeleton from '@mui/material/Skeleton';
 import { ToastContainer, Zoom, toast } from 'react-toastify';
 
-
 const SHIPPING_RETURN_URL = '/settings/all';
 const REVIEWS_URL = '/reviews/';
 
@@ -85,6 +84,7 @@ const ProductDetailPage = ({
   const [payload, setPayload] = useState('');
   const [rating, setRating] = useState('');
   const [isEdit, setIsEdit] = useState(false);
+  const [isAdded, setIsAdded] = useState(false);
 
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -95,7 +95,7 @@ const ProductDetailPage = ({
   }, [itemsDetail.reviews]);
 
   const handleInputChange = (e) => {
-    console.log('name', e.target.value);
+    // console.log('name', e.target.value);
     var tempChangeReviews = changeReviews;
 
     if (e.target.id === 'rating') {
@@ -124,7 +124,7 @@ const ProductDetailPage = ({
         }
       );
       setChangeReviews(reviewsInfo?.data);
-      console.log('reviewsInfo', reviewsInfo?.data);
+      // console.log('reviewsInfo', reviewsInfo?.data);
 
       setIsEdit(false);
     }
@@ -137,7 +137,7 @@ const ProductDetailPage = ({
       setIsEdit(false);
     }
   };
-  console.log('me', meData);
+  // console.log('me', meData);
 
   const getProduct = async () => {
     const { data } = await axios.get(`/products/${id}`, {
@@ -145,12 +145,19 @@ const ProductDetailPage = ({
       withCredentials: true,
     });
 
-    console.log('dada', data);
+    // console.log('dada', data);
     setItemsDetail(data);
   };
   useEffect(() => {
     getProduct();
+
+    // if (isAdded === true) {
+    //   setIsSuccess(true);
+    //   showCustomToast();
+    // }
   }, [id, addLiked]);
+
+  console.log('isAdded', isAdded);
 
   const getShipReturn = async () => {
     const shipData = await axios.get(SHIPPING_RETURN_URL, {
@@ -164,7 +171,7 @@ const ProductDetailPage = ({
     alert('Are you sure you want to remove the reviews?');
     var tempReviews = itemsDetail.reviews;
     tempReviews.forEach((c) => {
-      console.log('c', c);
+      // console.log('c', c);
       if (c.pk === pk) {
         axios.delete(`/reviews/${c.pk}`, {
           headers: { 'Content-Type': 'application/json' },
@@ -249,21 +256,25 @@ const ProductDetailPage = ({
     setItemsDetail(itemsDetail);
   };
 
-  const SuccessNotify = ({text}) => (
+  const SuccessNotify = ({ text }) => (
     <div>
-     <p className="text">{text}</p>
-    {/* <button className="button1" onClick={() => toast.dismiss()}>Ok!</button> */}
+      <p className='text'>{text}</p>
+      {/* <button className="button1" onClick={() => toast.dismiss()}>Ok!</button> */}
     </div>
   );
   const showCustomToast = () => {
-    toast.success(<SuccessNotify text="Success" />)
-  }
+    toast.success(<SuccessNotify text='Success' />);
+  };
   const handleSuccess = () => {
-      setIsSuccess(true);
-      showCustomToast()
-  }
+    // if (isAdded === true) {
+    setIsSuccess(true);
+    showCustomToast();
+    // window.location.reload();
+    // }
+    // setIsAdded(false);
+  };
 
-  console.log("isSuccess",isSuccess);
+  // console.log('isSuccess', isSuccess);
 
   useEffect(() => {
     const checkIfClickedOutside = (e) => {
@@ -277,22 +288,19 @@ const ProductDetailPage = ({
     };
   }, [isOpen]);
 
-
   useEffect(() => {
     const timer = setTimeout(() => {
-      setLoadings(false)
+      setLoadings(false);
     }, 680);
     return () => clearTimeout(timer);
   }, []);
- 
+
   if (loading)
     return (
       <div>
         <Loading />
       </div>
     );
-
-
 
   return (
     <DetailContainer>
@@ -302,108 +310,93 @@ const ProductDetailPage = ({
           <DetailRightInfoTop>
             <DetailName>
               {loadings ? (
-                <Skeleton 
-                  variant="rect" 
-                  duration={2}
-                  width={450} 
-                  height={60}/>
-                  ):(
-                      <>                    
-                        {itemsDetail.name}
-                      </>
-                     )}
+                <Skeleton variant='rect' duration={2} width={450} height={60} />
+              ) : (
+                <>{itemsDetail.name}</>
+              )}
             </DetailName>
             <DetailProductName>
               <DetailTitle>
                 {loadings ? (
-                  <Skeleton 
-                    variant="rect" 
-                    width={450} 
-                    height={30}/>
-                    ):(
-                      <>
-                        {itemsDetail.detail}
-                       </>
-                      )}
+                  <Skeleton variant='rect' width={450} height={30} />
+                ) : (
+                  <>{itemsDetail.detail}</>
+                )}
               </DetailTitle>
               <DetailPrice>
-              {loadings ? (
-                  <Skeleton 
-                    variant="rect" 
-                    width={450} 
-                    height={40}/>
-                    ):(
-                      <>
-                        ${itemsDetail.price}
-                      </>
-                      )}
+                {loadings ? (
+                  <Skeleton variant='rect' width={450} height={40} />
+                ) : (
+                  <>${itemsDetail.price}</>
+                )}
               </DetailPrice>
               {loadings ? (
-              <Skeleton 
-                variant="rect" 
-                width={450} 
-                height={50}/>
-                ):(
-                  <DetailCoupon>                   
-                    <p>
-                      Shop on our App and Enjoy 10% off
-                      <br />
-                      Use code
-                      <strong>APPFW22</strong>                  
-                    </p>
-                  </DetailCoupon>
-                      )}
-                  <DetailStock>
-                    InStock: {itemsDetail?.in_stock?.toLocaleString()}
-                  </DetailStock>         
+                <Skeleton variant='rect' width={450} height={50} />
+              ) : (
+                <DetailCoupon>
+                  <p>
+                    Shop on our App and Enjoy 10% off
+                    <br />
+                    Use code
+                    <strong>APPFW22</strong>
+                  </p>
+                </DetailCoupon>
+              )}
+              <DetailStock>
+                InStock: {itemsDetail?.in_stock?.toLocaleString()}
+              </DetailStock>
             </DetailProductName>
           </DetailRightInfoTop>
           <DetailRightInfoBottom>
-                    <LikeBtnWrapper>
-                      {meData && (
-                        <LikeBtn
-                          onClick={(e) => {
-                            handleLiked();
-                          }}
-                        >
-                          {itemsDetail.is_liked ? (
-                            <FavoriteIcon fontSize='medium' sx={{ color: '#e20000' }} />
-                          ) : (
-                            <FavoriteBorderIcon fontSize='medium' color='disabled' />
-                          )}
-                        </LikeBtn>
-                      )}
-                    </LikeBtnWrapper>
+            <LikeBtnWrapper>
+              {meData && (
+                <LikeBtn
+                  onClick={(e) => {
+                    handleLiked();
+                  }}
+                >
+                  {itemsDetail.is_liked ? (
+                    <FavoriteIcon fontSize='medium' sx={{ color: '#e20000' }} />
+                  ) : (
+                    <FavoriteBorderIcon fontSize='medium' color='disabled' />
+                  )}
+                </LikeBtn>
+              )}
+            </LikeBtnWrapper>
 
-                    {itemsDetail?.in_stock === 0 ? (
-                      <ButtonLarges style={{ background: 'gray' }} disabled>
-                        Sold out
-                      </ButtonLarges>
-                    ) : (
-                      // <ButtonLarges onClick={showCustomToast}>
-                    <ButtonLarges onClick={() => setIsOpen(true)}>
-                        Add to Cart
-                      </ButtonLarges>
-
-                    )}
-                    {isOpen && <AddToCart 
-                                  isSuccess={isSuccess} 
-                                  // onClose={handleAddtoBag} 
-                                  onSuccess={handleSuccess}
-                                  onClose={() => setIsOpen(false)}
-                                  />}
-                    {isSuccess && <ToastContainer 
-                      transition={Zoom}
-                      autoClose={1000}
-                      hideProgressBar={false}
-                      closeOnClick={true}
-                      limit={1}
-                      theme='dark' // light, dark, colored
-                      pauseOnHover={true}
-                    // pauseOnFocusLoss={true}
-                    // icon={} // true or false
-                      position='top-center'
-                      />}
+            {itemsDetail?.in_stock === 0 ? (
+              <ButtonLarges style={{ background: 'gray' }} disabled>
+                Sold out
+              </ButtonLarges>
+            ) : (
+              // <ButtonLarges onClick={showCustomToast}>
+              <ButtonLarges onClick={() => setIsOpen(true)}>
+                Add to Cart
+              </ButtonLarges>
+            )}
+            {isOpen && (
+              <AddToCart
+                // setIsSuccess={setIsSuccess}
+                // onClose={!isOpen}
+                onSuccess={handleSuccess}
+                // setIsAdded={setIsAdded}
+                onClose={() => setIsOpen(false)}
+              />
+            )}
+            {isSuccess && (
+              <ToastContainer
+                transition={Zoom}
+                autoClose={1000}
+                hideProgressBar={false}
+                closeOnClick={true}
+                limit={1}
+                theme='dark' // light, dark, colored
+                pauseOnHover={true}
+                // pauseOnFocusLoss={true}
+                // icon={} // true or false
+                position='top-center'
+              />
+            )}
           </DetailRightInfoBottom>
         </DetailRightInfo>
       </DetailWrapperOne>

@@ -68,6 +68,35 @@ const TestCart = () => {
   const [IdList, setIdList] = useState([]);
   const [checkNewList, setCheckNewList] = useState([]);
 
+  const [allDelList, setAllDelList] = useState([]);
+
+  const [checkedItem, setCheckedItem] = useState('');
+  const [selectedItem, setSelectedItem] = useState('');
+  const [checkedList, setCheckedList] = useState([]);
+
+  const handleCheckedItems = (e) => {
+    setCheckedItem({ ...checkedItem, [e.target.value]: e.target.checked });
+  };
+  // console.log('checkedItem', checkedItem);
+
+  useEffect(() => {
+    setSelectedItem(
+      Object.entries(checkedItem)
+        .filter(([key, value]) => value)
+        .map((added, index) => added[0])
+    );
+  }, [checkedItem]);
+  // console.log('selectedItem', selectedItem);
+
+  useEffect(() => {
+    if (selectedItem) {
+      setCheckedList(
+        carts?.filter((item) => selectedItem?.includes(item?.pk.toString()))
+      );
+    }
+  }, [selectedItem, carts]);
+  // console.log('setCheckedList', setCheckedList);
+
   const getAllCart = async () => {
     const cartList = await axios.get(CARTS_URL, {
       headers: { 'Content-Type': 'application/json' },
@@ -86,83 +115,59 @@ const TestCart = () => {
   // console.log('carts', carts);
 
   const handleAllDeleteCart = async () => {
-    alert('Are you sure you want to remove the product?');
-    // const empty =
-    await carts.map((i) => {
-      axios.delete(`/carts/${i.pk}`, {
-        headers: { 'Content-Type': 'application/json' },
-        withCredentials: true,
-      });
-      setCarts([]);
-    });
-    // setCarts(empty);
-    getAllCart([]);
-    // console.log("empty", empty);
-    window.location.reload('/carts');
+    if (
+      window.confirm('Are you sure you want to delete this item in your cart?')
+    ) {
+      // IdList.map(async (i) => {
+      // console.log('i', i);
+      // setAllDelList([...allDelList, i?.pk]);
+      // await axios.delete(`/carts/${IdList[0]}`, {
+      //   headers: { 'Content-Type': 'application/json' },
+      //   withCredentials: true,
+      // });
+      // setCarts([]);
+      // });
+      // getAllCart([]);
+      // window.location.reload();
+    }
   };
 
   const handleDeleteCart = async (pk) => {
-    alert('Are you sure you want to remove the product?');
     // console.log('pk', pk);
-    var tempCart = carts;
-    tempCart.forEach((c) => {
-      if (c?.pk === pk) {
-        // console.log('c?.pk', c?.pk);
-        axios.delete(`/carts/${pk}`, {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        });
-      }
-    });
-    window.location.reload('/carts');
-  };
 
-  useEffect(() => {
-    let ids = [];
-    carts?.map((item, i) => {
-      ids[i] = item?.pk;
-    });
-    setIdList(ids);
-    // console.log("ids", ids);
-  }, [carts]);
-
-  const onChangeAll = () => {
-    if (isChecked === false) {
-      setCheckList(IdList);
-      setIsChecked(true);
-      IdList.map(async (i) => {
-        console.log('i', i);
-        //setCheckList([...checkList, i]);
-        const check = await axios.get(`/carts/${i}`, {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        });
-        setCheckNewList([...checkNewList, check.data]);
-        console.log('checkNewList', checkNewList);
-        // console.log("check", check.data);
-      });
-    } else {
-      setCheckList([]);
-      setIsChecked(false);
-    }
-  };
-
-  // carts에서 가져와서 변경
-  const onChangeEach = async (e, id) => {
-    if (e.target.checked) {
-      setCheckList([...checkList, id]);
-      const check = await axios.get(`/carts/${id}`, {
+    if (
+      window.confirm('Are you sure you want to delete this item in your cart?')
+    ) {
+      await axios.delete(`/carts/${pk}`, {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
       });
-      setCheckNewList([...checkNewList, check.data]);
-    } else {
-      setCheckList(checkList.filter((checkedId) => checkedId !== id));
-      setCheckNewList(checkNewList.filter((checked) => checked?.pk !== id));
+      window.location.reload();
     }
   };
 
-  const PriceForBill = checkNewList.reduce((total, item) => {
+  const onChangeAll = () => {
+    // if (isChecked === false) {
+    //   setCheckList(IdList);
+    //   setIsChecked(true);
+    //   IdList.map(async (i) => {
+    //     console.log('i', i);
+    //     // setCheckList([...checkList, i]);
+    //     const check = await axios.get(`/carts/${i}`, {
+    //       headers: { 'Content-Type': 'application/json' },
+    //       withCredentials: true,
+    //     });
+    //     setCheckNewList([...checkNewList, check.data]);
+    //     console.log('checkNewList', checkNewList);
+    //     // console.log("check", check.data);
+    //   });
+    // } else {
+    //   setCheckList([]);
+    //   setIsChecked(false);
+    // }
+  };
+
+  const PriceForBill = checkedList.reduce((total, item) => {
     return total + item?.total_price;
   }, 0);
 
@@ -205,16 +210,17 @@ const TestCart = () => {
             <CartLeftInfo>
               <CartLeftCheckBar>
                 <CheckBarWrap>
-                  <OrderCheckBox onClick={() => onChangeAll()}>
+                  <OrderCheckBox>
                     <input
                       type='checkbox'
-                      checked={checkList.length === IdList.length}
+                      // checked={checkList.length === IdList.length}
+                      // onChange={() => onChangeAll()}
                     />
                     <label>All</label>
                   </OrderCheckBox>
                   <DeleteBtn
                     onClick={(e) => {
-                      e.preventDefault();
+                      // e.preventDefault();
                       handleAllDeleteCart();
                     }}
                   >
@@ -229,8 +235,12 @@ const TestCart = () => {
                       <ListsCheckBox>
                         <input
                           type='checkbox'
-                          onClick={(e) => onChangeEach(e, cart?.pk)}
-                          checked={checkList.includes(cart?.pk)}
+                          // onClick={(e) => onChangeEach(e, cart?.pk)}
+                          // checked={checkList.includes(cart?.pk)}
+                          id='cartPk'
+                          value={cart?.pk}
+                          onChange={(e) => handleCheckedItems(e)}
+                          checked={checkedItem[cart?.pk] || ''}
                         />
                       </ListsCheckBox>
                       <ListsItemImg>
@@ -269,7 +279,7 @@ const TestCart = () => {
                         <CloseIcon
                           fontSize='small'
                           onClick={(e) => {
-                            e.preventDefault();
+                            // e.preventDefault();
                             handleDeleteCart(cart?.pk);
                           }}
                         />
@@ -338,5 +348,5 @@ const TestCart = () => {
   );
 };
 
-// export default TestCart;
-export default React.memo(TestCart);
+export default TestCart;
+// export default React.memo(TestCart);
