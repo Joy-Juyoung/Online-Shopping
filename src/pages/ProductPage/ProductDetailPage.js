@@ -43,14 +43,7 @@ import {
   ReviewEditBtn,
   DetailStock,
 } from './ProductDetailElements';
-import {
-  NoUserModal,
-  NoUserContents,
-  NoUserTitle,
-  NoUserText,
-  NoUserBtn,
-  NoUserContainer,
-} from '../../components/Header/HeaderElements';
+
 import FileDownloadDoneIcon from '@mui/icons-material/FileDownloadDone';
 import EditIcon from '@mui/icons-material/Edit';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -66,6 +59,7 @@ import Skeleton from '@mui/material/Skeleton';
 import { ToastContainer, Zoom, toast } from 'react-toastify';
 import Modal from '../../components/Modal';
 import { ButtonSmall } from '../../components/ButtonElements';
+import NoUser from '../../components/NoUser';
 
 const SHIPPING_RETURN_URL = '/settings/all';
 const REVIEWS_URL = '/reviews/';
@@ -380,45 +374,10 @@ const ProductDetailPage = ({
               )}
             </LikeBtnWrapper>
 
-            <Modal
-              shown={noUserModalShown}
-              close={() => {
-                toggleNoUserModal(false);
-              }}
-            >
-              <NoUserModal>
-                <NoUserContainer>
-                  <NoUserContents>
-                    <NoUserTitle>Login Required</NoUserTitle>
-                    <NoUserText>
-                      In order to save favorite item, you need to login.
-                    </NoUserText>
-                    <NoUserText>
-                      Whould you like to login now or later?
-                    </NoUserText>
-                  </NoUserContents>
-                </NoUserContainer>
-              </NoUserModal>
-              <NoUserBtn>
-                <ButtonSmall
-                  onClick={() => {
-                    toggleNoUserModal(false);
-                  }}
-                >
-                  Later
-                </ButtonSmall>
-                <Link to='/login' style={{ textDecoration: 'none' }}>
-                  <ButtonSmall
-                    style={{ background: '#0A0F18', color: '#fff' }}
-                    onClick={() => {
-                      toggleNoUserModal(false);
-                    }}
-                  >
-                    LOGIN NOW
-                  </ButtonSmall>
-                </Link>
-              </NoUserBtn>
-            </Modal>
+            <NoUser
+              noUserModalShown={noUserModalShown}
+              toggleNoUserModal={toggleNoUserModal}
+            />
 
             {itemsDetail?.in_stock === 0 ? (
               <ButtonLarges style={{ background: 'gray' }} disabled>
@@ -437,6 +396,7 @@ const ProductDetailPage = ({
                 onSuccess={handleSuccess}
                 // setIsAdded={setIsAdded}
                 onClose={() => setIsOpen(false)}
+                meData={meData}
               />
             )}
             {isSuccess && (
