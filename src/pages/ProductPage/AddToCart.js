@@ -19,12 +19,14 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import { Bounce, ToastContainer, Zoom, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import NoUser from '../../components/NoUser';
 
-const AddToCart = ({ onClose, onSuccess, setIsAdded, setIsSuccess }) => {
+const AddToCart = ({ onClose, onSuccess, meData }) => {
   const [selectOptions, setSelectOptions] = useState([]);
   const [options, setOptions] = useState(null);
   const ref = useRef();
   const { id } = useParams();
+  const [noUserModalShown, toggleNoUserModal] = useState(false);
   // const [isAdded, setIsAdded] = useState(false);
 
   // const [success, setSuccess] = useState(false)
@@ -144,13 +146,28 @@ const AddToCart = ({ onClose, onSuccess, setIsAdded, setIsSuccess }) => {
                 </>
               ) : (
                 <>
-                  <ButtonLarges>ADD TO BAG</ButtonLarges>
+                  {meData === undefined ? (
+                    <ButtonLarges
+                      disable
+                      onClick={() => {
+                        toggleNoUserModal(!noUserModalShown);
+                      }}
+                    >
+                      ADD TO BAG
+                    </ButtonLarges>
+                  ) : (
+                    <ButtonLarges>ADD TO BAG</ButtonLarges>
+                  )}
                 </>
               )}
             </SidebarMenuBottom>
           </SidebarMenuKinds>
         </form>
       </SidebarMenuWrapper>
+      <NoUser
+        noUserModalShown={noUserModalShown}
+        toggleNoUserModal={toggleNoUserModal}
+      />
       <SidebarOutsideClose onClick={onClose} />
     </SidebarMenuContainer>
   );
