@@ -43,19 +43,29 @@ import {
   ReviewEditBtn,
   DetailStock,
 } from './ProductDetailElements';
+import {
+  NoUserModal,
+  NoUserContents,
+  NoUserTitle,
+  NoUserText,
+  NoUserBtn,
+  NoUserContainer,
+} from '../../components/Header/HeaderElements';
 import FileDownloadDoneIcon from '@mui/icons-material/FileDownloadDone';
 import EditIcon from '@mui/icons-material/Edit';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Avatar from '@mui/material/Avatar';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import SizeImage from '../../asset/size.png';
 import AddToCart from './AddToCart';
 import Loading from '../../components/Loading';
 import DetailSlider from './DetailSlider';
 import Skeleton from '@mui/material/Skeleton';
 import { ToastContainer, Zoom, toast } from 'react-toastify';
+import Modal from '../../components/Modal';
+import { ButtonSmall } from '../../components/ButtonElements';
 
 const SHIPPING_RETURN_URL = '/settings/all';
 const REVIEWS_URL = '/reviews/';
@@ -79,12 +89,15 @@ const ProductDetailPage = ({
   const [size, setSize] = useState(false);
   const [shippingReturn, setShippingReturn] = useState(false);
   const [reviews, setReviews] = useState(false);
+  const [noUserModalShown, toggleNoUserModal] = useState(false);
 
   const [changeReviews, setChangeReviews] = useState('');
   const [payload, setPayload] = useState('');
   const [rating, setRating] = useState('');
   const [isEdit, setIsEdit] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
+  const [fav, setFav] = useState(false);
+  const [slideIndex, setSlideIndex] = useState([]);
 
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -145,19 +158,18 @@ const ProductDetailPage = ({
       withCredentials: true,
     });
 
-    // console.log('dada', data);
+    setSlideIndex(data);
     setItemsDetail(data);
   };
   useEffect(() => {
     getProduct();
+  }, [addLiked]);
 
-    // if (isAdded === true) {
-    //   setIsSuccess(true);
-    //   showCustomToast();
-    // }
-  }, [id, addLiked]);
+  useEffect(() => {
+    setFav(itemsDetail?.is_liked);
+  }, []);
 
-  console.log('isAdded', isAdded);
+  console.log('me', meData);
 
   const getShipReturn = async () => {
     const shipData = await axios.get(SHIPPING_RETURN_URL, {
@@ -240,8 +252,8 @@ const ProductDetailPage = ({
   };
 
   const handleLiked = () => {
-    itemsDetail.is_liked = !itemsDetail.is_Liked;
-    // setFav(!fav);
+    // itemsDetail.is_liked = !itemsDetail.is_Liked;
+    setFav(!fav);
     const addLike = axios.put(
       '/wishlists/',
       {
@@ -266,12 +278,8 @@ const ProductDetailPage = ({
     toast.success(<SuccessNotify text='Success' />);
   };
   const handleSuccess = () => {
-    // if (isAdded === true) {
     setIsSuccess(true);
     showCustomToast();
-    // window.location.reload();
-    // }
-    // setIsAdded(false);
   };
 
   // console.log('isSuccess', isSuccess);
@@ -305,7 +313,7 @@ const ProductDetailPage = ({
   return (
     <DetailContainer>
       <DetailWrapperOne>
-        <DetailSlider />
+        <DetailSlider slideIndex={slideIndex} />
         <DetailRightInfo>
           <DetailRightInfoTop>
             <DetailName>
@@ -349,20 +357,68 @@ const ProductDetailPage = ({
           </DetailRightInfoTop>
           <DetailRightInfoBottom>
             <LikeBtnWrapper>
-              {meData && (
+              {meData === undefined ? (
+                <LikeBtn
+                  onClick={() => {
+                    toggleNoUserModal(!noUserModalShown);
+                  }}
+                >
+                  <FavoriteIcon sx={{ color: '#B1B1B1' }} />
+                </LikeBtn>
+              ) : (
                 <LikeBtn
                   onClick={(e) => {
                     handleLiked();
                   }}
                 >
-                  {itemsDetail.is_liked ? (
-                    <FavoriteIcon fontSize='medium' sx={{ color: '#e20000' }} />
+                  {fav ? (
+                    <FavoriteIcon sx={{ color: '#e20000' }} />
                   ) : (
-                    <FavoriteBorderIcon fontSize='medium' color='disabled' />
+                    <FavoriteIcon sx={{ color: '#B1B1B1' }} />
                   )}
                 </LikeBtn>
               )}
             </LikeBtnWrapper>
+
+            <Modal
+              shown={noUserModalShown}
+              close={() => {
+                toggleNoUserModal(false);
+              }}
+            >
+              <NoUserModal>
+                <NoUserContainer>
+                  <NoUserContents>
+                    <NoUserTitle>Login Required</NoUserTitle>
+                    <NoUserText>
+                      In order to save favorite item, you need to login.
+                    </NoUserText>
+                    <NoUserText>
+                      Whould you like to login now or later?
+                    </NoUserText>
+                  </NoUserContents>
+                </NoUserContainer>
+              </NoUserModal>
+              <NoUserBtn>
+                <ButtonSmall
+                  onClick={() => {
+                    toggleNoUserModal(false);
+                  }}
+                >
+                  Later
+                </ButtonSmall>
+                <Link to='/login' style={{ textDecoration: 'none' }}>
+                  <ButtonSmall
+                    style={{ background: '#0A0F18', color: '#fff' }}
+                    onClick={() => {
+                      toggleNoUserModal(false);
+                    }}
+                  >
+                    LOGIN NOW
+                  </ButtonSmall>
+                </Link>
+              </NoUserBtn>
+            </Modal>
 
             {itemsDetail?.in_stock === 0 ? (
               <ButtonLarges style={{ background: 'gray' }} disabled>

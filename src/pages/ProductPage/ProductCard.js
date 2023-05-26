@@ -75,7 +75,7 @@ const ProductsCard = ({
             setFav(!fav);
             // if (fav) {
             each.is_liked = !each.isLiked;
-            console.log('fav 2', fav);
+            // console.log('fav 2', fav);
             const addLike = axios.put(
               '/wishlists/',
               {
@@ -88,7 +88,7 @@ const ProductsCard = ({
             );
             setAdded(addLike);
             // window.location.reload();
-            console.log('added', added);
+            // console.log('added', added);
           }
           // }
         });
@@ -100,7 +100,7 @@ const ProductsCard = ({
         if (each.pk === pk) {
           each.is_liked = !each.isLiked;
           setFav(!fav);
-          console.log('fav 2', fav);
+          // console.log('fav 2', fav);
           const addLike = axios.put(
             '/wishlists/',
             {
@@ -124,7 +124,7 @@ const ProductsCard = ({
         if (each.pk === pk) {
           each.is_liked = !each.isLiked;
           setFav(!fav);
-          console.log('fav 2', fav);
+          // console.log('fav 2', fav);
           const addLike = axios.put(
             '/wishlists/',
             {
