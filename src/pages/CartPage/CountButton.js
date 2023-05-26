@@ -8,9 +8,17 @@ import {
 } from './CartElements';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
+import { useEffect } from 'react';
 
-const CountButton = ({ carts, cart, getAllCart }) => {
-  const [cartArr, setCartArr] = useState([]);
+const CountButton = ({ carts, cart, getAllCart, setCartArr }) => {
+  // const [cartArr, setCartArr] = useState([]);
+  const [countNumber, setCountNumber] = useState();
+
+  useEffect(() => {
+    setCountNumber(cart?.number_of_product);
+  }, []);
+
+  console.log('cart?.number_of_product', cart?.number_of_product);
 
   const handleIncrease = async (pk) => {
     // console.log('Ipk', pk);
@@ -19,7 +27,7 @@ const CountButton = ({ carts, cart, getAllCart }) => {
         await axios.put(
           `/carts/${pk}`,
           {
-            number_of_product: i.number_of_product + 1,
+            number_of_product: countNumber + 1,
           },
           {
             headers: { 'Content-Type': 'application/json' },
@@ -28,8 +36,10 @@ const CountButton = ({ carts, cart, getAllCart }) => {
         );
       }
     });
-    // setCartArr(addQty);
-    getAllCart();
+    setCartArr(addQty);
+    // setCountChange(!countChange);
+    setCountNumber(countNumber + 1);
+    // getAllCart();
   };
   // console.log('addQty', cartArr);
 
@@ -41,7 +51,7 @@ const CountButton = ({ carts, cart, getAllCart }) => {
           `/carts/${pk}`,
           {
             pk: i?.pk,
-            number_of_product: i.number_of_product - 1,
+            number_of_product: countNumber - 1,
           },
           {
             headers: { 'Content-Type': 'application/json' },
@@ -50,8 +60,9 @@ const CountButton = ({ carts, cart, getAllCart }) => {
         );
       }
     });
-    // setCartArr(minusQty);
-    getAllCart();
+    setCartArr(minusQty);
+    setCountNumber(countNumber - 1);
+    // getAllCart();
   };
 
   return (
@@ -59,16 +70,16 @@ const CountButton = ({ carts, cart, getAllCart }) => {
       <ItemDetailTwoWrap>
         <ItemDecreaseBtn
           onClick={(e) => {
-            // e.preventDefault();
+            e.preventDefault();
             handleDecrease(cart?.pk);
           }}
         >
           <RemoveIcon fontSize='small' color='action' />
         </ItemDecreaseBtn>
-        <ItemNumberInput>{cart?.number_of_product}</ItemNumberInput>
+        <ItemNumberInput>{countNumber}</ItemNumberInput>
         <ItemIncreaseBtn
           onClick={(e) => {
-            // e.preventDefault();
+            e.preventDefault();
             handleIncrease(cart?.pk);
           }}
         >

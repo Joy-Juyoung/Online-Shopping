@@ -63,12 +63,15 @@ const CARTS_URL = '/carts';
 const TestCart = ({ checkedList, setCheckedList }) => {
   const [loading, setLoading] = useState(false);
   const [carts, setCarts] = useState([]);
-  const [isChecked, setIsChecked] = useState(false);
-  const [checkList, setCheckList] = useState([]);
-  const [IdList, setIdList] = useState([]);
-  const [checkNewList, setCheckNewList] = useState([]);
+  // const [isChecked, setIsChecked] = useState(false);
+  // const [checkList, setCheckList] = useState([]);
+  // const [IdList, setIdList] = useState([]);
+  // const [checkNewList, setCheckNewList] = useState([]);
 
-  const [allDelList, setAllDelList] = useState([]);
+  // const [allDelList, setAllDelList] = useState([]);
+
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [cartArr, setCartArr] = useState([]);
 
   const [checkedItem, setCheckedItem] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
@@ -78,6 +81,10 @@ const TestCart = ({ checkedList, setCheckedList }) => {
     setCheckedItem({ ...checkedItem, [e.target.value]: e.target.checked });
   };
   // console.log('checkedItem', checkedItem);
+
+  useEffect(() => {
+    getAllCart();
+  }, [cartArr]);
 
   useEffect(() => {
     setSelectedItem(
@@ -254,6 +261,7 @@ const TestCart = ({ checkedList, setCheckedList }) => {
                             cart={cart}
                             getAllCart={getAllCart}
                             carts={carts}
+                            setCartArr={setCartArr}
                           />
                         </ItemDetailTwo>
                         <ItemDetailThree>
@@ -325,12 +333,20 @@ const TestCart = ({ checkedList, setCheckedList }) => {
               <CartRightBottom>
                 {checkedList?.length === 0 ? (
                   <>
-                    <CheckOutBtn disable>PROCEED TO CHECKOUT</CheckOutBtn>
-                    {/* <span>Please Select the item you want to paid</span> */}
+                    {isDisabled && (
+                      <p style={{ color: 'red', marginBottom: '20px' }}>
+                        * Please Select items to checkout
+                      </p>
+                    )}
+                    <CheckOutBtn disable onClick={() => setIsDisabled(true)}>
+                      PROCEED TO CHECKOUT
+                    </CheckOutBtn>
                   </>
                 ) : (
                   <Link to={`/carts/payment`}>
-                    <CheckOutBtn>PROCEED TO CHECKOUT</CheckOutBtn>
+                    <CheckOutBtn onClick={() => setIsDisabled(false)}>
+                      PROCEED TO CHECKOUT
+                    </CheckOutBtn>
                   </Link>
                 )}
               </CartRightBottom>
