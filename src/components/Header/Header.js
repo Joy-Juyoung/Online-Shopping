@@ -83,7 +83,7 @@ const Header = ({ meData, catData, setIsAdminBoard }) => {
     }
   }, [meData]);
 
-  console.log('me', me);
+  // console.log('me', me);
 
   const handleLogout = async () => {
     setLoading(true);

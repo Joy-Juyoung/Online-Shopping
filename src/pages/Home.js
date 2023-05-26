@@ -77,6 +77,8 @@ const Home = () => {
   const [isAdminBoard, setIsAdminBoard] = useState(false);
   const location = useLocation();
 
+  const [checkedList, setCheckedList] = useState([]);
+
   console.log('location', location.pathname);
 
   const getMe = async () => {
@@ -270,13 +272,25 @@ const Home = () => {
 
               <Route
                 path='/carts'
-                element={<TestCart meData={meData} />}
+                element={
+                  <TestCart
+                    meData={meData}
+                    setCheckedList={setCheckedList}
+                    checkedList={checkedList}
+                  />
+                }
                 exact={true}
               />
 
               <Route
                 path='/carts/payment'
-                element={<PaymentPage meData={meData} />}
+                element={
+                  <PaymentPage
+                    meData={meData}
+                    setCheckedList={setCheckedList}
+                    checkedList={checkedList}
+                  />
+                }
                 exact={true}
               />
 
