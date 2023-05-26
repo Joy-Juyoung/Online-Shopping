@@ -45,7 +45,7 @@ const AddCoupon = ({ meData, onClose }) => {
     });
     console.log('couponList', couponList?.data);
     setCoupons(couponList?.data);
-    setSelected(coupons.pk);
+    setSelected(coupons?.pk);
   };
 
   const handleOpenCoupon = async (pk) => {

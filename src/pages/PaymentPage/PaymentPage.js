@@ -65,20 +65,20 @@ const PaymentPage = ({ meData }, props) => {
   const [getCp, setGetCp] = useState(
     JSON.parse(localStorage.getItem('getCoupon'))
   );
-  // console.log('getCp', getCp[0]);
 
   const PriceForBill = carts?.reduce((total, item) => {
     return total + item?.total_price;
   }, 0);
   const ShippingFee = PriceForBill >= 200 ? 0 : 15;
   const Taxes = PriceForBill * 0.05;
-  const Discounts =
-    PriceForBill * (getCp[0] ? getCp[0]?.discount_rate * 0.01 : 0);
-  const TotalPriceTag = PriceForBill - Discounts + ShippingFee + Taxes;
+  // const Discounts =
+  //   PriceForBill * (getCp[0] ? getCp[0]?.discount_rate * 0.01 : 0);
+  const Discounts = getCp[0]
+    ? PriceForBill * getCp[0]?.discount_rate * 0.01
+    : 0;
+  // PriceForBill * (getCp[0] ? getCp[0]?.discount_rate * 0.01 : 0);
 
-  // const location = useLocation();
-  // const propsData = location.state;
-  // console.log('test2', propsData);
+  const TotalPriceTag = PriceForBill - Discounts + ShippingFee + Taxes;
 
   const getAllCart = async () => {
     const cartList = await axios.get(CARTS_URL, {
