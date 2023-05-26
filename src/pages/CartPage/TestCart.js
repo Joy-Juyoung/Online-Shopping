@@ -60,7 +60,7 @@ import CountButton from './CountButton';
 
 const CARTS_URL = '/carts';
 
-const TestCart = () => {
+const TestCart = ({ checkedList, setCheckedList }) => {
   const [loading, setLoading] = useState(false);
   const [carts, setCarts] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
@@ -72,7 +72,7 @@ const TestCart = () => {
 
   const [checkedItem, setCheckedItem] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
-  const [checkedList, setCheckedList] = useState([]);
+  // const [checkedList, setCheckedList] = useState([]);
 
   const handleCheckedItems = (e) => {
     setCheckedItem({ ...checkedItem, [e.target.value]: e.target.checked });
@@ -94,8 +94,14 @@ const TestCart = () => {
         carts?.filter((item) => selectedItem?.includes(item?.pk.toString()))
       );
     }
+
+    localStorage.setItem('getChecked', JSON.stringify(checkedList));
   }, [selectedItem, carts]);
-  // console.log('setCheckedList', setCheckedList);
+  console.log('checkedList', checkedList);
+
+  useEffect(() => {
+    localStorage.setItem('getChecked', JSON.stringify(checkedList));
+  }, [selectedItem, carts, checkedList]);
 
   const getAllCart = async () => {
     const cartList = await axios.get(CARTS_URL, {
@@ -146,26 +152,7 @@ const TestCart = () => {
     }
   };
 
-  const onChangeAll = () => {
-    // if (isChecked === false) {
-    //   setCheckList(IdList);
-    //   setIsChecked(true);
-    //   IdList.map(async (i) => {
-    //     console.log('i', i);
-    //     // setCheckList([...checkList, i]);
-    //     const check = await axios.get(`/carts/${i}`, {
-    //       headers: { 'Content-Type': 'application/json' },
-    //       withCredentials: true,
-    //     });
-    //     setCheckNewList([...checkNewList, check.data]);
-    //     console.log('checkNewList', checkNewList);
-    //     // console.log("check", check.data);
-    //   });
-    // } else {
-    //   setCheckList([]);
-    //   setIsChecked(false);
-    // }
-  };
+  const onChangeAll = () => {};
 
   const PriceForBill = checkedList.reduce((total, item) => {
     return total + item?.total_price;
@@ -173,7 +160,7 @@ const TestCart = () => {
 
   const ShippingFee = PriceForBill >= 200 ? 0 : 15;
 
-  const Taxes = PriceForBill * 0.05;
+  const Taxes = Math.round(PriceForBill * 0.05);
   const Discounts = 0;
   const TotalPriceTag = PriceForBill + ShippingFee + Taxes + Discounts;
 
@@ -302,7 +289,7 @@ const TestCart = () => {
                 <CartSummaryInfo>
                   <ItemPriceInfo>
                     Price
-                    <span>${PriceForBill?.toFixed(2)}</span>
+                    <span>${PriceForBill?.toLocaleString()}</span>
                   </ItemPriceInfo>
                   <ItemShippingFee>
                     Shipping fee
@@ -314,14 +301,14 @@ const TestCart = () => {
                   </ItemShippingFee>
                   <ItemShippingFee>
                     Duties amd Taxes
-                    <span>${Taxes?.toFixed(2)}</span>
+                    <span>${Taxes?.toLocaleString()}</span>
                   </ItemShippingFee>
                   <ItemTotalPrice>
                     Total
                     {PriceForBill === 0 ? (
                       <span>$0</span>
                     ) : (
-                      <span>${TotalPriceTag?.toFixed(2)}</span>
+                      <span>${TotalPriceTag?.toLocaleString()}</span>
                     )}
                   </ItemTotalPrice>
                   <ExtraInfo>
@@ -336,9 +323,16 @@ const TestCart = () => {
               </CartRightTop>
 
               <CartRightBottom>
-                <Link to={`/carts/payment`}>
-                  <CheckOutBtn>PROCEED TO CHECKOUT</CheckOutBtn>
-                </Link>
+                {checkedList?.length === 0 ? (
+                  <>
+                    <CheckOutBtn disable>PROCEED TO CHECKOUT</CheckOutBtn>
+                    {/* <span>Please Select the item you want to paid</span> */}
+                  </>
+                ) : (
+                  <Link to={`/carts/payment`}>
+                    <CheckOutBtn>PROCEED TO CHECKOUT</CheckOutBtn>
+                  </Link>
+                )}
               </CartRightBottom>
             </CartRightInfo>
           </CartBodyWrap>

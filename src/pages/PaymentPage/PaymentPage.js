@@ -38,17 +38,18 @@ import {
 import PaypalIcon from '../../asset/paypal.svg';
 import MastercardIcon from '../../asset/mastercard.svg';
 import VisaIcon from '../../asset/visa.svg';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import Modal from '../../components/Modal';
 import AddBalance from '../../components/AddBalance';
 import { useRef } from 'react';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import SuccessPayment from './SuccessPayment';
 import AddCoupon from './AddCoupon';
+import { ContentCutOutlined } from '@mui/icons-material';
 
 const CARTS_URL = '/carts';
 
-const PaymentPage = ({ meData }, props) => {
+const PaymentPage = ({ meData, checkedList, setCheckedList }) => {
   const balanceRef = useRef();
   const addressRef = useRef();
   const navigate = useNavigate();
@@ -61,24 +62,44 @@ const PaymentPage = ({ meData }, props) => {
   const [disableBalance, setDisableBalance] = useState(false);
   const [success, setSuccess] = useState(false);
   const [couponModalShown, toggleCouponModal] = useState(false);
+  const [coupons, setCoupons] = useState([]);
+  const [selected, setSelected] = useState();
 
-  const [getCp, setGetCp] = useState(
-    JSON.parse(localStorage.getItem('getCoupon'))
-  );
+  const [getCheckedList, setGetCheckedList] = useState();
+  console.log('checkedList', checkedList);
 
-  const PriceForBill = carts?.reduce((total, item) => {
+  const [getCp, setGetCp] = useState('');
+  // console.log('getCp', getCp);
+
+  useEffect(() => {
+    if (coupons?.length === 0) {
+      setGetCp([]);
+    } else {
+      setGetCp(JSON.parse(localStorage.getItem('getCoupon')));
+    }
+  }, [getCheckedList]);
+
+  const PriceForBill = getCheckedList?.reduce((total, item) => {
     return total + item?.total_price;
   }, 0);
   const ShippingFee = PriceForBill >= 200 ? 0 : 15;
-  const Taxes = PriceForBill * 0.05;
-  // const Discounts =
-  //   PriceForBill * (getCp[0] ? getCp[0]?.discount_rate * 0.01 : 0);
+  const Taxes = Math.round(PriceForBill * 0.05);
+
   const Discounts = getCp[0]
-    ? PriceForBill * getCp[0]?.discount_rate * 0.01
+    ? Math.round(PriceForBill * getCp[0]?.discount_rate * 0.01)
     : 0;
-  // PriceForBill * (getCp[0] ? getCp[0]?.discount_rate * 0.01 : 0);
 
   const TotalPriceTag = PriceForBill - Discounts + ShippingFee + Taxes;
+
+  const getCoupons = async () => {
+    const couponList = await axios.get('/coupons/', {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+    console.log('couponList', couponList?.data);
+    setCoupons(couponList?.data);
+    setSelected(coupons?.pk);
+  };
 
   const getAllCart = async () => {
     const cartList = await axios.get(CARTS_URL, {
@@ -93,15 +114,14 @@ const PaymentPage = ({ meData }, props) => {
   useEffect(() => {
     setLoading(true);
     getAllCart();
+    getCoupons();
     setTotalPrice(TotalPriceTag);
+    setGetCheckedList(JSON.parse(localStorage.getItem('getChecked')));
   }, [meData]);
-  // console.log('carts', carts);
-
-  // console?.log('TotalPriceTag', Math.round(TotalPriceTag));
 
   const payOrder = async () => {
     if (window.confirm('Are you sure you want to pay?')) {
-      carts.map((cItems) => {
+      getCheckedList.map((cItems) => {
         if (cItems?.product_option === null) {
           payList.push({
             product_id: cItems?.product.pk,
@@ -149,14 +169,14 @@ const PaymentPage = ({ meData }, props) => {
   };
 
   const handleDeleteCart = () => {
-    const deleteItem = carts?.map((c) => {
+    const deleteItem = getCheckedList?.map((c) => {
       axios.delete(`/carts/${c.pk}`, {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
       });
     });
     setCarts(deleteItem);
-    getAllCart([]);
+    // getAllCart([]);
   };
 
   const handlePayDisabled = () => {
@@ -168,8 +188,6 @@ const PaymentPage = ({ meData }, props) => {
       setDisableBalance(!disableBalance);
     }
   };
-
-  // const handleCoupon = () => {};
 
   if (loading)
     return (
@@ -207,9 +225,10 @@ const PaymentPage = ({ meData }, props) => {
                 </PaymentPsersonalInfo>
                 <PaymentListWrap>
                   <PaymentListTitle>
-                    Product information <span>{carts?.length} Items</span>
+                    Product information{' '}
+                    <span>{getCheckedList?.length} Items</span>
                   </PaymentListTitle>
-                  {carts?.map((cart) => {
+                  {getCheckedList?.map((cart) => {
                     return (
                       <ListsDetails key={cart?.pk}>
                         <ListsImgLink to={`/products/${cart?.product?.pk}`}>
@@ -244,7 +263,8 @@ const PaymentPage = ({ meData }, props) => {
                   <PaymentListTitle>Your Balance</PaymentListTitle>
                   <PaymentInfoDetails>
                     <h3 ref={balanceRef}>
-                      Your Current Balances: ${meData?.balance.toFixed(2)}
+                      Your Current Balances: $
+                      {meData?.balance?.toLocaleString()}
                     </h3>
                     {disableBalance && (
                       <p style={{ color: 'red' }}>
@@ -280,7 +300,7 @@ const PaymentPage = ({ meData }, props) => {
                 <PaymentSummaryInfo>
                   <ItemSummary>
                     Price
-                    <span>${PriceForBill?.toFixed(2)}</span>
+                    <span>${PriceForBill?.toLocaleString()}</span>
                   </ItemSummary>
                   <ItemSummary>
                     <div
@@ -321,11 +341,15 @@ const PaymentPage = ({ meData }, props) => {
                     <AddCoupon
                       meData={meData}
                       onClose={() => toggleCouponModal(false)}
+                      setCoupons={setCoupons}
+                      coupons={coupons}
+                      setSelected={setSelected}
+                      selected={selected}
                     />
                   </Modal>
                   <ItemSummary>
                     Discounts
-                    <span>${Discounts?.toFixed(2)}</span>
+                    <span>${Discounts?.toLocaleString()}</span>
                   </ItemSummary>
                   <ItemSummary>
                     Shipping fee
@@ -333,12 +357,12 @@ const PaymentPage = ({ meData }, props) => {
                   </ItemSummary>
                   <ItemSummary>
                     Duties and Taxes
-                    <span>${Taxes?.toFixed(2)}</span>
+                    <span>${Taxes?.toLocaleString()}</span>
                   </ItemSummary>
 
                   <ItemTotalPrice>
                     Total
-                    <span>${TotalPriceTag?.toFixed(2)}</span>
+                    <span>${TotalPriceTag?.toLocaleString()}</span>
                   </ItemTotalPrice>
                   <ExtraInfo>
                     <li>
@@ -357,11 +381,11 @@ const PaymentPage = ({ meData }, props) => {
                   !meData?.address ||
                   !meData?.phone_number ? (
                     <ButtonLarge onClick={handlePayDisabled}>
-                      Pay ${TotalPriceTag?.toFixed(2)}
+                      Pay ${TotalPriceTag?.toLocaleString()}
                     </ButtonLarge>
                   ) : (
                     <ButtonLarge onClick={payOrder}>
-                      Pay ${TotalPriceTag?.toFixed(2)}
+                      Pay ${TotalPriceTag?.toLocaleString()}
                     </ButtonLarge>
                   )}
                 </PaymentCheckout>
