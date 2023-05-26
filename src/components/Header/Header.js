@@ -159,6 +159,12 @@ const Header = ({ meData, catData, setIsAdminBoard }) => {
                     behavior: 'smooth',
                   })}
                 >
+                  {/* <span style={{ color: '#ffae00', fontWeight: '700' }}>
+                    Bl
+                  </span>
+                  an
+                  <span style={{ color: '#ffae00', fontWeight: '700' }}>K</span>
+                  Closet */}
                   BlankCloset
                 </div>
               </MidLink>
