@@ -281,7 +281,7 @@ const Home = () => {
                 }
                 exact={true}
               />
-
+              {/* 홈에 set 넣어주니까 다른페이지도 적용됨 */}
               <Route
                 path='/carts/payment'
                 element={
