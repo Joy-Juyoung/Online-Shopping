@@ -99,21 +99,11 @@ const PaymentPage = ({ meData, checkedList, setCheckedList }) => {
     console.log('couponList', couponList?.data);
     setCoupons(couponList?.data);
     setSelected(coupons?.pk);
-  };
-
-  const getAllCart = async () => {
-    const cartList = await axios.get(CARTS_URL, {
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true,
-    });
-
-    // console.log('cartList', cartList.data);
-    setCarts(cartList?.data);
     setLoading(false);
   };
+
   useEffect(() => {
     setLoading(true);
-    getAllCart();
     getCoupons();
     setTotalPrice(TotalPriceTag);
     setGetCheckedList(JSON.parse(localStorage.getItem('getChecked')));
