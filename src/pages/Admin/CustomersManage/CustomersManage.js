@@ -102,11 +102,7 @@ const CustomersManage = ({ meData }) => {
             return (
               <AdTBody key={user?.pk}>
                 <AdTBodyRow>
-                  {/* <AdTBodyCell className='check'>
-                    <CheckInput type='checkbox' />
-                  </AdTBodyCell> */}
                   <AdTBodyCell className='id'>{user?.pk}</AdTBodyCell>
-                  {/* <AdTBodyCell className='type'>{user?.type}</AdTBodyCell> */}
                   <AdTBodyCell className='username'>
                     {user?.username}
                   </AdTBodyCell>

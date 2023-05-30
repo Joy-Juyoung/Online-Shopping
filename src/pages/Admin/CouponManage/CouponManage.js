@@ -53,6 +53,8 @@ const CouponManage = ({ meData }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(8);
 
+  const [userInput, setUserInput] = useState("");
+
   // const initialState = { name: null, inStock: null, price: null, type:null }
 
   const getCoupons = async () => {
@@ -87,29 +89,29 @@ const CouponManage = ({ meData }) => {
   const firstPostIndex = lastPostIndex - postsPerPage;
   const currentPosts = coupons?.slice(firstPostIndex, lastPostIndex);
 
-  const handleSearch = (e) => {
-    setSearchValue(e.target.value);
-  };
+  // const handleSearch = (e) => {
+  //   setSearchValue(e.target.value);
+  // };
   // console.log('searchValue', searchValue);
 
-  useEffect(() => {
-    setSearchedList(
-      !searchValue
-        ? currentPosts
-        : currentPosts?.filter((search, index) => {
-            return (
-              search?.discount_rate
-                ?.toString()
-                .toLowerCase()
-                .includes(searchValue.toString().toLowerCase()) ||
-              search?.pk
-                ?.toString()
-                .toLowerCase()
-                .includes(searchValue.toString().toLowerCase())
-            );
-          })
-    );
-  }, [coupons, searchValue]);
+  // useEffect(() => {
+  //   setSearchedList(
+  //     !searchValue
+  //       ? currentPosts
+  //       : currentPosts?.filter((search, index) => {
+  //           return (
+  //             search?.discount_rate
+  //               ?.toString()
+  //               .toLowerCase()
+  //               .includes(searchValue.toString().toLowerCase()) ||
+  //             search?.pk
+  //               ?.toString()
+  //               .toLowerCase()
+  //               .includes(searchValue.toString().toLowerCase())
+  //           );
+  //         })
+  //   );
+  // }, [coupons, searchValue]);
 
   const handleDeleteCoupon = async (pk) => {
     if (window.confirm('Are you sure you want to delete this coupon?')) {
@@ -134,7 +136,12 @@ const CouponManage = ({ meData }) => {
       <h1>Coupons</h1>
       <AdListTop>
         <AdListSearch>
-          <input type='text' placeholder='Search' onChange={handleSearch} />
+          <input 
+            type='text'
+            placeholder='Search' 
+            // onChange={handleSearch} 
+            onChange={(e) => setUserInput(e.target.value)}
+          />
         </AdListSearch>
         <AdListUtils>
           <ButtonSmall
@@ -169,12 +176,15 @@ const CouponManage = ({ meData }) => {
               <AdTHeadCell className='details'></AdTHeadCell>
             </AdTHeadeRow>
           </AdTHead>
-          {/* .sort((start, end) => start.created_at - end.created_at) */}
-          {/* .reverse() */}
-          {currentPosts?.map((coupon) => {
-            {
-              /* {searchedList?.map((coupon) => { */
-            }
+          {currentPosts?.filter((list) => 
+            list.pk?.toString().includes(userInput)
+             || list.discount_rate?.toString().includes(userInput)
+             || list.created_at?.toLowerCase().includes(userInput.toLowerCase())
+             // date 검색을 어떻게 해야 할지
+             || list.start_date?.toLowerCase().includes(userInput.toLowerCase())
+             || list.end_date?.toLowerCase().includes(userInput.toLowerCase())
+          )          
+          .map((coupon) => {
             return (
               <AdTBody key={coupon?.pk} className='coupon'>
                 <AdTBodyRow>
