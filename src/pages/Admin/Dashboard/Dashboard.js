@@ -153,7 +153,7 @@ const Dashboard = ({ meData }) => {
           <DashboardGraph>Sales Growth per Month</DashboardGraph> */}
           {/* Get Orders -> Get total Price++ by created_at per a week */}
 
-          {/* <DashboardGraph>Order per Category</DashboardGraph> */}
+          {/* <DashboardGraph>Products per Category</DashboardGraph> */}
           {/* <DashboardGraph>Users Growth per Month</DashboardGraph> */}
         {/* </AdDashboardMid>
         <AdDashboardBot> */}

@@ -15,6 +15,7 @@ import {
   ActivityInfoWrap,
   MainAvatar,
   BasicInfoEach,
+  EditInfoEach,
 } from './UserAccountElements';
 import {
   ProductsListContainer,
@@ -136,7 +137,7 @@ const UserAccountPage = ({ meData }) => {
       // console.log('changed Data', meInfo?.data);
 
       setIsEdit(false);
-      // window.location.reload('/login');
+      window.location.reload();
     }
   };
 
@@ -220,7 +221,7 @@ const UserAccountPage = ({ meData }) => {
                     <ButtonUtils>Save</ButtonUtils>
                   </ShippingInfo>
 
-                  <InfoEach>
+                  <EditInfoEach>
                     <AccountInputLabel htmlFor='name'>Name</AccountInputLabel>
                     <InputEdit>
                       <Input
@@ -230,8 +231,8 @@ const UserAccountPage = ({ meData }) => {
                         onChange={handleInputChange}
                       />
                     </InputEdit>
-                  </InfoEach>
-                  <InfoEach>
+                  </EditInfoEach>
+                  <EditInfoEach>
                     <AccountInputLabel htmlFor='address'>
                       Address
                     </AccountInputLabel>
@@ -243,8 +244,8 @@ const UserAccountPage = ({ meData }) => {
                         onChange={handleInputChange}
                       />
                     </InputEdit>
-                  </InfoEach>
-                  <InfoEach>
+                  </EditInfoEach>
+                  <EditInfoEach>
                     <AccountInputLabel htmlFor='phone'>
                       Phone numbe
                     </AccountInputLabel>
@@ -256,7 +257,7 @@ const UserAccountPage = ({ meData }) => {
                         onChange={handleInputChange}
                       />
                     </InputEdit>
-                  </InfoEach>
+                  </EditInfoEach>
                 </LeftInfo>
               )}
               {/* <DelBtn>

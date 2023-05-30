@@ -85,58 +85,13 @@ const OrderPage = () => {
     if (status === 'All') {
       setIsSelected('All');
     }
-
-    // e.target.style.backgroundColor = '#000';
   };
-
-  // const handleOptionChange = (e) => {
-  //   setSelectOption(e.target.value);
-  // };
-
-  // console.log('selectOption', selectOption);
-  // useEffect(() => {
-  //   switch (selectOption) {
-  //     case 'created':
-  //       return setSortList(
-  //         // orderStatus.sort((a, b) => a.total_products - b.total_products)
-  //         orderStatus?.sort(
-  //           (start, end) =>
-  //             new Date(start.updated_at).getTime() -
-  //             new Date(end.updated_at).getTime()
-  //         )
-  //       );
-  //     case 'updated':
-  //       return setSortList(
-  //         // orderStatus.sort((a, b) => a.total_products - b.total_products)
-  //         orderStatus?.sort(
-  //           (start, end) =>
-  //             new Date(end.updated_at).getTime() -
-  //             new Date(start.updated_at).getTime()
-  //         )
-  //       );
-
-  //     default:
-  //       return setSortList(sortList);
-  //   }
-
-  // if (selectOption === 'updated') {
-  //   setSortList(
-  //     // orderStatus.sort((a, b) => a.total_products - b.total_products)
-  //     orderStatus?.sort(
-  //       (start, end) =>
-  //         new Date(start.updated_at).getTime() -
-  //         new Date(end.updated_at).getTime()
-  //     )
-  //   );
-  // }
-  // }, [selectOption]);
 
   const handleDateSort = () => {
     setIsSort(!isSort);
 
     if (isSort === true) {
       setSortList(
-        // orderStatus.sort((a, b) => a.total_products - b.total_products)
         orderStatus.sort(
           (start, end) =>
             new Date(start.created_at).getTime() -
@@ -145,7 +100,6 @@ const OrderPage = () => {
       );
     } else {
       setSortList(
-        // orderStatus.sort((a, b) => b.total_products - a.total_products)
         orderStatus.sort(
           (start, end) =>
             new Date(end.created_at).getTime() -
@@ -189,16 +143,6 @@ const OrderPage = () => {
             })}
           </OrderMenuBy>
           <OrderList>
-            {/* <OrderListTop>
-              {isSelected === 'All' && (
-                <ListTotal>Total {orderStatus?.length}</ListTotal>
-              )}
-              <ListView onChange={handleOptionChange}>
-                <option value='none'>--------</option>
-                <option value='updated'>New Updated</option>
-                <option value='created'>Ordered</option>
-              </ListView>
-            </OrderListTop> */}
             {orderStatus?.length === 0 ? (
               <OrderListEmpty>No orders found.</OrderListEmpty>
             ) : (

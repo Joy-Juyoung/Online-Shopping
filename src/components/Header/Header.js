@@ -66,7 +66,6 @@ const Header = ({ meData, catData, setIsAdminBoard }) => {
   const [balanceShown, toggleBalance] = useState(false);
   const [carts, setCarts] = useState([]);
   const ref = useRef();
-  const searchRef = useRef();
 
   const getAllCart = async () => {
     const cartList = await axios.get('/carts/', {
@@ -84,7 +83,7 @@ const Header = ({ meData, catData, setIsAdminBoard }) => {
     }
   }, [meData]);
 
-  console.log('me', me);
+  // console.log('me', me);
 
   const handleLogout = async () => {
     setLoading(true);
@@ -160,6 +159,12 @@ const Header = ({ meData, catData, setIsAdminBoard }) => {
                     behavior: 'smooth',
                   })}
                 >
+                  {/* <span style={{ color: '#ffae00', fontWeight: '700' }}>
+                    Bl
+                  </span>
+                  an
+                  <span style={{ color: '#ffae00', fontWeight: '700' }}>K</span>
+                  Closet */}
                   BlankCloset
                 </div>
               </MidLink>
@@ -331,25 +336,28 @@ const Header = ({ meData, catData, setIsAdminBoard }) => {
               </DropMenuList>
               {catData.map((category) => {
                 return (
-                  <DropMenuList key={category.pk}>
+                  <DropMenuList key={category?.pk}>
                     {/* <DropMenuWrap></DropMenuWrap> */}
                     <DropMenuParents>
-                      <DropdownButton to={`/products/category/${category.pk}`}>
-                        <span>{category.name.toUpperCase()}</span>
+                      <DropdownButton to={`/products/category/${category?.pk}`}>
+                        {category?.productKinds?.length === 0 &&
+                        meData?.type === 'user' ? null : (
+                          <span>{category?.name.toUpperCase()}</span>
+                        )}
                       </DropdownButton>
                       <DropChildWrap>
                         <DropMenuChild>
-                          {category.productKinds?.map((child) => {
+                          {category?.productKinds?.map((child) => {
                             return (
                               <Link
-                                key={child.pk}
+                                key={child?.pk}
                                 style={{
                                   color: 'black',
                                   textDecoration: 'none',
                                 }}
                                 to={`/products/category/${category?.pk}/${child?.name}/${child?.pk}`}
                               >
-                                <DropMenuItem>{child.name}</DropMenuItem>
+                                <DropMenuItem>{child?.name}</DropMenuItem>
                               </Link>
                             );
                           })}

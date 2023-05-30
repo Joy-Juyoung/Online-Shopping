@@ -58,17 +58,58 @@ import { Link } from 'react-router-dom';
 import { ButtonLarge } from '../../components/ButtonElements';
 import CountButton from './CountButton';
 
-
 const CARTS_URL = '/carts';
 
-const TestCart = () => {
+const TestCart = ({ checkedList, setCheckedList }) => {
   const [loading, setLoading] = useState(false);
   const [carts, setCarts] = useState([]);
-  const [isChecked, setIsChecked] = useState(false);
-  const [checkList, setCheckList] = useState([]);
-  const [IdList, setIdList] = useState([]);
-  const [checkNewList, setCheckNewList] = useState([]);
- 
+  // const [isChecked, setIsChecked] = useState(false);
+  // const [checkList, setCheckList] = useState([]);
+  // const [IdList, setIdList] = useState([]);
+  // const [checkNewList, setCheckNewList] = useState([]);
+
+  // const [allDelList, setAllDelList] = useState([]);
+
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [cartArr, setCartArr] = useState([]);
+
+  const [checkedItem, setCheckedItem] = useState('');
+  const [selectedItem, setSelectedItem] = useState('');
+  // const [checkedList, setCheckedList] = useState([]);
+
+  const handleCheckedItems = (e) => {
+    setCheckedItem({ ...checkedItem, [e.target.value]: e.target.checked });
+  };
+  // console.log('checkedItem', checkedItem);
+
+  useEffect(() => {
+    getAllCart();
+  }, [cartArr]);
+
+  useEffect(() => {
+    setSelectedItem(
+      Object.entries(checkedItem)
+        .filter(([key, value]) => value)
+        .map((added, index) => added[0])
+    );
+  }, [checkedItem]);
+  // console.log('selectedItem', selectedItem);
+
+  useEffect(() => {
+    if (selectedItem) {
+      setCheckedList(
+        carts?.filter((item) => selectedItem?.includes(item?.pk.toString()))
+      );
+    }
+
+    localStorage.setItem('getChecked', JSON.stringify(checkedList));
+  }, [selectedItem, carts]);
+  console.log('checkedList', checkedList);
+
+  useEffect(() => {
+    localStorage.setItem('getChecked', JSON.stringify(checkedList));
+  }, [selectedItem, carts, checkedList]);
+
   const getAllCart = async () => {
     const cartList = await axios.get(CARTS_URL, {
       headers: { 'Content-Type': 'application/json' },
@@ -82,102 +123,53 @@ const TestCart = () => {
   useEffect(() => {
     setLoading(true);
     getAllCart();
-     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
   // console.log('carts', carts);
 
-
-  const handleAllDeleteCart = async() => {
-    alert('Are you sure you want to remove the product?');
-    // const empty = 
-    await carts.map((i) => {
-       axios.delete(`/carts/${i.pk}`,
-          {
-            headers: { 'Content-Type': 'application/json' },
-            withCredentials: true,
-          }
-        );
-        setCarts([]);
-      });
-      // setCarts(empty);
-    getAllCart([]);
-    // console.log("empty", empty);
-    window.location.reload('/carts');
+  const handleAllDeleteCart = async () => {
+    if (
+      window.confirm('Are you sure you want to delete this item in your cart?')
+    ) {
+      // IdList.map(async (i) => {
+      // console.log('i', i);
+      // setAllDelList([...allDelList, i?.pk]);
+      // await axios.delete(`/carts/${IdList[0]}`, {
+      //   headers: { 'Content-Type': 'application/json' },
+      //   withCredentials: true,
+      // });
+      // setCarts([]);
+      // });
+      // getAllCart([]);
+      // window.location.reload();
+    }
   };
- 
+
   const handleDeleteCart = async (pk) => {
-    alert('Are you sure you want to remove the product?');
     // console.log('pk', pk);
-    var tempCart = carts;
-    tempCart.forEach((c) => {
-      if (c?.pk === pk) {
-        // console.log('c?.pk', c?.pk);
-        axios.delete(`/carts/${pk}`, {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        });
-      }
-    });
-    window.location.reload('/carts');
-  };
 
-  useEffect(() => {
-    let ids = []
-    carts?.map((item, i) => {
-      ids[i] = item?.pk
-    })
-    setIdList(ids)
-    // console.log("ids", ids);
-}, [carts])
-
-
-  const onChangeAll = () => {
-    if(isChecked === false) 
-    { 
-      setCheckList(IdList)
-      setIsChecked(true) 
-      IdList.map(async(i) =>  {
-        console.log("i", i);
-        //setCheckList([...checkList, i]);
-        const check = await axios.get(`/carts/${i}`, {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        });     
-        setCheckNewList([...checkNewList, check.data]);
-        console.log("checkNewList", checkNewList);
-        // console.log("check", check.data);
-      }    
-      )
-    } else {
-      setCheckList([])
-      setIsChecked(false) 
-    }
-}
-
- // carts에서 가져와서 변경
-const onChangeEach = async (e, id) => {
-    if (e.target.checked) {
-        setCheckList([...checkList, id]);
-        const check = await axios.get(`/carts/${id}`, {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        });
-        setCheckNewList([...checkNewList, check.data]);
-    } else {
-       setCheckList(checkList.filter((checkedId) => checkedId !== id));
-       setCheckNewList(checkNewList.filter((checked) => checked?.pk !== id));
+    if (
+      window.confirm('Are you sure you want to delete this item in your cart?')
+    ) {
+      await axios.delete(`/carts/${pk}`, {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      });
+      window.location.reload();
     }
   };
 
-  const PriceForBill = checkNewList.reduce((total, item) => {
+  const onChangeAll = () => {};
+
+  const PriceForBill = checkedList.reduce((total, item) => {
     return total + item?.total_price;
   }, 0);
 
-   const ShippingFee = 15;
+  const ShippingFee = PriceForBill >= 200 ? 0 : 15;
 
-  const Taxes = PriceForBill * 0.05;
+  const Taxes = Math.round(PriceForBill * 0.05);
   const Discounts = 0;
-   const TotalPriceTag = PriceForBill + ShippingFee + Taxes + Discounts;
+  const TotalPriceTag = PriceForBill + ShippingFee + Taxes + Discounts;
 
   if (loading)
     return (
@@ -212,22 +204,22 @@ const onChangeEach = async (e, id) => {
             <CartLeftInfo>
               <CartLeftCheckBar>
                 <CheckBarWrap>
-                  <OrderCheckBox
-                    onClick={() => onChangeAll()}
-                  >
+                  <OrderCheckBox>
                     <input
                       type='checkbox'
-                      checked={checkList.length === IdList.length}                      
+                      // checked={checkList.length === IdList.length}
+                      // onChange={() => onChangeAll()}
                     />
                     <label>All</label>
                   </OrderCheckBox>
                   <DeleteBtn
                     onClick={(e) => {
-                      e.preventDefault();
+                      // e.preventDefault();
                       handleAllDeleteCart();
                     }}
-                  >Delete</DeleteBtn>
-
+                  >
+                    Delete
+                  </DeleteBtn>
                 </CheckBarWrap>
               </CartLeftCheckBar>
               <CartProductLists>
@@ -237,9 +229,13 @@ const onChangeEach = async (e, id) => {
                       <ListsCheckBox>
                         <input
                           type='checkbox'
-                          onClick={(e) => onChangeEach(e, cart?.pk)} 
-                          checked={checkList.includes(cart?.pk) } 
-                          />
+                          // onClick={(e) => onChangeEach(e, cart?.pk)}
+                          // checked={checkList.includes(cart?.pk)}
+                          id='cartPk'
+                          value={cart?.pk}
+                          onChange={(e) => handleCheckedItems(e)}
+                          checked={checkedItem[cart?.pk] || ''}
+                        />
                       </ListsCheckBox>
                       <ListsItemImg>
                         <ListsImgLink to={`/products/${cart?.product?.pk}`}>
@@ -261,17 +257,24 @@ const onChangeEach = async (e, id) => {
                           </DetailOption>
                         </ItemDetailOne>
                         <ItemDetailTwo>
-                          <CountButton cart={cart} getAllCart={getAllCart} carts={carts}/>
+                          <CountButton
+                            cart={cart}
+                            getAllCart={getAllCart}
+                            carts={carts}
+                            setCartArr={setCartArr}
+                          />
                         </ItemDetailTwo>
                         <ItemDetailThree>
-                          <strong>${cart?.total_price?.toLocaleString()}</strong>
+                          <strong>
+                            ${cart?.total_price?.toLocaleString()}
+                          </strong>
                         </ItemDetailThree>
                       </ListsItemDetails>
                       <ListsDeleteBtn>
                         <CloseIcon
                           fontSize='small'
                           onClick={(e) => {
-                            e.preventDefault();
+                            // e.preventDefault();
                             handleDeleteCart(cart?.pk);
                           }}
                         />
@@ -284,23 +287,6 @@ const onChangeEach = async (e, id) => {
 
             <CartRightInfo>
               <CartRightTop>
-                <TotalTitle>
-                  <h3>Promo Code</h3>
-                  <PromoInfo>
-                    <QuestionMark>
-                      <HelpOutlineIcon fontSize='small' color='action' />
-                    </QuestionMark>
-                  </PromoInfo>
-                </TotalTitle>
-                <CouponInfo>
-                  <CouponInputWrap>
-                    <CouponInput placeholder='Please enter your promo code' />
-                    <CouponBtn>Apply</CouponBtn>
-                  </CouponInputWrap>
-                </CouponInfo>
-              </CartRightTop>
-
-              <CartRightMidOne>
                 <CartSummary>
                   Order Summary
                   <SummaryWrap>
@@ -325,10 +311,6 @@ const onChangeEach = async (e, id) => {
                     Duties amd Taxes
                     <span>${Taxes?.toLocaleString()}</span>
                   </ItemShippingFee>
-                  <ItemShippingFee>
-                    Discounts
-                    <span>${Discounts?.toLocaleString()}</span>
-                  </ItemShippingFee>
                   <ItemTotalPrice>
                     Total
                     {PriceForBill === 0 ? (
@@ -341,25 +323,32 @@ const onChangeEach = async (e, id) => {
                     <li>
                       * Additional duties and taxes may apply at checkout.
                     </li>
+                    <li>
+                      * Apply coupon to get additional discount at checkout.
+                    </li>
                   </ExtraInfo>
                 </CartSummaryInfo>
-              </CartRightMidOne>
-
-              <CartRightMidTwo>
-                <FreeShippingInfo>
-                  Add $<span>61 </span>
-                  more to enjoy
-                  <strong> FREE SHIPPING</strong>
-                </FreeShippingInfo>
-              </CartRightMidTwo>
+              </CartRightTop>
 
               <CartRightBottom>
-                {/* <CheckOutBtn>PROCEED TO CHECKOUT</CheckOutBtn> */}
-
-
-                <Link to={`/carts/payment`}>
-                  <CheckOutBtn>PROCEED TO CHECKOUT</CheckOutBtn>
-                </Link>
+                {checkedList?.length === 0 ? (
+                  <>
+                    {isDisabled && (
+                      <p style={{ color: 'red', marginBottom: '20px' }}>
+                        * Please Select items to checkout
+                      </p>
+                    )}
+                    <CheckOutBtn disable onClick={() => setIsDisabled(true)}>
+                      PROCEED TO CHECKOUT
+                    </CheckOutBtn>
+                  </>
+                ) : (
+                  <Link to={`/carts/payment`}>
+                    <CheckOutBtn onClick={() => setIsDisabled(false)}>
+                      PROCEED TO CHECKOUT
+                    </CheckOutBtn>
+                  </Link>
+                )}
               </CartRightBottom>
             </CartRightInfo>
           </CartBodyWrap>
@@ -369,5 +358,5 @@ const onChangeEach = async (e, id) => {
   );
 };
 
-// export default TestCart;
-export default React.memo(TestCart);
+export default TestCart;
+// export default React.memo(TestCart);

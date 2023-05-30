@@ -14,6 +14,29 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import axios from '../../api/axios';
 import { Link, useParams } from 'react-router-dom';
+import styled from 'styled-components';
+
+const LocateList = styled.li`
+  /* font-weight: 700;
+  font-size: 15px;
+  background: #ffc759;
+  color: #0a0f18;
+  padding: 3px 10px;
+  border-radius: 10px; */
+  p {
+    font-weight: 700;
+    font-size: 15px;
+    /* background: #ffc759; */
+    /* border-top: 2px solid #ffae00;
+    border-bottom: 2px solid #ffae00; */
+    border-top: 1px solid #0a0f18;
+    border-bottom: 1px solid #0a0f18;
+    /* border-radius: 3px; */
+    color: #0a0f18;
+    padding: 3px 5px;
+    width: 60%;
+  }
+`;
 
 const SideFilter = ({
   meData,
@@ -48,9 +71,9 @@ const SideFilter = ({
                 <ListSub>
                   <ul>
                     {items ? (
-                      <li>
-                        <strong>ALL PRODUCTS</strong>
-                      </li>
+                      <LocateList>
+                        <p>ALL PRODUCTS</p>
+                      </LocateList>
                     ) : (
                       <Link to='/products/all'>
                         <li>ALL PRODUCTS</li>
@@ -60,14 +83,9 @@ const SideFilter = ({
                       return (
                         <Link key={cat.pk} to={`/products/category/${cat.pk}`}>
                           {cat?.name === getAllKinds?.name ? (
-                            <li
-                              style={{
-                                fontWeight: '700',
-                                fontSize: '15px',
-                              }}
-                            >
-                              <strong>{cat?.name.toUpperCase()}</strong>
-                            </li>
+                            <LocateList>
+                              <p>{cat?.name.toUpperCase()}</p>
+                            </LocateList>
                           ) : (
                             <li>{cat?.name.toUpperCase()}</li>
                           )}
@@ -92,80 +110,44 @@ const SideFilter = ({
                 <ListSub>
                   <ul>
                     {priceRange === 'none' ? (
-                      <li
-                        onClick={() => rangeNone()}
-                        style={{
-                          fontWeight: '700',
-                          fontSize: '15px',
-                        }}
-                      >
-                        All
-                      </li>
+                      <LocateList onClick={() => rangeNone()}>
+                        <p>All</p>
+                      </LocateList>
                     ) : (
                       <li onClick={() => rangeNone()}>All</li>
                     )}
                     {priceRange === 0 ? (
-                      <li
-                        onClick={() => range0()}
-                        style={{
-                          fontWeight: '700',
-                          fontSize: '15px',
-                        }}
-                      >
-                        $0 ~ $50
-                      </li>
+                      <LocateList onClick={() => range0()}>
+                        <p>$0 ~ $50</p>
+                      </LocateList>
                     ) : (
                       <li onClick={() => range0()}>$0 ~ $50</li>
                     )}
                     {priceRange === 1 ? (
-                      <li
-                        onClick={() => range1()}
-                        style={{
-                          fontWeight: '700',
-                          fontSize: '15px',
-                        }}
-                      >
-                        $50 ~ $100
-                      </li>
+                      <LocateList onClick={() => range1()}>
+                        <p>$50 ~ $100</p>
+                      </LocateList>
                     ) : (
                       <li onClick={() => range1()}>$50 ~ $100</li>
                     )}
                     {priceRange === 2 ? (
-                      <li
-                        onClick={() => range2()}
-                        style={{
-                          fontWeight: '700',
-                          fontSize: '15px',
-                        }}
-                      >
-                        $100 ~ $150
-                      </li>
+                      <LocateList onClick={() => range2()}>
+                        <p>$100 ~ $150</p>
+                      </LocateList>
                     ) : (
                       <li onClick={() => range2()}>$100 ~ $150</li>
                     )}
                     {priceRange === 3 ? (
-                      <li
-                        onClick={() => range3()}
-                        style={{
-                          fontWeight: '700',
-                          fontSize: '15px',
-                        }}
-                      >
-                        $150 ~ $200
-                      </li>
+                      <LocateList onClick={() => range3()}>
+                        <p>$150 ~ $200</p>
+                      </LocateList>
                     ) : (
                       <li onClick={() => range3()}>$150 ~ $200</li>
                     )}
                     {priceRange === 4 ? (
-                      <li
-                        onClick={() => range4()}
-                        style={{
-                          fontWeight: '700',
-                          fontSize: '15px',
-                        }}
-                      >
-                        $200 ~
-                      </li>
+                      <LocateList onClick={() => range4()}>
+                        <p>$200 ~</p>
+                      </LocateList>
                     ) : (
                       <li onClick={() => range4()}>$200 ~</li>
                     )}

@@ -1,5 +1,12 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+export const AdIconDelete = styled.div`
+  /* margin-right: 10px; */
+  cursor: pointer;
+`;
+
+// ---modal
 export const PopupBox = styled.div`
   margin: 10px auto;
   padding: 0 10px;
@@ -204,4 +211,220 @@ export const BoxCatChild = styled.div`
       cursor: pointer;
     }
   }
+`;
+
+// ---overview
+
+export const AdOrderOverview = styled.div`
+  width: 100%;
+`;
+
+export const AdViewCount = styled.div`
+  /* display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px; */
+  margin: 20px 0 20px;
+  display: flex;
+  align-items: center;
+`;
+
+export const AdCountWrap = styled.div`
+  /* display: flex;
+  align-items: center;
+  flex-direction: column; */
+  flex: 1;
+  margin-right: 40px;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 25px;
+
+  height: 100%;
+`;
+
+export const AdCount = styled.div`
+  width: 100%;
+  height: 65px;
+
+  /* margin: 10px auto; */
+
+  /* background: #fff; */
+  /* color: #fff; */
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px 0 10px;
+
+  box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.1);
+
+  &.total {
+    color: #93334b;
+    border: 2px solid #e05076;
+    border-left: 10px solid #e05076;
+  }
+
+  &.pending {
+    color: #b74a01;
+    border: 2px solid #f2b155;
+    border-left: 10px solid #f2b155;
+  }
+
+  &.inprogress {
+    color: #005260;
+    border: 2px solid #61b9ff;
+    border-left: 10px solid #61b9ff;
+  }
+`;
+
+export const AdCountText = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  text-align: center;
+
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 600;
+    padding: 0;
+    /* margin-top: -10px; */
+  }
+`;
+
+export const AdCountIcon = styled.div`
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  justify-content: center;
+  /* font-size: 13px; */
+
+  svg {
+    margin: 0 auto;
+  }
+
+  p {
+    /* margin-top: -5px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+  }
+`;
+// ***
+export const AdItemByCatList = styled.div`
+  /* width: 100%;
+  height: 250px; */
+  height: 245px;
+  border: 2px solid #61b9ff;
+  border-radius: 20px;
+  margin: 20px 0;
+  flex: 3;
+
+  box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.1);
+`;
+// **
+
+export const AdViewList = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 40px;
+`;
+
+export const AdViewStatus = styled.div`
+  height: 320px;
+  border-radius: 20px;
+  box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.1);
+  position: relative;
+  /* margin-top: 20px; */
+
+  &.pending {
+    color: #b74a01;
+    border: 1px solid #f2b155;
+  }
+
+  &.inprogress {
+    color: #005260;
+    border: 1px solid #61b9ff;
+  }
+`;
+
+export const AdStatus = styled.div`
+  table {
+    width: 100%;
+    padding: 15px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  tr {
+  }
+
+  th {
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 5px;
+  }
+
+  td {
+    padding-top: 3px;
+  }
+`;
+
+export const ViewAllBtn = styled(Link)`
+  text-decoration: none;
+  position: absolute;
+  bottom: 15px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  /* background: #e9e7e7; */
+  padding: 3px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #fff;
+
+  &:visited {
+    color: #fff;
+  }
+
+  svg {
+    margin-left: 5px;
+  }
+
+  &.pending {
+    background: #f2b155;
+    border: 1px solid #f2b155;
+  }
+
+  &.inprogress {
+    background: #61b9ff;
+    border: 1px solid #61b9ff;
+  }
+
+  &:hover {
+    background: #fff;
+    &.pending {
+      color: #b74a01;
+      border: 1px solid #f2b155;
+    }
+
+    &.inprogress {
+      color: #005260;
+      border: 1px solid #61b9ff;
+    }
+  }
+`;
+
+export const EmptyList = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 15px;
+  opacity: 0.6;
 `;

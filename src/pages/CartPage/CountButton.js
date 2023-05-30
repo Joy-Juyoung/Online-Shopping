@@ -1,19 +1,33 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import axios from '../../api/axios';
-import { ItemDecreaseBtn, ItemDetailTwoWrap, ItemIncreaseBtn, ItemNumberInput } from './CartElements';
+import {
+  ItemDecreaseBtn,
+  ItemDetailTwoWrap,
+  ItemIncreaseBtn,
+  ItemNumberInput,
+} from './CartElements';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
+import { useEffect } from 'react';
 
-const CountButton = ( {carts, cart, getAllCart} ) => {
-  const [cartArr, setCartArr] = useState([])
+const CountButton = ({ carts, cart, getAllCart, setCartArr }) => {
+  // const [cartArr, setCartArr] = useState([]);
+  const [countNumber, setCountNumber] = useState();
 
-    const handleIncrease = async (pk) => {
-    const addQty =  carts.map((i) => {
+  useEffect(() => {
+    setCountNumber(cart?.number_of_product);
+  }, []);
+
+  console.log('cart?.number_of_product', cart?.number_of_product);
+
+  const handleIncrease = async (pk) => {
+    // console.log('Ipk', pk);
+    const addQty = await carts.map(async (i) => {
       if (pk === i?.pk && i.number_of_product < 10000) {
-        axios.put(
+        await axios.put(
           `/carts/${pk}`,
           {
-            number_of_product: i.number_of_product + 1,
+            number_of_product: countNumber + 1,
           },
           {
             headers: { 'Content-Type': 'application/json' },
@@ -23,18 +37,21 @@ const CountButton = ( {carts, cart, getAllCart} ) => {
       }
     });
     setCartArr(addQty);
-    getAllCart();
+    // setCountChange(!countChange);
+    setCountNumber(countNumber + 1);
+    // getAllCart();
   };
+  // console.log('addQty', cartArr);
 
-  const handleDecrease = async (pk) => {
-    const minusQty = await carts.map((i) => {
+  const handleDecrease = (pk) => {
+    console.log('Dpk', pk);
+    const minusQty = carts.map(async (i) => {
       if (pk === i?.pk && i.number_of_product > 1) {
-         axios.put(
-
+        await axios.put(
           `/carts/${pk}`,
           {
             pk: i?.pk,
-            number_of_product: i.number_of_product - 1,
+            number_of_product: countNumber - 1,
           },
           {
             headers: { 'Content-Type': 'application/json' },
@@ -42,36 +59,35 @@ const CountButton = ( {carts, cart, getAllCart} ) => {
           }
         );
       }
-    });   
+    });
     setCartArr(minusQty);
-    getAllCart();
+    setCountNumber(countNumber - 1);
+    // getAllCart();
   };
 
   return (
     <>
-      <ItemDetailTwoWrap >
+      <ItemDetailTwoWrap>
         <ItemDecreaseBtn
-            onClick={(e) => {
+          onClick={(e) => {
             e.preventDefault();
             handleDecrease(cart?.pk);
-            }}
+          }}
         >
-            <RemoveIcon fontSize='small' color='action' />
+          <RemoveIcon fontSize='small' color='action' />
         </ItemDecreaseBtn>
-        <ItemNumberInput>
-            {cart?.number_of_product}
-        </ItemNumberInput>
+        <ItemNumberInput>{countNumber}</ItemNumberInput>
         <ItemIncreaseBtn
-            onClick={(e) => {
-            e.preventDefault(); 
+          onClick={(e) => {
+            e.preventDefault();
             handleIncrease(cart?.pk);
-            }}
+          }}
         >
-            <AddIcon fontSize='small' color='action' />
+          <AddIcon fontSize='small' color='action' />
         </ItemIncreaseBtn>
       </ItemDetailTwoWrap>
     </>
-  )
-}
+  );
+};
 
 export default CountButton;

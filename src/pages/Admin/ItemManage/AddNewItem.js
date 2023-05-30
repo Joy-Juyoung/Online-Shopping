@@ -131,44 +131,6 @@ const AddNewItem = ({ products, catData }) => {
       })
   );
 
-  // const handleOptionDefault = async () => {
-  //   console.log('products', products);
-  //   console.log('products?.length + 1', products[products?.length - 1]?.pk);
-
-  //   console.log(
-  //     'NewItem',
-  //     products?.filter((pf) =>
-  //       pf?.name?.toLowerCase().includes(newItem?.name?.toLowerCase())
-  //     )
-  //   );
-
-  //   const newOption = await axios.post(
-  //     `/products/option/${products[products?.length - 1]?.pk}`,
-  //     {
-  //       name: 'Free',
-  //       description: 'Free',
-  //     },
-  //     {
-  //       headers: { 'Content-Type': 'application/json' },
-  //       withCredentials: true,
-  //     }
-  //   );
-  //   console.log('newOption', newOption?.data);
-  // };
-  // const handlePhotoDefault = async () => {
-  //   const newPhoto = await axios.put(
-  //     `/photoss/product/${products[products?.length - 1]?.pk}`,
-  //     {
-  //       picture: { Soon },
-  //     },
-  //     {
-  //       headers: { 'Content-Type': 'application/json' },
-  //       withCredentials: true,
-  //     }
-  //   );
-  //   console.log('newPhoto', newPhoto?.data);
-  // };
-
   return (
     <PopupBox>
       <form onSubmit={handleSubmit}>
@@ -203,6 +165,7 @@ const AddNewItem = ({ products, catData }) => {
                     id='productPrice'
                     value={addItemPrice || ''}
                     onChange={handleAddNewItem}
+                    min='0'
                   />
                 </BoxSpan>
                 <BoxSpan>
@@ -212,6 +175,7 @@ const AddNewItem = ({ products, catData }) => {
                     id='productInstock'
                     value={addItemInstock || ''}
                     onChange={handleAddNewItem}
+                    min='0'
                   />
                 </BoxSpan>
               </BoxLi>

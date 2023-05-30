@@ -92,6 +92,13 @@ const NewReview = ({ meData }) => {
     });
   }, [getItem]);
 
+  // console.log(
+  //   'temp',
+  //   getItem?.reviews
+  //     ?.filter((rf) => rf?.user?.username !== meData?.username)
+  //     .map((m) => m)
+  // );
+
   const handleReviewChange = (e) => {
     // e.preventDefault();
     setReviewValue(e.target.value);
@@ -101,7 +108,11 @@ const NewReview = ({ meData }) => {
   const handleReviewSubmit = async () => {
     var tempReview = getItem?.reviews;
     // console.log('active', tempReview.length);
-    if (tempReview.length === 0) {
+    if (
+      tempReview
+        ?.filter((rf) => rf?.user?.username === meData?.username)
+        .map((m) => m)
+    ) {
       console.log('Review 0');
       try {
         await axios.post(

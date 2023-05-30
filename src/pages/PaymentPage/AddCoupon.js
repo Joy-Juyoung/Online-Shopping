@@ -23,13 +23,20 @@ import Modal from '../../components/Modal';
 import DiscountIcon from '@mui/icons-material/Discount';
 import { ButtonSmall } from '../../components/ButtonElements';
 
-const AddCoupon = ({ meData, onClose }) => {
+const AddCoupon = ({
+  meData,
+  onClose,
+  setCoupons,
+  coupons,
+  selected,
+  setSelected,
+}) => {
   let ref = useRef();
-  const [coupons, setCoupons] = useState([]);
+  // const [coupons, setCoupons] = useState([]);
   const [couponEach, setCouponEach] = useState([]);
   const [couponDetails, setCouponDetails] = useState([]);
   const [isDrop, setIsDrop] = useState(false);
-  const [selected, setSelected] = useState();
+  // const [selected, setSelected] = useState();
   const [modalShown, toggleModal] = useState(false);
 
   const [selectedOption, setSelectedOption] = useState();
@@ -38,15 +45,15 @@ const AddCoupon = ({ meData, onClose }) => {
   //   JSON.parse(localStorage.getItem('getCoupon'))
   // );
 
-  const getCoupons = async () => {
-    const couponList = await axios.get('/coupons/', {
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true,
-    });
-    console.log('couponList', couponList?.data);
-    setCoupons(couponList?.data);
-    setSelected(coupons.pk);
-  };
+  // const getCoupons = async () => {
+  //   const couponList = await axios.get('/coupons/', {
+  //     headers: { 'Content-Type': 'application/json' },
+  //     withCredentials: true,
+  //   });
+  //   console.log('couponList', couponList?.data);
+  //   setCoupons(couponList?.data);
+  //   setSelected(coupons?.pk);
+  // };
 
   const handleOpenCoupon = async (pk) => {
     const couponEachList = await axios.get(`/coupons/${pk}`, {
@@ -66,9 +73,9 @@ const AddCoupon = ({ meData, onClose }) => {
   };
   console.log('couponDetails', couponDetails);
 
-  useEffect(() => {
-    getCoupons();
-  }, []);
+  // useEffect(() => {
+  //   getCoupons();
+  // }, []);
 
   const selectedCoupon = (pk) => {
     setSelectedOption(pk);
@@ -84,11 +91,12 @@ const AddCoupon = ({ meData, onClose }) => {
 
   const handleApply = () => {
     onClose();
+    window.location.reload();
   };
 
   useEffect(() => {
     localStorage.setItem('getCoupon', JSON.stringify(savedCp));
-  }, [savedCp, selectedOption]);
+  }, [savedCp, selectedOption, selected]);
 
   return (
     <OrderContainer>

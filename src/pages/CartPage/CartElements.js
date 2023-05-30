@@ -189,7 +189,8 @@ export const ItemDetailTwoWrap = styled.div`
   align-items: center;
   width: 73px;
   height: 24px;
-  position: fixed;
+  /* position: fixed; */
+  position: absolute;
 `;
 
 export const ItemDecreaseBtn = styled.button`
@@ -235,16 +236,16 @@ export const ItemDetailThree = styled.div`
   flex-grow: 1;
   flex-direction: column;
   align-items: center;
-  text-align:center;
+  text-align: center;
   width: 70px;
   /* height: 26px; */
 
   strong {
     display: inline-block;
-     height: 27px;
+    height: 27px;
     font-size: 18px;
     font-weight: 700;
-    text-align:center;
+    text-align: center;
   }
 `;
 
@@ -373,7 +374,8 @@ export const CouponBtn = styled.button`
 export const CartRightMidOne = styled.div``;
 
 export const CartSummary = styled.h3`
-  padding: 28px 0 20px;
+  /* padding: 28px 0 20px; */
+  padding-bottom: 20px;
   font-size: 18px;
   font-weight: 700;
 `;
@@ -385,6 +387,7 @@ export const SummaryWrap = styled.span`
 
 export const CartSummaryInfo = styled.div`
   display: block;
+  font-size: 14px;
 `;
 
 export const ItemPriceInfo = styled.dl`

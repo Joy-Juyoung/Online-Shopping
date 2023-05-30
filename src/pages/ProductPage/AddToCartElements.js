@@ -10,14 +10,13 @@ export const SidebarMenuContainer = styled.div`
   z-index: 3;
 `;
 export const SidebarOutsideClose = styled.button`
-    width: 100%;
-    background: none;
-    position: absolute;
-    top: 0;
-    height: 100vh;
-    border: none;
+  width: 100%;
+  background: none;
+  position: absolute;
+  top: 0;
+  height: 100vh;
+  border: none;
 `;
-
 
 export const SidebarMenuWrapper = styled.div`
   position: fixed;
@@ -124,5 +123,21 @@ export const ButtonLarges = styled.button`
   text-align: center;
   cursor: pointer;
   margin-left: 10px;
+`;
 
+export const ButtonNoUser = styled.div`
+  width: 100%;
+  height: 48px;
+  border-radius: 6px;
+  background: ${({ lightBg }) => (lightBg ? '#fff' : '#0A0F18')};
+  color: ${({ darkFont }) => (darkFont ? '#0A0F18' : '#fff')};
+  font-weight: ${({ fontStrong }) => (fontStrong ? 'bold' : 'normal')};
+  padding: 0;
+  font-size: 16px;
+  outline: none;
+  border: ${({ borderColor }) =>
+    borderColor ? '1px solid #0a0f18' : '1px solid #a3a9b3'};
+  text-align: center;
+  cursor: pointer;
+  margin-left: 10px;
 `;

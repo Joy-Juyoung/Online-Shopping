@@ -31,6 +31,7 @@ import {
   Td,
   PaymentStatusInfo,
   ReviewBtn,
+  ReviewDisableBtn,
 } from './OrderDetailsElements';
 
 const OrderDtails = ({ meData }) => {
@@ -38,10 +39,11 @@ const OrderDtails = ({ meData }) => {
   const [ordered, setOrdered] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const ShippingFee = 15;
+  const ShippingFee = ordered?.total_price >= 200 ? 0 : 15;
   const Taxes = ordered?.total_price * 0.05;
-  const Discounts = 0;
-  const TotalPriceTag = ordered?.total_price + ShippingFee + Taxes + Discounts;
+  // const TotalPriceTag = ordered?.total_price + ShippingFee + Taxes + Discounts;
+  const Discounts =
+    ordered?.total_price - ordered?.final_total_price + ShippingFee + Taxes;
 
   const getOrdersById = async () => {
     const orderedData = await axios.get(`/orders/${id}`, {
@@ -159,21 +161,17 @@ const OrderDtails = ({ meData }) => {
                           ${sold?.product?.price * sold?.number_of_product}
                         </Td>
                         <Td>
-                          <Link to={`/review/${sold?.product?.pk}`}>
-                            {ordered?.status === 'delivered' ? (
-                              <ReviewBtn active={true}>
-                                {/* <AddIcon fontSize='11px' /> */}
-                                View
-                                <RateReviewIcon fontSize='small' />
-                              </ReviewBtn>
-                            ) : (
-                              <ReviewBtn disabled>
-                                {/* <AddIcon fontSize='11px' /> */}
-                                View
-                                <RateReviewIcon fontSize='small' />
-                              </ReviewBtn>
-                            )}
-                          </Link>
+                          {/* <Link to={`/review/${sold?.product?.pk}`}> */}
+                          {ordered?.status === 'delivered' ? (
+                            <Link to={`/review/${sold?.product?.pk}`}>
+                              <ReviewBtn>Go to Review</ReviewBtn>
+                            </Link>
+                          ) : (
+                            <ReviewDisableBtn disabled>
+                              Go to Review
+                            </ReviewDisableBtn>
+                          )}
+                          {/* </Link> */}
                         </Td>
                       </Tr>
                     </Tbody>
@@ -208,7 +206,7 @@ const OrderDtails = ({ meData }) => {
               </ItemSummary>
               <ItemTotalPrice>
                 Total
-                <span>${TotalPriceTag.toLocaleString()}</span>
+                <span>${ordered?.final_total_price?.toLocaleString()}</span>
                 {/* <span>${ordered?.final_total_price?.toLocaleString()}</span> */}
               </ItemTotalPrice>
               <ExtraInfo>

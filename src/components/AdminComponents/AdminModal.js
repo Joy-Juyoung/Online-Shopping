@@ -25,7 +25,7 @@ const ModalContent = styled.div`
   width: ${({ isHorizontal }) => (isHorizontal ? '500px' : '380px')};
   min-height: 200px;
   background-color: white;
-  /* padding: 20px; */
+  padding: 20px;
   border-radius: 10px;
 
   margin-left: 250px;
