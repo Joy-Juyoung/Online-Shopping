@@ -2,11 +2,281 @@ import React, { useEffect, useState } from 'react';
 import { AdContainer } from '../AdminCommonElements';
 import axios from '../../../api/axios';
 import Loading from '../../../components/Loading';
+import {
+  AdCount,
+  AdCountIcon,
+  AdCountText,
+  AdGraph,
+  AdOrderOverview,
+  AdStatus,
+  AdViewCount,
+  AdViewList,
+  AdViewMonthGraph,
+  AdViewStatus,
+  EmptyList,
+  ViewAllBtn,
+} from './ItemOverViewStyle';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import PendingActionsIcon from '@mui/icons-material/PendingActions';
+import RotateRightIcon from '@mui/icons-material/RotateRight';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import DoNotDisturbAltIcon from '@mui/icons-material/DoNotDisturbAlt';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+
 
 const ItemManage = ({ meData }) => {
+
+  const [loading, setLoading] = useState(false);
+  const [products, setProducts] = useState();
+
+  const getProducts = async () => {
+    const productsList = await axios.get('/products/productAllParentsKinds', {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+    console.log('productsList', productsList.data);
+    setProducts(productsList?.data);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    getProducts();
+  }, [meData]);
+
+  if (loading)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   return (
     <AdContainer>
       <h1>Products</h1>
+      <AdOrderOverview>
+        <AdViewCount>
+          <AdCount className='pending'>
+            <AdCountIcon>
+              <PendingActionsIcon sx={{ fontSize: 45 }} />
+            </AdCountIcon>
+            <AdCountText>
+              {/* <span>{pendingList?.length}</span> */}
+              <p>TOPS</p>
+            </AdCountText>
+          </AdCount>
+          <AdCount className='inprogress'>
+            <AdCountIcon>
+              <RotateRightIcon sx={{ fontSize: 45 }} />
+            </AdCountIcon>
+            <AdCountText>
+              {/* <span>{inprogressList?.length}</span> */}
+              <p>BOTTOMS</p>
+            </AdCountText>
+          </AdCount>
+          <AdCount className='delivered'>
+            <AdCountIcon>
+              <LocalShippingIcon sx={{ fontSize: 45 }} />
+            </AdCountIcon>
+            <AdCountText>
+              {/* <span>{deliveredList?.length}</span> */}
+              <p>OUTER</p>
+            </AdCountText>
+          </AdCount>
+          <AdCount className='total'>
+            <AdCountIcon>
+              <ShoppingBagIcon sx={{ fontSize: 45 }} />
+            </AdCountIcon>
+            <AdCountText>
+              {/* <span>{products?.length}</span> */}
+              <p>SHOES</p>
+            </AdCountText>
+          </AdCount>
+          <AdCount className='cancel'>
+            <AdCountIcon>
+              <DoNotDisturbAltIcon sx={{ fontSize: 45 }} />
+            </AdCountIcon>
+            <AdCountText>
+              {/* <span>{cancelList?.length}</span> */}
+              <p>ACCESSORIES</p>
+            </AdCountText>
+          </AdCount>
+        </AdViewCount>
+
+        {/* <AdViewList>
+          <AdViewStatus className='pending'>
+            {pendingList?.length === 0 ? (
+              <EmptyList>
+                <FormatListBulletedIcon sx={{ fontSize: 45 }} />
+                <p>Nothing pending orders</p>
+              </EmptyList>
+            ) : (
+              <AdStatus>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>No.</th>
+                      <th>USER</th>
+                      <th>QTY</th>
+                      <th>TOTAL</th>
+                      <th>DATE</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {pendingList?.slice(0, 5).map((pl) => {
+                      return (
+                        <tr key={pl?.pk}>
+                          <td style={{ width: '10%' }}>{pl?.pk}</td>
+                          <td style={{ width: '20%' }}>{pl?.user?.username}</td>
+                          <td style={{ width: '10%' }}>{pl?.total_products}</td>
+                          <td style={{ width: '20%' }}>
+                            ${pl?.total_price?.toLocaleString()}
+                          </td>
+                          <td>
+                            {new Date(pl?.created_at).toLocaleString('en-ca')}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+                <ViewAllBtn className='pending' to='/admin/orders/pending'>
+                  <KeyboardDoubleArrowRightIcon sx={{ fontSize: 15 }} />
+                </ViewAllBtn>
+              </AdStatus>
+            )}
+          </AdViewStatus>
+          <AdViewStatus className='inprogress'>
+            {inprogressList?.length === 0 ? (
+              <EmptyList>
+                <FormatListBulletedIcon sx={{ fontSize: 45 }} />
+                <p>Nothing inprogress orders</p>
+              </EmptyList>
+            ) : (
+              <AdStatus>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>No.</th>
+                      <th>USER</th>
+                      <th>QTY</th>
+                      <th>TOTAL</th>
+                      <th>DATE</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {inprogressList?.slice(0, 5).map((il) => {
+                      return (
+                        <tr key={il?.pk}>
+                          <td style={{ width: '10%' }}>{il?.pk}</td>
+                          <td style={{ width: '20%' }}>{il?.user?.username}</td>
+                          <td style={{ width: '10%' }}>{il?.total_products}</td>
+                          <td style={{ width: '20%' }}>
+                            ${il?.total_price?.toLocaleString()}
+                          </td>
+                          <td>
+                            {new Date(il?.created_at).toLocaleString('en-ca')}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+                <ViewAllBtn className='inprogress' to='/admin/orders/all'>
+                  View All Inprogress orders
+                  <KeyboardDoubleArrowRightIcon sx={{ fontSize: 15 }} />
+                </ViewAllBtn>
+              </AdStatus>
+            )}
+          </AdViewStatus>
+          <AdViewStatus className='delivered'>
+            {deliveredList?.length === 0 ? (
+              <EmptyList>
+                <FormatListBulletedIcon sx={{ fontSize: 45 }} />
+                <p>Nothing delivered orders</p>
+              </EmptyList>
+            ) : (
+              <AdStatus>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>No.</th>
+                      <th>USER</th>
+                      <th>QTY</th>
+                      <th>TOTAL</th>
+                      <th>DATE</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {deliveredList?.slice(0, 5).map((dl) => {
+                      return (
+                        <tr key={dl?.pk}>
+                          <td style={{ width: '10%' }}>{dl?.pk}</td>
+                          <td style={{ width: '20%' }}>{dl?.user?.username}</td>
+                          <td style={{ width: '10%' }}>{dl?.total_products}</td>
+                          <td style={{ width: '20%' }}>
+                            ${dl?.total_price?.toLocaleString()}
+                          </td>
+                          <td>
+                            {new Date(dl?.created_at).toLocaleString('en-ca')}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+                <ViewAllBtn className='delivered' to='/admin/orders/all'>
+                  View All Delivered orders
+                  <KeyboardDoubleArrowRightIcon sx={{ fontSize: 15 }} />
+                </ViewAllBtn>
+              </AdStatus>
+            )}
+          </AdViewStatus>
+          <AdViewStatus className='cancel'>
+            {cancelList?.length === 0 ? (
+              <EmptyList>
+                <FormatListBulletedIcon sx={{ fontSize: 45 }} />
+                <p>Nothing cancelled orders</p>
+              </EmptyList>
+            ) : (
+              <AdStatus>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>No.</th>
+                      <th>USER</th>
+                      <th>QTY</th>
+                      <th>TOTAL</th>
+                      <th>DATE</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {cancelList?.slice(0, 5).map((cl) => {
+                      return (
+                        <tr key={cl?.pk}>
+                          <td style={{ width: '10%' }}>{cl?.pk}</td>
+                          <td style={{ width: '20%' }}>{cl?.user?.username}</td>
+                          <td style={{ width: '10%' }}>{cl?.total_products}</td>
+                          <td style={{ width: '20%' }}>
+                            ${cl?.total_price?.toLocaleString()}
+                          </td>
+                          <td>
+                            {new Date(cl?.created_at).toLocaleString('en-ca')}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+                <ViewAllBtn className='cancel' to='/admin/orders/all'>
+                  View All Cancelled orders
+                  <KeyboardDoubleArrowRightIcon sx={{ fontSize: 15 }} />
+                </ViewAllBtn>
+              </AdStatus>
+            )}
+          </AdViewStatus>
+        </AdViewList>  */}
+      </AdOrderOverview>
     </AdContainer>
   );
 };
