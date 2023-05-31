@@ -63,13 +63,6 @@ const CARTS_URL = '/carts';
 const TestCart = ({ checkedList, setCheckedList }) => {
   const [loading, setLoading] = useState(false);
   const [carts, setCarts] = useState([]);
-  // const [isChecked, setIsChecked] = useState(false);
-  // const [checkList, setCheckList] = useState([]);
-  // const [IdList, setIdList] = useState([]);
-  // const [checkNewList, setCheckNewList] = useState([]);
-
-  // const [allDelList, setAllDelList] = useState([]);
-
   const [isDisabled, setIsDisabled] = useState(false);
   const [cartArr, setCartArr] = useState([]);
 
@@ -83,10 +76,6 @@ const TestCart = ({ checkedList, setCheckedList }) => {
   // console.log('checkedItem', checkedItem);
 
   useEffect(() => {
-    getAllCart();
-  }, [cartArr]);
-
-  useEffect(() => {
     setSelectedItem(
       Object.entries(checkedItem)
         .filter(([key, value]) => value)
@@ -94,6 +83,10 @@ const TestCart = ({ checkedList, setCheckedList }) => {
     );
   }, [checkedItem]);
   // console.log('selectedItem', selectedItem);
+
+  useEffect(() => {
+    getAllCart();
+  }, [cartArr]);
 
   useEffect(() => {
     if (selectedItem) {
@@ -104,7 +97,7 @@ const TestCart = ({ checkedList, setCheckedList }) => {
 
     localStorage.setItem('getChecked', JSON.stringify(checkedList));
   }, [selectedItem, carts]);
-  console.log('checkedList', checkedList);
+  // console.log('checkedList', checkedList);
 
   useEffect(() => {
     localStorage.setItem('getChecked', JSON.stringify(checkedList));
@@ -115,7 +108,7 @@ const TestCart = ({ checkedList, setCheckedList }) => {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    console.log('cartList', cartList.data);
+    // console.log('cartList', cartList.data);
     setCarts(cartList?.data);
     setLoading(false);
   };
@@ -128,20 +121,21 @@ const TestCart = ({ checkedList, setCheckedList }) => {
   // console.log('carts', carts);
 
   const handleAllDeleteCart = async () => {
-    if (
-      window.confirm('Are you sure you want to delete this item in your cart?')
-    ) {
-      // IdList.map(async (i) => {
-      // console.log('i', i);
-      // setAllDelList([...allDelList, i?.pk]);
-      // await axios.delete(`/carts/${IdList[0]}`, {
-      //   headers: { 'Content-Type': 'application/json' },
-      //   withCredentials: true,
-      // });
-      // setCarts([]);
-      // });
-      // getAllCart([]);
-      // window.location.reload();
+    if (checkedList?.length !== 0) {
+      if (
+        window.confirm(
+          'Are you sure you want to delete checked items in your cart?'
+        )
+      ) {
+        const deleteItem = checkedList?.map((c) => {
+          axios.delete(`/carts/${c.pk}`, {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+          });
+        });
+        setCarts(deleteItem);
+        window.location.reload();
+      }
     }
   };
 

@@ -51,7 +51,7 @@ const HeroPage = ({ meData, catData }) => {
     getItems();
   }, []);
 
-  console.log('category', catData);
+  // console.log('category', catData);
 
   useEffect(() => {
     setLoading(true);

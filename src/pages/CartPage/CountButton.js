@@ -11,14 +11,13 @@ import AddIcon from '@mui/icons-material/Add';
 import { useEffect } from 'react';
 
 const CountButton = ({ carts, cart, getAllCart, setCartArr }) => {
-  // const [cartArr, setCartArr] = useState([]);
   const [countNumber, setCountNumber] = useState();
 
   useEffect(() => {
     setCountNumber(cart?.number_of_product);
   }, []);
 
-  console.log('cart?.number_of_product', cart?.number_of_product);
+  // console.log('cart?.number_of_product', cart?.number_of_product);
 
   const handleIncrease = async (pk) => {
     // console.log('Ipk', pk);
@@ -39,18 +38,18 @@ const CountButton = ({ carts, cart, getAllCart, setCartArr }) => {
     setCartArr(addQty);
     // setCountChange(!countChange);
     setCountNumber(countNumber + 1);
-    // getAllCart();
+    getAllCart();
   };
   // console.log('addQty', cartArr);
 
   const handleDecrease = (pk) => {
-    console.log('Dpk', pk);
+    // console.log('Dpk', pk);
     const minusQty = carts.map(async (i) => {
-      if (pk === i?.pk && i.number_of_product > 1) {
+      if (pk === i?.pk && i.number_of_product > 1 && countNumber > 1) {
         await axios.put(
           `/carts/${pk}`,
           {
-            pk: i?.pk,
+            // pk: i?.pk,
             number_of_product: countNumber - 1,
           },
           {
@@ -61,8 +60,8 @@ const CountButton = ({ carts, cart, getAllCart, setCartArr }) => {
       }
     });
     setCartArr(minusQty);
-    setCountNumber(countNumber - 1);
-    // getAllCart();
+    setCountNumber(countNumber > 1 ? countNumber - 1 : 1);
+    getAllCart();
   };
 
   return (

@@ -31,39 +31,16 @@ export const SidebarData = [
     title: 'Categories',
     path: '/admin/categories',
     icon: <CategoryIcon />,
-    // iconClosed: <ExpandMoreIcon />,
-    // iconOpened: <ExpandLessIcon />,
-    subNav: [
-      // {
-      //   title: 'Categories',
-      //   path: '/admin/categories/head',
-      //   icon: <GroupWorkIcon />,
-      // },
-      // {
-      //   title: 'Sub Categories',
-      //   path: '/admin/categories/:headName/sub',
-      //   icon: <WorkspacesIcon />,
-      // },
-    ],
   },
   {
     title: 'Products',
-    path: '/admin/items',
+    path: '/admin/products',
     icon: <ShoppingCartIcon />,
-    iconClosed: <ExpandMoreIcon />,
-    iconOpened: <ExpandLessIcon />,
-    subNav: [
-      {
-        title: 'All Products',
-        path: '/admin/items/all',
-        icon: <ReceiptIcon />,
-      },
-      {
-        title: 'Product Reviews',
-        path: '/admin/items/reviews',
-        icon: <RateReviewIcon />,
-      },
-    ],
+  },
+  {
+    title: 'Reviews',
+    path: '/admin/reviews',
+    icon: <RateReviewIcon />,
   },
   {
     title: 'Orders',
@@ -89,9 +66,4 @@ export const SidebarData = [
     path: '/admin/coupons',
     icon: <RedeemIcon />,
   },
-  // {
-  //   title: 'Feedbacks',
-  //   path: '/admin/feedbacks',
-  //   icon: <QuestionAnswerIcon />,
-  // },
 ];
