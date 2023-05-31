@@ -103,13 +103,22 @@ export const AdReviewTh = styled.th`
 `;
 
 export const AdReviewTbody = styled.tbody`
-  tr:nth-child(odd) {
-    background-color: #efeae1;
+  &:nth-child(even) {
+    background-color: #f9f4ea;
   }
-  tr:nth-child(even) {
+  &:nth-child(odd) {
     background-color: #fff;
   }
 `;
+
+// export const AdReviewNextTbody = styled.tbody`
+//   tr&:nth-child(even) {
+//     background-color: #f9f4ea;
+//   }
+//   &:nth-child(odd) {
+//     background-color: #fff;
+//   }
+// `;
 
 export const AdReviewBodyTr = styled.tr`
   width: 100%;
@@ -119,7 +128,7 @@ export const AdReviewBodyTr = styled.tr`
 export const AdReviewTd = styled.td`
   width: 20px;
   font-size: 14px;
-  padding: 3px 5px;
+  padding: 5px;
 `;
 
 export const AdReviewMidSide = styled.div``;

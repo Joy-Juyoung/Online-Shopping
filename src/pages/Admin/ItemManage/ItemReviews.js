@@ -29,6 +29,7 @@ import {
   AdReviewDetailPayload,
   AdReviewDetailBtn,
   AdReviewDetailUserInfo,
+  AdReviewNextTbody,
 } from './reviewStyle';
 import Avatar from '@mui/material/Avatar';
 import axios from '../../../api/axios';
@@ -58,7 +59,7 @@ const ItemReviews = ({ meData }) => {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    console.log('reviewList', reviewList.data);
+    // console.log('reviewList', reviewList.data);
     setReviews(reviewList?.data);
 
     setLoading(false);
@@ -69,9 +70,17 @@ const ItemReviews = ({ meData }) => {
     getReviews();
   }, []);
 
-  let uniqueList = reviews?.filter(
-    (rv, index) => rv?.Product_Name?.indexOf(rv?.Product_Name) !== index
-  );
+  // let uniqueList = reviews?.filter(
+  //   (rv, index, rf) => rf?.pk?.toString().indexOf(rv?.pk?.toString()) !== index
+  // );
+
+  let s = new Set();
+  let uniqueList = reviews?.filter((d) => {
+    if (!s.has(d?.Product_Name)) {
+      s.add(d?.Product_Name);
+      return d;
+    }
+  });
 
   const handleViewReviews = async (pk) => {
     const productReview = await axios.get(`/products/${pk}`, {
@@ -80,6 +89,7 @@ const ItemReviews = ({ meData }) => {
     });
     setNewList(productReview?.data);
   };
+  // console.log('newList', newList);
 
   const handleProductSearch = (e) => {
     setSearchProductValue(e.target.value);
@@ -139,7 +149,7 @@ const ItemReviews = ({ meData }) => {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    console.log('Review', review.data);
+    // console.log('Review', review.data);
     setReviewByUser(review.data);
   };
 
@@ -188,24 +198,34 @@ const ItemReviews = ({ meData }) => {
                     <AdReviewTh>PRODUCT NAME</AdReviewTh>
                   </AdReviewHeadTr>
                 </AdReviewThead>
-                <AdReviewTbody>
-                  {/* {uniqueList?.map((un, index) => { */}
-                  {searchedProductList?.map((un, index) => {
-                    return (
+                {searchedProductList?.map((un, index) => {
+                  {
+                    /* {uniqueList?.map((un, index) => { */
+                  }
+                  return (
+                    <AdReviewTbody key={index}>
                       <AdReviewBodyTr
-                        key={index}
                         onClick={() => handleViewReviews(un?.product)}
+                        style={
+                          un?.product === newList?.id
+                            ? {
+                                backgroundColor: '#ffcd6b',
+                                padding: '3px 10px',
+                              }
+                            : {}
+                        }
                       >
                         <AdReviewTd
                           style={{ width: '15%', textAlign: 'center' }}
                         >
                           {un?.product}
                         </AdReviewTd>
+
                         <AdReviewTd>{un?.Product_Name}</AdReviewTd>
                       </AdReviewBodyTr>
-                    );
-                  })}
-                </AdReviewTbody>
+                    </AdReviewTbody>
+                  );
+                })}
               </AdReviewTable>
             </AdReviewListWrap>
           </AdReviewItemList>
@@ -256,11 +276,11 @@ const ItemReviews = ({ meData }) => {
                       <AdReviewTh></AdReviewTh>
                     </AdReviewHeadTr>
                   </AdReviewThead>
-                  <AdReviewTbody>
-                    {/* {newList?.reviews?.map((nrv, index) => { */}
-                    {searchedReviewList?.map((nrv, index) => {
-                      return (
-                        <AdReviewBodyTr key={index}>
+                  {/* {newList?.reviews?.map((nrv, index) => { */}
+                  {searchedReviewList?.map((nrv, index) => {
+                    return (
+                      <AdReviewTbody key={index}>
+                        <AdReviewBodyTr>
                           <AdReviewTd
                             style={{ width: '7%', textAlign: 'center' }}
                           >
@@ -285,9 +305,9 @@ const ItemReviews = ({ meData }) => {
                             {/* View modal -> review more and delete */}
                           </AdReviewTd>
                         </AdReviewBodyTr>
-                      );
-                    })}
-                  </AdReviewTbody>
+                      </AdReviewTbody>
+                    );
+                  })}
                 </AdReviewTable>
               </AdReviewListWrap>
             )}
