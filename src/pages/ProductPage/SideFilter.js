@@ -24,15 +24,18 @@ const LocateList = styled.li`
   padding: 3px 10px;
   border-radius: 10px; */
   p {
-    font-weight: 700;
+    font-weight: 600;
     font-size: 15px;
-    /* background: #ffc759; */
-    /* border-top: 2px solid #ffae00;
-    border-bottom: 2px solid #ffae00; */
-    border-top: 1px solid #0a0f18;
-    border-bottom: 1px solid #0a0f18;
-    /* border-radius: 3px; */
+
+    background: #f2edda;
+    border-radius: 5px;
+    /* opacity: 0.5; */
+    /* color: #fff; */
+
+    /* border-top: 1px solid #0a0f18;
+    border-bottom: 1px solid #0a0f18; */
     color: #0a0f18;
+
     padding: 3px 5px;
     width: 60%;
   }
