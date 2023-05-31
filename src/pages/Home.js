@@ -111,9 +111,8 @@ const Home = () => {
       location.pathname === '/admin/categories' ||
       location.pathname === '/admin/categories/head' ||
       location.pathname === '/admin/categories/:headName/sub' ||
-      location.pathname === '/admin/items' ||
-      location.pathname === '/admin/items/all' ||
-      location.pathname === '/admin/items/reviews' ||
+      location.pathname === '/admin/products' ||
+      location.pathname === '/admin/reviews' ||
       location.pathname === '/admin/orders' ||
       location.pathname === '/admin/orders/all' ||
       location.pathname === '/admin/orders/pending' ||
@@ -348,12 +347,12 @@ const Home = () => {
                   exact={true}
                 />
                 <Route
-                  path='/admin/items/all'
+                  path='/admin/products'
                   element={<ItemList catData={catData} />}
                   exact={true}
                 />
                 <Route
-                  path='/admin/items/reviews'
+                  path='/admin/reviews'
                   element={<ItemReviews />}
                   exact={true}
                 />
