@@ -110,7 +110,7 @@ export const AdViewCount = styled.div`
   align-items: center;
   justify-content: space-evenly; */
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   grid-gap: 20px;
   margin: 40px auto;
 `;
@@ -160,6 +160,12 @@ export const AdCount = styled.div`
     /* opacity: 0.7; */
   }
 
+  &.cancel {
+    color: #82591c;
+    border: 2px solid #ad8260;
+    border-left: 10px solid #ad8260;
+    /* opacity: 0.7; */
+  }
 `;
 
 export const AdCountText = styled.div`

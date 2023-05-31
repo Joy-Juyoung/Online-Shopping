@@ -30,10 +30,12 @@ import { AdIconDelete } from './listStyle';
 const ItemList = ({ meData, catData }) => {
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState();
-  const [searchedList, setSearchedList] = useState();
-  const [searchValue, setSearchValue] = useState();
+  // const [searchedList, setSearchedList] = useState();
+  // const [searchValue, setSearchValue] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(8);
+
+  const [userInput, setUserInput] = useState("");
   // const [isHorizontal, setIsHorizontal] = useState(false);
 
   const [modalShown, toggleModal] = useState(false);
@@ -68,7 +70,7 @@ const ItemList = ({ meData, catData }) => {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    // console.log('itemList', itemList.data);
+    console.log('itemList', itemList.data);
     setProducts(itemList?.data);
     setLoading(false);
   };
@@ -82,32 +84,32 @@ const ItemList = ({ meData, catData }) => {
   const firstPostIndex = lastPostIndex - postsPerPage;
   const currentPosts = products?.slice(firstPostIndex, lastPostIndex);
 
-  useEffect(() => {
-    setSearchedList(
-      !searchValue
-        ? currentPosts
-        : currentPosts?.filter((search, index) => {
-            return (
-              search?.name.toLowerCase().includes(searchValue.toLowerCase()) ||
-              search?.kind?.name
-                .toLowerCase()
-                .includes(searchValue.toLowerCase()) ||
-              search?.pk
-                ?.toString()
-                .toLowerCase()
-                .includes(searchValue.toString().toLowerCase()) ||
-              search?.price
-                ?.toString()
-                .toLowerCase()
-                .includes(searchValue.toString().toLowerCase()) ||
-              search?.created_at
-                ?.toString()
-                .toLowerCase()
-                .includes(searchValue.toString().toLowerCase())
-            );
-          })
-    );
-  }, [products, searchValue]);
+  // useEffect(() => {
+  //   setSearchedList(
+  //     !searchValue
+  //       ? currentPosts
+  //       : currentPosts?.filter((search, index) => {
+  //           return (
+  //             search?.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+  //             search?.kind?.name
+  //               .toLowerCase()
+  //               .includes(searchValue.toLowerCase()) ||
+  //             search?.pk
+  //               ?.toString()
+  //               .toLowerCase()
+  //               .includes(searchValue.toString().toLowerCase()) ||
+  //             search?.price
+  //               ?.toString()
+  //               .toLowerCase()
+  //               .includes(searchValue.toString().toLowerCase()) ||
+  //             search?.created_at
+  //               ?.toString()
+  //               .toLowerCase()
+  //               .includes(searchValue.toString().toLowerCase())
+  //           );
+  //         })
+  //   );
+  // }, [products, searchValue]);
 
   const handleDeleteItem = async (pk) => {
     // console.log('pk', pk);
@@ -135,7 +137,8 @@ const ItemList = ({ meData, catData }) => {
           <input
             type='text'
             placeholder='Search'
-            onChange={(e) => setSearchValue(e.target.value)}
+            // onChange={(e) => setSearchValue(e.target.value)}
+            onChange={(e) => setUserInput(e.target.value)}
           />
         </AdListSearch>
         <AdListUtils>
@@ -174,7 +177,14 @@ const ItemList = ({ meData, catData }) => {
             </AdTHeadeRow>
           </AdTHead>
           {/* {searchedList?.map((product) => {  */}
-          {currentPosts?.map((product) => {
+          {currentPosts?.filter((list) => 
+            list.pk?.toString().includes(userInput)
+              || list.price?.toString().includes(userInput)
+              || list.name?.toLowerCase().includes(userInput.toLowerCase())
+              || list.kind?.name?.toLowerCase().includes(userInput.toLowerCase())
+              || list.created_at?.toLowerCase().includes(userInput.toLowerCase())
+          ) 
+          .map((product) => {
             return (
               <AdTBody key={product?.pk}>
                 <AdTBodyRow>

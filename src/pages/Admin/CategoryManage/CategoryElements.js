@@ -144,6 +144,9 @@ export const AdReviewTbody = styled.tbody`
 export const AdReviewBodyTr = styled.tr`
   width: 100%;
   cursor: pointer;
+
+
+
 `;
 
 export const AdReviewTd = styled.td`
@@ -160,6 +163,14 @@ export const AdReviewTd = styled.td`
     margin-left: 10px;
     cursor: pointer;
   }
+  
+  &:active,
+  &:focus,
+  &.active {
+    color: #000;
+    font-weight: bold;
+  }
+
 `;
 
 export const AdReviewMidSide = styled.div``;

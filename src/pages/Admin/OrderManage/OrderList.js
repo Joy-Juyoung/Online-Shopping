@@ -34,12 +34,14 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
   const [isSelected, setIsSelected] = useState(false);
   const [selectedOption, setSelectedOption] = useState();
 
-  const [searchedList, setSearchedList] = useState();
-  const [searchValue, setSearchValue] = useState();
+  // const [searchedList, setSearchedList] = useState();
+  // const [searchValue, setSearchValue] = useState();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(8);
 
+  const [userInput, setUserInput] = useState("");
+  
   const [orderById, setOrderById] = useState();
 
   const getOrders = async () => {
@@ -113,27 +115,27 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
     }
   };
 
-  useEffect(() => {
-    setSearchedList(
-      !searchValue
-        ? currentPosts
-        : currentPosts?.filter((search, index) => {
-            return (
-              search?.user?.username
-                .toLowerCase()
-                .includes(searchValue.toLowerCase()) ||
-              search?.status
-                .toLowerCase()
-                .includes(searchValue.toLowerCase()) ||
-              search?.pk
-                ?.toString()
-                .toLowerCase()
-                .includes(searchValue.toString().toLowerCase())
-            );
-          })
-    );
-  }, [orders, searchValue]);
-  console.log('searchedList', searchedList);
+  // useEffect(() => {
+  //   setSearchedList(
+  //     !searchValue
+  //       ? currentPosts
+  //       : currentPosts?.filter((search, index) => {
+  //           return (
+  //             search?.user?.username
+  //               .toLowerCase()
+  //               .includes(searchValue.toLowerCase()) ||
+  //             search?.status
+  //               .toLowerCase()
+  //               .includes(searchValue.toLowerCase()) ||
+  //             search?.pk
+  //               ?.toString()
+  //               .toLowerCase()
+  //               .includes(searchValue.toString().toLowerCase())
+  //           );
+  //         })
+  //   );
+  // }, [orders, searchValue]);
+  // console.log('searchedList', searchedList);
 
   if (loading)
     return (
@@ -149,7 +151,7 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
           <input
             type='text'
             placeholder='Search'
-            onChange={(e) => setSearchValue(e.target.value)}
+            onChange={(e) => setUserInput(e.target.value)}
           />
         </AdListSearch>
         <AdListUtils></AdListUtils>
@@ -167,9 +169,16 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
               <AdTHeadCell className='status'>STATUS</AdTHeadCell>
               <AdTHeadCell className='details'></AdTHeadCell>
             </AdTHeadeRow>
-          </AdTHead>
-          {/* ?.filter((list) => '' || list?.pk.toString().includes(searchValue)) */}
-          {currentPosts?.map((order) => {
+          </AdTHead>          
+          {currentPosts?.filter((list) => 
+            list.pk?.toString().includes(userInput)
+            || list.total_products?.toString().includes(userInput)
+            || list.total_price?.toString().includes(userInput)
+            || list.created_at?.toLowerCase().includes(userInput.toLowerCase())
+            || list.status?.toLowerCase().includes(userInput.toLowerCase())
+            || list.user?.username?.toLowerCase().includes(userInput.toLowerCase())
+          )
+          .map((order) => {
             // {searchedList?.map((order) => {
             return (
               <AdTBody key={order?.pk}>

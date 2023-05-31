@@ -27,6 +27,8 @@ import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArro
 import AddIcon from '@mui/icons-material/Add';
 import ReplyIcon from '@mui/icons-material/Reply';
 import CategoryAddBtn from './CategoryAddBtn';
+import AdminModal from '../../../components/AdminComponents/AdminModal';
+import AddNewCategory from './AddNewCategory';
 
 export const CategoryLists = styled.ul`
   display: flex;
@@ -47,6 +49,12 @@ const CategoryManage = ({ meData }) => {
   // const [editedTitle, setEditedTitle] = useState(catData.name)
   const [newList, setNewList] = useState();
 
+  const [modalShown, toggleModal] = useState(false);
+  const [addModalShown, toggleAddModal] = useState(false);
+
+  const [isActive, setIsActive] = useState(false);
+
+
   const getCategory = async () => {
     const categoryData = await axios.get('/products/productAllParentsKinds', {
       headers: { 'Content-Type': 'application/json' },
@@ -64,12 +72,6 @@ const CategoryManage = ({ meData }) => {
   const changeAddHandler = (e) => {
     setAddCate(e.target.value);
   };
-
-  // const handleInputChange = (e) => {
-  //   if (e.target.id === 'name') {
-  //     setInput(e.target.value);
-  //   }
-  // };
 
   const submitAddHandler = async (e) => {
     e.preventDefault();
@@ -97,6 +99,7 @@ const CategoryManage = ({ meData }) => {
     );
     // console.log("pr",productReview?.data)
     setNewList(productReview?.data);
+    setIsActive(!isActive);
   };
 
   const handleEditChange = (e) => {
@@ -131,6 +134,7 @@ const CategoryManage = ({ meData }) => {
                     return (
                       <AdReviewBodyTr
                         key={category?.pk}
+                        
                         onClick={() => handleViewCategories(category?.pk)}
                       >
                         {isEdit === true ? (
@@ -138,7 +142,8 @@ const CategoryManage = ({ meData }) => {
                             <AdReviewTd>
                               <form onSubmit={handleHeadSubmit}>
                                 <input
-                                  value={category?.name || ''}
+                                  // id
+                                  value={category?.name}
                                   onChange={handleEditChange}
                                 ></input>
                               </form>
@@ -152,10 +157,10 @@ const CategoryManage = ({ meData }) => {
                           </>
                         ) : (
                           <>
-                            <AdReviewTd>
+                            <AdReviewTd className={isActive ? 'active' : ''}>
                               {category?.name?.toUpperCase()}
                               <button
-                                // onClick={handleEdit}
+                                // onClick={handleEdit}                         
                                 onClick={() => setIsEdit(true)}
                               >
                                 <EditIcon fontSize='small' />
@@ -164,7 +169,7 @@ const CategoryManage = ({ meData }) => {
                           </>
                         )}
                       </AdReviewBodyTr>
-                    );
+                    )
                   })}
                 </AdReviewTbody>
               </AdReviewTable>
