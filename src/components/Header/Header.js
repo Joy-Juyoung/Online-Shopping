@@ -73,7 +73,7 @@ const Header = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalShown, toggleModal] = useState(false);
   const [balanceShown, toggleBalance] = useState(false);
-  // const [cartsTotal, setCartsTotal] = useState();
+  const [categorySort, setCategorySort] = useState();
 
   // const [carts, setCarts] = useState();
 
@@ -123,6 +123,10 @@ const Header = ({
       document.removeEventListener('click', checkIfClickedOutside);
     };
   }, [clickAccount, isModalOpen]);
+
+  // useEffect(() => {
+  //   setCategorySort(catData?.sort((a, b) => a?.pk - b?.pk));
+  // }, []);
 
   if (loading)
     return (
@@ -276,8 +280,6 @@ const Header = ({
                           <DropUser
                             meData={meData}
                             shown={() => toggleBalance(!balanceShown)}
-                            // setIsAdminBoard={setIsAdminBoard}
-                            // isAdminBoard={isAdminBoard}
                           />
                         )}
                         <Modal
@@ -312,10 +314,9 @@ const Header = ({
                   </DropdownButton>
                 </DropMenuParents>
               </DropMenuList>
-              {catData.map((category) => {
+              {catData?.map((category) => {
                 return (
                   <DropMenuList key={category?.pk}>
-                    {/* <DropMenuWrap></DropMenuWrap> */}
                     <DropMenuParents>
                       <DropdownButton to={`/products/category/${category?.pk}`}>
                         {category?.productKinds?.length === 0 &&
