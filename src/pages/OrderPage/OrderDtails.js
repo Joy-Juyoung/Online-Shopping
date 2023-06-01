@@ -33,6 +33,7 @@ import {
   ReviewBtn,
   ReviewDisableBtn,
 } from './OrderDetailsElements';
+import { NotificationStatus } from './OrderElements';
 
 const OrderDtails = ({ meData }) => {
   const { id } = useParams();
@@ -178,6 +179,10 @@ const OrderDtails = ({ meData }) => {
                   );
                 })}
               </Table>
+              <NotificationStatus>
+                * You can only create a review when the order status is
+                'Delivered'.
+              </NotificationStatus>
             </PaymentListWrap>
           </PaymentLeftInfo>
 

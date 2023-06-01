@@ -11,6 +11,7 @@ import {
   TotalCount,
   TotalCountWrap,
   EmptyWhishlist,
+  ListWishMid,
 } from '../ProductPage/ProductListElements';
 import Loading from '../../components/Loading';
 import ProductsCard from '../ProductPage/ProductCard';
@@ -18,7 +19,7 @@ import { useNavigate } from 'react-router-dom';
 
 const sort = [
   { value: 'Newest', text: 'Newest first' },
-  { value: 'Popular', text: 'Most Popular' },
+  // { value: 'Popular', text: 'Most Popular' },
   { value: 'HighToLow', text: 'Price: high to low' },
   { value: 'LowToHigh', text: 'Price: low to high' },
 ];
@@ -31,6 +32,11 @@ const WishlistPage = ({ meData }) => {
   const [wishItems, setWishItems] = useState([]);
   const [errMsg, setErMsg] = useState('');
   const [isEmpty, setIsEmpty] = useState(false);
+
+  const [selectOption, setSelectOption] = useState('Newest');
+  const [sortList, setSortList] = useState([]);
+  const [sortProducts, setSortProducts] = useState([]);
+
   const navigate = useNavigate();
 
   const getItems = async () => {
@@ -67,6 +73,34 @@ const WishlistPage = ({ meData }) => {
     // setLoading(false);
   }, []);
 
+  const handleOptionChange = (e) => {
+    setSelectOption(e.target.value);
+  };
+
+  useEffect(() => {
+    console.log('selectedOptionnnn', selectOption);
+    switch (selectOption) {
+      case 'LowToHigh':
+        const priceLToH = wishItems.sort((a, b) => a.price - b.price);
+        setSortList(priceLToH);
+        return setSortProducts(...sortList);
+      case 'HighToLow':
+        const priceHToL = wishItems.sort((a, b) => b.price - a.price);
+        setSortList(priceHToL);
+        return setSortProducts(...sortList);
+      case 'Newest':
+        const uploadNewest = wishItems.sort(
+          (start, end) =>
+            new Date(start.created_at).getTime() -
+            new Date(end.created_at).getTime()
+        );
+        setSortList(uploadNewest);
+        return setSortProducts(...sortList);
+      default:
+        return setSortList(sortProducts);
+    }
+  }, [selectOption, sortProducts]);
+
   if (loading)
     return (
       <div>
@@ -93,7 +127,7 @@ const WishlistPage = ({ meData }) => {
               </TotalCountWrap>
               <SelectWrap>
                 <select
-                  // onChange={handleOptionChange}
+                  onChange={handleOptionChange}
                   name='category-list'
                   id='category-list'
                 >
@@ -107,19 +141,41 @@ const WishlistPage = ({ meData }) => {
             </ListTop>
 
             <ListMidWrap>
-              <ListMid>
-                {wishItems?.map((all) => {
-                  return (
-                    <ProductsCard
-                      key={all.pk}
-                      all={all}
-                      // kindEach={kindEach}
-                      meData={meData}
-                      wishItems={wishItems}
-                    />
-                  );
-                })}
-              </ListMid>
+              {selectOption === 'Newest' ? (
+                <ListWishMid>
+                  {wishItems
+                    ?.sort(
+                      (start, end) =>
+                        new Date(start.created_at).getTime() -
+                        new Date(end.created_at).getTime()
+                    )
+                    .map((all) => {
+                      return (
+                        <ProductsCard
+                          key={all.pk}
+                          all={all}
+                          // kindEach={kindEach}
+                          meData={meData}
+                          wishItems={wishItems}
+                        />
+                      );
+                    })}
+                </ListWishMid>
+              ) : (
+                <ListWishMid>
+                  {wishItems?.map((all) => {
+                    return (
+                      <ProductsCard
+                        key={all.pk}
+                        all={all}
+                        // kindEach={kindEach}
+                        meData={meData}
+                        wishItems={wishItems}
+                      />
+                    );
+                  })}
+                </ListWishMid>
+              )}
             </ListMidWrap>
           </ProductsList>
         )}

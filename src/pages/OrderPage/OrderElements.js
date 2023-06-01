@@ -157,3 +157,8 @@ export const StatusBox = styled.div`
   font-weight: 600;
   font-size: 12px;
 `;
+
+export const NotificationStatus = styled.div`
+  font-size: 12px;
+  color: #626972;
+`;

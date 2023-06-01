@@ -22,6 +22,7 @@ import AdminModal from '../../../components/AdminComponents/AdminModal';
 import { Table, Tbody, Td, Th, Thead, Tr } from './OrderStyle';
 import { useNavigate } from 'react-router-dom';
 import { AdButtonUtils } from '../../../components/AdminComponents/AdminButtons';
+import DropStatus from './DropStatus';
 
 const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
   const navigate = useNavigate();
@@ -40,9 +41,10 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(8);
 
-  const [userInput, setUserInput] = useState("");
-  
+  const [userInput, setUserInput] = useState('');
+
   const [orderById, setOrderById] = useState();
+  const [isDrop, setIsDrop] = useState(false);
 
   const getOrders = async () => {
     const orederList = await axios.get('/orders/', {
@@ -82,61 +84,6 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
 
   const statusOptionData = ['pending', 'inprogress', 'delivered', 'cancelled'];
 
-  const handelStatusOption = async (e, pk) => {
-    console.log(e.target.value);
-    setSelectedOption(e.target.value);
-  };
-  const handelUpdateOption = async (pk) => {
-    console.log('pk', pk);
-    console.log('selectedOption', selectedOption);
-    try {
-      const statusChange = await axios.put(
-        `/orders/${pk}`,
-        {
-          status: selectedOption,
-        },
-        {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        }
-      );
-      console.log('statusChange', statusChange?.data);
-      // window.location.reload();
-      window.location.reload();
-      // navigate('/admin/orders/all');
-    } catch (err) {
-      if (err.response?.status === 400) {
-        // console.log('400 error');
-        setLoading(false);
-      } else {
-        console.log('Error page or empty page');
-        setLoading(false);
-      }
-    }
-  };
-
-  // useEffect(() => {
-  //   setSearchedList(
-  //     !searchValue
-  //       ? currentPosts
-  //       : currentPosts?.filter((search, index) => {
-  //           return (
-  //             search?.user?.username
-  //               .toLowerCase()
-  //               .includes(searchValue.toLowerCase()) ||
-  //             search?.status
-  //               .toLowerCase()
-  //               .includes(searchValue.toLowerCase()) ||
-  //             search?.pk
-  //               ?.toString()
-  //               .toLowerCase()
-  //               .includes(searchValue.toString().toLowerCase())
-  //           );
-  //         })
-  //   );
-  // }, [orders, searchValue]);
-  // console.log('searchedList', searchedList);
-
   if (loading)
     return (
       <div>
@@ -169,47 +116,55 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
               <AdTHeadCell className='status'>STATUS</AdTHeadCell>
               <AdTHeadCell className='details'></AdTHeadCell>
             </AdTHeadeRow>
-          </AdTHead>          
-          {currentPosts?.filter((list) => 
-            list.pk?.toString().includes(userInput)
-            || list.total_products?.toString().includes(userInput)
-            || list.total_price?.toString().includes(userInput)
-            || list.created_at?.toLowerCase().includes(userInput.toLowerCase())
-            || list.status?.toLowerCase().includes(userInput.toLowerCase())
-            || list.user?.username?.toLowerCase().includes(userInput.toLowerCase())
-          )
-          .map((order) => {
-            // {searchedList?.map((order) => {
-            return (
-              <AdTBody key={order?.pk}>
-                <AdTBodyRow>
-                  <AdTBodyCell className='id'>{order?.pk}</AdTBodyCell>
-                  <AdTBodyCell className='username'>
-                    {order?.user?.username}
-                  </AdTBodyCell>
-                  <AdTBodyCell className='qty'>
-                    {order?.total_products}
-                  </AdTBodyCell>
-                  <AdTBodyCell className='totalPrice'>
-                    ${order?.total_price?.toLocaleString()}
-                  </AdTBodyCell>
-                  <AdTBodyCell className='date'>
-                    {new Date(order?.created_at).toLocaleString('en-ca')}
-                  </AdTBodyCell>
-                  <AdTBodyCell className='status'>{order?.status}</AdTBodyCell>
-                  <AdTBodyCell style={{ width: '10%' }}>
-                    <AdButtonUtils
-                      onClick={(e) => {
-                        handleOrderDetails(order?.pk);
-                      }}
-                    >
-                      View
-                    </AdButtonUtils>
-                  </AdTBodyCell>
-                </AdTBodyRow>
-              </AdTBody>
-            );
-          })}
+          </AdTHead>
+          {currentPosts
+            ?.filter(
+              (list) =>
+                list.pk?.toString().includes(userInput) ||
+                list.total_products?.toString().includes(userInput) ||
+                list.total_price?.toString().includes(userInput) ||
+                list.created_at
+                  ?.toLowerCase()
+                  .includes(userInput.toLowerCase()) ||
+                list.status?.toLowerCase().includes(userInput.toLowerCase()) ||
+                list.user?.username
+                  ?.toLowerCase()
+                  .includes(userInput.toLowerCase())
+            )
+            .map((order) => {
+              // {searchedList?.map((order) => {
+              return (
+                <AdTBody key={order?.pk}>
+                  <AdTBodyRow>
+                    <AdTBodyCell className='id'>{order?.pk}</AdTBodyCell>
+                    <AdTBodyCell className='username'>
+                      {order?.user?.username}
+                    </AdTBodyCell>
+                    <AdTBodyCell className='qty'>
+                      {order?.total_products}
+                    </AdTBodyCell>
+                    <AdTBodyCell className='totalPrice'>
+                      ${order?.total_price?.toLocaleString()}
+                    </AdTBodyCell>
+                    <AdTBodyCell className='date'>
+                      {new Date(order?.created_at).toLocaleString('en-ca')}
+                    </AdTBodyCell>
+                    <AdTBodyCell className='status'>
+                      {order?.status}
+                    </AdTBodyCell>
+                    <AdTBodyCell style={{ width: '10%' }}>
+                      <AdButtonUtils
+                        onClick={(e) => {
+                          handleOrderDetails(order?.pk);
+                        }}
+                      >
+                        View
+                      </AdButtonUtils>
+                    </AdTBodyCell>
+                  </AdTBodyRow>
+                </AdTBody>
+              );
+            })}
         </AdTable>
       </AdListMid>
       <AdListBottom>
@@ -225,7 +180,7 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
         shown={modalShown}
         close={() => {
           toggleModal(false);
-          // setCleanupModal();
+          setIsDrop(false);
         }}
       >
         <div>
@@ -261,33 +216,12 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
               );
             })}
           </Table>
-          <div>
-            <div style={{ display: 'flex' }}>
-              Order Status:
-              <select
-                name='status'
-                id='status'
-                onChange={handelStatusOption}
-                // defaultValue={orderById?.status}
-              >
-                {statusOptionData?.map((optionData, index) => {
-                  // console.log('optionData', orderById?.status);
-                  return (
-                    <option
-                      key={index}
-                      value={orderById?.status || ''}
-                      // defaultValue={orderById?.status}
-                    >
-                      {optionData}
-                    </option>
-                  );
-                })}
-              </select>
-              <button onClick={() => handelUpdateOption(orderById?.pk)}>
-                Update
-              </button>
-            </div>
-          </div>
+          <DropStatus
+            statusOptionData={statusOptionData}
+            orderById={orderById}
+            isDrop={isDrop}
+            setIsDrop={setIsDrop}
+          />
         </div>
       </AdminModal>
     </AdContainer>

@@ -24,8 +24,8 @@ import Category from './Category';
 // const TestProduct_URL = '/products/productAllChildKinds/${id}';
 
 const sort = [
+  // { value: 'None', text: '----------' },
   { value: 'Newest', text: 'Newest first' },
-  { value: 'Popular', text: 'Most Popular' },
   { value: 'HighToLow', text: 'Price: high to low' },
   { value: 'LowToHigh', text: 'Price: low to high' },
 ];
@@ -35,13 +35,13 @@ const ProductListByCategory = ({ meData, catData }) => {
   const [itemKinds, setItemKinds] = useState([]);
   const { pId, cName, cId } = useParams();
   const [getAllKinds, setGetAllKinds] = useState([]);
-  const [selectOption, setSelectOption] = useState();
+  const [selectOption, setSelectOption] = useState('Newest');
   const [sortList, setSortList] = useState([]);
   const [sortProducts, setSortProducts] = useState([]);
   const [priceRange, setPriceRange] = useState();
   const [itemsByPrice, setItemsByPrice] = useState([]);
 
-  // console.log('pId', pId);
+  // console.log('itemKinds', itemKinds);
   // console.log('pName', pName);
   // console.log('cName', cName);
   // console.log('cId', cId);
@@ -85,37 +85,6 @@ const ProductListByCategory = ({ meData, catData }) => {
   };
 
   useEffect(() => {
-    console.log('selectedOptionnnn', selectOption);
-    if (itemKinds.name === cName) {
-      switch (selectOption) {
-        case 'LowToHigh':
-          const priceLToH = itemKinds.products.sort(
-            (a, b) => a.price - b.price
-          );
-          setSortList(priceLToH);
-          // setSortProducts(...sortList);
-          return setSortProducts(...sortList);
-        case 'HighToLow':
-          const priceHToL = itemKinds.products.sort(
-            (a, b) => b.price - a.price
-          );
-          setSortList(priceHToL);
-          // setSortProducts(sortList);
-          return setSortProducts(...sortList);
-        case 'Newest':
-          const uploadNewest = itemKinds.products.sort(
-            (a, b) => a.created_at - b.created_at
-          );
-          setSortList(uploadNewest);
-          // setSortProducts(sortList);
-          return setSortProducts(...sortList);
-        default:
-          return setSortList(sortProducts);
-      }
-    }
-  }, [selectOption, sortProducts]);
-
-  useEffect(() => {
     setItemsByPrice(itemKinds.products);
 
     if (priceRange === 0) {
@@ -147,6 +116,36 @@ const ProductListByCategory = ({ meData, catData }) => {
       setItemsByPrice(itemKinds.products);
     }
   }, [priceRange]);
+
+  useEffect(() => {
+    // console.log('selectedOptionnnn', selectOption);
+    if (itemKinds.name === cName) {
+      switch (selectOption) {
+        case 'LowToHigh':
+          const priceLToH = itemKinds.products.sort(
+            (a, b) => a.price - b.price
+          );
+          setSortList(priceLToH);
+          return setSortProducts(...sortList);
+        case 'HighToLow':
+          const priceHToL = itemKinds.products.sort(
+            (a, b) => b.price - a.price
+          );
+          setSortList(priceHToL);
+          return setSortProducts(...sortList);
+        case 'Newest':
+          const uploadNewest = itemKinds.products.sort(
+            (start, end) =>
+              new Date(end.created_at).getTime() -
+              new Date(start.created_at).getTime()
+          );
+          setSortList(uploadNewest);
+          return setSortProducts(...sortList);
+        default:
+          return setSortList(sortProducts);
+      }
+    }
+  }, [selectOption, sortProducts]);
 
   if (loading)
     return (
@@ -203,16 +202,39 @@ const ProductListByCategory = ({ meData, catData }) => {
               <ListMid>
                 {priceRange === 'none' ? (
                   <>
-                    {itemKinds.products?.map((all) => {
-                      return (
-                        <ProductsCard
-                          key={all.pk}
-                          all={all}
-                          meData={meData}
-                          itemKinds={itemKinds}
-                        />
-                      );
-                    })}
+                    {selectOption === 'Newest' ? (
+                      <>
+                        {itemKinds.products
+                          ?.sort(
+                            (start, end) =>
+                              new Date(end.created_at).getTime() -
+                              new Date(start.created_at).getTime()
+                          )
+                          .map((all) => {
+                            return (
+                              <ProductsCard
+                                key={all.pk}
+                                all={all}
+                                meData={meData}
+                                itemKinds={itemKinds}
+                              />
+                            );
+                          })}
+                      </>
+                    ) : (
+                      <>
+                        {itemKinds.products?.map((all) => {
+                          return (
+                            <ProductsCard
+                              key={all.pk}
+                              all={all}
+                              meData={meData}
+                              itemKinds={itemKinds}
+                            />
+                          );
+                        })}
+                      </>
+                    )}
                   </>
                 ) : (
                   <>

@@ -20,7 +20,7 @@ import Loading from '../../components/Loading';
 
 const sort = [
   { value: 'Newest', text: 'Newest first' },
-  { value: 'Popular', text: 'Most Popular' },
+  // { value: 'Popular', text: 'Most Popular' },
   { value: 'HighToLow', text: 'Price: high to low' },
   { value: 'LowToHigh', text: 'Price: low to high' },
 ];
@@ -29,7 +29,7 @@ const AllProducts = ({ meData, catData }) => {
 
   const [loading, setLoading] = useState(false);
   const { pId } = useParams();
-  const [selectOption, setSelectOption] = useState();
+  const [selectOption, setSelectOption] = useState('Newest');
   const [sortList, setSortList] = useState([]);
   const [sortProducts, setSortProducts] = useState([]);
   const [addLiked, setAddLiked] = useState();
@@ -41,7 +41,7 @@ const AllProducts = ({ meData, catData }) => {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    console.log('ProductList', itemsList?.data);
+    // console.log('ProductList', itemsList?.data);
     setItems(itemsList?.data);
     setLoading(false);
   };
@@ -72,10 +72,14 @@ const AllProducts = ({ meData, catData }) => {
         const priceHToL = items.sort((a, b) => b.price - a.price);
         setSortList(priceHToL);
         return setSortProducts(...sortList);
-      // case 'Newest':
-      //   const uploadNewest = items.sort((a, b) => a.created_at - b.created_at);
-      //   setSortList(uploadNewest);
-      //   return setSortProducts(...sortList);
+      case 'Newest':
+        const uploadNewest = items.sort(
+          (start, end) =>
+            new Date(end.created_at).getTime() -
+            new Date(start.created_at).getTime()
+        );
+        setSortList(uploadNewest);
+        return setSortProducts(...sortList);
       default:
         return setSortList(sortProducts);
     }
@@ -110,7 +114,7 @@ const AllProducts = ({ meData, catData }) => {
     }
   }, [priceRange]);
 
-  console.log('priceRange', priceRange);
+  // console.log('priceRange', priceRange);
 
   if (loading)
     return (
@@ -162,16 +166,39 @@ const AllProducts = ({ meData, catData }) => {
               <ListMid>
                 {priceRange === 'none' ? (
                   <>
-                    {items?.map((all) => {
-                      return (
-                        <ProductsCard
-                          key={all.pk}
-                          all={all}
-                          meData={meData}
-                          items={items}
-                        />
-                      );
-                    })}
+                    {selectOption === 'Newest' ? (
+                      <>
+                        {items
+                          ?.sort(
+                            (start, end) =>
+                              new Date(end.created_at).getTime() -
+                              new Date(start.created_at).getTime()
+                          )
+                          .map((all) => {
+                            return (
+                              <ProductsCard
+                                key={all.pk}
+                                all={all}
+                                meData={meData}
+                                items={items}
+                              />
+                            );
+                          })}
+                      </>
+                    ) : (
+                      <>
+                        {items?.map((all) => {
+                          return (
+                            <ProductsCard
+                              key={all.pk}
+                              all={all}
+                              meData={meData}
+                              items={items}
+                            />
+                          );
+                        })}
+                      </>
+                    )}
                   </>
                 ) : (
                   <>

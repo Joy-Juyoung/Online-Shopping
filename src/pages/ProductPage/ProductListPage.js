@@ -41,6 +41,10 @@ const ProductsListPage = ({ meData, catData }) => {
   const [selectOption, setSelectOption] = useState();
   const [sortList, setSortList] = useState([]);
 
+  const [priceRange, setPriceRange] = useState('none');
+  // const [itemsByPrice, setItemsByPrice] = useState([]);
+  const [itemsByPrice, setItemsByPrice] = useState([]);
+
   const getAllKindsProduct = async () => {
     const { data } = await axios.get(
       `/products/productAllParentsKinds/${pId}`,
@@ -50,20 +54,89 @@ const ProductsListPage = ({ meData, catData }) => {
       }
     );
     setGetAllKinds(data);
-    console.log('getAllKinds', getAllKinds);
+    // console.log('getAllKinds', getAllKinds);
     setLoading(false);
   };
 
   useEffect(() => {
     setLoading(true);
     getAllKindsProduct();
-
+    // setItemsByPrice(
+    //   getAllKinds?.productKinds?.map((range) =>
+    //     range?.products?.filter((pRange) => pRange?.price >= 0)
+    //   )
+    // );
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, [pId]);
 
   useEffect(() => {
     getAllKindsProduct();
   }, [addLiked]);
+
+  // console.log(
+  //   'getAllKinds range',
+  //   getAllKinds?.productKinds?.map((range) =>
+  //     range?.products?.filter((pRange) => pRange?.price <= 50)
+  //   )
+  // );
+
+  // console.log(
+  //   'pricerange',
+  //   getAllKinds?.productKinds?.map((range) =>
+  //     range?.products?.filter((pRange) => pRange?.price >= 0)?.map((m) => m)
+  //   )
+  // );
+
+  useEffect(() => {
+    setItemsByPrice(
+      getAllKinds?.productKinds?.map((range) =>
+        range?.products?.filter((pRange) => pRange?.price >= 0)
+      )
+    );
+
+    if (priceRange === 0) {
+      const rangeItems = getAllKinds?.productKinds?.map((range) =>
+        range?.products?.filter((pRange) => pRange?.price <= 50)
+      );
+
+      // if (rangeItems?.length === 0) {
+      // console.log('nothing', rangeItems);
+      // }
+      setItemsByPrice(rangeItems);
+    } else if (priceRange === 1) {
+      const rangeItems = getAllKinds?.productKinds?.map((range) =>
+        range?.products?.filter(
+          (pRange) => 50 < pRange?.price && pRange?.price <= 100
+        )
+      );
+      setItemsByPrice(rangeItems);
+    } else if (priceRange === 2) {
+      const rangeItems = getAllKinds?.productKinds?.map((range) =>
+        range?.products?.filter(
+          (pRange) => 100 < pRange?.price && pRange?.price <= 150
+        )
+      );
+      setItemsByPrice(rangeItems);
+    } else if (priceRange === 3) {
+      const rangeItems = getAllKinds?.productKinds?.map((range) =>
+        range?.products?.filter(
+          (pRange) => 150 < pRange?.price && pRange?.price <= 200
+        )
+      );
+      setItemsByPrice(rangeItems);
+    } else if (priceRange === 4) {
+      const rangeItems = getAllKinds?.productKinds?.map((range) =>
+        range?.products?.filter((pRange) => 200 < pRange?.price)
+      );
+      setItemsByPrice(rangeItems);
+    } else {
+      setItemsByPrice(
+        getAllKinds?.productKinds?.map((range) =>
+          range?.products?.filter((pRange) => pRange?.price >= 0)
+        )
+      );
+    }
+  }, [priceRange, pId]);
 
   if (loading)
     return (
@@ -73,13 +146,20 @@ const ProductsListPage = ({ meData, catData }) => {
     );
   return (
     <ProductsListContainer>
-      <h1>All {getAllKinds.name}</h1>
+      <h1>All {getAllKinds?.name}</h1>
       <Category pId={pId} getAllKinds={getAllKinds} meData={meData} />
       <ProductsWrap>
         <SideFilter
           meData={meData}
           getAllKinds={getAllKinds}
           catData={catData}
+          rangeNone={() => setPriceRange('none')}
+          range0={() => setPriceRange(0)}
+          range1={() => setPriceRange(1)}
+          range2={() => setPriceRange(2)}
+          range3={() => setPriceRange(3)}
+          range4={() => setPriceRange(4)}
+          priceRange={priceRange}
         />
         <ProductsListWrapper>
           {!isChileOpen ? (
@@ -87,29 +167,54 @@ const ProductsListPage = ({ meData, catData }) => {
               <ListAllMidWrap>
                 {getAllKinds?.productKinds?.map((item) => {
                   return (
-                    <ListMidWrapper key={item.pk}>
-                      {item.products?.length !== 0 && (
+                    <ListMidWrapper key={item?.pk}>
+                      {item?.products?.length !== 0 && (
                         <>
                           <Link
-                            to={`/products/category/${pId}/${item?.name}/${item.pk}`}
+                            to={`/products/category/${pId}/${item?.name}/${item?.pk}`}
                           >
+                            {/* {itemsByPrice?.map((price) =>
+                                  price?.map((all) =>all.length))} */}
                             <AllEachTitle>
-                              {item.name.toUpperCase()}
-                              <span>Total {item.products?.length}</span>
+                              {item?.name?.toUpperCase()}
+                              {/* <span>Total {item?.products?.length}</span> */}
                             </AllEachTitle>
                           </Link>
                           <ListMid>
-                            {item.products?.map((all) => {
-                              return (
-                                <ProductsCard
-                                  key={all.pk}
-                                  all={all}
-                                  meData={meData}
-                                  getAllKinds={getAllKinds}
-                                  addLiked={addLiked}
-                                />
-                              );
-                            })}
+                            {priceRange === undefined ||
+                            priceRange === 'none' ? (
+                              <>
+                                {item?.products
+                                  ?.filter((pRange) => pRange?.price >= 0)
+                                  ?.map((all) => {
+                                    return (
+                                      <ProductsCard
+                                        key={all?.pk}
+                                        all={all}
+                                        meData={meData}
+                                        getAllKinds={getAllKinds}
+                                        addLiked={addLiked}
+                                      />
+                                    );
+                                  })}
+                              </>
+                            ) : (
+                              <>
+                                {itemsByPrice?.map((price) =>
+                                  price?.map((all) => {
+                                    return (
+                                      <ProductsCard
+                                        key={all?.pk}
+                                        all={all}
+                                        meData={meData}
+                                        getAllKinds={getAllKinds}
+                                        addLiked={addLiked}
+                                      />
+                                    );
+                                  })
+                                )}
+                              </>
+                            )}
                           </ListMid>
                         </>
                       )}
