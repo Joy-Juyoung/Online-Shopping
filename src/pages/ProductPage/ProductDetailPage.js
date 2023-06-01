@@ -70,6 +70,7 @@ const ProductDetailPage = ({
   itemAllKinds,
   itemKinds,
   wishItems,
+  setIsCount,
 }) => {
   const [itemsDetail, setItemsDetail] = useState([]);
   const { id } = useParams();
@@ -161,9 +162,10 @@ const ProductDetailPage = ({
 
   useEffect(() => {
     setFav(itemsDetail?.is_liked);
+    setIsCount(false);
   }, []);
 
-  console.log('me', meData);
+  // console.log('me', meData);
 
   const getShipReturn = async () => {
     const shipData = await axios.get(SHIPPING_RETURN_URL, {
@@ -394,7 +396,7 @@ const ProductDetailPage = ({
                 // setIsSuccess={setIsSuccess}
                 // onClose={!isOpen}
                 onSuccess={handleSuccess}
-                // setIsAdded={setIsAdded}
+                setIsCount={setIsCount}
                 onClose={() => setIsOpen(false)}
                 meData={meData}
               />

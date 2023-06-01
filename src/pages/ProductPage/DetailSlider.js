@@ -6,6 +6,7 @@ import { useParams } from 'react-router';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@material-ui/icons';
+import DefaultImg from '../../asset/sorry.jpg';
 
 const ImageSlide = styled.div`
   position: relative;
@@ -36,8 +37,9 @@ const SlideContent = styled.div`
     text-align: center;
 
     img {
-      width: 100%;
-      height: auto;
+      /* width: 100%; */
+      height: 500px;
+      /* height: auto; */
     }
   }
 `;
@@ -118,7 +120,7 @@ const DetailSlider = ({ slideIndex }) => {
   //   setSlideIndex(data);
   // };
 
-  // console.log('slideIndex', slideIndex);
+  console.log('slideIndex', slideIndex);
 
   // useEffect(() => {
   //     getProduct();
@@ -128,47 +130,46 @@ const DetailSlider = ({ slideIndex }) => {
   return (
     <ImageSlide>
       <SlideBox>
+        {slideIndex?.photos?.length === 0 && (
+          <SlideList ref={slideRef}>
+            <SlideContent>
+              <picture>
+                <img src={DefaultImg} />
+              </picture>
+            </SlideContent>
+          </SlideList>
+        )}
         {slideIndex?.photos?.length === 1 ? (
           <SlideList ref={slideRef}>
             {slideIndex?.photos?.map((image, no) => (
               <SlideContent key={no}>
                 <picture>
-                  <img src={image.picture} />
+                  <img src={image?.picture} />
                 </picture>
               </SlideContent>
             ))}
           </SlideList>
         ) : (
           <>
-            <SlideList ref={slideRef}>
-              {slideIndex?.photos?.map((image, no) => (
-                <SlideContent key={no}>
-                  <picture>
-                    <img src={image.picture} />
-                  </picture>
-                </SlideContent>
-              ))}
-            </SlideList>
-            <ButtonPrev onClick={moveToPrevSlide}>
-              <ArrowLeftOutlined fontSize='large' />
-            </ButtonPrev>
-            <ButtonNext onClick={moveToNextSlide}>
-              <ArrowRightOutlined fontSize='large' />
-            </ButtonNext>
-            {/* <PaginationBox>
+            {slideIndex?.photos?.length !== 0 && (
+              <>
+                <SlideList ref={slideRef}>
                   {slideIndex?.photos?.map((image, no) => (
-                    <div
-                      key={no}
-                      onClick={() => {
-                        onChangeImage(no);
-                      }}
-                    >
+                    <SlideContent key={no}>
                       <picture>
-                        <img src={image.picture} />
+                        <img src={image?.picture} />
                       </picture>
-                    </div>
+                    </SlideContent>
                   ))}
-                </PaginationBox> */}
+                </SlideList>
+                <ButtonPrev onClick={moveToPrevSlide}>
+                  <ArrowLeftOutlined fontSize='large' />
+                </ButtonPrev>
+                <ButtonNext onClick={moveToNextSlide}>
+                  <ArrowRightOutlined fontSize='large' />
+                </ButtonNext>
+              </>
+            )}
           </>
         )}
       </SlideBox>

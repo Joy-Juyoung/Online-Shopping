@@ -222,7 +222,7 @@ const PaymentPage = ({ meData, checkedList, setCheckedList }) => {
                     return (
                       <ListsDetails key={cart?.pk}>
                         <ListsImgLink to={`/products/${cart?.product?.pk}`}>
-                          <img src={cart?.product.photos[0].picture} alt='' />
+                          <img src={cart?.product?.photos[0]?.picture} alt='' />
                         </ListsImgLink>
 
                         <ListsItemDetails to={`/products/${cart?.product?.pk}`}>

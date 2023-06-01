@@ -15,6 +15,8 @@ import {
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useNavigate } from 'react-router-dom';
 import axios from '../../api/axios';
+import DefaultImg from '../../asset/soon.jpg';
+// import FourthImage from '../../asset/pic24.jpg';
 
 const ProductsCard = ({
   all,
@@ -26,7 +28,6 @@ const ProductsCard = ({
   items,
 }) => {
   const [added, setAdded] = useState();
-  const [clickedLiked, setClickedLiked] = useState(false);
   const navigate = useNavigate();
 
   const [partentsItem, setParentsItem] = useState();
@@ -34,10 +35,9 @@ const ProductsCard = ({
   const [likeItem, setLikeItem] = useState();
   const [allofItems, setAllofItems] = useState();
 
-  const [getEachItem, setGetEachItem] = useState();
   const [fav, setFav] = useState(false);
 
-  // console.log('items', items);
+  // console.log('all', all);
   // console.log('getAllKinds', getAllKinds);
 
   useEffect(() => {
@@ -146,14 +146,20 @@ const ProductsCard = ({
   };
 
   return (
-    <ProductsEach to={`/products/${all.pk}`} key={all.pk}>
-      <ProductEachPhoto src={all?.photos[0]?.picture} alt='' />
+
+    <ProductsEach to={`/products/${all?.pk}`} key={all?.pk}>
+      {all?.photos?.length === 0 ? (
+        <ProductEachPhoto src={DefaultImg} alt='' />
+      ) : (
+        <ProductEachPhoto src={all?.photos[0]?.picture} alt='' />
+      )}
+
 
       {meData && (
         <ToggleLike
           onClick={(e) => {
             e.preventDefault();
-            handleLiked(all.pk);
+            handleLiked(all?.pk);
           }}
         >
           <ProductLike>
@@ -167,7 +173,7 @@ const ProductsCard = ({
       )}
 
       <ProductEachDetails>
-        <ProductTitle>{all?.name.toUpperCase()}</ProductTitle>
+        <ProductTitle>{all?.name?.toUpperCase()}</ProductTitle>
         <ProductDesc>{all?.detail}</ProductDesc>
         <ProductPrice>${all?.price}</ProductPrice>
       </ProductEachDetails>

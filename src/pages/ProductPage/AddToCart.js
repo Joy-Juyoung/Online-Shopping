@@ -21,27 +21,14 @@ import { Bounce, ToastContainer, Zoom, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NoUser from '../../components/NoUser';
 
-const AddToCart = ({ onClose, onSuccess, meData }) => {
+const AddToCart = ({ onClose, onSuccess, meData, setIsCount }) => {
   const [selectOptions, setSelectOptions] = useState([]);
   const [options, setOptions] = useState(null);
   const ref = useRef();
   const { id } = useParams();
   const [noUserModalShown, toggleNoUserModal] = useState(false);
-  // const [isAdded, setIsAdded] = useState(false);
-
-  // const [success, setSuccess] = useState(false)
 
   const ErrorNotify = () => toast.warn('Please make sure to select an option.');
-
-  const SuccessNotify = ({ text }) => (
-    <div>
-      <p className='text'>{text}</p>
-      {/* <button className="button1" onClick={() => toast.dismiss()}>Ok!</button> */}
-    </div>
-  );
-  const showCustomToast = () => {
-    toast.success(<SuccessNotify text='Success' />);
-  };
 
   useEffect(() => {
     const checkIfClickedOutside = (e) => {
@@ -71,8 +58,8 @@ const AddToCart = ({ onClose, onSuccess, meData }) => {
 
   const OptionHandleChange = (e) => {
     setOptions(e.target.value);
-    console.log('options', options);
   };
+  console.log('options', options);
 
   const handleAddToCart = async (e) => {
     e.preventDefault();
@@ -92,6 +79,7 @@ const AddToCart = ({ onClose, onSuccess, meData }) => {
     // setIsSuccess(true);
     onClose();
     onSuccess();
+    setIsCount(true);
   };
 
   return (
@@ -121,14 +109,14 @@ const AddToCart = ({ onClose, onSuccess, meData }) => {
               )}
 
               <SidebarMenuMidWrap />
-              {/* <select value={selectOptions} onChange={OptionHandleChange}>{optionLists}</select>  */}
             </SidebarMenuMid>
             <SidebarMenuBottom>
               <MenuTotalSummary>
                 <p>Total {selectOptions?.length} </p>
                 <p>${selectOptions?.price}</p>
               </MenuTotalSummary>
-              {options === null ? (
+              {options === null &&
+              selectOptions?.productOptions?.length !== 0 ? (
                 <>
                   <ButtonLarges onClick={ErrorNotify}>ADD TO BAG</ButtonLarges>
                   <ToastContainer

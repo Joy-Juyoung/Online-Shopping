@@ -294,18 +294,6 @@ const OrderPage = () => {
                                 </Link>
                               </Td>
                             </>
-                            // ) : (
-                            //   <>
-                            //     {isSelected !== 'All' &&
-                            //       isSelected !== 'pending' &&
-                            //       // isSelected !== 'inprogress' &&
-                            //       isSelected !== 'delivered' &&
-                            //       isSelected !== 'cancelled' && (
-                            //         <Td colSpan='6' rowSpan='1'>
-                            //           Nodata
-                            //         </Td>
-                            //       )}
-                            //   </>
                           )}
                         </Tr>
                       );

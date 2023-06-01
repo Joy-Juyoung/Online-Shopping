@@ -164,6 +164,7 @@ export const ListMidWrapper = styled.div``;
 
 export const AllEachTitle = styled.h2`
   width: 100%;
+  /* height: 805px; */
   /* border-top: 1px dotted gray; */
   font-size: 18px;
   padding: 5px 0;
@@ -182,6 +183,14 @@ export const ListMid = styled.div`
   display: grid;
   justify-content: center;
   grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+  /* min-height: 400px; */
+`;
+
+export const ListWishMid = styled.div`
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(5, 1fr);
   grid-gap: 20px;
 `;
 

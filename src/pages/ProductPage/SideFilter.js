@@ -25,16 +25,17 @@ const LocateList = styled.li`
   border-radius: 10px; */
   p {
     font-weight: 600;
-    font-size: 15px;
+    font-size: 16px;
 
-    background: #f2edda;
+    /* background: #f2f4f7; */
     border-radius: 5px;
+    color: #ffae00;
     /* opacity: 0.5; */
     /* color: #fff; */
 
     /* border-top: 1px solid #0a0f18;
     border-bottom: 1px solid #0a0f18; */
-    color: #0a0f18;
+    /* color: #0a0f18; */
 
     padding: 3px 5px;
     width: 60%;
@@ -101,7 +102,7 @@ const SideFilter = ({
             )}
           </SideFilterLl>
 
-          {itemKinds || items ? (
+          {itemKinds || items || getAllKinds ? (
             <SideFilterLl>
               <SideListDetails>
                 <SideListTitle>PRICE</SideListTitle>
@@ -114,10 +115,10 @@ const SideFilter = ({
                   <ul>
                     {priceRange === 'none' ? (
                       <LocateList onClick={() => rangeNone()}>
-                        <p>All</p>
+                        <p>ALL PRICE</p>
                       </LocateList>
                     ) : (
-                      <li onClick={() => rangeNone()}>All</li>
+                      <li onClick={() => rangeNone()}>ALL PRICE</li>
                     )}
                     {priceRange === 0 ? (
                       <LocateList onClick={() => range0()}>

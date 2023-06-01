@@ -1,12 +1,7 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@material-ui/icons';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-
-import Image1 from '../../asset/Hoodie017.jpg';
-import Image2 from '../../asset/jeans01.jpg';
-import Image3 from '../../asset/short-top03.jpg';
-import Image4 from '../../asset/Hoodie022.jpg';
-import axios from '../../api/axios';
+import DefaultImg from '../../asset/soon.jpg';
 
 const Container = styled.div`
   /* width: 100%; */
@@ -114,7 +109,7 @@ const Slider = ({ items }) => {
       <Wrapper slideIndex={slideIndex}>
         {items?.slice(0, 8).map((item) => (
           <Slide key={item?.pk}>
-            <Image src={item?.photos[0].picture} />
+            <Image src={item?.photos[0]?.picture} />
             <div style={{ paddingTop: '20px' }}>
               <p style={{ fontWeight: '600' }}>{item?.name.toUpperCase()}</p>
               <p>{item?.detail}</p>

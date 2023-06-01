@@ -7,6 +7,7 @@ export const OrderContainer = styled.div`
   margin: 0 auto;
   font-size: 14px;
   color: #0a0f18;
+  margin-bottom: 40px;
 
   h1 {
     text-align: center;
@@ -155,4 +156,9 @@ export const StatusBox = styled.div`
   padding: 5px 0;
   font-weight: 600;
   font-size: 12px;
+`;
+
+export const NotificationStatus = styled.div`
+  font-size: 12px;
+  color: #626972;
 `;

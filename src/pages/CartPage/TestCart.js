@@ -60,7 +60,7 @@ import CountButton from './CountButton';
 
 const CARTS_URL = '/carts';
 
-const TestCart = ({ checkedList, setCheckedList }) => {
+const TestCart = ({ checkedList, setCheckedList, setIsCount, isCount }) => {
   const [loading, setLoading] = useState(false);
   const [carts, setCarts] = useState([]);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -116,9 +116,14 @@ const TestCart = ({ checkedList, setCheckedList }) => {
   useEffect(() => {
     setLoading(true);
     getAllCart();
+
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
   // console.log('carts', carts);
+
+  useEffect(() => {
+    getAllCart();
+  }, [isCount]);
 
   const handleAllDeleteCart = async () => {
     if (checkedList?.length !== 0) {
@@ -134,13 +139,18 @@ const TestCart = ({ checkedList, setCheckedList }) => {
           });
         });
         setCarts(deleteItem);
-        window.location.reload();
+        // window.location.reload();
       }
     }
   };
 
+  // useEffect(() => {
+  //   getAllCart();
+  // }, [TotalPriceTag]);
+
   const handleDeleteCart = async (pk) => {
     // console.log('pk', pk);
+    setIsCount(false);
 
     if (
       window.confirm('Are you sure you want to delete this item in your cart?')
@@ -149,7 +159,8 @@ const TestCart = ({ checkedList, setCheckedList }) => {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
       });
-      window.location.reload();
+      // window.location.reload();
+      setIsCount(true);
     }
   };
 
@@ -164,6 +175,10 @@ const TestCart = ({ checkedList, setCheckedList }) => {
   const Taxes = Math.round(PriceForBill * 0.05);
   const Discounts = 0;
   const TotalPriceTag = PriceForBill + ShippingFee + Taxes + Discounts;
+
+  useEffect(() => {
+    getAllCart();
+  }, [TotalPriceTag]);
 
   if (loading)
     return (
@@ -198,7 +213,7 @@ const TestCart = ({ checkedList, setCheckedList }) => {
             <CartLeftInfo>
               <CartLeftCheckBar>
                 <CheckBarWrap>
-                  <OrderCheckBox>
+                  {/* <OrderCheckBox>
                     <input
                       type='checkbox'
                       // checked={checkList.length === IdList.length}
@@ -213,7 +228,8 @@ const TestCart = ({ checkedList, setCheckedList }) => {
                     }}
                   >
                     Delete
-                  </DeleteBtn>
+                  </DeleteBtn> */}
+                  <OrderCheckBox>total {carts?.length}</OrderCheckBox>
                 </CheckBarWrap>
               </CartLeftCheckBar>
               <CartProductLists>
@@ -233,7 +249,7 @@ const TestCart = ({ checkedList, setCheckedList }) => {
                       </ListsCheckBox>
                       <ListsItemImg>
                         <ListsImgLink to={`/products/${cart?.product?.pk}`}>
-                          <img src={cart?.product?.photos[0].picture} alt='' />
+                          <img src={cart?.product?.photos[0]?.picture} alt='' />
                         </ListsImgLink>
                       </ListsItemImg>
                       <ListsItemDetails>
@@ -314,11 +330,9 @@ const TestCart = ({ checkedList, setCheckedList }) => {
                     )}
                   </ItemTotalPrice>
                   <ExtraInfo>
+                    <li>* FREE SHIPPING on all orders $200+.</li>
                     <li>
                       * Additional duties and taxes may apply at checkout.
-                    </li>
-                    <li>
-                      * Apply coupon to get additional discount at checkout.
                     </li>
                   </ExtraInfo>
                 </CartSummaryInfo>

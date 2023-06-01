@@ -52,10 +52,11 @@ import Modal from '../Modal';
 import SearchIcon from '@mui/icons-material/Search';
 import AddBalance from '../AddBalance';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import CartCount from './CartCount';
 
 const CARTS_URL = '/carts/';
 
-const Header = ({ meData, catData, setIsAdminBoard }) => {
+const Header = ({ meData, catData, setIsAdminBoard, setIsCount, isCount }) => {
   const navigate = useNavigate();
   const [me, setMe] = useState(null);
   const [logout, setLogout] = useState();
@@ -64,26 +65,19 @@ const Header = ({ meData, catData, setIsAdminBoard }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalShown, toggleModal] = useState(false);
   const [balanceShown, toggleBalance] = useState(false);
-  const [carts, setCarts] = useState([]);
-  const ref = useRef();
+  // const [cartsTotal, setCartsTotal] = useState();
 
-  const getAllCart = async () => {
-    const cartList = await axios.get('/carts/', {
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true,
-    });
-    setCarts(cartList?.data);
-  };
+  // const [carts, setCarts] = useState();
+
+  const ref = useRef();
 
   useEffect(() => {
     setMe(meData);
-
-    if (meData) {
-      getAllCart();
-    }
+    // if (meData) {
+    //   getAllCart();
+    //   setCartsTotal(carts?.length);
+    // }
   }, [meData]);
-
-  // console.log('me', me);
 
   const handleLogout = async () => {
     setLoading(true);
@@ -152,21 +146,7 @@ const Header = ({ meData, catData, setIsAdminBoard }) => {
 
             <MiddleSide>
               <MidLink to='/'>
-                <div
-                  onClick={window.scrollTo({
-                    top: 0,
-                    left: 0,
-                    behavior: 'smooth',
-                  })}
-                >
-                  {/* <span style={{ color: '#ffae00', fontWeight: '700' }}>
-                    Bl
-                  </span>
-                  an
-                  <span style={{ color: '#ffae00', fontWeight: '700' }}>K</span>
-                  Closet */}
-                  BlankCloset
-                </div>
+                <div>BlankCloset</div>
               </MidLink>
             </MiddleSide>
             <RightSide>
@@ -266,24 +246,9 @@ const Header = ({ meData, catData, setIsAdminBoard }) => {
                       <FavoriteBorderIcon fontSize='medium' />
                     </FaLink>
                   </RightIcon>
-                  {carts.length === 0 ? (
-                    <>
-                      <RightIcon>
-                        <CartLink to='/carts'>
-                          <AddShoppingCartIcon fontSize='medium' />
-                        </CartLink>
-                      </RightIcon>
-                    </>
-                  ) : (
-                    <>
-                      <RightIcon>
-                        <CartLink to='/carts'>
-                          <ItemCount>{carts.length}</ItemCount>
-                          <AddShoppingCartIcon fontSize='medium' />
-                        </CartLink>
-                      </RightIcon>
-                    </>
-                  )}
+                  {/* cart count */}
+                  <CartCount setIsCount={setIsCount} isCount={isCount} />
+
                   <RightIcon>
                     {!isModalOpen && (
                       <>

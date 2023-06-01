@@ -23,9 +23,12 @@ import { ButtonSmall } from '../../../components/ButtonElements';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import AddItemModal from './AddItemModal';
 import AddNewItem from './AddNewItem';
 import { AdIconDelete } from './listStyle';
+import NoneImg from '../../../asset/none.png';
+import EditItem from './EditItem';
 
 const ItemList = ({ meData, catData }) => {
   const [loading, setLoading] = useState(false);
@@ -34,43 +37,19 @@ const ItemList = ({ meData, catData }) => {
   // const [searchValue, setSearchValue] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(8);
-
-  const [userInput, setUserInput] = useState("");
-  // const [isHorizontal, setIsHorizontal] = useState(false);
+  const [userInput, setUserInput] = useState('');
 
   const [modalShown, toggleModal] = useState(false);
-
-  // const [checkedItem, setCheckedItem] = useState('');
-  // const [selectedItem, setSelectedItem] = useState('');
-
-  // const handleCheckedItems = (e) => {
-  //   setCheckedItem({ ...checkedItem, [e.target.value]: e.target.checked });
-  // };
-  // console.log('checkedItem', checkedItem);
-
-  // useEffect(() => {
-  //   setSelectedItem(
-  //     Object.entries(checkedItem)
-  //       .filter(([key, value]) => value)
-  //       .map((added, index) => added[0])
-  //   );
-  // }, [checkedItem]);
-  // console.log('selectedItem', selectedItem);
-
-  // useEffect(() => {
-  //   if (selectedItem) {
-  //     setSelectedItem(
-  //       products?.filter((item) => selectedItem?.includes(item?.pk.toString()))
-  //     );
-  //   }
-  // }, [selectedItem]);
+  const [editModalShown, toggleEditModal] = useState(false);
+  const [editPk, setEditPk] = useState('');
+  const [addPhoto, setAddPhoto] = useState(null);
 
   const getProducts = async () => {
     const itemList = await axios.get('/products/', {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    console.log('itemList', itemList.data);
+    // console.log('itemList', itemList.data);
     setProducts(itemList?.data);
     setLoading(false);
   };
@@ -84,33 +63,6 @@ const ItemList = ({ meData, catData }) => {
   const firstPostIndex = lastPostIndex - postsPerPage;
   const currentPosts = products?.slice(firstPostIndex, lastPostIndex);
 
-  // useEffect(() => {
-  //   setSearchedList(
-  //     !searchValue
-  //       ? currentPosts
-  //       : currentPosts?.filter((search, index) => {
-  //           return (
-  //             search?.name.toLowerCase().includes(searchValue.toLowerCase()) ||
-  //             search?.kind?.name
-  //               .toLowerCase()
-  //               .includes(searchValue.toLowerCase()) ||
-  //             search?.pk
-  //               ?.toString()
-  //               .toLowerCase()
-  //               .includes(searchValue.toString().toLowerCase()) ||
-  //             search?.price
-  //               ?.toString()
-  //               .toLowerCase()
-  //               .includes(searchValue.toString().toLowerCase()) ||
-  //             search?.created_at
-  //               ?.toString()
-  //               .toLowerCase()
-  //               .includes(searchValue.toString().toLowerCase())
-  //           );
-  //         })
-  //   );
-  // }, [products, searchValue]);
-
   const handleDeleteItem = async (pk) => {
     // console.log('pk', pk);
     if (window.confirm('Are you sure you want to delete this Item?')) {
@@ -119,9 +71,18 @@ const ItemList = ({ meData, catData }) => {
         withCredentials: true,
       });
       console.log('delItem', delItem.data);
-      window.location.reload();
+      // window.location.reload();
     }
   };
+
+  const handleEditItem = async (pk) => {
+    toggleEditModal(!editModalShown);
+    setEditPk(pk);
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, [addPhoto, currentPosts]);
 
   if (loading)
     return (
@@ -162,78 +123,91 @@ const ItemList = ({ meData, catData }) => {
         <AdTable>
           <AdTHead>
             <AdTHeadeRow>
-              {/* <AdTHeadCell className='check'>
-                <input type='checkbox' />
-              </AdTHeadCell> */}
               <AdTHeadCell className='id'>ID</AdTHeadCell>
               <AdTHeadCell className='photo'>PHOTO</AdTHeadCell>
               <AdTHeadCell className='name'>NAME</AdTHeadCell>
               <AdTHeadCell className='price'>PRICE</AdTHeadCell>
-              {/* <AdTHeadCell>CATEGORY</AdTHeadCell> */}
               <AdTHeadCell className='sub'>SUB CATEGORY</AdTHeadCell>
-              {/* <AdTHeadCell>IN STOCK</AdTHeadCell> */}
               <AdTHeadCell className='createAt'>CREATE AT</AdTHeadCell>
+              <AdTHeadCell></AdTHeadCell>
               <AdTHeadCell></AdTHeadCell>
             </AdTHeadeRow>
           </AdTHead>
           {/* {searchedList?.map((product) => {  */}
-          {currentPosts?.filter((list) => 
-            list.pk?.toString().includes(userInput)
-              || list.price?.toString().includes(userInput)
-              || list.name?.toLowerCase().includes(userInput.toLowerCase())
-              || list.kind?.name?.toLowerCase().includes(userInput.toLowerCase())
-              || list.created_at?.toLowerCase().includes(userInput.toLowerCase())
-          ) 
-          .map((product) => {
-            return (
-              <AdTBody key={product?.pk}>
-                <AdTBodyRow>
-                  {/* <AdTBodyCell className='check'>
-                    <CheckInput
-                      type='checkbox'
-                      // name='couponpUser'
-                      // id='couponpUser'
-                      // value={product?.pk}
-                      // onChange={(e) => handleCheckedItems(e)}
-                      // checked={checkedItem[product?.pk] || ''}
-                    />
-                  </AdTBodyCell> */}
-                  <AdTBodyCell className='id'>{product?.pk}</AdTBodyCell>
-                  <AdTBodyCell className='photo'>
-                    <BodyImg
-                      src={product?.photos[0]?.picture}
-                      alt={product?.name}
-                    />
-                  </AdTBodyCell>
-                  <AdTBodyCell className='name'>
-                    {product?.name?.length > 30 ? (
-                      `${product?.name?.substring(0, 30)}...`
-                    ) : (
-                      <> {product?.name}</>
-                    )}
-                  </AdTBodyCell>
-                  <AdTBodyCell className='price'>
-                    ${product?.price?.toLocaleString()}
-                  </AdTBodyCell>
-                  {/* <AdTBodyCell>{product?.name}</AdTBodyCell> */}
-                  <AdTBodyCell className='sub'>
-                    {product?.kind?.name}
-                  </AdTBodyCell>
-                  {/* <AdTBodyCell>{product?.instock}</AdTBodyCell> */}
-                  <AdTBodyCell className='createAt'>
-                    {new Date(product?.created_at).toLocaleString('en-ca')}
-                  </AdTBodyCell>
-                  <AdTBodyCell style={{ width: '5%' }}>
-                    <AdIconDelete onClick={() => handleDeleteItem(product?.pk)}>
-                      <DeleteIcon />
-                    </AdIconDelete>
-                  </AdTBodyCell>
-                </AdTBodyRow>
-              </AdTBody>
-            );
-          })}
+          {currentPosts
+            ?.filter(
+              (list) =>
+                list.pk?.toString().includes(userInput) ||
+                list.price?.toString().includes(userInput) ||
+                list.name?.toLowerCase().includes(userInput.toLowerCase()) ||
+                list.kind?.name
+                  ?.toLowerCase()
+                  .includes(userInput.toLowerCase()) ||
+                list.created_at?.toLowerCase().includes(userInput.toLowerCase())
+            )
+            .map((product) => {
+              return (
+                <AdTBody key={product?.pk}>
+                  <AdTBodyRow>
+                    <AdTBodyCell className='id'>{product?.pk}</AdTBodyCell>
+                    <AdTBodyCell className='photo'>
+                      {product?.photos?.length === 0 ? (
+                        <BodyImg src={NoneImg} alt='No Image' />
+                      ) : (
+                        <BodyImg
+                          src={product?.photos[0]?.picture}
+                          alt={product?.name}
+                        />
+                      )}
+                    </AdTBodyCell>
+                    <AdTBodyCell className='name'>
+                      {product?.name?.length > 30 ? (
+                        `${product?.name?.substring(0, 30)}...`
+                      ) : (
+                        <> {product?.name}</>
+                      )}
+                    </AdTBodyCell>
+                    <AdTBodyCell className='price'>
+                      ${product?.price?.toLocaleString()}
+                    </AdTBodyCell>
+                    <AdTBodyCell className='sub'>
+                      {product?.kind?.name}
+                    </AdTBodyCell>
+                    <AdTBodyCell className='createAt'>
+                      {new Date(product?.created_at).toLocaleString('en-ca')}
+                    </AdTBodyCell>
+                    <AdTBodyCell style={{ width: '5%' }}>
+                      <AdIconDelete onClick={() => handleEditItem(product?.pk)}>
+                        <EditIcon />
+                      </AdIconDelete>
+                    </AdTBodyCell>
+                    <AdTBodyCell style={{ width: '5%' }}>
+                      <AdIconDelete
+                        onClick={() => handleDeleteItem(product?.pk)}
+                      >
+                        <DeleteIcon />
+                      </AdIconDelete>
+                    </AdTBodyCell>
+                  </AdTBodyRow>
+                </AdTBody>
+              );
+            })}
         </AdTable>
       </AdListMid>
+      <AddItemModal
+        shown={editModalShown}
+        close={() => {
+          toggleEditModal(false);
+        }}
+      >
+        <EditItem
+          products={products}
+          editPk={editPk}
+          toggleEditModal={toggleEditModal}
+          addPhoto={addPhoto}
+          setAddPhoto={setAddPhoto}
+        />
+      </AddItemModal>
       <AdListBottom>
         <Pagination
           totalPosts={products?.length}

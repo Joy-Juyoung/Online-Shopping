@@ -2,7 +2,8 @@ import React from 'react';
 import Smaile from '../asset/smaile.svg';
 import Donuts from '../asset/donuts.svg';
 import SettingsIcon from '@mui/icons-material/Settings';
-import Change from '../asset/change.svg';
+// import Change from '../asset/change.svg';
+import Change from '../asset/time.svg';
 
 import styled from 'styled-components';
 

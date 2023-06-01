@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Routes,
   Route,
@@ -18,38 +18,27 @@ import LoginPage from './LoginPage/LoginPage';
 import ProductDetailPage from './ProductPage/ProductDetailPage';
 import ProductsListPage from './ProductPage/ProductListPage';
 import RegisterPage from './RegisterPage/RegisterPage';
-// import TestHeader from '../components/Header/TestHeader';
-// import TestHome from './HeroPage/TestHome';
-// import TestLogin from './LoginPage/TestLogin';
-// import TestRegister from './RegisterPage/TestRegister';
-// import ProductAllParentsKinds from './ProductPage/ProductAllParentsKinds';
-// import TestPage from './Test/TestPage';
-
 import UserAccountPage from './UserAccountPage/UserAccountPage';
 
 import WishlistPage from './WishlistPage/WishlistPage';
 import CartPage from './CartPage/CartPage';
+import TestCart from './CartPage/TestCart';
 
 import ProductListByCategory from './ProductPage/ProductListByCategory';
 import AllProducts from './ProductPage/AllProducts';
 import HelpCenterPage from './HelpCenterPage/HelpCenter';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
-import TestCart from './CartPage/TestCart';
 import OrderPage from './OrderPage/OrderPage';
 import OrderDtails from './OrderPage/OrderDtails';
 import PaymentPage from './PaymentPage/PaymentPage';
 import AddBalance from '../components/AddBalance';
 import NewReview from './ReviewPage.js/NewReview';
-import SuccessPayment from './PaymentPage/SuccessPayment';
 import MyReviews from './ReviewPage.js/MyReviews';
-import { useState } from 'react';
-import axios from '../api/axios';
-import { useEffect } from 'react';
+
 import MyCoupons from './CouponPage/MyCoupons';
 import ResearchResult from './ProductPage/ResearchResult';
 
-// import AdminHeader from '../components/AdminComponents/AdminHeader';
 import Dashboard from './Admin/Dashboard/Dashboard';
 import CustomersManage from './Admin/CustomersManage/CustomersManage';
 import CouponManage from './Admin/CouponManage/CouponManage';
@@ -68,8 +57,8 @@ import FeedbackManage from './Admin/FeedbackManage/FeedbackManage';
 import AdminSidebar from '../components/AdminComponents/Sidebar/AdminSidebar';
 import AdminHeader from '../components/AdminComponents/AdminHeader';
 import { Container } from './CommonElements';
-import HeaderBackup from '../components/Header/HeaderBackup';
 import EmptyPage from './EmptyPage';
+import axios from '../api/axios';
 
 const Home = () => {
   const [meData, setMeData] = useState();
@@ -79,7 +68,10 @@ const Home = () => {
 
   const [checkedList, setCheckedList] = useState([]);
 
-  console.log('location', location.pathname);
+  // const [isSuccess, setIsSuccess] = useState(false);
+  const [isCount, setIsCount] = useState(false);
+
+  // console.log('location', location.pathname);
 
   const getMe = async () => {
     try {
@@ -123,32 +115,6 @@ const Home = () => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (
-  //     location.pathname === '/login' ||
-  //     '/register' ||
-  //     '/userAccount' ||
-  //     '/myReviews' ||
-  //     '/coupon' ||
-  //     '/userOrders' ||
-  //     '/userOrders/:id' ||
-  //     '/review/:reviewId' ||
-  //     '/products/all' ||
-  //     '/products/search/:searchValue' ||
-  //     '/products/:id' ||
-  //     '/products/productAllChildKinds/:id' ||
-  //     '/products/category/:pId/:cName/:cId' ||
-  //     '/products/category/:pId' ||
-  //     '/wishlist' ||
-  //     '/carts' ||
-  //     '/carts/payment' ||
-  //     '/userBalance' ||
-  //     '/helpcenter'
-  //   ) {
-  //     setIsAdminBoard(false);
-  //   }
-  // }, [isAdminBoard]);
-
   return (
     <>
       {isAdminBoard === false && (
@@ -159,6 +125,8 @@ const Home = () => {
             meData={meData}
             catData={catData}
             setIsAdminBoard={setIsAdminBoard}
+            setIsCount={setIsCount}
+            isCount={isCount}
           />
           <Container>
             <Routes>
@@ -236,7 +204,11 @@ const Home = () => {
               <Route
                 path='/products/:id'
                 element={
-                  <ProductDetailPage meData={meData} catData={catData} />
+                  <ProductDetailPage
+                    meData={meData}
+                    catData={catData}
+                    setIsCount={setIsCount}
+                  />
                 }
                 exact={true}
               />
@@ -276,6 +248,8 @@ const Home = () => {
                     meData={meData}
                     setCheckedList={setCheckedList}
                     checkedList={checkedList}
+                    setIsCount={setIsCount}
+                    isCount={isCount}
                   />
                 }
                 exact={true}
