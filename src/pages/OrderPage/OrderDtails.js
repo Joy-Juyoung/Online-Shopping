@@ -41,8 +41,7 @@ const OrderDtails = ({ meData }) => {
   const [loading, setLoading] = useState(false);
 
   const ShippingFee = ordered?.total_price >= 200 ? 0 : 15;
-  const Taxes = ordered?.total_price * 0.05;
-  // const TotalPriceTag = ordered?.total_price + ShippingFee + Taxes + Discounts;
+  const Taxes = Math.round(ordered?.total_price * 0.05);
   const Discounts =
     ordered?.total_price - ordered?.final_total_price + ShippingFee + Taxes;
 
