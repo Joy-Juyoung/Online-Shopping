@@ -109,7 +109,7 @@ const Slider = ({ items }) => {
       <Wrapper slideIndex={slideIndex}>
         {items?.slice(0, 8).map((item) => (
           <Slide key={item?.pk}>
-            <Image src={item?.photos[0]?.picture} />
+            <Image src={item?.photos?.[0]?.picture} />
             <div style={{ paddingTop: '20px' }}>
               <p style={{ fontWeight: '600' }}>{item?.name.toUpperCase()}</p>
               <p>{item?.detail}</p>
