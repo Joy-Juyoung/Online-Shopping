@@ -219,6 +219,14 @@ const AddNewItem = ({ products, catData }) => {
                           <p
                             key={child?.pk}
                             onClick={() => selectedChild(child?.pk)}
+                            style={
+                              child?.pk === childsPk
+                                ? {
+                                    background: '#000',
+                                    color: '#fff',
+                                  }
+                                : {}
+                            }
                           >
                             {child?.name}
                           </p>
@@ -256,21 +264,23 @@ const AddNewItem = ({ products, catData }) => {
           </BoxH2>
           <BoxUl>
             <BoxNotice>
-              Please add a product picture and product option.
+              Please add a product pictures and option.
               <p>*There are default image and option(option: Free)</p>
             </BoxNotice>
-            <BoxLi>
+            {/* <BoxLi>
               <BoxSpan>
                 <Input type='date' id='couponStart' />
               </BoxSpan>
               <BoxSpan>
                 <Input type='date' id='couponEnd' />
               </BoxSpan>
-            </BoxLi>
+            </BoxLi> */}
           </BoxUl>
 
-          <BoxBtn className='prev'>
-            <AddNextBtn>Upload</AddNextBtn>
+          <BoxBtn>
+            <AddNextBtn onClick={() => window.location.reload()}>
+              Upload
+            </AddNextBtn>
           </BoxBtn>
         </Box>
       )}

@@ -52,10 +52,17 @@ import Modal from '../Modal';
 import SearchIcon from '@mui/icons-material/Search';
 import AddBalance from '../AddBalance';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import CartCount from './CartCount';
 
 const CARTS_URL = '/carts/';
 
-const Header = ({ meData, catData, setIsAdminBoard }) => {
+const Header = ({
+  meData,
+  catData,
+  setIsAdminBoard,
+  isCartChange,
+  setIsCartChange,
+}) => {
   const navigate = useNavigate();
   const [me, setMe] = useState(null);
   const [logout, setLogout] = useState();
@@ -65,6 +72,8 @@ const Header = ({ meData, catData, setIsAdminBoard }) => {
   const [modalShown, toggleModal] = useState(false);
   const [balanceShown, toggleBalance] = useState(false);
   const [carts, setCarts] = useState([]);
+  const [cartsTotal, setCartsTotal] = useState();
+
   const ref = useRef();
 
   const getAllCart = async () => {
@@ -77,11 +86,20 @@ const Header = ({ meData, catData, setIsAdminBoard }) => {
 
   useEffect(() => {
     setMe(meData);
-
-    if (meData) {
-      getAllCart();
-    }
+    setCartsTotal(carts?.length);
+    // if (meData) {
+    //   getAllCart();
+    // }
   }, [meData]);
+
+  useEffect(() => {
+    getAllCart();
+    // setCartsTotal(carts?.length);
+  }, [cartsTotal]);
+
+  // useEffect(() => {
+  //   getAllCart();
+  // }, [carts]);
 
   // console.log('me', me);
 
@@ -153,11 +171,11 @@ const Header = ({ meData, catData, setIsAdminBoard }) => {
             <MiddleSide>
               <MidLink to='/'>
                 <div
-                  onClick={window.scrollTo({
-                    top: 0,
-                    left: 0,
-                    behavior: 'smooth',
-                  })}
+                // onClick={window.scrollTo({
+                //   top: 0,
+                //   left: 0,
+                //   behavior: 'smooth',
+                // })}
                 >
                   {/* <span style={{ color: '#ffae00', fontWeight: '700' }}>
                     Bl
@@ -266,24 +284,13 @@ const Header = ({ meData, catData, setIsAdminBoard }) => {
                       <FavoriteBorderIcon fontSize='medium' />
                     </FaLink>
                   </RightIcon>
-                  {carts.length === 0 ? (
-                    <>
-                      <RightIcon>
-                        <CartLink to='/carts'>
-                          <AddShoppingCartIcon fontSize='medium' />
-                        </CartLink>
-                      </RightIcon>
-                    </>
-                  ) : (
-                    <>
-                      <RightIcon>
-                        <CartLink to='/carts'>
-                          <ItemCount>{carts.length}</ItemCount>
-                          <AddShoppingCartIcon fontSize='medium' />
-                        </CartLink>
-                      </RightIcon>
-                    </>
-                  )}
+                  <CartCount
+                    // carts={carts}
+                    cartsTotal={cartsTotal}
+                    setCartsTotal={setCartsTotal}
+                    carts={carts}
+                  />
+
                   <RightIcon>
                     {!isModalOpen && (
                       <>

@@ -21,7 +21,13 @@ import { Bounce, ToastContainer, Zoom, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NoUser from '../../components/NoUser';
 
-const AddToCart = ({ onClose, onSuccess, meData }) => {
+const AddToCart = ({
+  onClose,
+  onSuccess,
+  meData,
+  isCartChange,
+  setIsCartChange,
+}) => {
   const [selectOptions, setSelectOptions] = useState([]);
   const [options, setOptions] = useState(null);
   const ref = useRef();

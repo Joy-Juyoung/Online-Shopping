@@ -7,6 +7,7 @@ export const OrderContainer = styled.div`
   margin: 0 auto;
   font-size: 14px;
   color: #0a0f18;
+  margin-bottom: 40px;
 
   h1 {
     text-align: center;

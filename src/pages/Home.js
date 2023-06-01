@@ -79,6 +79,8 @@ const Home = () => {
 
   const [checkedList, setCheckedList] = useState([]);
 
+  const [isCartChange, setIsCartChange] = useState(false);
+
   console.log('location', location.pathname);
 
   const getMe = async () => {
@@ -159,6 +161,8 @@ const Home = () => {
             meData={meData}
             catData={catData}
             setIsAdminBoard={setIsAdminBoard}
+            isCartChange={isCartChange}
+            setIsCartChange={setIsCartChange}
           />
           <Container>
             <Routes>
@@ -236,7 +240,12 @@ const Home = () => {
               <Route
                 path='/products/:id'
                 element={
-                  <ProductDetailPage meData={meData} catData={catData} />
+                  <ProductDetailPage
+                    meData={meData}
+                    catData={catData}
+                    isCartChange={isCartChange}
+                    setIsCartChange={setIsCartChange}
+                  />
                 }
                 exact={true}
               />
@@ -276,6 +285,8 @@ const Home = () => {
                     meData={meData}
                     setCheckedList={setCheckedList}
                     checkedList={checkedList}
+                    isCartChange={isCartChange}
+                    setIsCartChange={setIsCartChange}
                   />
                 }
                 exact={true}
@@ -288,6 +299,8 @@ const Home = () => {
                     meData={meData}
                     setCheckedList={setCheckedList}
                     checkedList={checkedList}
+                    isCartChange={isCartChange}
+                    setIsCartChange={setIsCartChange}
                   />
                 }
                 exact={true}

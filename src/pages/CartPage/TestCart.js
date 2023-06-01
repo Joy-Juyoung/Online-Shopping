@@ -134,10 +134,14 @@ const TestCart = ({ checkedList, setCheckedList }) => {
           });
         });
         setCarts(deleteItem);
-        window.location.reload();
+        // window.location.reload();
       }
     }
   };
+
+  // useEffect(() => {
+  //   getAllCart();
+  // }, [TotalPriceTag]);
 
   const handleDeleteCart = async (pk) => {
     // console.log('pk', pk);
@@ -164,6 +168,10 @@ const TestCart = ({ checkedList, setCheckedList }) => {
   const Taxes = Math.round(PriceForBill * 0.05);
   const Discounts = 0;
   const TotalPriceTag = PriceForBill + ShippingFee + Taxes + Discounts;
+
+  useEffect(() => {
+    getAllCart();
+  }, [TotalPriceTag]);
 
   if (loading)
     return (
@@ -314,11 +322,9 @@ const TestCart = ({ checkedList, setCheckedList }) => {
                     )}
                   </ItemTotalPrice>
                   <ExtraInfo>
+                    <li>* FREE SHIPPING on all orders $200+.</li>
                     <li>
                       * Additional duties and taxes may apply at checkout.
-                    </li>
-                    <li>
-                      * Apply coupon to get additional discount at checkout.
                     </li>
                   </ExtraInfo>
                 </CartSummaryInfo>

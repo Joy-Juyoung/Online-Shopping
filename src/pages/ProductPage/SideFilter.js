@@ -27,7 +27,7 @@ const LocateList = styled.li`
     font-weight: 600;
     font-size: 15px;
 
-    background: #f2edda;
+    background: #f2f4f7;
     border-radius: 5px;
     /* opacity: 0.5; */
     /* color: #fff; */
