@@ -39,7 +39,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 import axios from '../../api/axios';
 
-const CartCount = ({ setIsCount, isCount }) => {
+const CartCount = ({ setIsCount, isCount, payList, setPayList }) => {
   const [carts, setCarts] = useState([]);
   // const [cartList, setCartList] = useState();
 
@@ -55,7 +55,7 @@ const CartCount = ({ setIsCount, isCount }) => {
 
   useEffect(() => {
     getAllCart();
-  }, [isCount]);
+  }, [isCount, payList]);
 
   return (
     <>

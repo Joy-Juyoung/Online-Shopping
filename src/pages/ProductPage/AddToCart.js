@@ -28,7 +28,8 @@ const AddToCart = ({ onClose, onSuccess, meData, setIsCount }) => {
   const { id } = useParams();
   const [noUserModalShown, toggleNoUserModal] = useState(false);
 
-  const ErrorNotify = () => toast.warn('Please make sure to select an option.');
+  const ErrorNotify = () =>
+    toast?.warn('Please make sure to select an option.');
 
   useEffect(() => {
     const checkIfClickedOutside = (e) => {

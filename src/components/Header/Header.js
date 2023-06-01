@@ -56,7 +56,15 @@ import CartCount from './CartCount';
 
 const CARTS_URL = '/carts/';
 
-const Header = ({ meData, catData, setIsAdminBoard, setIsCount, isCount }) => {
+const Header = ({
+  meData,
+  catData,
+  setIsAdminBoard,
+  setIsCount,
+  isCount,
+  payList,
+  setPayList,
+}) => {
   const navigate = useNavigate();
   const [me, setMe] = useState(null);
   const [logout, setLogout] = useState();
@@ -247,7 +255,12 @@ const Header = ({ meData, catData, setIsAdminBoard, setIsCount, isCount }) => {
                     </FaLink>
                   </RightIcon>
                   {/* cart count */}
-                  <CartCount setIsCount={setIsCount} isCount={isCount} />
+                  <CartCount
+                    setIsCount={setIsCount}
+                    isCount={isCount}
+                    payList={payList}
+                    setPayList={setPayList}
+                  />
 
                   <RightIcon>
                     {!isModalOpen && (

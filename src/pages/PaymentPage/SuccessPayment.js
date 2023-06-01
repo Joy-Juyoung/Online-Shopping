@@ -10,12 +10,9 @@ import styled from 'styled-components';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { PaymentSuccessMsg } from './PaymentElements';
 
-const SuccessPayment = () => {
-  // const [orderStatus, setOrderStatus] = useState(null);
-  // const [isEmpty, setIsEmpty] = useState(false);
+const SuccessPayment = ({ setIsCount, isCount }) => {
   const [loading, setLoading] = useState(false);
-  // const [errMsg, setErMsg] = useState('');
-  // const [isSelected, setIsSelected] = useState('All');
+  const [carts, setCarts] = useState([]);
 
   useEffect(() => {
     setLoading(true);
@@ -26,6 +23,20 @@ const SuccessPayment = () => {
     loadData();
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
+
+  const getAllCart = async () => {
+    const cartList = await axios.get('/carts/', {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+    setCarts(cartList?.data);
+    // setCartList(carts);
+    // setCartsTotal(cartList?.data?.length);
+  };
+
+  useEffect(() => {
+    getAllCart();
+  }, [isCount]);
 
   if (loading)
     return (
@@ -42,7 +53,7 @@ const SuccessPayment = () => {
       <p>Thank you so much for your order.</p>
       <Link to='/products/all'>
         <ButtonLarge borderColor={true} fontStrong={true}>
-          Countinue Shopping
+          Continue Shopping
         </ButtonLarge>
       </Link>
     </PaymentSuccessMsg>

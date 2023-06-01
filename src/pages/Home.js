@@ -68,7 +68,7 @@ const Home = () => {
 
   const [checkedList, setCheckedList] = useState([]);
 
-  // const [isSuccess, setIsSuccess] = useState(false);
+  const [payList, setPayList] = useState([]);
   const [isCount, setIsCount] = useState(false);
 
   // console.log('location', location.pathname);
@@ -127,6 +127,8 @@ const Home = () => {
             setIsAdminBoard={setIsAdminBoard}
             setIsCount={setIsCount}
             isCount={isCount}
+            payList={payList}
+            setPayList={setPayList}
           />
           <Container>
             <Routes>
@@ -262,6 +264,10 @@ const Home = () => {
                     meData={meData}
                     setCheckedList={setCheckedList}
                     checkedList={checkedList}
+                    setIsCount={setIsCount}
+                    isCount={isCount}
+                    payList={payList}
+                    setPayList={setPayList}
                   />
                 }
                 exact={true}

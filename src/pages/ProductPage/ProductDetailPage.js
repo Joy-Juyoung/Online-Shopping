@@ -271,7 +271,7 @@ const ProductDetailPage = ({
     </div>
   );
   const showCustomToast = () => {
-    toast.success(<SuccessNotify text='Success' />);
+    toast?.success(<SuccessNotify text='Success' />);
   };
   const handleSuccess = () => {
     setIsSuccess(true);

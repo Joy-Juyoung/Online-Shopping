@@ -49,13 +49,20 @@ import { ContentCutOutlined } from '@mui/icons-material';
 
 const CARTS_URL = '/carts';
 
-const PaymentPage = ({ meData, checkedList, setCheckedList }) => {
+const PaymentPage = ({
+  meData,
+  checkedList,
+  setIsCount,
+  isCount,
+  payList,
+  setPayList,
+}) => {
   const balanceRef = useRef();
   const addressRef = useRef();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [carts, setCarts] = useState([]);
-  const [payList, setPayList] = useState([]);
+  // const [payList, setPayList] = useState([]);
   const [modalShown, toggleModal] = useState(false);
   const [totalPrice, setTotalPrice] = useState();
   const [disableAddress, setDisableAddress] = useState(false);
@@ -70,6 +77,16 @@ const PaymentPage = ({ meData, checkedList, setCheckedList }) => {
 
   const [getCp, setGetCp] = useState('');
   // console.log('getCp', getCp);
+
+  const getAllCart = async () => {
+    const cartList = await axios.get('/carts/', {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+    setCarts(cartList?.data);
+    // setCartList(carts);
+    // setCartsTotal(cartList?.data?.length);
+  };
 
   useEffect(() => {
     if (coupons?.length === 0) {
@@ -106,8 +123,9 @@ const PaymentPage = ({ meData, checkedList, setCheckedList }) => {
     setLoading(true);
     getCoupons();
     setTotalPrice(TotalPriceTag);
+
     setGetCheckedList(JSON.parse(localStorage.getItem('getChecked')));
-  }, [meData]);
+  }, [meData, isCount]);
 
   const payOrder = async () => {
     if (window.confirm('Are you sure you want to pay?')) {
@@ -128,6 +146,8 @@ const PaymentPage = ({ meData, checkedList, setCheckedList }) => {
       });
       console.log('payList', payList);
 
+      // setIsCount(false);
+
       try {
         const sendOrder = axios.post(
           '/orders/',
@@ -145,6 +165,9 @@ const PaymentPage = ({ meData, checkedList, setCheckedList }) => {
         console.log('sendOrder', sendOrder);
         handleDeleteCart();
         setPayList([]);
+        // window.location.reload();
+        // setIsCount(true);
+        getAllCart();
       } catch (err) {
         if (err?.response?.status === 400) {
           setLoading(false);
@@ -189,7 +212,7 @@ const PaymentPage = ({ meData, checkedList, setCheckedList }) => {
   return (
     <PaymentContainer>
       {success ? (
-        <SuccessPayment />
+        <SuccessPayment setIsCount={setIsCount} isCount={isCount} />
       ) : (
         <>
           <h1>ORDER</h1>
