@@ -19,7 +19,7 @@ import {
 import axios from '../../../api/axios';
 import Loading from '../../../components/Loading';
 import Pagination from '../../../components/AdminComponents//Pagination';
-import { ButtonSmall } from '../../../components/ButtonElements';
+import { ButtonSmall, ButtonUtils } from '../../../components/ButtonElements';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import EditIcon from '@mui/icons-material/Edit';
@@ -29,6 +29,7 @@ import { AdIconDelete } from './listStyle';
 import NoneImg from '../../../asset/none.png';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditItem from './EditItem';
+import EditPhotoItem from './EditPhotoItem';
 
 const ItemList = ({ meData, catData }) => {
   const [loading, setLoading] = useState(false);
@@ -40,6 +41,7 @@ const ItemList = ({ meData, catData }) => {
   const [userInput, setUserInput] = useState('');
 
   const [modalShown, toggleModal] = useState(false);
+  const [photoModalShown, togglePhotoModal] = useState(false);
   const [editModalShown, toggleEditModal] = useState(false);
   const [editPk, setEditPk] = useState('');
   const [addPhoto, setAddPhoto] = useState(null);
@@ -82,6 +84,11 @@ const ItemList = ({ meData, catData }) => {
       console.log('delItem', delItem.data);
       // window.location.reload();
     }
+  };
+
+  const handlePhotoItem = async (pk) => {
+    togglePhotoModal(!photoModalShown);
+    setEditPk(pk);
   };
 
   const handleEditItem = async (pk) => {
@@ -139,6 +146,7 @@ const ItemList = ({ meData, catData }) => {
               <AdTHeadCell className='sub'>SUB CATEGORY</AdTHeadCell>
               <AdTHeadCell className='createAt'>CREATE AT</AdTHeadCell>
               <AdTHeadCell></AdTHeadCell>
+              {/* <AdTHeadCell></AdTHeadCell> */}
               <AdTHeadCell></AdTHeadCell>
             </AdTHeadeRow>
           </AdTHead>
@@ -174,11 +182,16 @@ const ItemList = ({ meData, catData }) => {
                   <AdTBodyCell className='createAt'>
                     {new Date(product?.created_at).toLocaleString('en-ca')}
                   </AdTBodyCell>
-                  <AdTBodyCell style={{ width: '5%' }}>
+                  <AdTBodyCell style={{ width: '10%' }}>
+                    <AdIconDelete onClick={() => handlePhotoItem(product?.pk)}>
+                      <ButtonUtils>+ Photos</ButtonUtils>
+                    </AdIconDelete>
+                  </AdTBodyCell>
+                  {/* <AdTBodyCell style={{ width: '5%' }}>
                     <AdIconDelete onClick={() => handleEditItem(product?.pk)}>
                       <EditIcon />
                     </AdIconDelete>
-                  </AdTBodyCell>
+                  </AdTBodyCell> */}
                   <AdTBodyCell style={{ width: '5%' }}>
                     <AdIconDelete onClick={() => handleDeleteItem(product?.pk)}>
                       <DeleteIcon />
@@ -190,6 +203,21 @@ const ItemList = ({ meData, catData }) => {
           })}
         </AdTable>
       </AdListMid>
+      <AddItemModal
+        shown={photoModalShown}
+        close={() => {
+          togglePhotoModal(false);
+        }}
+      >
+        <EditPhotoItem
+          products={products}
+          editPk={editPk}
+          togglePhotoModal={togglePhotoModal}
+          addPhoto={addPhoto}
+          setAddPhoto={setAddPhoto}
+        />
+      </AddItemModal>
+
       <AddItemModal
         shown={editModalShown}
         close={() => {
@@ -204,6 +232,7 @@ const ItemList = ({ meData, catData }) => {
           setAddPhoto={setAddPhoto}
         />
       </AddItemModal>
+
       <AdListBottom>
         <Pagination
           totalPosts={products?.length}
