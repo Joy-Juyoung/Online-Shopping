@@ -146,12 +146,14 @@ const ProductsCard = ({
   };
 
   return (
+
     <ProductsEach to={`/products/${all?.pk}`} key={all?.pk}>
       {all?.photos?.length === 0 ? (
         <ProductEachPhoto src={DefaultImg} alt='' />
       ) : (
-        <ProductEachPhoto src={all?.photos?.[0]?.picture} alt='' />
+        <ProductEachPhoto src={all?.photos[0]?.picture} alt='' />
       )}
+
 
       {meData && (
         <ToggleLike

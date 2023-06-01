@@ -18,23 +18,41 @@ import {
   AdViewCount,
   AdViewList,
   AdViewStatus,
+  AdViewListWrap,
+  AdStatus,
+  ViewAllBtn,
 } from './DashboardStyle';
 import PersonIcon from '@mui/icons-material/Person';
 import PaidIcon from '@mui/icons-material/Paid';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import ReceiptIcon from '@mui/icons-material/Receipt';
-
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import DountChart from './DountChart';
+import { DountInfo, DountWrap } from './DountElements';
 
 const Dashboard = ({ meData }) => {
   const [loading, setLoading] = useState(false);
   const [customers, setCustomers] = useState();
   const [products, setProducts] = useState();
   const [orders, setOrders] = useState();
+  const [reviews, setReviews] = useState();
+
   const [pendingList, setPendingList] = useState();
   const [inprogressList, setInprogressList] = useState();
   const [deliveredList, setDeliveredList] = useState();
   const [cancelList, setCancelList] = useState();
 
+
+ const getReviews = async () => {
+    const reviewList = await axios.get('/reviews/', {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+    console.log('reviewList', reviewList.data);
+    setReviews(reviewList?.data);
+
+    setLoading(false);
+  };
 
   const getProducts = async () => {
     const productsList = await axios.get('/products/', {
@@ -71,6 +89,7 @@ const Dashboard = ({ meData }) => {
     getCustomers();
     getProducts();
     getOrders();
+    getReviews();
   }, [meData]);
 
   useEffect(() => {
@@ -141,30 +160,100 @@ const Dashboard = ({ meData }) => {
           </AdCount>
         </AdViewCount>
         <AdViewList>
-          <AdViewStatus className='pending'>
+          <AdViewListWrap>
+            <AdViewStatus className='pending'>
+              <DountWrap>
+                <DountInfo>
+                  <DountChart color="#f2b155" percent={0.43} size="100px" order={orders}/>
+                  <p>Pending</p>
+                </DountInfo>
+                <DountInfo>
 
+                <DountChart color="#61b9ff" percent={0.15} size="100px" order={orders}/>
+                <p>Inprogress</p>
+                </DountInfo>
+              </DountWrap>  
+              <DountWrap>
+                <DountInfo>
+                <DountChart color="#73b748" percent={0.34} size="100px" order={orders}/>
+                <p>Delivered</p>
+                </DountInfo>
+                <DountInfo>
+                <DountChart color="#ad8260" percent={0.08} size="100px" order={orders}/>
+                <p>Cancelled</p>
+                </DountInfo>
+              </DountWrap>
+            </AdViewStatus>
+            <AdViewStatus className='delivered'>
+              <h4>Recent Update Reviews</h4>
+              <AdStatus>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>NO.</th>
+                      <th>PRODUCT NAME</th>
+                      <th>USER NAME</th>
+                      <th>RATING</th>
+                      <th>PAYLOAD</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {reviews?.slice(0, 4).map((rv) => {
+                      return (
+                        <tr key={rv?.pk}>
+                          <td style={{ width: '10%' }}>{rv?.pk}</td>
+                          <td style={{ width: '30%' }}>{rv?.Product_Name}</td>                          
+                          <td style={{ width: '20%' }}>{rv?.user?.username}</td>
+                          <td style={{ width: '5%' }}>{rv?.rating}</td>
+                          <td style={{ width: '10%' }}>{rv?.payload}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </AdStatus>
+            </AdViewStatus>   
+          </AdViewListWrap>
+          <AdViewStatus className='inprogress'>
+            <h4>Recent Update Products</h4>
+            <AdStatus>
+               <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>PHOTO</th>
+                    <th>NAME</th>
+                    <th>PRICE</th>
+                    <th>SUB CATEGORY</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {products?.slice(0, 10).map((dl) => {
+                    return (
+                      <tr key={dl?.pk}>
+                        <td style={{ width: '10%' }}>{dl?.pk}</td>
+                        <td style={{ width: '10%' }}>
+                          <img src={dl?.photos[0]?.picture}/>
+                          {/* {dl?.photos[0]?.picture} */}
+                        </td>
+                        <td style={{ width: '30%' }}>{dl?.name}</td>
+                        <td style={{ width: '5%' }}>{dl?.price}</td>
+                        <td style={{ width: '20%' }}>{dl?.kind?.name}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </AdStatus>
           </AdViewStatus>
         </AdViewList>
       </AdOrderOverview>
+{/*      
+          <DashboardList>order status circle</DashboardList>
+          최근 업데이트된 시간별 Status
+          <DashboardList>Recenter review</DashboardList>
+           최근 오더목록 중 주문한 유저정보 */}
 
-      {/* <AdDashboardWrap>        
-        <AdDashboardMid>
-          <DashboardGraph>Order per Month</DashboardGraph>
-          <DashboardGraph>Sales Growth per Month</DashboardGraph> */}
-          {/* Get Orders -> Get total Price++ by created_at per a week */}
-
-          {/* <DashboardGraph>Products per Category</DashboardGraph> */}
-          {/* <DashboardGraph>Users Growth per Month</DashboardGraph> */}
-        {/* </AdDashboardMid>
-        <AdDashboardBot> */}
-          {/* <DashboardList>Order Activity</DashboardList> */}
-          {/* 최근 업데이트된 시간별 Status */}
-          {/* <DashboardList>Recent Products</DashboardList> */}
-          {/* 최근 업로드된 아이템 */}
-          {/* <DashboardList>Recenter Buyers</DashboardList> */}
-          {/* 최근 오더목록 중 주문한 유저정보 */}
-        {/* </AdDashboardBot>
-      </AdDashboardWrap> */}
     </AdContainer>
   );
 };
