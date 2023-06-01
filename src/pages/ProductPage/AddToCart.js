@@ -21,13 +21,7 @@ import { Bounce, ToastContainer, Zoom, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NoUser from '../../components/NoUser';
 
-const AddToCart = ({
-  onClose,
-  onSuccess,
-  meData,
-  isCartChange,
-  setIsCartChange,
-}) => {
+const AddToCart = ({ onClose, onSuccess, meData, isSuccess, setIsSuccess }) => {
   const [selectOptions, setSelectOptions] = useState([]);
   const [options, setOptions] = useState(null);
   const ref = useRef();
@@ -39,15 +33,14 @@ const AddToCart = ({
 
   const ErrorNotify = () => toast.warn('Please make sure to select an option.');
 
-  const SuccessNotify = ({ text }) => (
-    <div>
-      <p className='text'>{text}</p>
-      {/* <button className="button1" onClick={() => toast.dismiss()}>Ok!</button> */}
-    </div>
-  );
-  const showCustomToast = () => {
-    toast.success(<SuccessNotify text='Success' />);
-  };
+  // const SuccessNotify = ({ text }) => (
+  //   <div>
+  //     <p className='text'>{text}</p>
+  //   </div>
+  // );
+  // const showCustomToast = () => {
+  //   toast.success(<SuccessNotify text='Success' />);
+  // };
 
   useEffect(() => {
     const checkIfClickedOutside = (e) => {
@@ -77,8 +70,8 @@ const AddToCart = ({
 
   const OptionHandleChange = (e) => {
     setOptions(e.target.value);
-    console.log('options', options);
   };
+  console.log('options', options);
 
   const handleAddToCart = async (e) => {
     e.preventDefault();
@@ -127,14 +120,13 @@ const AddToCart = ({
               )}
 
               <SidebarMenuMidWrap />
-              {/* <select value={selectOptions} onChange={OptionHandleChange}>{optionLists}</select>  */}
             </SidebarMenuMid>
             <SidebarMenuBottom>
               <MenuTotalSummary>
                 <p>Total {selectOptions?.length} </p>
                 <p>${selectOptions?.price}</p>
               </MenuTotalSummary>
-              {options === null ? (
+              {options === 'none' ? (
                 <>
                   <ButtonLarges onClick={ErrorNotify}>ADD TO BAG</ButtonLarges>
                   <ToastContainer

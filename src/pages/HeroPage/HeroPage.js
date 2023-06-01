@@ -93,9 +93,13 @@ const HeroPage = ({ meData, catData }) => {
           </SectionWrap>
         </MidInfo>
         <MidInfo>
-          <SectionTitle>Most Popular</SectionTitle>
+          <SectionTitle>New Arrival</SectionTitle>
           <SectionProducts>
-            <Slider items={items.filter((item, idx) => idx < 9)} />
+            <Slider
+              items={items.filter(
+                (item, idx) => idx < 9 && item?.photos?.length !== 0
+              )}
+            />
           </SectionProducts>
           <SectionButton>
             <Link to='/products/all'>
@@ -118,9 +122,13 @@ const HeroPage = ({ meData, catData }) => {
           </SectionCategories>
         </MidInfo>
         <MidInfo>
-          <SectionTitle>New Arrival</SectionTitle>
+          <SectionTitle>Most Popular</SectionTitle>
           <SectionProducts>
-            <Slider items={items?.reverse().filter((item, idx) => idx < 9)} />
+            <Slider
+              items={items
+                ?.reverse()
+                .filter((item, idx) => idx < 9 && item?.photos?.length !== 0)}
+            />
           </SectionProducts>
           <SectionButton>
             <Link to='/products/all'>

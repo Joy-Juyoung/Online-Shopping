@@ -60,8 +60,8 @@ const Header = ({
   meData,
   catData,
   setIsAdminBoard,
-  isCartChange,
-  setIsCartChange,
+  isSuccess,
+  setIsSuccess,
 }) => {
   const navigate = useNavigate();
   const [me, setMe] = useState(null);
@@ -71,37 +71,33 @@ const Header = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalShown, toggleModal] = useState(false);
   const [balanceShown, toggleBalance] = useState(false);
-  const [carts, setCarts] = useState([]);
+  // const [carts, setCarts] = useState([]);
   const [cartsTotal, setCartsTotal] = useState();
 
   const ref = useRef();
 
-  const getAllCart = async () => {
-    const cartList = await axios.get('/carts/', {
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true,
-    });
-    setCarts(cartList?.data);
-  };
+  // const getAllCart = async () => {
+  //   const cartList = await axios.get('/carts/', {
+  //     headers: { 'Content-Type': 'application/json' },
+  //     withCredentials: true,
+  //   });
+  //   setCarts(cartList?.data);
+  // };
 
   useEffect(() => {
     setMe(meData);
-    setCartsTotal(carts?.length);
     // if (meData) {
     //   getAllCart();
+    //   setCartsTotal(carts?.length);
     // }
   }, [meData]);
 
-  useEffect(() => {
-    getAllCart();
-    // setCartsTotal(carts?.length);
-  }, [cartsTotal]);
-
   // useEffect(() => {
-  //   getAllCart();
-  // }, [carts]);
-
-  // console.log('me', me);
+  //   if (meData) {
+  //     getAllCart();
+  //     setCartsTotal(carts?.length);
+  //   }
+  // }, [isSuccess]);
 
   const handleLogout = async () => {
     setLoading(true);
@@ -170,21 +166,7 @@ const Header = ({
 
             <MiddleSide>
               <MidLink to='/'>
-                <div
-                // onClick={window.scrollTo({
-                //   top: 0,
-                //   left: 0,
-                //   behavior: 'smooth',
-                // })}
-                >
-                  {/* <span style={{ color: '#ffae00', fontWeight: '700' }}>
-                    Bl
-                  </span>
-                  an
-                  <span style={{ color: '#ffae00', fontWeight: '700' }}>K</span>
-                  Closet */}
-                  BlankCloset
-                </div>
+                <div>BlankCloset</div>
               </MidLink>
             </MiddleSide>
             <RightSide>
@@ -284,12 +266,7 @@ const Header = ({
                       <FavoriteBorderIcon fontSize='medium' />
                     </FaLink>
                   </RightIcon>
-                  <CartCount
-                    // carts={carts}
-                    cartsTotal={cartsTotal}
-                    setCartsTotal={setCartsTotal}
-                    carts={carts}
-                  />
+                  <CartCount />
 
                   <RightIcon>
                     {!isModalOpen && (

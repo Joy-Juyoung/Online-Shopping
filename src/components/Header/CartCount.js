@@ -33,64 +33,41 @@ import {
   ModalBtnDetail,
   FlagBtn,
   ItemCount,
-  AdminLink,
 } from './HeaderElements';
-import FlagIcon from '@mui/icons-material/Flag';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import PermIdentityRoundedIcon from '@mui/icons-material/PermIdentityRounded';
-import LogoutIcon from '@mui/icons-material/Logout';
-import Search from './Search';
-import TestSearch from './TestSearch';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import Loading from '../../components/Loading';
-import DropUser from './DropUser';
-import { ButtonSmall, ButtonUtils } from '../ButtonElements';
-import Modal from '../Modal';
-import SearchIcon from '@mui/icons-material/Search';
-import AddBalance from '../AddBalance';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+
 import axios from '../../api/axios';
 
-const CartCount = ({
-  cartsTotal,
-  setCartsTotal,
-  isCartChange,
-  setIsCartChange,
-  carts,
-}) => {
-  // const [carts, setCarts] = useState([]);
-  const [cartList, setCartList] = useState();
-  // const getAllCart = async () => {
-  //   const cartList = await axios.get('/carts/', {
-  //     headers: { 'Content-Type': 'application/json' },
-  //     withCredentials: true,
-  //   });
-  //   setCarts(cartList?.data);
-  //   // setCartList(carts);
-  //   setCartsTotal(cartList?.data?.length);
-  // };
+const CartCount = (
+  {
+    // cartsTotal,
+    // setCartsTotal,
+    // isSuccess,
+    // setIsSuccess,
+    // carts,
+  }
+) => {
+  const [carts, setCarts] = useState([]);
+  // const [cartList, setCartList] = useState();
 
-  // useEffect(() => {
-  //   setCartList(carts);
-  // }, [cartsTotal]);
-
-  // useEffect(() => {
-  //   // setCartList(carts);
-  //   setCartsTotal(carts?.length);
-  // }, [carts]);
-
-  // useEffect(() => {
-  //   setCartsTotal(carts?.length);
-  // }, []);
+  const getAllCart = async () => {
+    const cartList = await axios.get('/carts/', {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    });
+    setCarts(cartList?.data);
+    // setCartList(carts);
+    // setCartsTotal(cartList?.data?.length);
+  };
 
   // useEffect(() => {
   //   getAllCart();
-  // }, [cartsTotal]);
+  // }, [carts]);
 
   return (
     <>
-      {cartsTotal === 0 ? (
+      {carts?.length === 0 ? (
         <RightIcon>
           <CartLink to='/carts'>
             <AddShoppingCartIcon fontSize='medium' />
@@ -99,7 +76,7 @@ const CartCount = ({
       ) : (
         <RightIcon>
           <CartLink to='/carts'>
-            <ItemCount>{cartsTotal}</ItemCount>
+            <ItemCount>{carts?.length}</ItemCount>
             <AddShoppingCartIcon fontSize='medium' />
           </CartLink>
         </RightIcon>

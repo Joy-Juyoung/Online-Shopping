@@ -70,8 +70,8 @@ const ProductDetailPage = ({
   itemAllKinds,
   itemKinds,
   wishItems,
-  isCartChange,
-  setIsCartChange,
+  isSuccess,
+  setIsSuccess,
 }) => {
   const [itemsDetail, setItemsDetail] = useState([]);
   const { id } = useParams();
@@ -95,7 +95,7 @@ const ProductDetailPage = ({
   const [fav, setFav] = useState(false);
   const [slideIndex, setSlideIndex] = useState([]);
 
-  const [isSuccess, setIsSuccess] = useState(false);
+  // const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
     setChangeReviews(itemsDetail.reviews);
@@ -397,8 +397,8 @@ const ProductDetailPage = ({
                 // onClose={!isOpen}
                 onSuccess={handleSuccess}
                 // setIsAdded={setIsAdded}
-                isCartChange={isCartChange}
-                setIsCartChange={setIsCartChange}
+                isSuccess={isSuccess}
+                setIsSuccess={setIsSuccess}
                 onClose={() => setIsOpen(false)}
                 meData={meData}
               />

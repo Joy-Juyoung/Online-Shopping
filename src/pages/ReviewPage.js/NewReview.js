@@ -181,7 +181,7 @@ const NewReview = ({ meData }) => {
           {/* <form onSubmit={handleReviewSubmit}> */}
           <ReviewItemInfo>
             <ListsImgLink to={`/products/${getItem?.id}`}>
-              <img src={getItem?.photos?.[0].picture} alt={getItem?.name} />
+              <img src={getItem?.photos?.[0]?.picture} alt={getItem?.name} />
             </ListsImgLink>
             <ReviewItemDetails to={`/products/${getItem?.id}`}>
               <DetailName>{getItem?.name}</DetailName>

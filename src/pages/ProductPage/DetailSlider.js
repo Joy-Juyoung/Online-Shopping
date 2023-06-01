@@ -144,7 +144,7 @@ const DetailSlider = ({ slideIndex }) => {
             {slideIndex?.photos?.map((image, no) => (
               <SlideContent key={no}>
                 <picture>
-                  <img src={image.picture} />
+                  <img src={image?.picture} />
                 </picture>
               </SlideContent>
             ))}
@@ -157,7 +157,7 @@ const DetailSlider = ({ slideIndex }) => {
                   {slideIndex?.photos?.map((image, no) => (
                     <SlideContent key={no}>
                       <picture>
-                        <img src={image.picture} />
+                        <img src={image?.picture} />
                       </picture>
                     </SlideContent>
                   ))}
