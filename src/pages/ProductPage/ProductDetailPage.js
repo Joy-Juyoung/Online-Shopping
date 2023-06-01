@@ -70,8 +70,7 @@ const ProductDetailPage = ({
   itemAllKinds,
   itemKinds,
   wishItems,
-  isSuccess,
-  setIsSuccess,
+  setIsCount,
 }) => {
   const [itemsDetail, setItemsDetail] = useState([]);
   const { id } = useParams();
@@ -95,7 +94,7 @@ const ProductDetailPage = ({
   const [fav, setFav] = useState(false);
   const [slideIndex, setSlideIndex] = useState([]);
 
-  // const [isSuccess, setIsSuccess] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
     setChangeReviews(itemsDetail.reviews);
@@ -163,6 +162,7 @@ const ProductDetailPage = ({
 
   useEffect(() => {
     setFav(itemsDetail?.is_liked);
+    setIsCount(false);
   }, []);
 
   // console.log('me', meData);
@@ -396,9 +396,7 @@ const ProductDetailPage = ({
                 // setIsSuccess={setIsSuccess}
                 // onClose={!isOpen}
                 onSuccess={handleSuccess}
-                // setIsAdded={setIsAdded}
-                isSuccess={isSuccess}
-                setIsSuccess={setIsSuccess}
+                setIsCount={setIsCount}
                 onClose={() => setIsOpen(false)}
                 meData={meData}
               />

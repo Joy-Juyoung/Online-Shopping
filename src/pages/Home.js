@@ -69,7 +69,7 @@ const Home = () => {
   const [checkedList, setCheckedList] = useState([]);
 
   // const [isSuccess, setIsSuccess] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isCount, setIsCount] = useState(false);
 
   // console.log('location', location.pathname);
 
@@ -125,8 +125,8 @@ const Home = () => {
             meData={meData}
             catData={catData}
             setIsAdminBoard={setIsAdminBoard}
-            isSuccess={isSuccess}
-            setIsSuccess={setIsSuccess}
+            setIsCount={setIsCount}
+            isCount={isCount}
           />
           <Container>
             <Routes>
@@ -207,8 +207,7 @@ const Home = () => {
                   <ProductDetailPage
                     meData={meData}
                     catData={catData}
-                    isSuccess={isSuccess}
-                    setIsSuccess={setIsSuccess}
+                    setIsCount={setIsCount}
                   />
                 }
                 exact={true}
@@ -249,8 +248,8 @@ const Home = () => {
                     meData={meData}
                     setCheckedList={setCheckedList}
                     checkedList={checkedList}
-                    isSuccess={isSuccess}
-                    setIsSuccess={setIsSuccess}
+                    setIsCount={setIsCount}
+                    isCount={isCount}
                   />
                 }
                 exact={true}
@@ -263,8 +262,6 @@ const Home = () => {
                     meData={meData}
                     setCheckedList={setCheckedList}
                     checkedList={checkedList}
-                    isSuccess={isSuccess}
-                    setIsSuccess={setIsSuccess}
                   />
                 }
                 exact={true}

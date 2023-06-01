@@ -37,7 +37,7 @@ const ProductsCard = ({
 
   const [fav, setFav] = useState(false);
 
-  console.log('all', all);
+  // console.log('all', all);
   // console.log('getAllKinds', getAllKinds);
 
   useEffect(() => {

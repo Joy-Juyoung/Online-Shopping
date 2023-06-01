@@ -56,13 +56,7 @@ import CartCount from './CartCount';
 
 const CARTS_URL = '/carts/';
 
-const Header = ({
-  meData,
-  catData,
-  setIsAdminBoard,
-  isSuccess,
-  setIsSuccess,
-}) => {
+const Header = ({ meData, catData, setIsAdminBoard, setIsCount, isCount }) => {
   const navigate = useNavigate();
   const [me, setMe] = useState(null);
   const [logout, setLogout] = useState();
@@ -71,18 +65,11 @@ const Header = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalShown, toggleModal] = useState(false);
   const [balanceShown, toggleBalance] = useState(false);
-  // const [carts, setCarts] = useState([]);
-  const [cartsTotal, setCartsTotal] = useState();
+  // const [cartsTotal, setCartsTotal] = useState();
+
+  // const [carts, setCarts] = useState();
 
   const ref = useRef();
-
-  // const getAllCart = async () => {
-  //   const cartList = await axios.get('/carts/', {
-  //     headers: { 'Content-Type': 'application/json' },
-  //     withCredentials: true,
-  //   });
-  //   setCarts(cartList?.data);
-  // };
 
   useEffect(() => {
     setMe(meData);
@@ -91,13 +78,6 @@ const Header = ({
     //   setCartsTotal(carts?.length);
     // }
   }, [meData]);
-
-  // useEffect(() => {
-  //   if (meData) {
-  //     getAllCart();
-  //     setCartsTotal(carts?.length);
-  //   }
-  // }, [isSuccess]);
 
   const handleLogout = async () => {
     setLoading(true);
@@ -266,7 +246,8 @@ const Header = ({
                       <FavoriteBorderIcon fontSize='medium' />
                     </FaLink>
                   </RightIcon>
-                  <CartCount />
+                  {/* cart count */}
+                  <CartCount setIsCount={setIsCount} isCount={isCount} />
 
                   <RightIcon>
                     {!isModalOpen && (
