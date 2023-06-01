@@ -196,29 +196,40 @@ export const AdCountIcon = styled.div`
 
 export const AdViewList = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1.4fr;
   grid-gap: 40px 20px;
 `;
+
+export const AdViewListWrap = styled.div``
 
 export const AdViewStatus = styled.div`
   height: 220px;
   border-radius: 20px;
   box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.1);
   position: relative;
-
+  
+  h4 {
+    margin-top: 10px;
+    margin-left: 20px;
+    font-size: 18px;
+  }
   &.pending {
     color: #b74a01;
     border: 1px solid #f2b155;
+
   }
 
   &.inprogress {
     color: #005260;
     border: 1px solid #61b9ff;
+    height: 450px;
+  
   }
 
   &.delivered {
     color: #006b21;
     border: 1px solid #73b748;
+    margin-top: 10px;
   }
 
   &.cancel {
@@ -248,6 +259,15 @@ export const AdStatus = styled.div`
 
   td {
     padding-top: 3px;
+    /* display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; */
+
+    img {
+      width: 25px;
+      height: 25px;
+    }
   }
 `;
 
