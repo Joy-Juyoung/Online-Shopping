@@ -48,8 +48,8 @@ const AddToCart = ({ onClose, onSuccess, meData, setIsCount }) => {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    console.log('sideOption', sideOption.data);
-    setSelectOptions(sideOption.data);
+    // console.log('sideOption', sideOption.data);
+    setSelectOptions(sideOption?.data);
   };
   useEffect(() => {
     getSelectOptions();
