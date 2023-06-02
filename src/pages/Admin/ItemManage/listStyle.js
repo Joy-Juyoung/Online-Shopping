@@ -154,6 +154,11 @@ export const AddNextBtn = styled.div`
   &:hover {
     font-weight: 600;
   }
+
+  /* &.upload {
+    display: flex;
+    justify-content: flex-end;
+  } */
 `;
 
 // ---Next
