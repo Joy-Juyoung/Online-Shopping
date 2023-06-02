@@ -55,7 +55,7 @@ const AddNewItem = ({ products, catData }) => {
   useEffect(() => {
     setParentskinds(catData);
     setAllproducts(products);
-  }, [products, newItem]);
+  }, []);
 
   // console.log('products', products);
   // console.log('products?.length + 1', products?.[products?.length - 1]?.pk);
@@ -277,7 +277,12 @@ const AddNewItem = ({ products, catData }) => {
             </BoxLi> */}
           </BoxUl>
 
-          <BoxBtn>
+          <BoxBtn
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+            }}
+          >
             <AddNextBtn onClick={() => window.location.reload()}>
               Upload
             </AddNextBtn>
