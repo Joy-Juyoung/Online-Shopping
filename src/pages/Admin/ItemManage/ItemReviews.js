@@ -91,7 +91,7 @@ const ItemReviews = ({ meData }) => {
     });
     setNewList(productReview?.data);
   };
-  // console.log('newList', newList);
+  console.log('newList', newList);
 
   const handleProductSearch = (e) => {
     setSearchProductValue(e.target.value);

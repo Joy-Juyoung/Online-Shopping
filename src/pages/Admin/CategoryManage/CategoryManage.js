@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AdContainer } from '../AdminCommonElements';
 import axios from '../../../api/axios';
 import styled from 'styled-components';
 import EditIcon from '@mui/icons-material/Edit';
-import SaveAltSharpIcon from '@mui/icons-material/SaveAltSharp';
+
 import {
   AdCategoryForm,
   AdCategoryInput,
@@ -28,7 +28,9 @@ import AddIcon from '@mui/icons-material/Add';
 import ReplyIcon from '@mui/icons-material/Reply';
 import CategoryAddBtn from './CategoryAddBtn';
 import AdminModal from '../../../components/AdminComponents/AdminModal';
-import AddNewCategory from './AddNewCategory';
+import CategoryHeadEdit from './CategoryHeadEdit';
+import CategorySubEdit from './CategorySubEdit';
+
 
 export const CategoryLists = styled.ul`
   display: flex;
@@ -46,13 +48,16 @@ const CategoryManage = ({ meData }) => {
   const [catData, setCatData] = useState([]);
   const [addCate, setAddCate] = useState('');
   const [isEdit, setIsEdit] = useState(false);
-  // const [editedTitle, setEditedTitle] = useState(catData.name)
+  const [isChildEdit, setIsChildEdit] = useState(false);
+
   const [newList, setNewList] = useState();
+
+  const [upDateState,setUpDateState] =  useState(-1);
+
+  const [upDateChildState,setUpDateChildState] =  useState(-1);
 
   const [modalShown, toggleModal] = useState(false);
   const [addModalShown, toggleAddModal] = useState(false);
-
-  const [isActive, setIsActive] = useState(false);
 
 
   const getCategory = async () => {
@@ -90,6 +95,7 @@ const CategoryManage = ({ meData }) => {
   };
 
   const handleViewCategories = async (pk) => {
+    setUpDateState(pk);
     const productReview = await axios.get(
       `/products/productAllParentsKinds/${pk}`,
       {
@@ -97,20 +103,24 @@ const CategoryManage = ({ meData }) => {
         withCredentials: true,
       }
     );
-    // console.log("pr",productReview?.data)
+    console.log("pr",productReview?.data)
     setNewList(productReview?.data);
-    setIsActive(!isActive);
   };
 
-  const handleEditChange = (e) => {
-    setCatData(e.target.value);
+  const handleEdit = (pk) => {
+    setUpDateState(pk);
+    setIsEdit(!isEdit);
   };
 
-  const handleHeadSubmit = (e) => {
-    e.preventDefault();
-
-    // let newCatData = catData.
+  const handleChildEdit = (pk) => {
+    setUpDateChildState(pk);
+    setIsChildEdit(!isChildEdit);
   };
+
+
+  useEffect(() => {
+    getCategory();
+  }, [isEdit,isChildEdit]);
 
   return (
     <AdContainer>
@@ -130,44 +140,36 @@ const CategoryManage = ({ meData }) => {
                   </AdReviewHeadTr>
                 </AdReviewThead>
                 <AdReviewTbody>
-                  {catData?.map((category) => {
+                  {catData?.sort((a,b) => a.pk-b.pk)
+                  .map((category) => {
                     return (
                       <AdReviewBodyTr
-                        key={category?.pk}
-                        
+                        key={category?.pk}                        
                         onClick={() => handleViewCategories(category?.pk)}
-                      >
-                        {isEdit === true ? (
-                          <>
-                            <AdReviewTd>
-                              <form onSubmit={handleHeadSubmit}>
-                                <input
-                                  // id
-                                  value={category?.name}
-                                  onChange={handleEditChange}
-                                ></input>
-                              </form>
-                              <div>
-                                <button onClick={handleHeadSubmit}>save</button>
-                                <button onClick={() => setIsEdit(false)}>
-                                  cancel
-                                </button>
-                              </div>
-                            </AdReviewTd>
-                          </>
-                        ) : (
-                          <>
-                            <AdReviewTd className={isActive ? 'active' : ''}>
+                        style={
+                          category?.name === newList?.name
+                            ? {
+                                backgroundColor: '#ffcd6b',
+                                padding: '3px 10px',
+                              }
+                            : {}
+                        }
+                      >      
+                        <AdReviewTd>
+                        {upDateState === category?.pk && isEdit ? (
+                            <CategoryHeadEdit categorys={category} setUpDateState={setUpDateState} setIsEdit={setIsEdit} />
+                          ):(
+                            <div>
                               {category?.name?.toUpperCase()}
-                              <button
-                                // onClick={handleEdit}                         
-                                onClick={() => setIsEdit(true)}
-                              >
-                                <EditIcon fontSize='small' />
-                              </button>
-                            </AdReviewTd>
-                          </>
-                        )}
+                                <button                      
+                                  onClick={() => handleEdit(category?.pk)}
+                                >
+                                  <EditIcon fontSize='small' />
+                                </button>
+                            </div>
+                          )}
+
+                        </AdReviewTd>                        
                       </AdReviewBodyTr>
                     )
                   })}
@@ -216,16 +218,22 @@ const CategoryManage = ({ meData }) => {
                     </AdReviewHeadTr>
                   </AdReviewThead>
                   <AdReviewTbody>
-                    {newList?.productKinds?.map((nl) => {
+                    {newList?.productKinds?.map((sub) => {
                       return (
-                        <AdReviewBodyTr key={nl.pk}>
+                        <AdReviewBodyTr key={sub?.pk}>
                           <AdReviewTd>
-                            {nl?.name?.toUpperCase()}
-                            <button
-                            // onClick={handleEdit}
-                            >
-                              <EditIcon fontSize='small' />
-                            </button>
+                          {upDateChildState === sub?.pk && isChildEdit ? (
+                            <CategorySubEdit sub={sub} upDateState={upDateState} setUpDateChildState={setUpDateChildState} setIsChildEdit={setIsChildEdit}/>
+                          ):(
+                              <div>
+                                {sub?.name?.toUpperCase()}
+                                <button
+                                  onClick={() => handleChildEdit(sub?.pk)}
+                                >
+                                  <EditIcon fontSize='small' />
+                                </button>
+                              </div>
+                            )}
                           </AdReviewTd>
                         </AdReviewBodyTr>
                       );
