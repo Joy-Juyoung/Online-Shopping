@@ -6,8 +6,18 @@ import axios from '../../../api/axios';
 import { ButtonUtils } from '../../../components/ButtonElements';
 
 const Dropbtn = styled.div`
+  /* position: relative;
+  font-size: 14px; */
+  margin-top: -20px;
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const DropWrap = styled.div`
   position: relative;
   font-size: 14px;
+  /* margin-top: -40px; */
+  /* display: flex; */
 `;
 
 const Dropdown = styled.div`
@@ -122,32 +132,37 @@ const DropStatus = ({
 
   return (
     <Dropbtn>
-      <DropdownWrap>
-        <Dropdown onClick={handleDropdown}>
-          {selectedOption ? (
-            <span>{selectedOption}</span>
-          ) : (
-            <span>{orderById?.status}</span>
-          )}
-          {isDrop ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-        </Dropdown>
-        <ButtonUtils onClick={() => handelUpdateOption(orderById?.pk)}>
-          Update
-        </ButtonUtils>
-      </DropdownWrap>
-      {isDrop ? (
-        <DropdownContent>
-          {statusOptionData?.map((optionData, index) => {
-            return (
-              <li key={index}>
-                <span onClick={() => handelStatusOption(optionData)}>
-                  {optionData}
-                </span>
-              </li>
-            );
-          })}
-        </DropdownContent>
-      ) : null}
+      <DropWrap>
+        <DropdownWrap>
+          <Dropdown onClick={handleDropdown}>
+            {selectedOption ? (
+              <span>{selectedOption}</span>
+            ) : (
+              <span>{orderById?.status}</span>
+            )}
+            {isDrop ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+          </Dropdown>
+          <ButtonUtils
+            onClick={() => handelUpdateOption(orderById?.pk)}
+            style={{ background: '#21201E', color: '#fff' }}
+          >
+            Update Status
+          </ButtonUtils>
+        </DropdownWrap>
+        {isDrop ? (
+          <DropdownContent>
+            {statusOptionData?.map((optionData, index) => {
+              return (
+                <li key={index}>
+                  <span onClick={() => handelStatusOption(optionData)}>
+                    {optionData}
+                  </span>
+                </li>
+              );
+            })}
+          </DropdownContent>
+        ) : null}
+      </DropWrap>
     </Dropbtn>
   );
 };

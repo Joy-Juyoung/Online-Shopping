@@ -185,11 +185,17 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
       >
         <div>
           <h2>Order Details</h2>
-          <div>
-            <div>Order number: {orderById?.pk}</div>
+          <div
+            style={{
+              margin: '10px',
+              // display: 'flex',
+              // justifyContent: 'space-between',
+            }}
+          >
+            <div>Order no.: {orderById?.pk}</div>
             <div>Order User: {orderById?.soldProduct[0]?.user?.username}</div>
           </div>
-          <Table>
+          <Table style={{ marginTop: '20px' }}>
             <Thead>
               <Tr>
                 <Th>Product Name</Th>
