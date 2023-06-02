@@ -314,7 +314,7 @@ const Header = ({
                   </DropdownButton>
                 </DropMenuParents>
               </DropMenuList>
-              {catData?.map((category) => {
+              {categorySort?.map((category) => {
                 return (
                   <DropMenuList key={category?.pk}>
                     <DropMenuParents>
