@@ -124,9 +124,9 @@ const Header = ({
     };
   }, [clickAccount, isModalOpen]);
 
-  // useEffect(() => {
-  //   setCategorySort(catData?.sort((a, b) => a?.pk - b?.pk));
-  // }, []);
+  useEffect(() => {
+    setCategorySort(catData?.sort((a, b) => a?.pk - b?.pk));
+  }, []);
 
   if (loading)
     return (

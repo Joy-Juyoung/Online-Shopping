@@ -79,11 +79,11 @@ const AdminHeader = ({ meData, setIsAdminBoard }) => {
             <PersonIcon />
           </AdUserLink>
         </AdUserIcon>
-        <AdInfoIcon>
+        <AdInfoIcon onClick={handleLogout}>
           <AdRightIcon>{meData?.username.toUpperCase()}</AdRightIcon>
           <AdRightIcon>
             <AdPermLink>
-              <LogoutIcon fontSize='medium' onClick={handleLogout} />
+              <LogoutIcon fontSize='medium' />
             </AdPermLink>
           </AdRightIcon>
         </AdInfoIcon>

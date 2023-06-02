@@ -140,12 +140,13 @@ export const AdInfoIcon = styled.div`
   border-radius: 10px;
   padding: 10px 15px;
   border: 2px solid #ffae00;
+  cursor: pointer;
 `;
 
 export const AdRightIcon = styled.div`
   display: flex;
   align-items: center;
-  cursor: default;
+  /* cursor: default; */
 `;
 
 export const AdPermLink = styled(Link)`
@@ -154,11 +155,7 @@ export const AdPermLink = styled(Link)`
   text-decoration: none;
   margin-left: 10px;
   color: #21201e;
-  /* font-weight: 900; */
-  cursor: pointer;
-  /* & :hover {
-    color: lightgray;
-  } */
+  /* cursor: pointer; */
 `;
 
 // export const SideHideLink = styled(Link)`
