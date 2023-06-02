@@ -54,8 +54,6 @@ import Dashboard from './Admin/Dashboard/Dashboard';
 import CustomersManage from './Admin/CustomersManage/CustomersManage';
 import CouponManage from './Admin/CouponManage/CouponManage';
 import CategoryManage from './Admin/CategoryManage/CategoryManage';
-import HeadCategory from './Admin/CategoryManage/HeadCategory';
-import SubCategory from './Admin/CategoryManage/SubCategory';
 import ItemManage from './Admin/ItemManage/ItemManage';
 import ItemList from './Admin/ItemManage/ItemList';
 import ItemReviews from './Admin/ItemManage/ItemReviews';
@@ -329,16 +327,6 @@ const Home = () => {
                 <Route
                   path='/admin/categories'
                   element={<CategoryManage />}
-                  exact={true}
-                />
-                <Route
-                  path='/admin/categories/head'
-                  element={<HeadCategory />}
-                  exact={true}
-                />
-                <Route
-                  path='/admin/categories/:headName/sub'
-                  element={<SubCategory />}
                   exact={true}
                 />
                 <Route

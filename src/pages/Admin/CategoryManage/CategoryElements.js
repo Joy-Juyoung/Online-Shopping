@@ -150,26 +150,26 @@ export const AdReviewBodyTr = styled.tr`
 `;
 
 export const AdReviewTd = styled.td`
-  width: 20px;
+  width: 100%;
   font-size: 14px;
   padding: 3px 5px;
   display: flex;
+  
+  div {
+    width: 100%;
+    display: flex;
+    justify-content:space-between;
 
-  button {
+    button {
     width: 20px;
     height: 20px;
     background: none;
     border: none;
     margin-left: 10px;
     cursor: pointer;
-  }
-  
-  &:active,
-  &:focus,
-  &.active {
-    color: #000;
-    font-weight: bold;
-  }
+      }
+
+    }
 
 `;
 

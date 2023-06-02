@@ -203,7 +203,7 @@ export const AdViewList = styled.div`
 export const AdViewListWrap = styled.div``
 
 export const AdViewStatus = styled.div`
-  height: 220px;
+  height: 230px;
   border-radius: 20px;
   box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.1);
   position: relative;
@@ -222,14 +222,14 @@ export const AdViewStatus = styled.div`
   &.inprogress {
     color: #005260;
     border: 1px solid #61b9ff;
-    height: 450px;
+    height: 480px;
   
   }
 
   &.delivered {
     color: #006b21;
     border: 1px solid #73b748;
-    margin-top: 10px;
+    margin-top: 20px;
   }
 
   &.cancel {
