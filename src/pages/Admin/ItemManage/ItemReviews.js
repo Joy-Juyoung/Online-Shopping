@@ -49,6 +49,8 @@ const ItemReviews = ({ meData }) => {
   const [modalShown, toggleModal] = useState(false);
   const [reviewByUser, setReviewByUser] = useState();
 
+  const [delPk, setDelPk] = useState();
+
   const [searchedProductList, setSearchedProductList] = useState();
   const [searchProductValue, setSearchProductValue] = useState();
   const [searchedReviewList, setSearchedReviewList] = useState();
@@ -150,11 +152,12 @@ const ItemReviews = ({ meData }) => {
       withCredentials: true,
     });
     // console.log('Review', review.data);
-    setReviewByUser(review.data);
+    setReviewByUser(review?.data);
   };
 
   const handleReviewDelete = async (pk) => {
-    // console.log('pk', pk);
+    // console.log('newList', newList);
+    // setDelPk(newList?.pk);
     if (window.confirm('Are you sure you want to delete this review?')) {
       const reviewDel = await axios.delete(`/reviews/${pk}`, {
         headers: { 'Content-Type': 'application/json' },
@@ -162,11 +165,16 @@ const ItemReviews = ({ meData }) => {
       });
       console.log('Review', reviewDel.data);
       window.location.reload();
+      // handleView(newList?.kind?.pk);
     }
     // else {
     //   }
     // setReviewByUser(review.data);
   };
+
+  // useEffect(() => {
+  //   handleView(newList?.pk);
+  // }, [delPk]);
 
   if (loading)
     return (
@@ -199,9 +207,6 @@ const ItemReviews = ({ meData }) => {
                   </AdReviewHeadTr>
                 </AdReviewThead>
                 {searchedProductList?.map((un, index) => {
-                  {
-                    /* {uniqueList?.map((un, index) => { */
-                  }
                   return (
                     <AdReviewTbody key={index}>
                       <AdReviewBodyTr
