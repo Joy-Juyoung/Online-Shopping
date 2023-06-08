@@ -17,6 +17,9 @@ import { Link, useParams } from 'react-router-dom';
 import Category from './Category';
 import SideFilter from './SideFilter';
 import Loading from '../../components/Loading';
+import { LoadMore } from '../OrderPage/OrderElements';
+import { LoadMoreBtn } from '../../components/ButtonElements';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const sort = [
   { value: 'Newest', text: 'Newest first' },
@@ -224,7 +227,11 @@ const AllProducts = ({ meData, catData }) => {
               </ListMid>
             </ListMidWrap>
           </ProductsList>
-          <button onClick={handleShowMore}>Load more</button>
+          <LoadMore>
+            <LoadMoreBtn onClick={handleShowMore}>
+              Load more <ExpandMoreIcon />
+            </LoadMoreBtn>
+          </LoadMore>
         </ProductsListWrapper>
       </ProductsWrap>
     </ProductsListContainer>

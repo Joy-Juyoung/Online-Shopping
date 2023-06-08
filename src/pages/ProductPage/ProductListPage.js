@@ -61,6 +61,7 @@ const ProductsListPage = ({ meData, catData }) => {
   useEffect(() => {
     setLoading(true);
     getAllKindsProduct();
+    setPriceRange('none');
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, [pId]);
 
@@ -158,11 +159,8 @@ const ProductsListPage = ({ meData, catData }) => {
                               <Link
                                 to={`/products/category/${pId}/${item?.name}/${item?.pk}`}
                               >
-                                {/* {itemsByPrice?.map((price) =>
-                                  price?.map((all) =>all.length))} */}
                                 <AllEachTitle>
                                   {item?.name?.toUpperCase()}
-                                  {/* <span>Total {item?.products?.length}</span> */}
                                 </AllEachTitle>
                               </Link>
                               <ListMid>
