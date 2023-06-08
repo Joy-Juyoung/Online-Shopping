@@ -42,8 +42,7 @@ const Dashboard = ({ meData }) => {
   const [deliveredList, setDeliveredList] = useState();
   const [cancelList, setCancelList] = useState();
 
-
- const getReviews = async () => {
+  const getReviews = async () => {
     const reviewList = await axios.get('/reviews/', {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
@@ -73,7 +72,7 @@ const Dashboard = ({ meData }) => {
     setCustomers(userList?.data);
     setLoading(false);
   };
-  
+
   const getOrders = async () => {
     const orderList = await axios.get('/orders/', {
       headers: { 'Content-Type': 'application/json' },
@@ -81,7 +80,7 @@ const Dashboard = ({ meData }) => {
     });
     console.log('orederList', orderList.data);
     setOrders(orderList?.data);
-    setLoading(false);   
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -109,8 +108,8 @@ const Dashboard = ({ meData }) => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
 
-
-  const totalSales = pendingList?.length + inprogressList?.length + deliveredList?.length;
+  const totalSales =
+    pendingList?.length + inprogressList?.length + deliveredList?.length;
   if (loading)
     return (
       <div>
@@ -121,7 +120,7 @@ const Dashboard = ({ meData }) => {
     <AdContainer>
       <h1>Dashboard</h1>
       <AdOrderOverview>
-      <AdViewCount>
+        <AdViewCount>
           <AdCount className='total'>
             <AdCountIcon>
               <PersonIcon sx={{ fontSize: 45 }} />
@@ -154,7 +153,7 @@ const Dashboard = ({ meData }) => {
               <ReceiptIcon sx={{ fontSize: 45 }} />
             </AdCountIcon>
             <AdCountText>
-              <span>{totalSales}</span>
+              <span>{totalSales || 0}</span>
               <p>Total Sales</p>
             </AdCountText>
           </AdCount>
@@ -164,23 +163,42 @@ const Dashboard = ({ meData }) => {
             <AdViewStatus className='pending'>
               <DountWrap>
                 <DountInfo>
-                  <DountChart color="#f2b155" percent={0.43} size="100px" order={orders}/>
+                  <DountChart
+                    color='#f2b155'
+                    percent={0.43}
+                    size='100px'
+                    order={orders}
+                  />
                   <p>Pending</p>
                 </DountInfo>
                 <DountInfo>
-
-                <DountChart color="#61b9ff" percent={0.15} size="100px" order={orders}/>
-                <p>Inprogress</p>
+                  <DountChart
+                    color='#61b9ff'
+                    percent={0.15}
+                    size='100px'
+                    order={orders}
+                  />
+                  <p>Inprogress</p>
                 </DountInfo>
-              </DountWrap>  
+              </DountWrap>
               <DountWrap>
                 <DountInfo>
-                <DountChart color="#73b748" percent={0.34} size="100px" order={orders}/>
-                <p>Delivered</p>
+                  <DountChart
+                    color='#73b748'
+                    percent={0.34}
+                    size='100px'
+                    order={orders}
+                  />
+                  <p>Delivered</p>
                 </DountInfo>
                 <DountInfo>
-                <DountChart color="#ad8260" percent={0.08} size="100px" order={orders}/>
-                <p>Cancelled</p>
+                  <DountChart
+                    color='#ad8260'
+                    percent={0.08}
+                    size='100px'
+                    order={orders}
+                  />
+                  <p>Cancelled</p>
                 </DountInfo>
               </DountWrap>
             </AdViewStatus>
@@ -202,7 +220,7 @@ const Dashboard = ({ meData }) => {
                       return (
                         <tr key={rv?.pk}>
                           <td style={{ width: '10%' }}>{rv?.pk}</td>
-                          <td style={{ width: '30%' }}>{rv?.Product_Name}</td>                          
+                          <td style={{ width: '30%' }}>{rv?.Product_Name}</td>
                           <td style={{ width: '20%' }}>{rv?.user?.username}</td>
                           <td style={{ width: '5%' }}>{rv?.rating}</td>
                           <td style={{ width: '10%' }}>{rv?.payload}</td>
@@ -212,12 +230,12 @@ const Dashboard = ({ meData }) => {
                   </tbody>
                 </table>
               </AdStatus>
-            </AdViewStatus>   
+            </AdViewStatus>
           </AdViewListWrap>
           <AdViewStatus className='inprogress'>
             <h4>Recent Update Products</h4>
             <AdStatus>
-               <table>
+              <table>
                 <thead>
                   <tr>
                     <th>ID</th>
@@ -233,7 +251,7 @@ const Dashboard = ({ meData }) => {
                       <tr key={dl?.pk}>
                         <td style={{ width: '10%' }}>{dl?.pk}</td>
                         <td style={{ width: '10%' }}>
-                          <img src={dl?.photos[0]?.picture}/>
+                          <img src={dl?.photos[0]?.picture} />
                           {/* {dl?.photos[0]?.picture} */}
                         </td>
                         <td style={{ width: '30%' }}>{dl?.name}</td>
@@ -248,12 +266,11 @@ const Dashboard = ({ meData }) => {
           </AdViewStatus>
         </AdViewList>
       </AdOrderOverview>
-{/*      
+      {/*      
           <DashboardList>order status circle</DashboardList>
           최근 업데이트된 시간별 Status
           <DashboardList>Recenter review</DashboardList>
            최근 오더목록 중 주문한 유저정보 */}
-
     </AdContainer>
   );
 };
