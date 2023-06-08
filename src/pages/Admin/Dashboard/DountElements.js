@@ -10,8 +10,8 @@ export const Chart = styled.div`
 
 
 export const DountWrap = styled.div`
-  margin-top: 5px;
-  margin-left: 5px;
+  margin-top: 10px;
+  margin-left: 30px;
   display: flex;
 
   /* span {
@@ -22,6 +22,7 @@ export const DountWrap = styled.div`
 
 export const DountInfo = styled.div`
   display: flex;
+  margin-left: 15px;
   p {
     margin-top:30px
   }
