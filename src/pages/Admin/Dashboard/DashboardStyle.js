@@ -169,17 +169,22 @@ export const AdCountText = styled.div`
   font-size: 13px;
 
   p {
+
     margin-top: -10px;
+    height:19px
   }
 
   span {
+
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 35px;
     padding: 0;
     margin-top: -10px;
+    height: 53px;
   }
+
 `;
 
 export const AdCountIcon = styled.div`
@@ -214,12 +219,15 @@ export const AdViewStatus = styled.div`
     font-size: 18px;
   }
   &.pending {
+    width:451.59px;
+    width: 100%;
     color: #b74a01;
     border: 1px solid #f2b155;
 
   }
 
   &.inprogress {
+    width:478.41px;
     color: #005260;
     border: 1px solid #61b9ff;
     height: 480px;
@@ -227,23 +235,31 @@ export const AdViewStatus = styled.div`
   }
 
   &.delivered {
+    width:451.59px;
     color: #006b21;
     border: 1px solid #73b748;
     margin-top: 20px;
   }
 
   &.cancel {
+    width: 100%;
     color: #82591c;
     border: 1px solid #ad8260;
   }
 `;
 
 export const AdStatus = styled.div`
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+
   table {
     width: 100%;
     padding: 15px;
     font-size: 14px;
     text-align: center;
+
   }
 
   tr {
@@ -259,10 +275,7 @@ export const AdStatus = styled.div`
 
   td {
     padding-top: 3px;
-    /* display: block;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis; */
+
 
     img {
       width: 25px;

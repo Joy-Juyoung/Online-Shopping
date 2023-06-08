@@ -29,6 +29,8 @@ import ReceiptIcon from '@mui/icons-material/Receipt';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import DountChart from './DountChart';
 import { DountInfo, DountWrap } from './DountElements';
+import PartLoading from './PartLoading';
+import { Skeleton } from '@mui/material';
 
 const Dashboard = ({ meData }) => {
   const [loading, setLoading] = useState(false);
@@ -37,6 +39,9 @@ const Dashboard = ({ meData }) => {
   const [orders, setOrders] = useState();
   const [reviews, setReviews] = useState();
 
+  const [loadings, setLoadings] = useState(true);
+  const [loadingss, setLoadingss] = useState(true);
+  
   const [pendingList, setPendingList] = useState();
   const [inprogressList, setInprogressList] = useState();
   const [deliveredList, setDeliveredList] = useState();
@@ -50,7 +55,6 @@ const Dashboard = ({ meData }) => {
     });
     console.log('reviewList', reviewList.data);
     setReviews(reviewList?.data);
-
     setLoading(false);
   };
 
@@ -109,19 +113,36 @@ const Dashboard = ({ meData }) => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoadings(false);
+    }, 4000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoadingss(false);
+    }, 5600);
+    return () => clearTimeout(timer);
+  }, []);
 
   const totalSales = pendingList?.length + inprogressList?.length + deliveredList?.length;
+
   if (loading)
     return (
       <div>
         <Loading />
       </div>
     );
+
+  
+
   return (
     <AdContainer>
       <h1>Dashboard</h1>
       <AdOrderOverview>
-      <AdViewCount>
+        <AdViewCount>
           <AdCount className='total'>
             <AdCountIcon>
               <PersonIcon sx={{ fontSize: 45 }} />
@@ -136,8 +157,12 @@ const Dashboard = ({ meData }) => {
               <ShoppingBasketIcon sx={{ fontSize: 45 }} />
             </AdCountIcon>
             <AdCountText>
-              <span>{products?.length}</span>
-              <p>Total Products</p>
+              {loadingss ? (
+                    <Skeleton variant='circular' width={53} height={53} />
+                    ) : (
+                    <span>{products?.length}</span>
+                    )}
+                    <p>Total Products</p>
             </AdCountText>
           </AdCount>
           <AdCount className='inprogress'>
@@ -145,18 +170,26 @@ const Dashboard = ({ meData }) => {
               <PaidIcon sx={{ fontSize: 45 }} />
             </AdCountIcon>
             <AdCountText>
-              <span>{orders?.length}</span>
-              <p>Total Orders</p>
+                  {loadings ? (
+                    <Skeleton variant='circular' width={53} height={53} />
+                  ) : (
+                      <span>{orders?.length}</span>
+                  )}
+                    <p>Total Orders</p>
             </AdCountText>
           </AdCount>
           <AdCount className='delivered'>
             <AdCountIcon>
               <ReceiptIcon sx={{ fontSize: 45 }} />
             </AdCountIcon>
-            <AdCountText>
-              <span>{totalSales}</span>
-              <p>Total Sales</p>
-            </AdCountText>
+                <AdCountText>
+                  {loadings ? (
+                    <Skeleton variant="circular" width={53} height={53} />
+                  ) : (
+                    <span>{totalSales}</span>
+                  )}
+                    <p>Total Sales</p>
+                </AdCountText>
           </AdCount>
         </AdViewCount>
         <AdViewList>
@@ -168,9 +201,8 @@ const Dashboard = ({ meData }) => {
                   <p>Pending</p>
                 </DountInfo>
                 <DountInfo>
-
-                <DountChart color="#61b9ff" percent={0.15} size="100px" order={orders}/>
-                <p>Inprogress</p>
+                  <DountChart color="#61b9ff" percent={0.15} size="100px" order={orders}/>
+                  <p>Inprogress</p>
                 </DountInfo>
               </DountWrap>  
               <DountWrap>
@@ -188,6 +220,10 @@ const Dashboard = ({ meData }) => {
               <h4>Recent Update Reviews</h4>
               <AdStatus>
                 <table>
+                {loadings ? (
+                        <Skeleton variant='rect' width="100%" height={150} />
+                        ) : (
+                      <>
                   <thead>
                     <tr>
                       <th>NO.</th>
@@ -198,18 +234,20 @@ const Dashboard = ({ meData }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {reviews?.slice(0, 4).map((rv) => {
+                    {reviews?.slice(0, 5).map((rv) => {
                       return (
                         <tr key={rv?.pk}>
-                          <td style={{ width: '10%' }}>{rv?.pk}</td>
-                          <td style={{ width: '30%' }}>{rv?.Product_Name}</td>                          
-                          <td style={{ width: '20%' }}>{rv?.user?.username}</td>
+                          <td style={{ width: '5%' }}>{rv?.pk}</td>
+                          <td style={{ width: '33%' }}>{rv?.Product_Name}</td>                          
+                          <td style={{ width: '22%' }}>{rv?.user?.username}</td>
                           <td style={{ width: '5%' }}>{rv?.rating}</td>
                           <td style={{ width: '10%' }}>{rv?.payload}</td>
                         </tr>
                       );
                     })}
                   </tbody>
+                  </>
+                    )}
                 </table>
               </AdStatus>
             </AdViewStatus>   
@@ -218,31 +256,37 @@ const Dashboard = ({ meData }) => {
             <h4>Recent Update Products</h4>
             <AdStatus>
                <table>
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>PHOTO</th>
-                    <th>NAME</th>
-                    <th>PRICE</th>
-                    <th>SUB CATEGORY</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {products?.slice(0, 10).map((dl) => {
-                    return (
-                      <tr key={dl?.pk}>
-                        <td style={{ width: '10%' }}>{dl?.pk}</td>
-                        <td style={{ width: '10%' }}>
-                          <img src={dl?.photos[0]?.picture}/>
-                          {/* {dl?.photos[0]?.picture} */}
-                        </td>
-                        <td style={{ width: '30%' }}>{dl?.name}</td>
-                        <td style={{ width: '5%' }}>{dl?.price}</td>
-                        <td style={{ width: '20%' }}>{dl?.kind?.name}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
+                {loadingss ? (
+                        <Skeleton variant='rect' width="100%" height={400} />
+                        ) : (
+                      <>
+                        <thead>
+                          <tr>
+                            <th>ID</th>
+                            <th>PHOTO</th>
+                            <th>NAME</th>
+                            <th>PRICE</th>
+                            <th>SUB CATEGORY</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {products?.slice(0, 10).map((dl) => {
+                            return (
+                              <tr key={dl?.pk}>
+                                <td style={{ width: '10%' }}>{dl?.pk}</td>
+                                <td style={{ width: '10%' }}>
+                                  <img src={dl?.photos[0]?.picture}/>
+                                  {/* {dl?.photos[0]?.picture} */}
+                                </td>
+                                <td style={{ width: '30%' }}>{dl?.name}</td>
+                                <td style={{ width: '5%' }}>{dl?.price}</td>
+                                <td style={{ width: '20%' }}>{dl?.kind?.name}</td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </>
+                    )}
               </table>
             </AdStatus>
           </AdViewStatus>
