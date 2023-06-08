@@ -30,7 +30,7 @@ const CustomersManage = ({ meData }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(8);
 
-  const [userInput, setUserInput] = useState("");
+  const [userInput, setUserInput] = useState('');
 
   const getCustomers = async () => {
     const userList = await axios.get('/users/', {
@@ -46,7 +46,6 @@ const CustomersManage = ({ meData }) => {
     setLoading(true);
     getCustomers();
   }, [meData]);
-
 
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
@@ -64,11 +63,11 @@ const CustomersManage = ({ meData }) => {
       <h1>Custoemrs</h1>
       <AdListTop>
         <AdListSearch>
-          <input 
-            type='text' 
-            placeholder='Search' 
+          <input
+            type='text'
+            placeholder='Search'
             onChange={(e) => setUserInput(e.target.value)}
-            />
+          />
         </AdListSearch>
         <AdListUtils>
           <ButtonSmall>Delete</ButtonSmall>
@@ -91,35 +90,121 @@ const CustomersManage = ({ meData }) => {
               <AdTHeadCell className='type'>TYPE</AdTHeadCell>
             </AdTHeadeRow>
           </AdTHead>
-          {currentPosts?.filter((list) =>
-            list.username.toLowerCase().includes(userInput.toLowerCase())
-            || list.type.toLowerCase().includes(userInput.toLowerCase())            
-            || list.pk?.toString().includes(userInput)
-            || list.balance?.toString().includes(userInput)
-            || list.address?.toString().includes(userInput)
-            || list.phone_number?.toString().includes(userInput)
-            )
-          .map((user) => {
-            return (
-              <AdTBody key={user?.pk}>
-                <AdTBodyRow>
-                  <AdTBodyCell className='id'>{user?.pk}</AdTBodyCell>
-                  <AdTBodyCell className='username'>
-                    {user?.username}
-                  </AdTBodyCell>
-                  <AdTBodyCell className='address'>{user?.address}</AdTBodyCell>
-                  <AdTBodyCell className='phone'>
-                    {user?.phone_number}
-                  </AdTBodyCell>
-                  <AdTBodyCell className='balance'>${user?.balance?.toLocaleString()}</AdTBodyCell>
-                  {/* <select onChange={handleSelect} defaultValue={user?.type}>
+
+          {userInput === null ? (
+            <>
+              {currentPosts
+                ?.filter(
+                  (list) =>
+                    list.username
+                      .toLowerCase()
+                      .includes(userInput.toLowerCase()) ||
+                    list.type.toLowerCase().includes(userInput.toLowerCase()) ||
+                    list.pk?.toString().includes(userInput) ||
+                    list.balance?.toString().includes(userInput) ||
+                    list.address?.toString().includes(userInput) ||
+                    list.phone_number?.toString().includes(userInput)
+                )
+                .map((user) => {
+                  return (
+                    <AdTBody key={user?.pk}>
+                      <AdTBodyRow>
+                        <AdTBodyCell className='id'>{user?.pk}</AdTBodyCell>
+                        <AdTBodyCell className='username'>
+                          {user?.username}
+                        </AdTBodyCell>
+                        <AdTBodyCell className='address'>
+                          {user?.address}
+                        </AdTBodyCell>
+                        <AdTBodyCell className='phone'>
+                          {user?.phone_number}
+                        </AdTBodyCell>
+                        <AdTBodyCell className='balance'>
+                          ${user?.balance?.toLocaleString()}
+                        </AdTBodyCell>
+                        {/* <select onChange={handleSelect} defaultValue={user?.type}>
                     <option value={user?.type}>{user?.type}</option>
                   </select> */}
-                  <AdTBodyCell className='type'>{user?.type}</AdTBodyCell>
-                </AdTBodyRow>
-              </AdTBody>
-            );
-          })}
+                        <AdTBodyCell className='type'>{user?.type}</AdTBodyCell>
+                      </AdTBodyRow>
+                    </AdTBody>
+                  );
+                })}
+            </>
+          ) : (
+            <>
+              {customers
+                ?.filter(
+                  (list) =>
+                    list.username
+                      .toLowerCase()
+                      .includes(userInput.toLowerCase()) ||
+                    list.type.toLowerCase().includes(userInput.toLowerCase()) ||
+                    list.pk?.toString().includes(userInput) ||
+                    list.balance?.toString().includes(userInput) ||
+                    list.address?.toString().includes(userInput) ||
+                    list.phone_number?.toString().includes(userInput)
+                )
+                .slice(firstPostIndex, lastPostIndex)
+                .map((user) => {
+                  return (
+                    <AdTBody key={user?.pk}>
+                      <AdTBodyRow>
+                        <AdTBodyCell className='id'>{user?.pk}</AdTBodyCell>
+                        <AdTBodyCell className='username'>
+                          {user?.username}
+                        </AdTBodyCell>
+                        <AdTBodyCell className='address'>
+                          {user?.address}
+                        </AdTBodyCell>
+                        <AdTBodyCell className='phone'>
+                          {user?.phone_number}
+                        </AdTBodyCell>
+                        <AdTBodyCell className='balance'>
+                          ${user?.balance?.toLocaleString()}
+                        </AdTBodyCell>
+                        {/* <select onChange={handleSelect} defaultValue={user?.type}>
+                    <option value={user?.type}>{user?.type}</option>
+                  </select> */}
+                        <AdTBodyCell className='type'>{user?.type}</AdTBodyCell>
+                      </AdTBodyRow>
+                    </AdTBody>
+                  );
+                })}
+            </>
+          )}
+          {/* {currentPosts
+            ?.filter(
+              (list) =>
+                list.username.toLowerCase().includes(userInput.toLowerCase()) ||
+                list.type.toLowerCase().includes(userInput.toLowerCase()) ||
+                list.pk?.toString().includes(userInput) ||
+                list.balance?.toString().includes(userInput) ||
+                list.address?.toString().includes(userInput) ||
+                list.phone_number?.toString().includes(userInput)
+            )
+            .map((user) => {
+              return (
+                <AdTBody key={user?.pk}>
+                  <AdTBodyRow>
+                    <AdTBodyCell className='id'>{user?.pk}</AdTBodyCell>
+                    <AdTBodyCell className='username'>
+                      {user?.username}
+                    </AdTBodyCell>
+                    <AdTBodyCell className='address'>
+                      {user?.address}
+                    </AdTBodyCell>
+                    <AdTBodyCell className='phone'>
+                      {user?.phone_number}
+                    </AdTBodyCell>
+                    <AdTBodyCell className='balance'>
+                      ${user?.balance?.toLocaleString()}
+                    </AdTBodyCell>
+                    <AdTBodyCell className='type'>{user?.type}</AdTBodyCell>
+                  </AdTBodyRow>
+                </AdTBody>
+              );
+            })} */}
         </AdTable>
       </AdListMid>
       <AdListBottom>
