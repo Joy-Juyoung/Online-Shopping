@@ -31,15 +31,16 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
 const statusKinds = ['All', 'pending', 'inprogress', 'delivered', 'cancelled'];
-const OrderPage = () => {
+
+const OrderPage = ({ meData }) => {
   const [orderStatus, setOrderStatus] = useState(null);
-  // const [isEmpty, setIsEmpty] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errMsg, setErMsg] = useState('');
   const [isSelected, setIsSelected] = useState('All');
   const [isSort, setIsSort] = useState(false);
   const [sortList, setSortList] = useState([]);
-  const [selectOption, setSelectOption] = useState();
+
+  const [nextList, setNextList] = useState(8);
 
   const getOrders = async () => {
     try {
@@ -47,7 +48,9 @@ const OrderPage = () => {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
       });
-      setOrderStatus(order?.data);
+      setOrderStatus(
+        order?.data?.filter((of) => of?.user?.username === meData?.username)
+      );
       setLoading(false);
     } catch (err) {
       if (err.response?.status === 400) {
@@ -67,6 +70,10 @@ const OrderPage = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     getOrders();
   }, []);
+
+  const handleShowMore = () => {
+    setNextList(nextList + 8);
+  };
 
   const handleStatusList = (status) => {
     console.log(status);
@@ -157,7 +164,6 @@ const OrderPage = () => {
                           {isSort ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
                         </span>
                       </Th>
-                      {/* <Th>Order Date</Th> */}
                       <Th>Number of Items</Th>
                       <Th>Order Pice</Th>
                       <Th>Status</Th>
@@ -165,7 +171,7 @@ const OrderPage = () => {
                     </Tr>
                   </Thead>
                   <Tbody>
-                    {orderStatus?.reverse().map((order) => {
+                    {orderStatus?.slice(0, nextList).map((order) => {
                       return (
                         <Tr key={order?.pk}>
                           {isSelected === 'All' && (
@@ -303,6 +309,7 @@ const OrderPage = () => {
               </OrderListWrap>
             )}
           </OrderList>
+          <button onClick={handleShowMore}>Load more</button>
         </OrderWrap>
       </OrderWrapper>
     </OrderContainer>

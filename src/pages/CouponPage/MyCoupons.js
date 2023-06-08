@@ -52,9 +52,9 @@ const MyCoupons = ({ meData }) => {
   const [isDrop, setIsDrop] = useState(false);
   const [selected, setSelected] = useState();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalShown, toggleModal] = useState(false);
-  const [indexEven, setIndexEven] = useState(false);
+
+  const [nextList, setNextList] = useState(9);
 
   const getCoupons = async () => {
     const couponList = await axios.get('/coupons/', {
@@ -93,6 +93,10 @@ const MyCoupons = ({ meData }) => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
 
+  const handleShowMore = () => {
+    setNextList(nextList + 9);
+  };
+
   if (loading)
     return (
       <div>
@@ -111,17 +115,14 @@ const MyCoupons = ({ meData }) => {
               </ReviewListEmpty>
             ) : (
               <CouponListWrap>
-                {coupons?.map((coupon, index) => {
+                {coupons?.slice(0, nextList).map((coupon, index) => {
                   return (
                     <CouponFrame key={index} ref={ref}>
                       <Circle></Circle>
-                      {/* {coupon?.discount_rate === 50 &&}
-                      {coupon?.discount_rate === 30 &&}
-                      {coupon?.discount_rate === 15 &&} */}
+
                       <CouponInside
                         style={{
                           backgroundColor: index % 2 ? '#FEE599' : '#529292',
-                          // border: index % 2 ? '' : '2px solid #f8931f'#CFCFCF #FDBF1E,
                         }}
                       >
                         <CouponHeader>
@@ -163,6 +164,7 @@ const MyCoupons = ({ meData }) => {
               </CouponListWrap>
             )}
           </OrderList>
+          <button onClick={handleShowMore}>Load more</button>
         </OrderWrap>
       </OrderWrapper>
       <Modal

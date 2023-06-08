@@ -41,11 +41,6 @@ const ProductListByCategory = ({ meData, catData }) => {
   const [priceRange, setPriceRange] = useState();
   const [itemsByPrice, setItemsByPrice] = useState([]);
 
-  // console.log('itemKinds', itemKinds);
-  // console.log('pName', pName);
-  // console.log('cName', cName);
-  // console.log('cId', cId);
-
   const getAllKindsProduct = async () => {
     const { data } = await axios.get(
       `/products/productAllParentsKinds/${pId}`,
@@ -56,11 +51,11 @@ const ProductListByCategory = ({ meData, catData }) => {
     );
     setGetAllKinds(data);
   };
-
   useEffect(() => {
     getAllKindsProduct();
     setPriceRange('none');
   }, []);
+  // console.log('GetAllKind', getAllKinds);
 
   const getKindsProduct = async () => {
     const { data } = await axios.get(`/products/productAllChildKinds/${cId}`, {

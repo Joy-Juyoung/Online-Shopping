@@ -177,9 +177,22 @@ export const GooImg = styled.img`
 
 export const SocialPart = styled.div`
   display: flex;
-  /* -webkit-box-align: center; */
   align-items: center;
-  /* -webkit-box-pack: start; */
+  justify-content: space-between;
+  width: 100%;
+  /* align-self: flex-start; */
+  /* margin-top: 28px; */
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+`;
+
+export const SocialWrap = styled.div`
+  display: flex;
+  align-items: center;
   justify-content: flex-start;
   align-self: flex-start;
   margin-top: 28px;

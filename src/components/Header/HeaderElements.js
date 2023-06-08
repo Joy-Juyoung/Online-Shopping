@@ -250,6 +250,17 @@ export const DropMenuParents = styled.div`
   margin-right: 80px;
 `;
 
+export const DropdownButtonNone = styled.div`
+  text-decoration: none;
+  background: none;
+  border: none;
+  color: black;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  padding-bottom: 10px;
+`;
+
 export const DropdownButton = styled(Link)`
   text-decoration: none;
   background: none;
