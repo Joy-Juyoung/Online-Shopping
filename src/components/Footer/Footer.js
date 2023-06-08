@@ -25,6 +25,9 @@ import {
   FooterLineThree,
   LocationInfoBtn,
   CompanyInfo,
+  SocialWrap,
+  GoTop,
+  GoTopBtn,
 } from './FooterElements';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { color } from '@mui/system';
@@ -37,6 +40,7 @@ import { Link } from 'react-router-dom';
 import Modal from '../Modal';
 import Comingsoon from '../Comingsoon';
 import EmailIcon from '@mui/icons-material/Email';
+import NorthIcon from '@mui/icons-material/North';
 
 // import Smaile from '../../asset/smaile.svg';
 // import Donuts from '../../asset/donuts.svg';
@@ -61,11 +65,8 @@ const Footer = ({ click, isNewWindow }) => {
           <HelpBtn>
             <Link to='mailto:dev3blank@gmail.com'>
               <HelpIcon>
-                {/* Help Center
-              <EmailIcon fontSize='small' /> */}
                 <EmailIcon fontSize='small' />
                 <p>Contact Email</p>
-                {/* <span>Calgary, Canada</span> */}
                 <span>dev3blank@gmail.com</span>
               </HelpIcon>
             </Link>
@@ -73,42 +74,45 @@ const Footer = ({ click, isNewWindow }) => {
           <DownloadPart>
             <DownloadTitle>Download the BlankCloset app</DownloadTitle>
             <DownApp onClick={() => toggleModal(!modalShown)}>
-              {/* <Link to='/comingsoon'> */}
               <AppImg src={AppStore} />
-              {/* </Link> */}
             </DownApp>
 
             <DownGoo onClick={() => toggleModal(!modalShown)}>
-              {/* <Link to=''> */}
               <GooImg src={GooPlay} />
-              {/* </Link> */}
             </DownGoo>
           </DownloadPart>
           <SocialPart>
-            <InstarTab>
-              <Link
-                to='https://instagram.com/dev_blk?igshid=OGQ5ZDc2ODk2ZA=='
-                target='_blank'
+            <SocialWrap>
+              <InstarTab>
+                <Link
+                  to='https://instagram.com/dev_blk?igshid=OGQ5ZDc2ODk2ZA=='
+                  target='_blank'
+                >
+                  <InstarImg src={Instar} />
+                </Link>
+              </InstarTab>
+
+              <TwitTab onClick={() => toggleModal(!modalShown)}>
+                <TwitImg src={Twit} />
+              </TwitTab>
+
+              <YoutubTab onClick={() => toggleModal(!modalShown)}>
+                <YoutubImg src={Youtub} />
+              </YoutubTab>
+            </SocialWrap>
+            <GoTop>
+              <GoTopBtn
+                onClick={() =>
+                  window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+                }
               >
-                <InstarImg src={Instar} />
-              </Link>
-            </InstarTab>
-
-            <TwitTab onClick={() => toggleModal(!modalShown)}>
-              {/* <Link to=''> */}
-              <TwitImg src={Twit} />
-              {/* </Link> */}
-            </TwitTab>
-
-            <YoutubTab onClick={() => toggleModal(!modalShown)}>
-              {/* <Link to=''> */}
-              <YoutubImg src={Youtub} />
-              {/* </Link> */}
-            </YoutubTab>
+                <span>Top</span>
+                <NorthIcon />
+              </GoTopBtn>
+            </GoTop>
           </SocialPart>
         </FooterLineTwo>
         <FooterLineThree>
-          {/* <LocationInfoBtn>Learn more about BlankCloset Co.,Ltd.</LocationInfoBtn> */}
           <CompanyInfo>
             BlankCloset may not be the direct seller but only an intermediary
             for some products. In this case, BlankCloset has limited liability

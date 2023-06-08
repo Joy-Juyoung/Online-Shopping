@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../../api/axios';
-import { ButtonUtils } from '../../components/ButtonElements';
+import { ButtonUtils, LoadMoreBtn } from '../../components/ButtonElements';
 import { PesnalContainer, PesnalWrapper } from '../CommonElements';
 import {
   ListTotal,
   ListView,
+  LoadMore,
   OrderContainer,
   OrderEachStatus,
   OrderList,
@@ -29,17 +30,24 @@ import { Link } from 'react-router-dom';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const statusKinds = ['All', 'pending', 'inprogress', 'delivered', 'cancelled'];
-const OrderPage = () => {
+
+const OrderPage = ({ meData }) => {
   const [orderStatus, setOrderStatus] = useState(null);
-  // const [isEmpty, setIsEmpty] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errMsg, setErMsg] = useState('');
   const [isSelected, setIsSelected] = useState('All');
   const [isSort, setIsSort] = useState(false);
   const [sortList, setSortList] = useState([]);
-  const [selectOption, setSelectOption] = useState();
+
+  const [pendingOrderList, setPendingOrderList] = useState([]);
+  const [inprogressOrderList, setInprogressOrderList] = useState([]);
+  const [deliveredOrderList, setDeliveredOrderList] = useState([]);
+  const [cancelOrderList, setCancelOrderList] = useState([]);
+
+  const [nextList, setNextList] = useState(8);
 
   const getOrders = async () => {
     try {
@@ -47,7 +55,23 @@ const OrderPage = () => {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
       });
-      setOrderStatus(order?.data);
+      setOrderStatus(
+        order?.data?.filter((of) => of?.user?.username === meData?.username)
+      );
+
+      setPendingOrderList(
+        order?.data?.filter((of) => of?.status === 'pending')
+      );
+      setInprogressOrderList(
+        order?.data?.filter((of) => of?.status === 'inprogress')
+      );
+      setDeliveredOrderList(
+        order?.data?.filter((of) => of?.status === 'delivered')
+      );
+      setCancelOrderList(
+        order?.data?.filter((of) => of?.status === 'cancelled')
+      );
+
       setLoading(false);
     } catch (err) {
       if (err.response?.status === 400) {
@@ -60,13 +84,17 @@ const OrderPage = () => {
     }
   };
 
-  console.log('orderStatus', orderStatus);
+  // console.log('orderStatus', new Date(orderStatus?));
 
   useEffect(() => {
     setLoading(true);
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     getOrders();
   }, []);
+
+  const handleShowMore = () => {
+    setNextList(nextList + 8);
+  };
 
   const handleStatusList = (status) => {
     console.log(status);
@@ -86,6 +114,8 @@ const OrderPage = () => {
       setIsSelected('All');
     }
   };
+
+  // console.log(orderStatus);
 
   const handleDateSort = () => {
     setIsSort(!isSort);
@@ -157,7 +187,6 @@ const OrderPage = () => {
                           {isSort ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
                         </span>
                       </Th>
-                      {/* <Th>Order Date</Th> */}
                       <Th>Number of Items</Th>
                       <Th>Order Pice</Th>
                       <Th>Status</Th>
@@ -165,7 +194,7 @@ const OrderPage = () => {
                     </Tr>
                   </Thead>
                   <Tbody>
-                    {orderStatus?.reverse().map((order) => {
+                    {orderStatus?.slice(0, nextList).map((order) => {
                       return (
                         <Tr key={order?.pk}>
                           {isSelected === 'All' && (
@@ -235,7 +264,7 @@ const OrderPage = () => {
                               </Td>
                             </>
                           )}
-                          {/* {order?.status === isSelected ? ( */}
+
                           {order?.status === isSelected && (
                             <>
                               <Td>{order.pk.toString().padStart(6, '0')}</Td>
@@ -303,6 +332,11 @@ const OrderPage = () => {
               </OrderListWrap>
             )}
           </OrderList>
+          <LoadMore>
+            <LoadMoreBtn onClick={handleShowMore}>
+              Load more <ExpandMoreIcon />
+            </LoadMoreBtn>
+          </LoadMore>
         </OrderWrap>
       </OrderWrapper>
     </OrderContainer>

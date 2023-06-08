@@ -17,32 +17,17 @@ import {
   BasicInfoEach,
   EditInfoEach,
 } from './UserAccountElements';
-import {
-  ProductsListContainer,
-  ProductsWrap,
-} from '../ProductPage/ProductListElements';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { ProductsListContainer } from '../ProductPage/ProductListElements';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-
-import {
-  ButtonHover,
-  ButtonLarge,
-  ButtonSmall,
-  ButtonUtils,
-} from '../../components/ButtonElements';
+import { ButtonUtils } from '../../components/ButtonElements';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { PesnalContainer, PesnalWrapper } from '../CommonElements';
-import { InputWrap } from '../LoginPage/LoginElements';
+import { PesnalWrapper } from '../CommonElements';
 import Loading from '../../components/Loading';
 import axios from '../../api/axios';
-import { PersonalVideo } from '@material-ui/icons';
-import { useNavigate } from 'react-router-dom';
 import Avatar, { ConfigProvider } from 'react-avatar';
-import { useLocation } from 'react-router-dom';
 
 const UserAccountPage = ({ meData }) => {
-  // const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
@@ -59,15 +44,10 @@ const UserAccountPage = ({ meData }) => {
       withCredentials: true,
     });
     // console.log('reviewsList', reviewsList?.data);
-    setReviews(reviewsList?.data);
-    // setLoading(false);
+    setReviews(
+      reviewsList?.data.filter((rf) => rf?.user?.username === meData?.username)
+    );
   };
-
-  useEffect(() => {
-    // setLoading(true);
-    getReviews();
-    // window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -77,6 +57,7 @@ const UserAccountPage = ({ meData }) => {
       setLoading(false);
     };
     loadData();
+    getReviews();
   }, []);
 
   useEffect(() => {
@@ -86,10 +67,7 @@ const UserAccountPage = ({ meData }) => {
     setPhone(meData?.phone_number);
   }, [meData]);
 
-  // console.log('name', address);
-
   const handleInputChange = (e) => {
-    // console.log('name', e.target.value);
     var tempChangeUserInfo = changeUserInfo;
 
     if (e.target.id === 'name') {
@@ -103,17 +81,6 @@ const UserAccountPage = ({ meData }) => {
     }
     setChangeUserInfo(tempChangeUserInfo);
   };
-
-  // const handleDeleteUser = async () => {
-  //   alert('Are you sure you want to delete this account?');
-
-  //   axios.delete('/users/me', {
-  //     headers: { 'Content-Type': 'application/json' },
-  //     withCredentials: true,
-  //   });
-  //   navigate('/');
-  //   window.location.reload();
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -134,14 +101,10 @@ const UserAccountPage = ({ meData }) => {
         }
       );
       setChangeUserInfo(meInfo?.data);
-      // console.log('changed Data', meInfo?.data);
-
       setIsEdit(false);
-      window.location.reload();
+      // window.location.reload();
     }
   };
-
-  // console.log('changed', changeUserInfo);
 
   const handleEdit = () => {
     if (!isEdit) {

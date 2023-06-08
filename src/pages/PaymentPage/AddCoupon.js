@@ -41,19 +41,6 @@ const AddCoupon = ({
 
   const [selectedOption, setSelectedOption] = useState();
   const [savedCp, setSavedCp] = useState([]);
-  // const [getCp, setGetCp] = useState(
-  //   JSON.parse(localStorage.getItem('getCoupon'))
-  // );
-
-  // const getCoupons = async () => {
-  //   const couponList = await axios.get('/coupons/', {
-  //     headers: { 'Content-Type': 'application/json' },
-  //     withCredentials: true,
-  //   });
-  //   console.log('couponList', couponList?.data);
-  //   setCoupons(couponList?.data);
-  //   setSelected(coupons?.pk);
-  // };
 
   const handleOpenCoupon = async (pk) => {
     const couponEachList = await axios.get(`/coupons/${pk}`, {
@@ -72,10 +59,6 @@ const AddCoupon = ({
     }
   };
   console.log('couponDetails', couponDetails);
-
-  // useEffect(() => {
-  //   getCoupons();
-  // }, []);
 
   const selectedCoupon = (pk) => {
     setSelectedOption(pk);
@@ -110,7 +93,14 @@ const AddCoupon = ({
               </ReviewListEmpty>
             ) : (
               <div>
-                <ul>
+                <ul
+                  style={{
+                    overflowY: 'scroll',
+                    height: '250px',
+                    width: '200px',
+                    padding: '0 10px',
+                  }}
+                >
                   <li
                     style={{
                       display: 'flex',
@@ -123,16 +113,7 @@ const AddCoupon = ({
                     }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                      <input
-                        type='radio'
-                        name='selectedCoupon'
-
-                        // checked={selectedOption === coupon?.pk}
-                        // onChange={(e) => {
-                        //   e.preventDefault();
-                        //   selectedCoupon(coupon?.pk);
-                        // }}
-                      />
+                      <input type='radio' name='selectedCoupon' />
                       <div style={{ marginLeft: '5px' }}>none</div>
                     </div>
                   </li>
@@ -185,7 +166,7 @@ const AddCoupon = ({
                 </ul>
                 <ButtonSmall
                   onClick={handleApply}
-                  style={{ margin: '15px auto' }}
+                  style={{ margin: '15px auto', marginBottom: '-20px' }}
                 >
                   Apply Coupon
                 </ButtonSmall>

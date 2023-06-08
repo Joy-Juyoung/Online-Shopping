@@ -7,30 +7,19 @@ import {
   CartProductLists,
   CartRightBottom,
   CartRightInfo,
-  CartRightMidOne,
-  CartRightMidTwo,
   CartRightTop,
   CartSummary,
   CartSummaryInfo,
   CartWrapper,
   CheckBarWrap,
   CheckOutBtn,
-  CouponBtn,
-  CouponInfo,
-  CouponInput,
-  CouponInputWrap,
-  DeleteBtn,
   DetailDescription,
   DetailName,
   DetailOption,
   ExtraInfo,
-  FreeShippingInfo,
-  ItemIncreaseBtn,
-  ItemDecreaseBtn,
   ItemDetailOne,
   ItemDetailThree,
   ItemDetailTwo,
-  ItemNumberInput,
   ItemPriceInfo,
   ItemShippingFee,
   ItemTotalPrice,
@@ -41,17 +30,10 @@ import {
   ListsItemDetails,
   ListsItemImg,
   OrderCheckBox,
-  PromoInfo,
-  QuestionMark,
   SummaryWrap,
-  ItemDetailTwoWrap,
-  TotalTitle,
 } from './CartElements';
 
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import CloseIcon from '@mui/icons-material/Close';
-// import RemoveIcon from '@mui/icons-material/Remove';
-// import AddIcon from '@mui/icons-material/Add';
 import axios from '../../api/axios';
 import Loading from '../../components/Loading';
 import { Link } from 'react-router-dom';
@@ -65,15 +47,14 @@ const TestCart = ({ checkedList, setCheckedList, setIsCount, isCount }) => {
   const [carts, setCarts] = useState([]);
   const [isDisabled, setIsDisabled] = useState(false);
   const [cartArr, setCartArr] = useState([]);
+  const [isQtyChanged, setIsQtyChanged] = useState(false);
 
   const [checkedItem, setCheckedItem] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
-  // const [checkedList, setCheckedList] = useState([]);
 
   const handleCheckedItems = (e) => {
     setCheckedItem({ ...checkedItem, [e.target.value]: e.target.checked });
   };
-  // console.log('checkedItem', checkedItem);
 
   useEffect(() => {
     setSelectedItem(
@@ -82,11 +63,6 @@ const TestCart = ({ checkedList, setCheckedList, setIsCount, isCount }) => {
         .map((added, index) => added[0])
     );
   }, [checkedItem]);
-  // console.log('selectedItem', selectedItem);
-
-  useEffect(() => {
-    getAllCart();
-  }, [cartArr]);
 
   useEffect(() => {
     if (selectedItem) {
@@ -97,7 +73,6 @@ const TestCart = ({ checkedList, setCheckedList, setIsCount, isCount }) => {
 
     localStorage.setItem('getChecked', JSON.stringify(checkedList));
   }, [selectedItem, carts]);
-  // console.log('checkedList', checkedList);
 
   useEffect(() => {
     localStorage.setItem('getChecked', JSON.stringify(checkedList));
@@ -115,15 +90,11 @@ const TestCart = ({ checkedList, setCheckedList, setIsCount, isCount }) => {
 
   useEffect(() => {
     setLoading(true);
-    getAllCart();
-
+    // getAllCart();
+    setIsQtyChanged(false);
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
   // console.log('carts', carts);
-
-  useEffect(() => {
-    getAllCart();
-  }, [isCount]);
 
   const handleAllDeleteCart = async () => {
     if (checkedList?.length !== 0) {
@@ -143,10 +114,6 @@ const TestCart = ({ checkedList, setCheckedList, setIsCount, isCount }) => {
       }
     }
   };
-
-  // useEffect(() => {
-  //   getAllCart();
-  // }, [TotalPriceTag]);
 
   const handleDeleteCart = async (pk) => {
     // console.log('pk', pk);
@@ -178,7 +145,7 @@ const TestCart = ({ checkedList, setCheckedList, setIsCount, isCount }) => {
 
   useEffect(() => {
     getAllCart();
-  }, [TotalPriceTag]);
+  }, [cartArr, isCount]);
 
   if (loading)
     return (
@@ -213,22 +180,6 @@ const TestCart = ({ checkedList, setCheckedList, setIsCount, isCount }) => {
             <CartLeftInfo>
               <CartLeftCheckBar>
                 <CheckBarWrap>
-                  {/* <OrderCheckBox>
-                    <input
-                      type='checkbox'
-                      // checked={checkList.length === IdList.length}
-                      // onChange={() => onChangeAll()}
-                    />
-                    <label>All</label>
-                  </OrderCheckBox>
-                  <DeleteBtn
-                    onClick={(e) => {
-                      // e.preventDefault();
-                      handleAllDeleteCart();
-                    }}
-                  >
-                    Delete
-                  </DeleteBtn> */}
                   <OrderCheckBox>total {carts?.length}</OrderCheckBox>
                 </CheckBarWrap>
               </CartLeftCheckBar>
@@ -272,6 +223,8 @@ const TestCart = ({ checkedList, setCheckedList, setIsCount, isCount }) => {
                             getAllCart={getAllCart}
                             carts={carts}
                             setCartArr={setCartArr}
+                            isQtyChanged={isQtyChanged}
+                            setIsQtyChanged={setIsQtyChanged}
                           />
                         </ItemDetailTwo>
                         <ItemDetailThree>

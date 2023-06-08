@@ -53,6 +53,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import AddBalance from '../AddBalance';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import CartCount from './CartCount';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
 const CARTS_URL = '/carts/';
 
@@ -324,27 +325,46 @@ const Header = ({
                           to={`/products/category/${category?.pk}`}
                         >
                           {category?.productKinds?.length === 0 &&
-                          meData?.type === 'user' ? null : (
+                          meData?.type !== 'admin_user' ? null : (
                             <span>{category?.name.toUpperCase()}</span>
                           )}
                         </DropdownButton>
                         <DropChildWrap>
-                          <DropMenuChild>
-                            {category?.productKinds?.map((child) => {
-                              return (
-                                <Link
-                                  key={child?.pk}
+                          {category?.productKinds?.length === 0 ? (
+                            <DropMenuChild>
+                              <DropMenuItem
+                                style={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                }}
+                              >
+                                <ErrorOutlineIcon
                                   style={{
-                                    color: 'black',
-                                    textDecoration: 'none',
+                                    marginRight: '10px',
+                                    color: 'red',
                                   }}
-                                  to={`/products/category/${category?.pk}/${child?.name}/${child?.pk}`}
-                                >
-                                  <DropMenuItem>{child?.name}</DropMenuItem>
-                                </Link>
-                              );
-                            })}
-                          </DropMenuChild>
+                                />
+                                No subcategories. Please add a subcategory
+                              </DropMenuItem>
+                            </DropMenuChild>
+                          ) : (
+                            <DropMenuChild>
+                              {category?.productKinds?.map((child) => {
+                                return (
+                                  <Link
+                                    key={child?.pk}
+                                    style={{
+                                      color: 'black',
+                                      textDecoration: 'none',
+                                    }}
+                                    to={`/products/category/${category?.pk}/${child?.name}/${child?.pk}`}
+                                  >
+                                    <DropMenuItem>{child?.name}</DropMenuItem>
+                                  </Link>
+                                );
+                              })}
+                            </DropMenuChild>
+                          )}
                         </DropChildWrap>
                       </DropMenuParents>
                     </DropMenuList>

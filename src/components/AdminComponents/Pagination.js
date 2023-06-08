@@ -22,12 +22,17 @@ const Pagination = ({
   const [startNum, setStartNum] = useState(0);
   const [endNum, setEndNum] = useState(5);
 
+  console.log('currentPage', currentPage);
   const handleClick = (direction) => {
     if (direction === 'right') {
       setCurrentPage(currentPage + 1);
-      console.log('currentPage', currentPage);
+      setStartNum(startNum);
+      setEndNum(endNum);
+
       if (currentPage === pages.length) {
         setCurrentPage(currentPage);
+        setStartNum(startNum);
+        setEndNum(endNum);
       }
       if (currentPage >= startNum + 5) {
         setStartNum(startNum + 5);

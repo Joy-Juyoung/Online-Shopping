@@ -17,6 +17,9 @@ import { Link, useParams } from 'react-router-dom';
 import Category from './Category';
 import SideFilter from './SideFilter';
 import Loading from '../../components/Loading';
+import { LoadMore } from '../OrderPage/OrderElements';
+import { LoadMoreBtn } from '../../components/ButtonElements';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const sort = [
   { value: 'Newest', text: 'Newest first' },
@@ -36,6 +39,8 @@ const AllProducts = ({ meData, catData }) => {
   const [priceRange, setPriceRange] = useState();
   const [itemsByPrice, setItemsByPrice] = useState([]);
 
+  const [nextList, setNextList] = useState(12);
+
   const getItems = async () => {
     const itemsList = await axios.get('/products/', {
       headers: { 'Content-Type': 'application/json' },
@@ -53,9 +58,13 @@ const AllProducts = ({ meData, catData }) => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
 
-  useEffect(() => {
-    getItems();
-  }, [addLiked]);
+  const handleShowMore = () => {
+    setNextList(nextList + 8);
+  };
+
+  // useEffect(() => {
+  //   getItems();
+  // }, [addLiked]);
 
   const handleOptionChange = (e) => {
     setSelectOption(e.target.value);
@@ -169,11 +178,12 @@ const AllProducts = ({ meData, catData }) => {
                     {selectOption === 'Newest' ? (
                       <>
                         {items
-                          ?.sort(
-                            (start, end) =>
-                              new Date(end.created_at).getTime() -
-                              new Date(start.created_at).getTime()
-                          )
+                          ?.slice(0, nextList)
+                          // .sort(
+                          //   (start, end) =>
+                          //     new Date(end.created_at).getTime() -
+                          //     new Date(start.created_at).getTime()
+                          // )
                           .map((all) => {
                             return (
                               <ProductsCard
@@ -187,7 +197,7 @@ const AllProducts = ({ meData, catData }) => {
                       </>
                     ) : (
                       <>
-                        {items?.map((all) => {
+                        {items?.slice(0, nextList).map((all) => {
                           return (
                             <ProductsCard
                               key={all.pk}
@@ -202,7 +212,7 @@ const AllProducts = ({ meData, catData }) => {
                   </>
                 ) : (
                   <>
-                    {itemsByPrice?.map((all) => {
+                    {itemsByPrice?.slice(0, nextList).map((all) => {
                       return (
                         <ProductsCard
                           key={all.pk}
@@ -217,6 +227,11 @@ const AllProducts = ({ meData, catData }) => {
               </ListMid>
             </ListMidWrap>
           </ProductsList>
+          <LoadMore>
+            <LoadMoreBtn onClick={handleShowMore}>
+              Load more <ExpandMoreIcon />
+            </LoadMoreBtn>
+          </LoadMore>
         </ProductsListWrapper>
       </ProductsWrap>
     </ProductsListContainer>

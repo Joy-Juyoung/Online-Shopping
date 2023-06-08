@@ -13,7 +13,7 @@ import {
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import axios from '../../api/axios';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 const LocateList = styled.li`
@@ -58,6 +58,11 @@ const SideFilter = ({
 }) => {
   const [isCategoryDrop, setIsCategoryDrop] = useState(true);
   const [isPriceDrop, setIsPriceDrop] = useState(true);
+  const location = useLocation();
+
+  // useEffect(()=> {
+  //   if(location?.pathname)
+  // })
 
   return (
     <SideFilterContainer>
