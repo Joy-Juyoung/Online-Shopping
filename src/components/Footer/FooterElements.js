@@ -257,3 +257,47 @@ export const CompanyInfo = styled.p`
   font-size: 12px;
   color: #a9a9a9;
 `;
+
+export const GoTop = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const GoTopBtn = styled.button`
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  background: #0a0f18;
+  padding: 5px 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* padding: 50px; */
+  /* margin-right: 20px; */
+  /* font-weight: 600; */
+
+  span {
+    /* margin-left: 40px; */
+  }
+
+  svg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    margin-right: -5px;
+    /* margin-left: 5px; */
+  }
+
+  &:hover {
+    background: #ffae00;
+    color: #0a0f18;
+    font-weight: 600;
+    /* border: 1px solid #0a0f18; */
+  }
+`;

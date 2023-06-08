@@ -26,6 +26,8 @@ import {
   LocationInfoBtn,
   CompanyInfo,
   SocialWrap,
+  GoTop,
+  GoTopBtn,
 } from './FooterElements';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { color } from '@mui/system';
@@ -38,6 +40,7 @@ import { Link } from 'react-router-dom';
 import Modal from '../Modal';
 import Comingsoon from '../Comingsoon';
 import EmailIcon from '@mui/icons-material/Email';
+import NorthIcon from '@mui/icons-material/North';
 
 // import Smaile from '../../asset/smaile.svg';
 // import Donuts from '../../asset/donuts.svg';
@@ -97,13 +100,16 @@ const Footer = ({ click, isNewWindow }) => {
                 <YoutubImg src={Youtub} />
               </YoutubTab>
             </SocialWrap>
-            <button
-              onClick={() =>
-                window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
-              }
-            >
-              Go to top
-            </button>
+            <GoTop>
+              <GoTopBtn
+                onClick={() =>
+                  window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+                }
+              >
+                <span>Top</span>
+                <NorthIcon />
+              </GoTopBtn>
+            </GoTop>
           </SocialPart>
         </FooterLineTwo>
         <FooterLineThree>

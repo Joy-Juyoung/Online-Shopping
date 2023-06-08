@@ -129,40 +129,6 @@ export const AdTBodyCell = styled.td`
     flex-direction: column;
     align-items: center; */
   }
-  /* itemList */
-  &.check {
-    padding-left: 15px;
-    width: 5%;
-  }
-
-  &.id {
-    width: 5%;
-  }
-
-  &.phto {
-    width: 10%;
-    height: 40px;
-  }
-
-  &.name {
-    width: 30%;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    padding-right: 10px;
-  }
-
-  &.price {
-    width: 10%;
-  }
-
-  &.sub {
-    width: 15%;
-  }
-
-  &.createAt {
-    width: 25%;
-  }
 
   /* couponList */
 

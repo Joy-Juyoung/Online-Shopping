@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../../api/axios';
-import { ButtonUtils } from '../../components/ButtonElements';
+import { ButtonUtils, LoadMoreBtn } from '../../components/ButtonElements';
 import { PesnalContainer, PesnalWrapper } from '../CommonElements';
 import {
   ListTotal,
   ListView,
+  LoadMore,
   OrderContainer,
   OrderEachStatus,
   OrderList,
@@ -29,6 +30,7 @@ import { Link } from 'react-router-dom';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const statusKinds = ['All', 'pending', 'inprogress', 'delivered', 'cancelled'];
 
@@ -39,6 +41,11 @@ const OrderPage = ({ meData }) => {
   const [isSelected, setIsSelected] = useState('All');
   const [isSort, setIsSort] = useState(false);
   const [sortList, setSortList] = useState([]);
+
+  const [pendingOrderList, setPendingOrderList] = useState([]);
+  const [inprogressOrderList, setInprogressOrderList] = useState([]);
+  const [deliveredOrderList, setDeliveredOrderList] = useState([]);
+  const [cancelOrderList, setCancelOrderList] = useState([]);
 
   const [nextList, setNextList] = useState(8);
 
@@ -51,6 +58,20 @@ const OrderPage = ({ meData }) => {
       setOrderStatus(
         order?.data?.filter((of) => of?.user?.username === meData?.username)
       );
+
+      setPendingOrderList(
+        order?.data?.filter((of) => of?.status === 'pending')
+      );
+      setInprogressOrderList(
+        order?.data?.filter((of) => of?.status === 'inprogress')
+      );
+      setDeliveredOrderList(
+        order?.data?.filter((of) => of?.status === 'delivered')
+      );
+      setCancelOrderList(
+        order?.data?.filter((of) => of?.status === 'cancelled')
+      );
+
       setLoading(false);
     } catch (err) {
       if (err.response?.status === 400) {
@@ -63,7 +84,7 @@ const OrderPage = ({ meData }) => {
     }
   };
 
-  console.log('orderStatus', orderStatus);
+  // console.log('orderStatus', new Date(orderStatus?));
 
   useEffect(() => {
     setLoading(true);
@@ -93,6 +114,8 @@ const OrderPage = ({ meData }) => {
       setIsSelected('All');
     }
   };
+
+  // console.log(orderStatus);
 
   const handleDateSort = () => {
     setIsSort(!isSort);
@@ -241,7 +264,7 @@ const OrderPage = ({ meData }) => {
                               </Td>
                             </>
                           )}
-                          {/* {order?.status === isSelected ? ( */}
+
                           {order?.status === isSelected && (
                             <>
                               <Td>{order.pk.toString().padStart(6, '0')}</Td>
@@ -309,7 +332,11 @@ const OrderPage = ({ meData }) => {
               </OrderListWrap>
             )}
           </OrderList>
-          <button onClick={handleShowMore}>Load more</button>
+          <LoadMore>
+            <LoadMoreBtn onClick={handleShowMore}>
+              Load more <ExpandMoreIcon />
+            </LoadMoreBtn>
+          </LoadMore>
         </OrderWrap>
       </OrderWrapper>
     </OrderContainer>
