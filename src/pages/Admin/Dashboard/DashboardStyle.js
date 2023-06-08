@@ -159,7 +159,6 @@ export const AdCount = styled.div`
     border-left: 10px solid #73b748;
     /* opacity: 0.7; */
   }
-
 `;
 
 export const AdCountText = styled.div`
@@ -182,6 +181,12 @@ export const AdCountText = styled.div`
   }
 `;
 
+export const DashLoader = styled.div`
+  display: flex;
+  margin: 10px;
+  padding-top: 10px;
+`;
+
 export const AdCountIcon = styled.div`
   display: flex;
   flex-direction: column;
@@ -200,14 +205,14 @@ export const AdViewList = styled.div`
   grid-gap: 40px 20px;
 `;
 
-export const AdViewListWrap = styled.div``
+export const AdViewListWrap = styled.div``;
 
 export const AdViewStatus = styled.div`
   height: 230px;
   border-radius: 20px;
   box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.1);
   position: relative;
-  
+
   h4 {
     margin-top: 10px;
     margin-left: 20px;
@@ -216,14 +221,12 @@ export const AdViewStatus = styled.div`
   &.pending {
     color: #b74a01;
     border: 1px solid #f2b155;
-
   }
 
   &.inprogress {
     color: #005260;
     border: 1px solid #61b9ff;
     height: 480px;
-  
   }
 
   &.delivered {
@@ -239,6 +242,8 @@ export const AdViewStatus = styled.div`
 `;
 
 export const AdStatus = styled.div`
+  position: relative;
+
   table {
     width: 100%;
     padding: 15px;
@@ -269,6 +274,15 @@ export const AdStatus = styled.div`
       height: 25px;
     }
   }
+`;
+
+export const DashListLoader = styled.tr`
+  display: flex;
+  position: absolute;
+  top: 200px;
+  left: 250px;
+  /* margin: 10px; */
+  /* padding: 40px; */
 `;
 
 export const ViewAllBtn = styled(Link)`

@@ -21,6 +21,8 @@ import {
   AdViewListWrap,
   AdStatus,
   ViewAllBtn,
+  DashLoader,
+  DashListLoader,
 } from './DashboardStyle';
 import PersonIcon from '@mui/icons-material/Person';
 import PaidIcon from '@mui/icons-material/Paid';
@@ -29,6 +31,7 @@ import ReceiptIcon from '@mui/icons-material/Receipt';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import DountChart from './DountChart';
 import { DountInfo, DountWrap } from './DountElements';
+import PartLoader from '../../../components/PartLoader';
 
 const Dashboard = ({ meData }) => {
   const [loading, setLoading] = useState(false);
@@ -126,7 +129,13 @@ const Dashboard = ({ meData }) => {
               <PersonIcon sx={{ fontSize: 45 }} />
             </AdCountIcon>
             <AdCountText>
-              <span>{customers?.length}</span>
+              <span>
+                {customers?.length || (
+                  <DashLoader>
+                    <PartLoader />
+                  </DashLoader>
+                )}
+              </span>
               <p>Total Users</p>
             </AdCountText>
           </AdCount>
@@ -135,7 +144,13 @@ const Dashboard = ({ meData }) => {
               <ShoppingBasketIcon sx={{ fontSize: 45 }} />
             </AdCountIcon>
             <AdCountText>
-              <span>{products?.length}</span>
+              <span>
+                {products?.length || (
+                  <DashLoader>
+                    <PartLoader />
+                  </DashLoader>
+                )}
+              </span>
               <p>Total Products</p>
             </AdCountText>
           </AdCount>
@@ -144,7 +159,13 @@ const Dashboard = ({ meData }) => {
               <PaidIcon sx={{ fontSize: 45 }} />
             </AdCountIcon>
             <AdCountText>
-              <span>{orders?.length}</span>
+              <span>
+                {orders?.length || (
+                  <DashLoader>
+                    <PartLoader />
+                  </DashLoader>
+                )}
+              </span>
               <p>Total Orders</p>
             </AdCountText>
           </AdCount>
@@ -153,7 +174,13 @@ const Dashboard = ({ meData }) => {
               <ReceiptIcon sx={{ fontSize: 45 }} />
             </AdCountIcon>
             <AdCountText>
-              <span>{totalSales || 0}</span>
+              <span>
+                {totalSales || (
+                  <DashLoader>
+                    <PartLoader />
+                  </DashLoader>
+                )}
+              </span>
               <p>Total Sales</p>
             </AdCountText>
           </AdCount>
@@ -259,7 +286,11 @@ const Dashboard = ({ meData }) => {
                         <td style={{ width: '20%' }}>{dl?.kind?.name}</td>
                       </tr>
                     );
-                  })}
+                  }) || (
+                    <DashListLoader>
+                      <PartLoader />
+                    </DashListLoader>
+                  )}
                 </tbody>
               </table>
             </AdStatus>
