@@ -243,14 +243,26 @@ const Dashboard = ({ meData }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {reviews?.slice(0, 4).map((rv) => {
+                    {reviews?.slice(0, 5).map((rv) => {
                       return (
                         <tr key={rv?.pk}>
-                          <td style={{ width: '10%' }}>{rv?.pk}</td>
-                          <td style={{ width: '30%' }}>{rv?.Product_Name}</td>
-                          <td style={{ width: '20%' }}>{rv?.user?.username}</td>
-                          <td style={{ width: '5%' }}>{rv?.rating}</td>
-                          <td style={{ width: '10%' }}>{rv?.payload}</td>
+                          <td>{rv?.pk}</td>
+                          <td>
+                            {rv?.Product_Name?.length > 10 ? (
+                              `${rv?.Product_Name?.substring(0, 10)}...`
+                            ) : (
+                              <> {rv?.Product_Name}</>
+                            )}
+                          </td>
+                          <td>{rv?.user?.username}</td>
+                          <td>{rv?.rating}</td>
+                          <td>
+                            {rv?.payload?.length > 8 ? (
+                              `${rv?.payload?.substring(0, 8)}...`
+                            ) : (
+                              <> {rv?.payload}</>
+                            )}
+                          </td>
                         </tr>
                       );
                     })}
@@ -281,7 +293,13 @@ const Dashboard = ({ meData }) => {
                           <img src={dl?.photos[0]?.picture} />
                           {/* {dl?.photos[0]?.picture} */}
                         </td>
-                        <td style={{ width: '30%' }}>{dl?.name}</td>
+                        <td style={{ width: '30%' }}>
+                          {dl?.name?.length > 15 ? (
+                            `${dl?.name?.substring(0, 15)}...`
+                          ) : (
+                            <> {dl?.name}</>
+                          )}
+                        </td>
                         <td style={{ width: '5%' }}>{dl?.price}</td>
                         <td style={{ width: '20%' }}>{dl?.kind?.name}</td>
                       </tr>
