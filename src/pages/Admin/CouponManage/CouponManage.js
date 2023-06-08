@@ -53,7 +53,7 @@ const CouponManage = ({ meData }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(8);
 
-  const [userInput, setUserInput] = useState("");
+  const [userInput, setUserInput] = useState('');
 
   // const initialState = { name: null, inStock: null, price: null, type:null }
 
@@ -136,10 +136,10 @@ const CouponManage = ({ meData }) => {
       <h1>Coupons</h1>
       <AdListTop>
         <AdListSearch>
-          <input 
+          <input
             type='text'
-            placeholder='Search' 
-            // onChange={handleSearch} 
+            placeholder='Search'
+            // onChange={handleSearch}
             onChange={(e) => setUserInput(e.target.value)}
           />
         </AdListSearch>
@@ -176,7 +176,103 @@ const CouponManage = ({ meData }) => {
               <AdTHeadCell className='details'></AdTHeadCell>
             </AdTHeadeRow>
           </AdTHead>
-          {currentPosts?.filter((list) => 
+          {userInput === null ? (
+            <>
+              {currentPosts
+                ?.filter(
+                  (list) =>
+                    list.pk?.toString().includes(userInput) ||
+                    list.discount_rate?.toString().includes(userInput) ||
+                    list.created_at
+                      ?.toLowerCase()
+                      .includes(userInput.toLowerCase()) ||
+                    // date 검색을 어떻게 해야 할지
+                    list.start_date
+                      ?.toLowerCase()
+                      .includes(userInput.toLowerCase()) ||
+                    list.end_date
+                      ?.toLowerCase()
+                      .includes(userInput.toLowerCase())
+                )
+                .map((coupon) => {
+                  return (
+                    <AdTBody key={coupon?.pk} className='coupon'>
+                      <AdTBodyRow>
+                        <AdTBodyCell className='id'>{coupon?.pk}</AdTBodyCell>
+                        <AdTBodyCell className='discount'>
+                          {coupon?.discount_rate}%
+                        </AdTBodyCell>
+                        <AdTBodyCell className='duration'>
+                          {new Date(coupon?.start_date).toDateString()} -{' '}
+                          {new Date(coupon?.end_date).toDateString()}
+                        </AdTBodyCell>
+                        <AdTBodyCell className='createAt'>
+                          {new Date(coupon?.created_at).toLocaleString('en-ca')}
+                        </AdTBodyCell>
+                        <AdTBodyCell className='details'>
+                          <ButtonUtils
+                            onClick={(e) => {
+                              handleOpenCoupon(coupon?.pk);
+                            }}
+                          >
+                            View
+                          </ButtonUtils>
+                        </AdTBodyCell>
+                      </AdTBodyRow>
+                    </AdTBody>
+                  );
+                })}
+            </>
+          ) : (
+            <>
+              {coupons
+                ?.filter(
+                  (list) =>
+                    list.pk?.toString().includes(userInput) ||
+                    list.discount_rate?.toString().includes(userInput) ||
+                    list.created_at
+                      ?.toLowerCase()
+                      .includes(userInput.toLowerCase()) ||
+                    // date 검색을 어떻게 해야 할지
+                    list.start_date
+                      ?.toLowerCase()
+                      .includes(userInput.toLowerCase()) ||
+                    list.end_date
+                      ?.toLowerCase()
+                      .includes(userInput.toLowerCase())
+                )
+                .slice(firstPostIndex, lastPostIndex)
+                .map((coupon) => {
+                  return (
+                    <AdTBody key={coupon?.pk} className='coupon'>
+                      <AdTBodyRow>
+                        <AdTBodyCell className='id'>{coupon?.pk}</AdTBodyCell>
+                        <AdTBodyCell className='discount'>
+                          {coupon?.discount_rate}%
+                        </AdTBodyCell>
+                        <AdTBodyCell className='duration'>
+                          {new Date(coupon?.start_date).toDateString()} -{' '}
+                          {new Date(coupon?.end_date).toDateString()}
+                        </AdTBodyCell>
+                        <AdTBodyCell className='createAt'>
+                          {new Date(coupon?.created_at).toLocaleString('en-ca')}
+                        </AdTBodyCell>
+                        <AdTBodyCell className='details'>
+                          <ButtonUtils
+                            onClick={(e) => {
+                              handleOpenCoupon(coupon?.pk);
+                            }}
+                          >
+                            View
+                          </ButtonUtils>
+                        </AdTBodyCell>
+                      </AdTBodyRow>
+                    </AdTBody>
+                  );
+                })}
+            </>
+          )}
+          {/* {currentPosts?.filter((list) => 
             list.pk?.toString().includes(userInput)
              || list.discount_rate?.toString().includes(userInput)
              || list.created_at?.toLowerCase().includes(userInput.toLowerCase())
@@ -211,7 +307,7 @@ const CouponManage = ({ meData }) => {
                 </AdTBodyRow>
               </AdTBody>
             );
-          })}
+          })} */}
         </AdTable>
       </AdListMid>
       <AdListBottom>
