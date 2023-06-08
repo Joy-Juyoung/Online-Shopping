@@ -10,7 +10,14 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import { useEffect } from 'react';
 
-const CountButton = ({ carts, cart, getAllCart, setCartArr }) => {
+const CountButton = ({
+  carts,
+  cart,
+  getAllCart,
+  setCartArr,
+  isQtyChanged,
+  setIsQtyChanged,
+}) => {
   const [countNumber, setCountNumber] = useState();
 
   useEffect(() => {
@@ -38,7 +45,8 @@ const CountButton = ({ carts, cart, getAllCart, setCartArr }) => {
     setCartArr(addQty);
     // setCountChange(!countChange);
     setCountNumber(countNumber + 1);
-    getAllCart();
+    // getAllCart();
+    // setIsQtyChanged(true);
   };
   // console.log('addQty', cartArr);
 
@@ -61,7 +69,8 @@ const CountButton = ({ carts, cart, getAllCart, setCartArr }) => {
     });
     setCartArr(minusQty);
     setCountNumber(countNumber > 1 ? countNumber - 1 : 1);
-    getAllCart();
+    // getAllCart();
+    // setIsQtyChanged(true);
   };
 
   return (

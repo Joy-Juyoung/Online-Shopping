@@ -23,6 +23,7 @@ import {
   SectionProducts,
   ProductsWrap,
   SectionTitle,
+  HeroLoader,
 } from './HeroElements';
 import FirstImage from '../../asset/pic31.jpg';
 import SecondImage from '../../asset/pic20.jpg';
@@ -33,11 +34,13 @@ import Loading from '../../components/Loading';
 import Slider from './Slider';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from '../../api/axios';
+import PartLoader from '../../components/PartLoader';
 
 const HeroPage = ({ meData, catData }) => {
   // const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [items, setItems] = useState([]);
+  const [isDataLoading, setIsDataLoading] = useState(false);
 
   const getItems = async () => {
     const itemsList = await axios.get('/products/', {
@@ -45,9 +48,11 @@ const HeroPage = ({ meData, catData }) => {
       withCredentials: true,
     });
     setItems(itemsList?.data);
+    setIsDataLoading(false);
   };
 
   useEffect(() => {
+    setIsDataLoading(true);
     getItems();
   }, []);
 
@@ -95,11 +100,17 @@ const HeroPage = ({ meData, catData }) => {
         <MidInfo>
           <SectionTitle>New Arrival</SectionTitle>
           <SectionProducts>
-            <Slider
-              items={items.filter(
-                (item, idx) => idx < 9 && item?.photos?.length !== 0
-              )}
-            />
+            {isDataLoading ? (
+              <HeroLoader>
+                <PartLoader />
+              </HeroLoader>
+            ) : (
+              <Slider
+                items={items.filter(
+                  (item, idx) => idx < 9 && item?.photos?.length !== 0
+                )}
+              />
+            )}
           </SectionProducts>
           <SectionButton>
             <Link to='/products/all'>
@@ -114,7 +125,9 @@ const HeroPage = ({ meData, catData }) => {
               return (
                 <CategoriesWrap key={cat?.pk}>
                   <Link to={`/products/category/${cat.pk}`}>
-                    <span>{cat?.productKinds[1]?.name}</span>
+                    {cat?.productKinds[1] && (
+                      <span>{cat?.productKinds[1]?.name}</span>
+                    )}
                   </Link>
                 </CategoriesWrap>
               );
@@ -124,11 +137,17 @@ const HeroPage = ({ meData, catData }) => {
         <MidInfo>
           <SectionTitle>Most Popular</SectionTitle>
           <SectionProducts>
-            <Slider
-              items={items
-                ?.reverse()
-                .filter((item, idx) => idx < 9 && item?.photos?.length !== 0)}
-            />
+            {isDataLoading ? (
+              <HeroLoader>
+                <PartLoader />
+              </HeroLoader>
+            ) : (
+              <Slider
+                items={items
+                  ?.reverse()
+                  .filter((item, idx) => idx < 9 && item?.photos?.length !== 0)}
+              />
+            )}
           </SectionProducts>
           <SectionButton>
             <Link to='/products/all'>

@@ -73,9 +73,12 @@ export const CouponFrame = styled.div`
   border: 3px dashed #000;
   border-radius: 5px;
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   padding: 10px;
   position: relative;
+
+  /* overflow-y: scroll;
+  height: 400px; */
 `;
 
 export const Circle = styled.div`

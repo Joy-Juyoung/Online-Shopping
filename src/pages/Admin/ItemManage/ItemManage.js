@@ -28,56 +28,56 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { Link } from 'react-router-dom';
 
 const ItemManage = ({ catData }) => {
-  const [loading, setLoading] = useState(false);
-  const [orders, setOrders] = useState();
+  // const [loading, setLoading] = useState(false);
+  // const [orders, setOrders] = useState();
 
-  const [pendingList, setPendingList] = useState();
-  const [inprogressList, setInprogressList] = useState();
+  // const [pendingList, setPendingList] = useState();
+  // const [inprogressList, setInprogressList] = useState();
 
-  const [products, setProducts] = useState();
+  // const [products, setProducts] = useState();
 
-  const getProducts = async () => {
-    const itemList = await axios.get('/products/', {
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true,
-    });
-    // console.log('itemList', itemList.data);
-    setProducts(itemList?.data);
-    setLoading(false);
-  };
+  // const getProducts = async () => {
+  //   const itemList = await axios.get('/products/', {
+  //     headers: { 'Content-Type': 'application/json' },
+  //     withCredentials: true,
+  //   });
+  //   // console.log('itemList', itemList.data);
+  //   setProducts(itemList?.data);
+  //   setLoading(false);
+  // };
 
-  console.log('catData', catData);
+  // console.log('catData', catData);
 
-  const getOrders = async () => {
-    const orderList = await axios.get('/orders/', {
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true,
-    });
-    console.log('orederList', orderList.data);
-    setOrders(orderList?.data);
-    setLoading(false);
-  };
+  // const getOrders = async () => {
+  //   const orderList = await axios.get('/orders/', {
+  //     headers: { 'Content-Type': 'application/json' },
+  //     withCredentials: true,
+  //   });
+  //   console.log('orederList', orderList.data);
+  //   setOrders(orderList?.data);
+  //   setLoading(false);
+  // };
 
-  useEffect(() => {
-    setLoading(true);
-    getOrders();
-    getProducts();
-  }, [catData]);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   getOrders();
+  //   getProducts();
+  // }, [catData]);
 
-  useEffect(() => {
-    setPendingList(orders?.filter((po) => po?.status === 'pending'));
-    setInprogressList(orders?.filter((po) => po?.status === 'inprogress'));
-  }, [orders]);
+  // useEffect(() => {
+  //   setPendingList(orders?.filter((po) => po?.status === 'pending'));
+  //   setInprogressList(orders?.filter((po) => po?.status === 'inprogress'));
+  // }, [orders]);
 
-  if (loading)
-    return (
-      <div>
-        <Loading />
-      </div>
-    );
+  // if (loading)
+  //   return (
+  //     <div>
+  //       <Loading />
+  //     </div>
+  //   );
   return (
     <AdContainer>
-      <h1>Orders</h1>
+      {/* <h1>Orders</h1>
       <AdOrderOverview>
         <AdViewCount>
           <AdCountWrap>
@@ -200,7 +200,7 @@ const ItemManage = ({ catData }) => {
             )}
           </AdViewStatus>
         </AdViewList>
-      </AdOrderOverview>
+      </AdOrderOverview> */}
     </AdContainer>
   );
 };

@@ -50,13 +50,12 @@ const OrderPending = ({ meData }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [orders, setOrders] = useState();
-  const [pendings, setPendings] = useState();
-  const [inprogress, setInprogress] = useState();
+
   const [modalShown, toggleModal] = useState(false);
   const [orderById, setOrderById] = useState();
 
-  const [searchedList, setSearchedList] = useState();
   const [searchValue, setSearchValue] = useState();
+  const [userInput, setUserInput] = useState('');
 
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(8);
@@ -66,24 +65,19 @@ const OrderPending = ({ meData }) => {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    console.log('orederList', orederList.data);
-    setOrders(orederList?.data);
+    // console.log('orederList', orederList.data);
+    setOrders(orederList?.data?.filter((po) => po?.status === 'pending'));
     setLoading(false);
   };
 
   useEffect(() => {
     setLoading(true);
     getOrders();
-    // setPendings(orders?.filter((po) => po?.status === 'pending'));
-    // setInprogress(orders?.filter((po) => po?.status === 'inprogress'));
   }, [meData]);
 
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
-  // const currentPosts = pendings?.slice(firstPostIndex, lastPostIndex);
-  const currentPosts = orders
-    ?.filter((po) => po?.status === 'pending')
-    ?.slice(firstPostIndex, lastPostIndex);
+  const currentPosts = orders?.slice(firstPostIndex, lastPostIndex);
 
   const handleDetails = async (pk) => {
     toggleModal(!modalShown);
@@ -92,7 +86,7 @@ const OrderPending = ({ meData }) => {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
-    console.log('orderedData', orderedData?.data);
+    // console.log('orderedData', orderedData?.data);
     setOrderById(orderedData?.data);
   };
 
@@ -109,7 +103,7 @@ const OrderPending = ({ meData }) => {
         withCredentials: true,
       }
     );
-    console.log('statusChange', statusChange?.data);
+    // console.log('statusChange', statusChange?.data);
     navigate('/admin/orders/all');
   };
 
@@ -124,35 +118,14 @@ const OrderPending = ({ meData }) => {
         withCredentials: true,
       }
     );
-    console.log('statusChange', statusChange?.data);
+    // console.log('statusChange', statusChange?.data);
     navigate('/admin/orders/all');
   };
 
-  const handleSearch = (e) => {
-    setSearchValue(e.target.value);
-  };
-  console.log('searchValue', searchValue);
-
-  useEffect(() => {
-    setSearchedList(
-      !searchValue
-        ? currentPosts
-        : currentPosts?.filter((search, index) => {
-            return (
-              search?.user?.username
-                .toLowerCase()
-                .includes(searchValue.toLowerCase()) ||
-              search?.status
-                .toLowerCase()
-                .includes(searchValue.toLowerCase()) ||
-              search?.pk
-                ?.toString()
-                .toLowerCase()
-                .includes(searchValue.toString().toLowerCase())
-            );
-          })
-    );
-  }, [orders, searchValue]);
+  // const handleSearch = (e) => {
+  //   setSearchValue(e.target.value);
+  // };
+  // console.log('searchValue', searchValue);
 
   if (loading)
     return (
@@ -165,7 +138,11 @@ const OrderPending = ({ meData }) => {
       <h1>Pending Orders</h1>
       <AdListTop>
         <AdListSearch>
-          <input type='text' placeholder='Search' onChange={handleSearch} />
+          <input
+            type='text'
+            placeholder='Search'
+            onChange={(e) => setUserInput(e.target.value)}
+          />
         </AdListSearch>
         <AdListUtils>{/* <ButtonSmall>Add</ButtonSmall> */}</AdListUtils>
       </AdListTop>
@@ -184,57 +161,70 @@ const OrderPending = ({ meData }) => {
               <AdTHeadCell className='details'></AdTHeadCell>
             </AdTHeadeRow>
           </AdTHead>
-          {currentPosts?.map((pendingOrder) => {
-            {
-              /* {searchedList?.map((pendingOrder) => { */
-            }
-            return (
-              <AdTBody key={pendingOrder?.pk}>
-                <AdTBodyRow>
-                  <AdTBodyCell className='id'>{pendingOrder?.pk}</AdTBodyCell>
-                  <AdTBodyCell className='username'>
-                    {pendingOrder?.user?.username}
-                  </AdTBodyCell>
-                  <AdTBodyCell className='username'>
-                    {pendingOrder?.total_products}
-                  </AdTBodyCell>
-                  <AdTBodyCell className='qty'>
-                    <AdButtonUtils
-                      onClick={(e) => {
-                        handleDetails(pendingOrder?.pk);
-                      }}
-                    >
-                      View
-                    </AdButtonUtils>
-                  </AdTBodyCell>
-                  <AdTBodyCell className='totalPrice'>
-                    ${pendingOrder?.total_price?.toLocaleString()}
-                  </AdTBodyCell>
-                  <AdTBodyCell style={{ width: '25%' }}>
-                    {new Date(pendingOrder?.created_at).toLocaleString('en-ca')}
-                  </AdTBodyCell>
-                  <AdTBodyCell>{pendingOrder?.status}</AdTBodyCell>
-                  <AdTBodyCell style={{ width: '18%' }}>
-                    <AdButtonCancel
-                      onClick={() => handleCancel(pendingOrder?.pk)}
-                    >
-                      CANCEL
-                    </AdButtonCancel>
-                    <AdButtonAccept
-                      onClick={() => handleAccept(pendingOrder?.pk)}
-                    >
-                      ACCEPT
-                    </AdButtonAccept>
-                  </AdTBodyCell>
-                </AdTBodyRow>
-              </AdTBody>
-            );
-          })}
+          {currentPosts
+            ?.filter(
+              (list) =>
+                list.pk?.toString().includes(userInput) ||
+                list.total_products?.toString().includes(userInput) ||
+                list.total_price?.toString().includes(userInput) ||
+                list.created_at
+                  ?.toLowerCase()
+                  .includes(userInput.toLowerCase()) ||
+                list.status?.toLowerCase().includes(userInput.toLowerCase()) ||
+                list.user?.username
+                  ?.toLowerCase()
+                  .includes(userInput.toLowerCase())
+            )
+            .map((pendingOrder) => {
+              return (
+                <AdTBody key={pendingOrder?.pk}>
+                  <AdTBodyRow>
+                    <AdTBodyCell className='id'>{pendingOrder?.pk}</AdTBodyCell>
+                    <AdTBodyCell className='username'>
+                      {pendingOrder?.user?.username}
+                    </AdTBodyCell>
+                    <AdTBodyCell className='username'>
+                      {pendingOrder?.total_products}
+                    </AdTBodyCell>
+                    <AdTBodyCell className='qty'>
+                      <AdButtonUtils
+                        onClick={(e) => {
+                          handleDetails(pendingOrder?.pk);
+                        }}
+                      >
+                        View
+                      </AdButtonUtils>
+                    </AdTBodyCell>
+                    <AdTBodyCell className='totalPrice'>
+                      ${pendingOrder?.total_price?.toLocaleString()}
+                    </AdTBodyCell>
+                    <AdTBodyCell style={{ width: '25%' }}>
+                      {new Date(pendingOrder?.created_at).toLocaleString(
+                        'en-ca'
+                      )}
+                    </AdTBodyCell>
+                    <AdTBodyCell>{pendingOrder?.status}</AdTBodyCell>
+                    <AdTBodyCell style={{ width: '18%' }}>
+                      <AdButtonCancel
+                        onClick={() => handleCancel(pendingOrder?.pk)}
+                      >
+                        CANCEL
+                      </AdButtonCancel>
+                      <AdButtonAccept
+                        onClick={() => handleAccept(pendingOrder?.pk)}
+                      >
+                        ACCEPT
+                      </AdButtonAccept>
+                    </AdTBodyCell>
+                  </AdTBodyRow>
+                </AdTBody>
+              );
+            })}
         </AdTable>
       </AdListMid>
       <AdListBottom>
         <Pagination
-          totalPosts={orders?.filter((po) => po?.status === 'pending').length}
+          totalPosts={orders?.length}
           postsPerPage={postsPerPage}
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}

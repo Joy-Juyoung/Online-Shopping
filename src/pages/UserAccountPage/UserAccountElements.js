@@ -1,14 +1,10 @@
 import styled from 'styled-components';
 
 export const AccountForm = styled.form`
-  /* margin-bottom: 50px; */
-  /* display: flex;
-  justify-content: center; */
   margin: 40px auto;
 `;
 
 export const AccountInput = styled.div`
-  /* padding: 0 40px; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -39,21 +35,15 @@ export const MainAvatar = styled.div`
 `;
 
 export const BasicInfoEach = styled.div`
-  /* margin-bottom: 15px; */
-  /* padding: 10px 0; */
   display: flex;
   align-items: center;
 `;
 
 export const InfoEach = styled.div`
-  /* margin-bottom: 15px; */
   padding: 10px 0;
 `;
 
-export const EditInfoEach = styled.div`
-  /* margin-bottom: 15px; */
-  /* padding: 10px 0; */
-`;
+export const EditInfoEach = styled.div``;
 
 export const AccountInputTitle = styled.div`
   font-weight: 600;
@@ -67,8 +57,6 @@ export const LeftInfo = styled.div`
 `;
 
 export const ShippingInfo = styled.div`
-  /* margin: 40px 0 20px; */
-  /* margin: 0 20px; */
   display: flex;
   align-items: center;
 
@@ -83,9 +71,7 @@ export const AccountInputLabel = styled.label`
   font-size: 15px;
 `;
 
-export const InputEdit = styled.div`
-  /* margin-bottom: 15px; */
-`;
+export const InputEdit = styled.div``;
 
 export const DelBtn = styled.div`
   display: flex;
@@ -99,7 +85,6 @@ export const DelBtn = styled.div`
     border: none;
     padding: 10px;
     background: none;
-    /* border-bottom: 0.5px solid gray; */
 
     &:hover {
       font-weight: 600;
@@ -113,21 +98,18 @@ export const ActivityInfo = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* align-items: center; */
-  /* justify-content: space-between; */
+
   width: 50%;
   margin: 0 auto;
   padding-top: 20px;
   border-top: 1px solid lightgray;
 
   h2 {
-    /* font-weight: 700; */
     margin-right: 15px;
   }
 `;
 
 export const ActivityInfoWrap = styled.div`
-  /* margin: 40px 0 20px; */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -138,6 +120,5 @@ export const ActivityInfoWrap = styled.div`
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    /* border: 1px; */
   }
 `;

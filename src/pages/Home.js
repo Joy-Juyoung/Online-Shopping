@@ -21,7 +21,7 @@ import RegisterPage from './RegisterPage/RegisterPage';
 import UserAccountPage from './UserAccountPage/UserAccountPage';
 
 import WishlistPage from './WishlistPage/WishlistPage';
-import CartPage from './CartPage/CartPage';
+// import CartPage from './CartPage/CartPage';
 import TestCart from './CartPage/TestCart';
 
 import ProductListByCategory from './ProductPage/ProductListByCategory';

@@ -29,11 +29,6 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
   const [loading, setLoading] = useState(false);
   const [orders, setOrders] = useState();
   const [modalShown, toggleModal] = useState(false);
-  const [cleanupModal, setCleanupModal] = useState(false);
-  const [isSwitch, setIsSwitch] = useState(false);
-
-  const [isSelected, setIsSelected] = useState(false);
-  const [selectedOption, setSelectedOption] = useState();
 
   // const [searchedList, setSearchedList] = useState();
   // const [searchValue, setSearchValue] = useState();

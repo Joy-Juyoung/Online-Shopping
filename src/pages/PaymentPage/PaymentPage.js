@@ -25,8 +25,6 @@ import {
   PaymentCheckout,
   PaymentSuccessMsg,
 } from './PaymentElements';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
 import AddIcon from '@mui/icons-material/Add';
 import axios from '../../api/axios';
 import Loading from '../../components/Loading';
@@ -35,19 +33,12 @@ import {
   ButtonSmall,
   ButtonUtils,
 } from '../../components/ButtonElements';
-import PaypalIcon from '../../asset/paypal.svg';
-import MastercardIcon from '../../asset/mastercard.svg';
-import VisaIcon from '../../asset/visa.svg';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import Modal from '../../components/Modal';
 import AddBalance from '../../components/AddBalance';
 import { useRef } from 'react';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import SuccessPayment from './SuccessPayment';
 import AddCoupon from './AddCoupon';
-import { ContentCutOutlined } from '@mui/icons-material';
-
-const CARTS_URL = '/carts';
 
 const PaymentPage = ({
   meData,
@@ -120,6 +111,7 @@ const PaymentPage = ({
   };
 
   useEffect(() => {
+    // window.location.reload();
     setLoading(true);
     getCoupons();
     setTotalPrice(TotalPriceTag);
@@ -162,12 +154,9 @@ const PaymentPage = ({
           }
         );
         setSuccess(true);
-        console.log('sendOrder', sendOrder);
         handleDeleteCart();
         setPayList([]);
-        // window.location.reload();
-        // setIsCount(true);
-        getAllCart();
+        setIsCount(true);
       } catch (err) {
         if (err?.response?.status === 400) {
           setLoading(false);
@@ -176,9 +165,9 @@ const PaymentPage = ({
           console.log('Error page or empty page');
         }
       }
-    } else {
-      // window.location.reload();
     }
+
+    // setPayList([]);
   };
 
   const handleDeleteCart = () => {
@@ -189,7 +178,6 @@ const PaymentPage = ({
       });
     });
     setCarts(deleteItem);
-    // getAllCart([]);
   };
 
   const handlePayDisabled = () => {
@@ -378,9 +366,10 @@ const PaymentPage = ({
                     <span>${TotalPriceTag?.toLocaleString()}</span>
                   </ItemTotalPrice>
                   <ExtraInfo>
+                    <li>* FREE SHIPPING on all orders $200+.</li>
                     <li>
                       * No additional duties and taxes are charged on delivery,
-                      as they are included in the final price..
+                      as they are included in the final price.
                     </li>
                   </ExtraInfo>
                 </PaymentSummaryInfo>

@@ -41,11 +41,6 @@ const ProductListByCategory = ({ meData, catData }) => {
   const [priceRange, setPriceRange] = useState();
   const [itemsByPrice, setItemsByPrice] = useState([]);
 
-  // console.log('itemKinds', itemKinds);
-  // console.log('pName', pName);
-  // console.log('cName', cName);
-  // console.log('cId', cId);
-
   const getAllKindsProduct = async () => {
     const { data } = await axios.get(
       `/products/productAllParentsKinds/${pId}`,
@@ -56,11 +51,11 @@ const ProductListByCategory = ({ meData, catData }) => {
     );
     setGetAllKinds(data);
   };
-
   useEffect(() => {
     getAllKindsProduct();
     setPriceRange('none');
   }, []);
+  // console.log('GetAllKind', getAllKinds);
 
   const getKindsProduct = async () => {
     const { data } = await axios.get(`/products/productAllChildKinds/${cId}`, {
@@ -85,35 +80,35 @@ const ProductListByCategory = ({ meData, catData }) => {
   };
 
   useEffect(() => {
-    setItemsByPrice(itemKinds.products);
+    setItemsByPrice(itemKinds?.products);
 
     if (priceRange === 0) {
-      const rangeItems = itemKinds.products?.filter(
+      const rangeItems = itemKinds?.products?.filter(
         (range) => range?.price <= 50
       );
       setItemsByPrice(rangeItems);
     } else if (priceRange === 1) {
-      const rangeItems = itemKinds.products?.filter(
+      const rangeItems = itemKinds?.products?.filter(
         (range) => 50 < range?.price && range?.price <= 100
       );
       setItemsByPrice(rangeItems);
     } else if (priceRange === 2) {
-      const rangeItems = itemKinds.products?.filter(
+      const rangeItems = itemKinds?.products?.filter(
         (range) => 100 < range?.price && range?.price <= 150
       );
       setItemsByPrice(rangeItems);
     } else if (priceRange === 3) {
-      const rangeItems = itemKinds.products?.filter(
+      const rangeItems = itemKinds?.products?.filter(
         (range) => 150 < range?.price && range?.price <= 200
       );
       setItemsByPrice(rangeItems);
     } else if (priceRange === 4) {
-      const rangeItems = itemKinds.products?.filter(
+      const rangeItems = itemKinds?.products?.filter(
         (range) => 200 < range?.price
       );
       setItemsByPrice(rangeItems);
     } else {
-      setItemsByPrice(itemKinds.products);
+      setItemsByPrice(itemKinds?.products);
     }
   }, [priceRange]);
 
@@ -241,7 +236,7 @@ const ProductListByCategory = ({ meData, catData }) => {
                     {itemsByPrice?.map((all) => {
                       return (
                         <ProductsCard
-                          key={all.pk}
+                          key={all?.pk}
                           all={all}
                           meData={meData}
                           itemKinds={itemKinds}

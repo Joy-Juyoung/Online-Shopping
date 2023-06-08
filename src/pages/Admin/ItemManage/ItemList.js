@@ -59,7 +59,7 @@ const ItemList = ({ meData, catData }) => {
   useEffect(() => {
     setLoading(true);
     getProducts();
-  }, [meData]);
+  }, [meData, addPhoto]);
 
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
@@ -96,9 +96,9 @@ const ItemList = ({ meData, catData }) => {
     setEditPk(pk);
   };
 
-  useEffect(() => {
-    getProducts();
-  }, [addPhoto, currentPosts]);
+  // useEffect(() => {
+  //   getProducts();
+  // }, [addPhoto]);
 
   if (loading)
     return (
@@ -155,8 +155,10 @@ const ItemList = ({ meData, catData }) => {
             return (
               <AdTBody key={product?.pk}>
                 <AdTBodyRow>
-                  <AdTBodyCell className='id'>{product?.pk}</AdTBodyCell>
-                  <AdTBodyCell className='photo'>
+                  <AdTBodyCell style={{ width: '5%' }}>
+                    {product?.pk}
+                  </AdTBodyCell>
+                  <AdTBodyCell style={{ width: '8%', height: '40px' }}>
                     {product?.photos?.length === 0 ? (
                       <BodyImg src={NoneImg} alt='No Image' />
                     ) : (
@@ -166,20 +168,20 @@ const ItemList = ({ meData, catData }) => {
                       />
                     )}
                   </AdTBodyCell>
-                  <AdTBodyCell className='name'>
+                  <AdTBodyCell style={{ width: '25%' }}>
                     {product?.name?.length > 30 ? (
                       `${product?.name?.substring(0, 30)}...`
                     ) : (
                       <> {product?.name}</>
                     )}
                   </AdTBodyCell>
-                  <AdTBodyCell className='price'>
+                  <AdTBodyCell style={{ width: '7%' }}>
                     ${product?.price?.toLocaleString()}
                   </AdTBodyCell>
-                  <AdTBodyCell className='sub'>
+                  <AdTBodyCell style={{ width: '12%' }}>
                     {product?.kind?.name}
                   </AdTBodyCell>
-                  <AdTBodyCell className='createAt'>
+                  <AdTBodyCell style={{ width: '18%' }}>
                     {new Date(product?.created_at).toLocaleString('en-ca')}
                   </AdTBodyCell>
                   <AdTBodyCell style={{ width: '10%' }}>
@@ -187,11 +189,7 @@ const ItemList = ({ meData, catData }) => {
                       <ButtonUtils>+ Photos</ButtonUtils>
                     </AdIconDelete>
                   </AdTBodyCell>
-                  {/* <AdTBodyCell style={{ width: '5%' }}>
-                    <AdIconDelete onClick={() => handleEditItem(product?.pk)}>
-                      <EditIcon />
-                    </AdIconDelete>
-                  </AdTBodyCell> */}
+
                   <AdTBodyCell style={{ width: '5%' }}>
                     <AdIconDelete onClick={() => handleDeleteItem(product?.pk)}>
                       <DeleteIcon />

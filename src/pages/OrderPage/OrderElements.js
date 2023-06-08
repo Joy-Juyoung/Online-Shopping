@@ -162,3 +162,11 @@ export const NotificationStatus = styled.div`
   font-size: 12px;
   color: #626972;
 `;
+
+export const LoadMore = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 20px;
+`;

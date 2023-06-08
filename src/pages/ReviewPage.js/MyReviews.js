@@ -31,7 +31,9 @@ const MyReviews = ({ meData }) => {
       withCredentials: true,
     });
     console.log('reviewsList', reviewsList?.data);
-    setReviews(reviewsList?.data);
+    setReviews(
+      reviewsList?.data.filter((rf) => rf?.user?.username === meData?.username)
+    );
     setLoading(false);
   };
 
@@ -104,13 +106,32 @@ const MyReviews = ({ meData }) => {
                             <Td>
                               {new Date(review.created_at).toLocaleDateString()}
                             </Td>
-                            <Td>{review.Product_Name}</Td>
-                            <Td>{review?.payload}</Td>
+
+                            <Td>
+                              {review?.Product_Name?.length > 20 ? (
+                                `${review?.Product_Name?.substring(0, 20)}...`
+                              ) : (
+                                <> {review?.Product_Name}</>
+                              )}
+                            </Td>
+                            <Td>
+                              {review?.payload?.length > 20 ? (
+                                `${review?.payload?.substring(0, 20)}...`
+                              ) : (
+                                <> {review?.payload}</>
+                              )}
+                            </Td>
                             <Td>
                               <Link to={`/review/${review.product}`}>
                                 <ReviewBtn active={true}>
-                                  View
-                                  <RateReviewIcon fontSize='small' />
+                                  <RateReviewIcon
+                                    fontSize='small'
+                                    style={{
+                                      marginRight: '5px',
+                                      marginTop: '2px',
+                                    }}
+                                  />
+                                  View & Eidt
                                 </ReviewBtn>
                               </Link>
                             </Td>

@@ -156,6 +156,7 @@ export const SectionButton = styled.div`
 export const SectionProducts = styled.div`
   display: flex;
   width: 100%;
+  height: 380px;
   margin-top: 20px;
   cursor: pointer;
 `;
@@ -260,4 +261,12 @@ export const TrendingWrap = styled.div`
     margin: -5px 5px;
     font-style: italic;
   }
+`;
+
+export const HeroLoader = styled.div`
+  display: flex;
+  /* margin: 10px;
+  padding-top: 10px; */
+
+  margin: 150px auto;
 `;
