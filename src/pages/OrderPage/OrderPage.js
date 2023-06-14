@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../../api/axios';
-import { ButtonUtils, LoadMoreBtn } from '../../components/ButtonElements';
+import {
+  ButtonUtils,
+  LoadMoreBtn,
+  LoadMoreBtnDisabled,
+} from '../../components/ButtonElements';
 import { PesnalContainer, PesnalWrapper } from '../CommonElements';
 import {
   ListTotal,
@@ -47,7 +51,7 @@ const OrderPage = ({ meData }) => {
   const [deliveredOrderList, setDeliveredOrderList] = useState([]);
   const [cancelOrderList, setCancelOrderList] = useState([]);
 
-  const [nextList, setNextList] = useState(8);
+  const [nextList, setNextList] = useState(15);
 
   const getOrders = async () => {
     try {
@@ -55,9 +59,10 @@ const OrderPage = ({ meData }) => {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
       });
-      setOrderStatus(
-        order?.data?.filter((of) => of?.user?.username === meData?.username)
-      );
+      // setOrderStatus(
+      //   order?.data?.filter((of) => of?.user?.username === meData?.username)
+      // );
+      setOrderStatus(order?.data);
 
       setPendingOrderList(
         order?.data?.filter((of) => of?.status === 'pending')
@@ -93,7 +98,7 @@ const OrderPage = ({ meData }) => {
   }, []);
 
   const handleShowMore = () => {
-    setNextList(nextList + 8);
+    setNextList(nextList + 20);
   };
 
   const handleStatusList = (status) => {
@@ -333,9 +338,15 @@ const OrderPage = ({ meData }) => {
             )}
           </OrderList>
           <LoadMore>
-            <LoadMoreBtn onClick={handleShowMore}>
-              Load more <ExpandMoreIcon />
-            </LoadMoreBtn>
+            {nextList / orderStatus?.length <= 1 ? (
+              <LoadMoreBtn onClick={handleShowMore}>
+                Load more <ExpandMoreIcon />
+              </LoadMoreBtn>
+            ) : (
+              <LoadMoreBtnDisabled disabled>
+                Load more <ExpandMoreIcon />
+              </LoadMoreBtnDisabled>
+            )}
           </LoadMore>
         </OrderWrap>
       </OrderWrapper>

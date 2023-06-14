@@ -8,13 +8,14 @@ import { ButtonUtils } from '../../../components/ButtonElements';
 const Dropbtn = styled.div`
   /* position: relative;
   font-size: 14px; */
-  margin-top: -20px;
+  margin-top: -15px;
   display: flex;
   justify-content: flex-end;
+  margin-bottom: 10px;
 `;
 
 const DropWrap = styled.div`
-  position: relative;
+  /* position: relative; */
   font-size: 14px;
   /* margin-top: -40px; */
   /* display: flex; */

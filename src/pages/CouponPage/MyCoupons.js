@@ -3,15 +3,8 @@ import axios from '../../api/axios';
 import {
   OrderContainer,
   OrderList,
-  OrderListWrap,
   OrderWrap,
   OrderWrapper,
-  Table,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
 } from '../OrderPage/OrderElements';
 import {
   BackCircle,
@@ -23,8 +16,6 @@ import {
   CouponBackInfo,
   CouponBackInside,
   CouponBackP,
-  CouponBackSide,
-  CouponExpired,
   CouponFrame,
   CouponH,
   CouponHeader,
@@ -33,15 +24,20 @@ import {
   CouponListWrap,
   CouponP,
   CouponRate,
-  Line,
   ReviewListEmpty,
   ViewDetails,
+  LoadMore,
 } from './MyCouponsElements';
 import CloseIcon from '@mui/icons-material/Close';
 import Loading from '../../components/Loading';
 import PageviewIcon from '@mui/icons-material/Pageview';
 import Modal from '../../components/Modal';
 import DiscountIcon from '@mui/icons-material/Discount';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import {
+  LoadMoreBtnDisabled,
+  LoadMoreBtn,
+} from '../../components/ButtonElements';
 
 const MyCoupons = ({ meData }) => {
   let ref = useRef();
@@ -164,7 +160,17 @@ const MyCoupons = ({ meData }) => {
               </CouponListWrap>
             )}
           </OrderList>
-          <button onClick={handleShowMore}>Load more</button>
+          <LoadMore>
+            {nextList / coupons?.length <= 1 ? (
+              <LoadMoreBtn onClick={handleShowMore}>
+                Load more <ExpandMoreIcon />
+              </LoadMoreBtn>
+            ) : (
+              <LoadMoreBtnDisabled disabled>
+                Load more <ExpandMoreIcon />
+              </LoadMoreBtnDisabled>
+            )}
+          </LoadMore>
         </OrderWrap>
       </OrderWrapper>
       <Modal

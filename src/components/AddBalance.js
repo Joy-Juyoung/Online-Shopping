@@ -40,13 +40,13 @@ const BoxSpan = styled.span`
   margin: 3px 0;
 `;
 
-const AddBalance = ({ meData }) => {
+const AddBalance = ({ meData, isCancelled }) => {
   const [changeUserBalance, setChangeUserBalance] = useState('');
   const [balance, setBalance] = useState(0);
 
   useEffect(() => {
     setChangeUserBalance(meData);
-  }, [meData]);
+  }, [meData, isCancelled]);
 
   const ChangeBalance = (e) => {
     setBalance(e.target.value);

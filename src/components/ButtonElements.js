@@ -87,15 +87,6 @@ export const ButtonUtils = styled.button`
 `;
 
 export const LoadMoreBtn = styled.button`
-  /* border: none;
-  border-radius: 5px;
-  background: #fff;
-  color: #0a0f18;
-  padding: 5px 10px;
-  cursor: pointer;
-  box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center; */
   width: auto;
   min-width: 130px;
   height: 44px;
@@ -124,4 +115,59 @@ export const LoadMoreBtn = styled.button`
     font-size: 18px;
     margin-left: 5px;
   }
+
+  &:disabled {
+    background: #f7f7f7;
+    color: gary !important;
+    cursor: not-allowed;
+
+    &:hover {
+      background: #f7f7f7;
+      color: gary !important;
+    }
+  }
+`;
+
+export const LoadMoreBtnDisabled = styled.button`
+  width: auto;
+  min-width: 130px;
+  height: 44px;
+  border-radius: 6px;
+  /* background: #fff; */
+  /* color: #0a0f18; */
+  padding: 0 16px;
+  font-size: 16px;
+  /* outline: none; */
+  /* border: 1px solid #a3a9b3; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* cursor: not-allowed; */
+  text-decoration: none;
+
+  background: #f7f7f7;
+  color: gary;
+
+  /* &:hover {
+    background: #0a0f18;
+    color: #fff;
+  } */
+
+  svg {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    margin-left: 5px;
+  }
+
+  /* &:disabled {
+    background: #f7f7f7;
+    color: gary;
+    cursor: not-allowed;
+
+    &:hover {
+      background: #f7f7f7;
+      color: gary !important;
+    }
+  } */
 `;

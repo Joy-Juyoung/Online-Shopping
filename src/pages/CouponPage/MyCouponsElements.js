@@ -73,12 +73,9 @@ export const CouponFrame = styled.div`
   border: 3px dashed #000;
   border-radius: 5px;
   width: 100%;
-  /* height: 100%; */
+  height: 100%;
   padding: 10px;
   position: relative;
-
-  /* overflow-y: scroll;
-  height: 400px; */
 `;
 
 export const Circle = styled.div`
@@ -183,8 +180,7 @@ export const CouponBackFrame = styled.div`
   border-radius: 5px;
   width: 100%;
   height: 100%;
-  padding: 15px;
-  /* margin: 10px; */
+  padding: 30px 15px;
   margin: 0 auto;
   position: relative;
 
@@ -201,10 +197,6 @@ export const CouponBackFrame = styled.div`
     100% {
       transform: rotateY(0);
     }
-  }
-
-  h3 {
-    margin: 10px 0;
   }
 `;
 
@@ -233,7 +225,7 @@ export const CouponBackInfo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 25px;
+  padding: 20px;
 `;
 export const CouponBackP = styled.div`
   &.name {
@@ -292,4 +284,11 @@ export const CloseCircle = styled.div`
     color: #000;
     border: 1px solid #000;
   }
+`;
+
+export const LoadMore = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
 `;

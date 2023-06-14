@@ -50,6 +50,8 @@ export const PaymentLeftInfo = styled.div`
 export const PaymentStatusInfo = styled.div`
   margin: 30px 0;
   font-weight: 600;
+  display: flex;
+  align-items: center;
 
   span {
     font-size: 18px;
@@ -57,6 +59,14 @@ export const PaymentStatusInfo = styled.div`
     margin-left: 10px;
     padding: 5px 10px;
   }
+`;
+
+export const PaymentPendingCancel = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 85%;
+  margin-left: 10px;
 `;
 
 export const PaymentPsersonalInfo = styled.div`
