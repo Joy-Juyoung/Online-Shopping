@@ -121,54 +121,113 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
               <AdTHeadCell className='details'></AdTHeadCell>
             </AdTHeadeRow>
           </AdTHead>
-          {currentPosts
-            ?.filter(
-              (list) =>
-                list.pk?.toString().includes(userInput) ||
-                list.total_products?.toString().includes(userInput) ||
-                list.total_price?.toString().includes(userInput) ||
-                list.created_at
-                  ?.toLowerCase()
-                  .includes(userInput.toLowerCase()) ||
-                list.status?.toLowerCase().includes(userInput.toLowerCase()) ||
-                list.user?.username
-                  ?.toLowerCase()
-                  .includes(userInput.toLowerCase())
-            )
-            .map((order) => {
-              // {searchedList?.map((order) => {
-              return (
-                <AdTBody key={order?.pk}>
-                  <AdTBodyRow>
-                    <AdTBodyCell className='id'>{order?.pk}</AdTBodyCell>
-                    <AdTBodyCell className='username'>
-                      {order?.user?.username}
-                    </AdTBodyCell>
-                    <AdTBodyCell className='qty'>
-                      {order?.total_products}
-                    </AdTBodyCell>
-                    <AdTBodyCell className='totalPrice'>
-                      ${order?.final_total_price?.toLocaleString()}
-                    </AdTBodyCell>
-                    <AdTBodyCell className='date'>
-                      {new Date(order?.created_at).toLocaleString('en-ca')}
-                    </AdTBodyCell>
-                    <AdTBodyCell className='status'>
-                      {order?.status}
-                    </AdTBodyCell>
-                    <AdTBodyCell style={{ width: '10%' }}>
-                      <AdButtonUtils
-                        onClick={(e) => {
-                          handleOrderDetails(order?.pk);
-                        }}
-                      >
-                        View
-                      </AdButtonUtils>
-                    </AdTBodyCell>
-                  </AdTBodyRow>
-                </AdTBody>
-              );
-            })}
+          {userInput === null ? (
+            <>
+              {currentPosts
+                ?.filter(
+                  (list) =>
+                    list.pk?.toString().includes(userInput) ||
+                    list.total_products?.toString().includes(userInput) ||
+                    list.total_price?.toString().includes(userInput) ||
+                    list.created_at
+                      ?.toLowerCase()
+                      .includes(userInput.toLowerCase()) ||
+                    list.status?.toLowerCase().includes(userInput.toLowerCase()) ||
+                    list.user?.username
+                      ?.toLowerCase()
+                      .includes(userInput.toLowerCase())
+                )
+                .map((order) => {
+                  // {searchedList?.map((order) => {
+                  return (
+                    <AdTBody key={order?.pk}>
+                      <AdTBodyRow>
+                        <AdTBodyCell className='id'>{order?.pk}</AdTBodyCell>
+                        <AdTBodyCell className='username'>
+                          {order?.user?.username}
+                        </AdTBodyCell>
+                        <AdTBodyCell className='qty'>
+                          {order?.total_products}
+                        </AdTBodyCell>
+                        <AdTBodyCell className='totalPrice'>
+                          ${order?.final_total_price?.toLocaleString()}
+                        </AdTBodyCell>
+                        <AdTBodyCell className='date'>
+                          {new Date(order?.created_at).toLocaleString('en-ca')}
+                        </AdTBodyCell>
+                        <AdTBodyCell className='status'>
+                          {order?.status}
+                        </AdTBodyCell>
+                        <AdTBodyCell style={{ width: '10%' }}>
+                          <AdButtonUtils
+                            onClick={(e) => {
+                              handleOrderDetails(order?.pk);
+                            }}
+                          >
+                            View
+                          </AdButtonUtils>
+                        </AdTBodyCell>
+                      </AdTBodyRow>
+                    </AdTBody>
+                  );
+                })}
+            </>  
+          ):(
+            <>
+              {orders
+              ?.filter(
+                (list) =>
+                  list.pk?.toString().includes(userInput) ||
+                  list.total_products?.toString().includes(userInput) ||
+                  list.total_price?.toString().includes(userInput) ||
+                  list.created_at
+                    ?.toLowerCase()
+                    .includes(userInput.toLowerCase()) ||
+                  list.status?.toLowerCase().includes(userInput.toLowerCase()) ||
+                  list.user?.username
+                    ?.toLowerCase()
+                    .includes(userInput.toLowerCase())
+              )
+              .slice(firstPostIndex, lastPostIndex)
+              .map((order) => {
+                // {searchedList?.map((order) => {
+                return (
+                  <AdTBody key={order?.pk}>
+                    <AdTBodyRow>
+                      <AdTBodyCell className='id'>{order?.pk}</AdTBodyCell>
+                      <AdTBodyCell className='username'>
+                        {order?.user?.username}
+                      </AdTBodyCell>
+                      <AdTBodyCell className='qty'>
+                        {order?.total_products}
+                      </AdTBodyCell>
+                      <AdTBodyCell className='totalPrice'>
+                        ${order?.final_total_price?.toLocaleString()}
+                      </AdTBodyCell>
+                      <AdTBodyCell className='date'>
+                        {new Date(order?.created_at).toLocaleString('en-ca')}
+                      </AdTBodyCell>
+                      <AdTBodyCell className='status'>
+                        {order?.status}
+                      </AdTBodyCell>
+                      <AdTBodyCell style={{ width: '10%' }}>
+                        <AdButtonUtils
+                          onClick={(e) => {
+                            handleOrderDetails(order?.pk);
+                          }}
+                        >
+                          View
+                        </AdButtonUtils>
+                      </AdTBodyCell>
+                    </AdTBodyRow>
+                  </AdTBody>
+                );
+              })
+              
+              }
+            </>
+          )
+          }
         </AdTable>
       </AdListMid>
       <AdListBottom>
