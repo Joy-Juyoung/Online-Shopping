@@ -74,14 +74,30 @@ const AllProducts = ({ meData, catData }) => {
     console.log('selectedOptionnnn', selectOption);
     switch (selectOption) {
       case 'LowToHigh':
+        if (itemsByPrice) {
+          const priceLToH = itemsByPrice.sort((a, b) => a.price - b.price);
+          setSortList(priceLToH);
+        }
         const priceLToH = items.sort((a, b) => a.price - b.price);
         setSortList(priceLToH);
         return setSortProducts(...sortList);
       case 'HighToLow':
+        if (itemsByPrice) {
+          const priceLToH = itemsByPrice.sort((a, b) => b.price - a.price);
+          setSortList(priceLToH);
+        }
         const priceHToL = items.sort((a, b) => b.price - a.price);
         setSortList(priceHToL);
         return setSortProducts(...sortList);
       case 'Newest':
+        if (itemsByPrice) {
+          const priceLToH = itemsByPrice.sort(
+            (start, end) =>
+              new Date(end.created_at).getTime() -
+              new Date(start.created_at).getTime()
+          );
+          setSortList(priceLToH);
+        }
         const uploadNewest = items.sort(
           (start, end) =>
             new Date(end.created_at).getTime() -
@@ -153,7 +169,7 @@ const AllProducts = ({ meData, catData }) => {
             <ListTop>
               <TotalCountWrap>
                 <TotalCount style={{ fontSize: '13px' }}>
-                  Total {items?.length}
+                  Total {itemsByPrice ? itemsByPrice?.length : items?.length}
                 </TotalCount>
               </TotalCountWrap>
               <SelectWrap>

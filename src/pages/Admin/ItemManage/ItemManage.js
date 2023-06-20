@@ -1,31 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { AdContainer } from '../AdminCommonElements';
-import axios from '../../../api/axios';
-import Loading from '../../../components/Loading';
-import {
-  AdCount,
-  AdCountIcon,
-  AdCountText,
-  AdCountWrap,
-  AdGraph,
-  AdItemByCatList,
-  AdOrderOverview,
-  AdStatus,
-  AdViewCount,
-  AdViewList,
-  AdViewMonthGraph,
-  AdViewStatus,
-  EmptyList,
-  ViewAllBtn,
-} from './listStyle';
-import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
-import PendingActionsIcon from '@mui/icons-material/PendingActions';
-import RotateRightIcon from '@mui/icons-material/RotateRight';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import DoNotDisturbAltIcon from '@mui/icons-material/DoNotDisturbAlt';
-import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import { Link } from 'react-router-dom';
 
 const ItemManage = ({ catData }) => {
   // const [loading, setLoading] = useState(false);

@@ -181,7 +181,7 @@ const ResearchResult = ({ meData, catData, onClose }) => {
             <ListTop>
               <TotalCountWrap>
                 <TotalCount style={{ fontSize: '13px' }}>
-                  Total {items?.length}
+                  Total {itemsByPrice ? itemsByPrice?.length : items?.length}
                 </TotalCount>
               </TotalCountWrap>
               <SelectWrap>

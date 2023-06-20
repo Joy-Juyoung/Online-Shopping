@@ -18,7 +18,6 @@ import {
 } from '../AdminCommonElements';
 import axios from '../../../api/axios';
 import Loading from '../../../components/Loading';
-import Pagination from '../../../components/AdminComponents/Pagination';
 import { ButtonSmall, ButtonUtils } from '../../../components/ButtonElements';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
@@ -36,6 +35,9 @@ import {
 } from './CouponStyle';
 import AdminModal from '../../../components/AdminComponents/AdminModal';
 import AddNewCoupon from './AddNewCoupon';
+// import Pagination from '../../../components/AdminComponents/Pagination';
+import usePagination from '../../../components/AdminComponents/PaginationCopy';
+import { Pagination } from '@mui/material';
 
 const CouponManage = ({ meData }) => {
   const [loading, setLoading] = useState(false);
@@ -54,8 +56,13 @@ const CouponManage = ({ meData }) => {
   const [postsPerPage, setPostsPerPage] = useState(8);
 
   const [userInput, setUserInput] = useState('');
+  // const [nullDate, setNullDate] = useState(new Date());
+  var today = new Date();
+  var lastDay = new Date(today.getTime() + 24 * 60 * 60 * 1000);
 
   // const initialState = { name: null, inStock: null, price: null, type:null }
+  let [page, setPage] = useState(1);
+  const PER_PAGE = 8;
 
   const getCoupons = async () => {
     const couponList = await axios.get('/coupons/', {
@@ -73,6 +80,14 @@ const CouponManage = ({ meData }) => {
     getCoupons();
   }, [meData]);
 
+  const count = Math.ceil(coupons?.length / PER_PAGE);
+  const _DATA = usePagination(coupons, PER_PAGE);
+
+  const handleChange = (e, p) => {
+    setPage(p);
+    _DATA.jump(p);
+  };
+
   const handleOpenCoupon = async (pk) => {
     toggleModal(!modalShown);
     const couponEachList = await axios.get(`/coupons/${pk}`, {
@@ -85,33 +100,11 @@ const CouponManage = ({ meData }) => {
     setIsDrop(!isDrop);
   };
 
-  const lastPostIndex = currentPage * postsPerPage;
-  const firstPostIndex = lastPostIndex - postsPerPage;
-  const currentPosts = coupons?.slice(firstPostIndex, lastPostIndex);
+  // const lastPostIndex = currentPage * postsPerPage;
+  // const firstPostIndex = lastPostIndex - postsPerPage;
+  // const currentPosts = coupons?.slice(firstPostIndex, lastPostIndex);
 
-  // const handleSearch = (e) => {
-  //   setSearchValue(e.target.value);
-  // };
-  // console.log('searchValue', searchValue);
-
-  // useEffect(() => {
-  //   setSearchedList(
-  //     !searchValue
-  //       ? currentPosts
-  //       : currentPosts?.filter((search, index) => {
-  //           return (
-  //             search?.discount_rate
-  //               ?.toString()
-  //               .toLowerCase()
-  //               .includes(searchValue.toString().toLowerCase()) ||
-  //             search?.pk
-  //               ?.toString()
-  //               .toLowerCase()
-  //               .includes(searchValue.toString().toLowerCase())
-  //           );
-  //         })
-  //   );
-  // }, [coupons, searchValue]);
+  // console.log('date', new Date());
 
   const handleDeleteCoupon = async (pk) => {
     if (window.confirm('Are you sure you want to delete this coupon?')) {
@@ -178,7 +171,9 @@ const CouponManage = ({ meData }) => {
           </AdTHead>
           {userInput === null ? (
             <>
-              {currentPosts
+              {/* {currentPosts */}
+              {_DATA
+                ?.currentData()
                 ?.filter(
                   (list) =>
                     list.pk?.toString().includes(userInput) ||
@@ -202,10 +197,18 @@ const CouponManage = ({ meData }) => {
                         <AdTBodyCell className='discount'>
                           {coupon?.discount_rate}%
                         </AdTBodyCell>
-                        <AdTBodyCell className='duration'>
-                          {new Date(coupon?.start_date).toDateString()} -{' '}
-                          {new Date(coupon?.end_date).toDateString()}
-                        </AdTBodyCell>
+                        {coupon?.start_date === null ? (
+                          <AdTBodyCell className='duration'>
+                            {new Date().toDateString()} -{' '}
+                            {new Date().toDateString() + 5}
+                          </AdTBodyCell>
+                        ) : (
+                          <AdTBodyCell className='duration'>
+                            {new Date(coupon?.start_date).toDateString()} -{' '}
+                            {new Date(coupon?.end_date).toDateString()}
+                          </AdTBodyCell>
+                        )}
+
                         <AdTBodyCell className='createAt'>
                           {new Date(coupon?.created_at).toLocaleString('en-ca')}
                         </AdTBodyCell>
@@ -225,7 +228,9 @@ const CouponManage = ({ meData }) => {
             </>
           ) : (
             <>
-              {coupons
+              {/* {coupons */}
+              {_DATA
+                .currentData()
                 ?.filter(
                   (list) =>
                     list.pk?.toString().includes(userInput) ||
@@ -241,7 +246,6 @@ const CouponManage = ({ meData }) => {
                       ?.toLowerCase()
                       .includes(userInput.toLowerCase())
                 )
-                .slice(firstPostIndex, lastPostIndex)
                 .map((coupon) => {
                   return (
                     <AdTBody key={coupon?.pk} className='coupon'>
@@ -250,10 +254,18 @@ const CouponManage = ({ meData }) => {
                         <AdTBodyCell className='discount'>
                           {coupon?.discount_rate}%
                         </AdTBodyCell>
-                        <AdTBodyCell className='duration'>
-                          {new Date(coupon?.start_date).toDateString()} -{' '}
-                          {new Date(coupon?.end_date).toDateString()}
-                        </AdTBodyCell>
+                        {coupon?.start_date === null ? (
+                          <AdTBodyCell className='duration'>
+                            {new Date().toDateString()} -{' '}
+                            {new Date().toDateString() + 5}
+                          </AdTBodyCell>
+                        ) : (
+                          <AdTBodyCell className='duration'>
+                            {new Date(coupon?.start_date).toDateString()} -{' '}
+                            {new Date(coupon?.end_date).toDateString()}
+                          </AdTBodyCell>
+                        )}
+
                         <AdTBodyCell className='createAt'>
                           {new Date(coupon?.created_at).toLocaleString('en-ca')}
                         </AdTBodyCell>
@@ -272,50 +284,22 @@ const CouponManage = ({ meData }) => {
                 })}
             </>
           )}
-          {/* {currentPosts?.filter((list) => 
-            list.pk?.toString().includes(userInput)
-             || list.discount_rate?.toString().includes(userInput)
-             || list.created_at?.toLowerCase().includes(userInput.toLowerCase())
-             // date 검색을 어떻게 해야 할지
-             || list.start_date?.toLowerCase().includes(userInput.toLowerCase())
-             || list.end_date?.toLowerCase().includes(userInput.toLowerCase())
-          )          
-          .map((coupon) => {
-            return (
-              <AdTBody key={coupon?.pk} className='coupon'>
-                <AdTBodyRow>
-                  <AdTBodyCell className='id'>{coupon?.pk}</AdTBodyCell>
-                  <AdTBodyCell className='discount'>
-                    {coupon?.discount_rate}%
-                  </AdTBodyCell>
-                  <AdTBodyCell className='duration'>
-                    {new Date(coupon?.start_date).toDateString()} -{' '}
-                    {new Date(coupon?.end_date).toDateString()}
-                  </AdTBodyCell>
-                  <AdTBodyCell className='createAt'>
-                    {new Date(coupon?.created_at).toLocaleString('en-ca')}
-                  </AdTBodyCell>
-                  <AdTBodyCell className='details'>
-                    <ButtonUtils
-                      onClick={(e) => {
-                        handleOpenCoupon(coupon?.pk);
-                      }}
-                    >
-                      View
-                    </ButtonUtils>
-                  </AdTBodyCell>
-                </AdTBodyRow>
-              </AdTBody>
-            );
-          })} */}
         </AdTable>
       </AdListMid>
       <AdListBottom>
-        <Pagination
+        {/* <Pagination
           totalPosts={coupons?.length}
           postsPerPage={postsPerPage}
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}
+        /> */}
+        <Pagination
+          count={count}
+          size='large'
+          page={page}
+          variant='outlined'
+          shape='rounded'
+          onChange={handleChange}
         />
       </AdListBottom>
       <AdminModal

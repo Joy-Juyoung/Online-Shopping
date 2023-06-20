@@ -18,10 +18,7 @@ import {
 } from '../AdminCommonElements';
 import axios from '../../../api/axios';
 import Loading from '../../../components/Loading';
-import Pagination from '../../../components/AdminComponents//Pagination';
-import { ButtonSmall } from '../../../components/ButtonElements';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import PaginationOrigin from '../../../components/AdminComponents//Pagination';
 
 const CustomersManage = ({ meData }) => {
   const [loading, setLoading] = useState(false);
@@ -57,7 +54,7 @@ const CustomersManage = ({ meData }) => {
         <Loading />
       </div>
     );
-    
+
   return (
     <AdContainer>
       <h1>Custoemrs</h1>
@@ -169,7 +166,7 @@ const CustomersManage = ({ meData }) => {
         </AdTable>
       </AdListMid>
       <AdListBottom>
-        <Pagination
+        <PaginationOrigin
           totalPosts={customers?.length}
           postsPerPage={postsPerPage}
           setCurrentPage={setCurrentPage}

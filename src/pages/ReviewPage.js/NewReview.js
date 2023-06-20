@@ -72,7 +72,6 @@ const NewReview = ({ meData }) => {
     setLoading(true);
     getProduct();
     // getReviews();
-
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, [reviewId]);
 
@@ -194,7 +193,8 @@ const NewReview = ({ meData }) => {
             <div>
               <Rating
                 size='large'
-                value={reviewRating || null}
+                value={getItem?.rating || null}
+                // value={reviewRating || null}
                 onChange={(event, newValue) => {
                   setReviewRating(newValue);
                 }}
@@ -206,7 +206,8 @@ const NewReview = ({ meData }) => {
             <textarea
               id='payload'
               name='payload'
-              value={reviewValue}
+              // value={reviewValue}
+              value={getItem?.reviews?.[0]?.payload}
               onChange={handleReviewChange}
             />
           </ReviewText>

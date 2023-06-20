@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Loader = styled.span`
+const Loader = styled.div`
   width: 30px;
   height: 30px;
   border: 5px solid;

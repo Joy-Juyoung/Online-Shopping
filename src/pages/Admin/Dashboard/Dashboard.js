@@ -260,7 +260,7 @@ const Dashboard = ({ meData }) => {
                             {rv?.payload?.length > 8 ? (
                               `${rv?.payload?.substring(0, 8)}...`
                             ) : (
-                              <> {rv?.payload}</>
+                              <span>{rv?.payload}</span>
                             )}
                           </td>
                         </tr>
@@ -297,7 +297,7 @@ const Dashboard = ({ meData }) => {
                           {dl?.name?.length > 15 ? (
                             `${dl?.name?.substring(0, 15)}...`
                           ) : (
-                            <> {dl?.name}</>
+                            <span>{dl?.name}</span>
                           )}
                         </td>
                         <td style={{ width: '5%' }}>{dl?.price}</td>
@@ -306,7 +306,9 @@ const Dashboard = ({ meData }) => {
                     );
                   }) || (
                     <DashListLoader>
-                      <PartLoader />
+                      <td>
+                        <PartLoader />
+                      </td>
                     </DashListLoader>
                   )}
                 </tbody>
