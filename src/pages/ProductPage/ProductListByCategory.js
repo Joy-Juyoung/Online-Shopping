@@ -175,7 +175,11 @@ const ProductListByCategory = ({ meData, catData }) => {
             <ListTop>
               <TotalCountWrap>
                 <TotalCount style={{ fontSize: '13px' }}>
-                  Total {itemKinds?.products?.length}
+                  Total{' '}
+                  {itemsByPrice
+                    ? itemsByPrice?.length
+                    : itemKinds?.products?.length}
+                  {/* Total {itemKinds?.products?.length} */}
                 </TotalCount>
               </TotalCountWrap>
               <SelectWrap>
