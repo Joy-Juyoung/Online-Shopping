@@ -1,11 +1,20 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+export const DetailsInfo = styled.div``;
+
+export const DetailsInfoPrice = styled.div`
+  margin-top: 20px;
+  font-size: 15px;
+  margin-bottom: -10px;
+`;
+
 export const Table = styled.table`
   width: 100%;
-  margin-bottom: 5em;
+  margin-bottom: 40px;
   font-size: 13px;
   text-align: center;
+  box-shadow: 0px 3px 10px 0 rgba(0, 0, 0, 0.1);
 
   tbody:nth-child(odd) {
     background-color: #fff;
@@ -23,10 +32,12 @@ export const Tr = styled.tr``;
 
 export const Th = styled.th`
   padding: 10px;
+  text-align: left;
 `;
 
 export const Td = styled.td`
   padding: 10px;
+  text-align: left;
 
   a {
     text-decoration: none;

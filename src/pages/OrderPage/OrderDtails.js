@@ -32,13 +32,19 @@ import {
   PaymentStatusInfo,
   ReviewBtn,
   ReviewDisableBtn,
+  PaymentPendingCancel,
 } from './OrderDetailsElements';
 import { NotificationStatus } from './OrderElements';
+import { ButtonSmall, ButtonUtils } from '../../components/ButtonElements';
 
 const OrderDtails = ({ meData }) => {
   const { id } = useParams();
   const [ordered, setOrdered] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isCancelled, setIsCancelled] = useState(false);
+
+  const [balance, setBalance] = useState('');
+  const [changeUserBalance, setChangeUserBalance] = useState('');
 
   const ShippingFee = ordered?.total_price >= 200 ? 0 : 15;
   const Taxes = Math.round(ordered?.total_price * 0.05);
@@ -55,13 +61,46 @@ const OrderDtails = ({ meData }) => {
     setOrdered(orderedData?.data);
   };
 
-  console.log('ordered out', ordered);
+  // console.log('ordered out', ordered);
 
   useEffect(() => {
     setLoading(true);
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     getOrdersById();
-  }, []);
+    setBalance(meData?.balance);
+  }, [isCancelled]);
+
+  const handleCancelled = async () => {
+    setIsCancelled(false);
+    if (window.confirm('Are you sure you want to cancelled this order?')) {
+      const cancelData = await axios.put(
+        `/orders/${id}`,
+        {
+          status: 'cancelled',
+        },
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        }
+      );
+      console.log('cancelData', cancelData?.data);
+
+      const meInfo = await axios.put(
+        '/users/me',
+        {
+          balance: Number(balance) + Number(ordered?.final_total_price),
+        },
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        }
+      );
+      setChangeUserBalance(meInfo?.data);
+      setIsCancelled(true);
+    }
+  };
+  console.log('BeforeBalance', meData?.balance);
+  console.log('changeUserBalance', changeUserBalance);
 
   if (loading)
     return (
@@ -78,14 +117,19 @@ const OrderDtails = ({ meData }) => {
             <PaymentStatusInfo>
               ORDER STATUS
               {ordered?.status === 'pending' && (
-                <span
-                  style={{
-                    background: '#FEF3C7',
-                    color: '#b74a01',
-                  }}
-                >
-                  {ordered?.status.toUpperCase()}
-                </span>
+                <PaymentPendingCancel>
+                  <span
+                    style={{
+                      background: '#FEF3C7',
+                      color: '#b74a01',
+                    }}
+                  >
+                    {ordered?.status.toUpperCase()}
+                  </span>
+                  <ButtonSmall onClick={handleCancelled}>
+                    Cancel Order
+                  </ButtonSmall>
+                </PaymentPendingCancel>
               )}
               {ordered?.status === 'inprogress' && (
                 <span
@@ -118,6 +162,23 @@ const OrderDtails = ({ meData }) => {
                 </span>
               )}
             </PaymentStatusInfo>
+            {/* {ordered?.status === 'pending' && ( */}
+            <ExtraInfo style={{ margin: '-10px 0' }}>
+              <li>
+                * Cancellation of the order is only possible in the Pending
+                state.
+              </li>
+              <li>
+                * Upon canceling your order you will receive a full refund to
+                your balance within 1~3 business days
+              </li>
+            </ExtraInfo>
+            {/* )} */}
+            <PaymentPsersonalInfo>
+              <PaymentStatusInfo style={{ margin: '-10px 0' }}>
+                Order Number <span>{ordered?.pk}</span>
+              </PaymentStatusInfo>
+            </PaymentPsersonalInfo>
             <PaymentPsersonalInfo>
               <PaymentListTitle>Shipping address</PaymentListTitle>
               <PaymentInfoDetails>
@@ -131,6 +192,7 @@ const OrderDtails = ({ meData }) => {
                 Product information
                 <span>{ordered?.soldProduct?.length} Items</span>
               </PaymentListTitle>
+
               <Table>
                 <Thead>
                   <Tr>
@@ -178,7 +240,7 @@ const OrderDtails = ({ meData }) => {
                   );
                 })}
               </Table>
-              <NotificationStatus>
+              <NotificationStatus style={{ margin: '-10px 0' }}>
                 * You can only create a review when the order status is
                 'Delivered'.
               </NotificationStatus>

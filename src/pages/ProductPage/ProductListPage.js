@@ -23,6 +23,7 @@ import ProductsCard from './ProductCard';
 import SideFilter from './SideFilter';
 import ProductListByCategory from './ProductListByCategory';
 import Category from './Category';
+import NoteAddIcon from '@mui/icons-material/NoteAdd';
 
 const sort = [
   { value: 'Newest', text: 'Newest first' },
@@ -147,65 +148,61 @@ const ProductsListPage = ({ meData, catData }) => {
           {!isChileOpen ? (
             <ProductsList>
               <ListAllMidWrap>
-                {getAllKinds?.productKinds?.length === 0 ? (
-                  <p>Empty page</p>
-                ) : (
-                  <>
-                    {getAllKinds?.productKinds?.map((item) => {
-                      return (
-                        <ListMidWrapper key={item?.pk}>
-                          {item?.products?.length !== 0 && (
-                            <>
-                              <Link
-                                to={`/products/category/${pId}/${item?.name}/${item?.pk}`}
-                              >
-                                <AllEachTitle>
-                                  {item?.name?.toUpperCase()}
-                                </AllEachTitle>
-                              </Link>
-                              <ListMid>
-                                {priceRange === undefined ||
-                                priceRange === 'none' ? (
-                                  <>
-                                    {item?.products
-                                      ?.filter((pRange) => pRange?.price >= 0)
-                                      ?.map((all) => {
-                                        return (
-                                          <ProductsCard
-                                            key={all?.pk}
-                                            all={all}
-                                            meData={meData}
-                                            getAllKinds={getAllKinds}
-                                            addLiked={addLiked}
-                                          />
-                                        );
-                                      })}
-                                  </>
-                                ) : (
-                                  <>
-                                    {itemsByPrice?.map((price) =>
-                                      price?.map((all) => {
-                                        return (
-                                          <ProductsCard
-                                            key={all?.pk}
-                                            all={all}
-                                            meData={meData}
-                                            getAllKinds={getAllKinds}
-                                            addLiked={addLiked}
-                                          />
-                                        );
-                                      })
-                                    )}
-                                  </>
-                                )}
-                              </ListMid>
-                            </>
-                          )}
-                        </ListMidWrapper>
-                      );
-                    })}
-                  </>
-                )}
+                <>
+                  {getAllKinds?.productKinds?.map((item) => {
+                    return (
+                      <ListMidWrapper key={item?.pk}>
+                        {item?.products?.length !== 0 && (
+                          <>
+                            <Link
+                              to={`/products/category/${pId}/${item?.name}/${item?.pk}`}
+                            >
+                              <AllEachTitle>
+                                {item?.name?.toUpperCase()}
+                              </AllEachTitle>
+                            </Link>
+                            <ListMid>
+                              {priceRange === undefined ||
+                              priceRange === 'none' ? (
+                                <>
+                                  {item?.products
+                                    ?.filter((pRange) => pRange?.price >= 0)
+                                    ?.map((all) => {
+                                      return (
+                                        <ProductsCard
+                                          key={all?.pk}
+                                          all={all}
+                                          meData={meData}
+                                          getAllKinds={getAllKinds}
+                                          addLiked={addLiked}
+                                        />
+                                      );
+                                    })}
+                                </>
+                              ) : (
+                                <>
+                                  {itemsByPrice?.map((price) =>
+                                    price?.map((all) => {
+                                      return (
+                                        <ProductsCard
+                                          key={all?.pk}
+                                          all={all}
+                                          meData={meData}
+                                          getAllKinds={getAllKinds}
+                                          addLiked={addLiked}
+                                        />
+                                      );
+                                    })
+                                  )}
+                                </>
+                              )}
+                            </ListMid>
+                          </>
+                        )}
+                      </ListMidWrapper>
+                    );
+                  })}
+                </>
               </ListAllMidWrap>
             </ProductsList>
           ) : (

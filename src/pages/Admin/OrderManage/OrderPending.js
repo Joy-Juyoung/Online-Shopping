@@ -22,6 +22,7 @@ import {
   DeliveredLabel,
   DeliveredSlider,
   DeliveredToggle,
+  DetailsInfo,
   ReviewBtn,
   Table,
   Tbody,
@@ -240,9 +241,15 @@ const OrderPending = ({ meData }) => {
       >
         <div>
           <h2>Order Details</h2>
-          <div>
-            <div>Order number: {orderById?.pk}</div>
-            <div>Order User: {orderById?.soldProduct[0]?.user?.username}</div>
+          <div
+            style={{
+              margin: '10px',
+            }}
+          >
+            <DetailsInfo>Order no.: {orderById?.pk}</DetailsInfo>
+            <DetailsInfo>
+              Order User: {orderById?.soldProduct[0]?.user?.username}
+            </DetailsInfo>
           </div>
           <Table>
             <Thead>
@@ -253,10 +260,10 @@ const OrderPending = ({ meData }) => {
                 <Th>Price</Th>
               </Tr>
             </Thead>
-            {orderById?.soldProduct?.map((sold, index) => {
-              return (
-                <Tbody key={sold?.pk}>
-                  <Tr>
+            <Tbody>
+              {orderById?.soldProduct?.map((sold, index) => {
+                return (
+                  <Tr key={sold?.pk}>
                     <Td>{sold?.product.name.toUpperCase()}</Td>
                     {sold?.product_option === null ? (
                       <Td>Free</Td>
@@ -267,9 +274,23 @@ const OrderPending = ({ meData }) => {
                     <Td>{sold?.number_of_product}</Td>
                     <Td>${sold?.product?.price * sold?.number_of_product}</Td>
                   </Tr>
-                </Tbody>
-              );
-            })}
+                );
+              })}
+              <Tr>
+                <Td
+                  colSpan='3'
+                  style={{
+                    background: '#fff',
+                    fontWeight: '600',
+                  }}
+                >
+                  Order Total
+                </Td>
+                <Td style={{ background: '#fff', fontWeight: '600' }}>
+                  ${orderById?.final_total_price?.toLocaleString()}
+                </Td>
+              </Tr>
+            </Tbody>
           </Table>
         </div>
       </AdminModal>

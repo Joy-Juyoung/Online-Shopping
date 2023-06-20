@@ -15,6 +15,7 @@ import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import PendingIcon from '@mui/icons-material/Pending';
+import BorderAllIcon from '@mui/icons-material/BorderAll';
 
 export const SidebarData = [
   {
@@ -44,11 +45,16 @@ export const SidebarData = [
   },
   {
     title: 'Orders',
-    path: '/admin/orders',
+    // path: '/admin/orders',
     icon: <MonetizationOnIcon />,
     iconClosed: <ExpandMoreIcon />,
     iconOpened: <ExpandLessIcon />,
     subNav: [
+      // {
+      //   title: 'Order Overview',
+      //   path: '/admin/orders',
+      //   icon: <BorderAllIcon />,
+      // },
       {
         title: 'Order History',
         path: '/admin/orders/all',

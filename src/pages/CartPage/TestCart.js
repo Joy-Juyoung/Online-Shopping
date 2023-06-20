@@ -40,7 +40,7 @@ import { Link } from 'react-router-dom';
 import { ButtonLarge } from '../../components/ButtonElements';
 import CountButton from './CountButton';
 
-const CARTS_URL = '/carts';
+// const CARTS_URL = '/carts/';
 
 const TestCart = ({ checkedList, setCheckedList, setIsCount, isCount }) => {
   const [loading, setLoading] = useState(false);
@@ -74,12 +74,16 @@ const TestCart = ({ checkedList, setCheckedList, setIsCount, isCount }) => {
     localStorage.setItem('getChecked', JSON.stringify(checkedList));
   }, [selectedItem, carts]);
 
+  console.log('checkedItem', checkedItem);
+  console.log('selectedItem', selectedItem);
+  console.log('checkedList', checkedList);
+
   useEffect(() => {
     localStorage.setItem('getChecked', JSON.stringify(checkedList));
   }, [selectedItem, carts, checkedList]);
 
   const getAllCart = async () => {
-    const cartList = await axios.get(CARTS_URL, {
+    const cartList = await axios.get('/carts/', {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
@@ -96,24 +100,24 @@ const TestCart = ({ checkedList, setCheckedList, setIsCount, isCount }) => {
   }, []);
   // console.log('carts', carts);
 
-  const handleAllDeleteCart = async () => {
-    if (checkedList?.length !== 0) {
-      if (
-        window.confirm(
-          'Are you sure you want to delete checked items in your cart?'
-        )
-      ) {
-        const deleteItem = checkedList?.map((c) => {
-          axios.delete(`/carts/${c.pk}`, {
-            headers: { 'Content-Type': 'application/json' },
-            withCredentials: true,
-          });
-        });
-        setCarts(deleteItem);
-        // window.location.reload();
-      }
-    }
-  };
+  // const handleAllDeleteCart = async () => {
+  //   if (checkedList?.length !== 0) {
+  //     if (
+  //       window.confirm(
+  //         'Are you sure you want to delete checked items in your cart?'
+  //       )
+  //     ) {
+  //       const deleteItem = checkedList?.map((c) => {
+  //         axios.delete(`/carts/${c.pk}`, {
+  //           headers: { 'Content-Type': 'application/json' },
+  //           withCredentials: true,
+  //         });
+  //       });
+  //       setCarts(deleteItem);
+  //       // window.location.reload();
+  //     }
+  //   }
+  // };
 
   const handleDeleteCart = async (pk) => {
     // console.log('pk', pk);

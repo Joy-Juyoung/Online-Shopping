@@ -39,6 +39,7 @@ import AddBalance from '../../components/AddBalance';
 import { useRef } from 'react';
 import SuccessPayment from './SuccessPayment';
 import AddCoupon from './AddCoupon';
+import EditAddress from './EditAddress';
 
 const PaymentPage = ({
   meData,
@@ -62,6 +63,10 @@ const PaymentPage = ({
   const [couponModalShown, toggleCouponModal] = useState(false);
   const [coupons, setCoupons] = useState([]);
   const [selected, setSelected] = useState();
+  const [changeUserInfo, setChangeUserInfo] = useState('');
+
+  const [addressModalShown, toggleAddressModal] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
 
   const [getCheckedList, setGetCheckedList] = useState();
   console.log('checkedList', checkedList);
@@ -115,6 +120,7 @@ const PaymentPage = ({
     setLoading(true);
     getCoupons();
     setTotalPrice(TotalPriceTag);
+    setChangeUserInfo(meData);
 
     setGetCheckedList(JSON.parse(localStorage.getItem('getChecked')));
   }, [meData, isCount]);
@@ -220,10 +226,30 @@ const PaymentPage = ({
                     <p>{meData?.phone_number}</p>
                     <p>{meData?.address}</p>
                   </PaymentInfoDetails>
-                  <Link to='/userAccount'>
-                    <ButtonSmall>Edit my shipping address</ButtonSmall>
-                  </Link>
+                  {/* <Link to='/userAccount'> */}
+                  <ButtonSmall
+                    onClick={() => {
+                      toggleAddressModal(!addressModalShown);
+                    }}
+                  >
+                    Edit my shipping address
+                  </ButtonSmall>
+                  {/* </Link> */}
                 </PaymentPsersonalInfo>
+
+                <Modal
+                  shown={addressModalShown}
+                  close={() => {
+                    toggleAddressModal(false);
+                  }}
+                >
+                  <EditAddress
+                    meData={meData}
+                    isEdit={isEdit}
+                    setIsEdit={setIsEdit}
+                  />
+                </Modal>
+
                 <PaymentListWrap>
                   <PaymentListTitle>
                     Product information{' '}

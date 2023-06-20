@@ -19,7 +19,16 @@ import Loading from '../../../components/Loading';
 import Pagination from '../../../components/AdminComponents//Pagination';
 
 import AdminModal from '../../../components/AdminComponents/AdminModal';
-import { Table, Tbody, Td, Th, Thead, Tr } from './OrderStyle';
+import {
+  DetailsInfo,
+  DetailsInfoPrice,
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from './OrderStyle';
 import { useNavigate } from 'react-router-dom';
 import { AdButtonUtils } from '../../../components/AdminComponents/AdminButtons';
 import DropStatus from './DropStatus';
@@ -139,7 +148,7 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
                       {order?.total_products}
                     </AdTBodyCell>
                     <AdTBodyCell className='totalPrice'>
-                      ${order?.total_price?.toLocaleString()}
+                      ${order?.final_total_price?.toLocaleString()}
                     </AdTBodyCell>
                     <AdTBodyCell className='date'>
                       {new Date(order?.created_at).toLocaleString('en-ca')}
@@ -183,12 +192,12 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
           <div
             style={{
               margin: '10px',
-              // display: 'flex',
-              // justifyContent: 'space-between',
             }}
           >
-            <div>Order no.: {orderById?.pk}</div>
-            <div>Order User: {orderById?.soldProduct[0]?.user?.username}</div>
+            <DetailsInfo>Order no.: {orderById?.pk}</DetailsInfo>
+            <DetailsInfo>
+              Order User: {orderById?.soldProduct[0]?.user?.username}
+            </DetailsInfo>
           </div>
           <Table style={{ marginTop: '20px' }}>
             <Thead>
@@ -198,11 +207,14 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
                 <Th>Qty</Th>
                 <Th>Price</Th>
               </Tr>
+              {/* <Tr>
+                <Th></Th>
+              </Tr> */}
             </Thead>
-            {orderById?.soldProduct?.map((sold, index) => {
-              return (
-                <Tbody key={sold?.pk}>
-                  <Tr>
+            <Tbody>
+              {orderById?.soldProduct?.map((sold, index) => {
+                return (
+                  <Tr key={sold?.pk}>
                     <Td>{sold?.product.name.toUpperCase()}</Td>
                     {sold?.product_option === null ? (
                       <Td>Free</Td>
@@ -213,10 +225,25 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
                     <Td>{sold?.number_of_product}</Td>
                     <Td>${sold?.product?.price * sold?.number_of_product}</Td>
                   </Tr>
-                </Tbody>
-              );
-            })}
+                );
+              })}
+              <Tr>
+                <Td
+                  colSpan='3'
+                  style={{
+                    background: '#fff',
+                    fontWeight: '600',
+                  }}
+                >
+                  Order Total
+                </Td>
+                <Td style={{ background: '#fff', fontWeight: '600' }}>
+                  ${orderById?.final_total_price?.toLocaleString()}
+                </Td>
+              </Tr>
+            </Tbody>
           </Table>
+
           <DropStatus
             statusOptionData={statusOptionData}
             orderById={orderById}
