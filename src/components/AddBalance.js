@@ -85,15 +85,29 @@ const AddBalance = ({ meData, isCancelled }) => {
               </BoxSpan>
             </BoxLi>
             <BoxLi>
-              <BoxH3>Add Balance</BoxH3>
+              <BoxH3>Amount</BoxH3>
+              {/* <BoxSpan style={{ fontSize: '11px' }}>
+                Up to $5,000 per day
+              </BoxSpan> */}
               <BoxSpan>
                 <Input
                   type='number'
                   placeholder='Enter the price you want to add'
                   onChange={ChangeBalance}
                   min='0'
+                  max='5000'
                   // value={''}
                 />
+              </BoxSpan>
+              <BoxSpan
+                style={{
+                  fontSize: '11px',
+                  marginTop: '-5px',
+                  marginLeft: '3px',
+                  color: 'gray',
+                }}
+              >
+                Up to $5,000 per day
               </BoxSpan>
             </BoxLi>
           </BoxUl>

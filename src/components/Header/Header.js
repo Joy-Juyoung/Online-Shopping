@@ -322,7 +322,10 @@ const Header = ({
                     <DropMenuList key={category?.pk}>
                       <DropMenuParents>
                         <DropdownButton
-                          to={`/products/category/${category?.pk}`}
+                          to={
+                            category?.productKinds?.length !== 0 &&
+                            `/products/category/${category?.pk}`
+                          }
                         >
                           {category?.productKinds?.length === 0 &&
                           meData?.type !== 'admin_user' ? null : (
