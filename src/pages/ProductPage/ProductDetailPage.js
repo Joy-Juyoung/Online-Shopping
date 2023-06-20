@@ -60,6 +60,7 @@ import { ToastContainer, Zoom, toast } from 'react-toastify';
 import Modal from '../../components/Modal';
 import { ButtonSmall } from '../../components/ButtonElements';
 import NoUser from '../../components/NoUser';
+import AddToCoupon from './AddToCoupon';
 
 const SHIPPING_RETURN_URL = '/settings/all';
 const REVIEWS_URL = '/reviews/';
@@ -145,7 +146,7 @@ const ProductDetailPage = ({
       setIsEdit(false);
     }
   };
-  // console.log('me', meData);
+  console.log('me', meData);
 
   const getProduct = async () => {
     const { data } = await axios.get(`/products/${id}`, {
@@ -340,12 +341,15 @@ const ProductDetailPage = ({
               ) : (
                 <DetailCoupon>
                   <p>
-                    Shop on our App and Enjoy 10% off
-                    <br />
-                    Use code
-                    <strong>APPFW22</strong>
+                    Do not miss 50% OFF !! <button onClick={()=> setIsAdded(true)}>Click Me</button>
                   </p>
                 </DetailCoupon>
+              )}
+              {isAdded && (
+                <AddToCoupon
+                  onClose={() => setIsAdded(false)}
+                  meData={meData}
+                />
               )}
               <DetailStock>
                 InStock: {itemsDetail?.in_stock?.toLocaleString()}
