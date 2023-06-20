@@ -113,28 +113,46 @@ const ProductListByCategory = ({ meData, catData }) => {
   }, [priceRange]);
 
   useEffect(() => {
-    // console.log('selectedOptionnnn', selectOption);
     if (itemKinds.name === cName) {
       switch (selectOption) {
         case 'LowToHigh':
+          if (itemsByPrice) {
+            const priceLToH = itemsByPrice.sort((a, b) => a.price - b.price);
+            setSortList(priceLToH);
+          }
           const priceLToH = itemKinds.products.sort(
             (a, b) => a.price - b.price
           );
           setSortList(priceLToH);
+
           return setSortProducts(...sortList);
         case 'HighToLow':
+          if (itemsByPrice) {
+            const priceHToL = itemsByPrice.sort((a, b) => b.price - a.price);
+            setSortList(priceHToL);
+          }
           const priceHToL = itemKinds.products.sort(
             (a, b) => b.price - a.price
           );
           setSortList(priceHToL);
+
           return setSortProducts(...sortList);
         case 'Newest':
+          if (itemsByPrice) {
+            const uploadNewest = itemsByPrice.sort(
+              (start, end) =>
+                new Date(end.created_at).getTime() -
+                new Date(start.created_at).getTime()
+            );
+            setSortList(uploadNewest);
+          }
           const uploadNewest = itemKinds.products.sort(
             (start, end) =>
               new Date(end.created_at).getTime() -
               new Date(start.created_at).getTime()
           );
           setSortList(uploadNewest);
+
           return setSortProducts(...sortList);
         default:
           return setSortList(sortProducts);
