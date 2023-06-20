@@ -102,7 +102,7 @@ const UserAccountPage = ({ meData }) => {
       );
       setChangeUserInfo(meInfo?.data);
       setIsEdit(false);
-      // window.location.reload();
+      window.location.reload();
     }
   };
 
