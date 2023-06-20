@@ -31,7 +31,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import axios from '../../api/axios';
 import { useLocation } from 'react-router-dom';
 
-const TestSearch = ({ onClose }) => {
+const TestSearch = ({ onClose, onKeyPress }) => {
   const [keywords, setKeywords] = useState(
     JSON.parse(localStorage.getItem('keywords') || '[]')
   );
@@ -83,13 +83,14 @@ const TestSearch = ({ onClose }) => {
   const handleClearKeywords = () => {
     setKeywords([]);
   };
-  useEffect(() => {
-    const checkIfClickedOutside = (e) => {};
-    document.addEventListener('click', checkIfClickedOutside);
-    return () => {
-      document.removeEventListener('click', checkIfClickedOutside);
-    };
-  }, [onClose]);
+  // useEffect(() => {
+  //   const checkIfClickedOutside = (e) => {};
+  //   document.addEventListener('click', checkIfClickedOutside);
+  //   document.addEventListener('keypress', checkIfClickedOutside);
+  //   return () => {
+  //     document.removeEventListener('click', checkIfClickedOutside);
+  //   };
+  // }, [onClose]);
 
   return (
     <ModalContainer>
@@ -97,7 +98,11 @@ const TestSearch = ({ onClose }) => {
         {/* <TestModalContainer> */}
         <TestModalWrapper>
           <ModalHeader>
-            <SearchBar onAddKeyword={handleAddKeyword} onClose={onClose} />
+            <SearchBar
+              onAddKeyword={handleAddKeyword}
+              onClose={onClose}
+              onKeyPress={onKeyPress}
+            />
             <ModalCloseBtn onClick={onClose}>
               <CloseIcon fontSize='large' />
             </ModalCloseBtn>

@@ -153,7 +153,10 @@ const Header = ({
                 </ModalBtn>
               </ModalBtnWrap>
               {isModalOpen && (
-                <TestSearch onClose={() => setIsModalOpen(false)} />
+                <TestSearch
+                  onClose={() => setIsModalOpen(false)}
+                  onKeyPress={() => setIsModalOpen(false)}
+                />
               )}
             </LeftSide>
 
