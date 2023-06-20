@@ -162,20 +162,84 @@ const OrderPending = ({ meData }) => {
               <AdTHeadCell className='details'></AdTHeadCell>
             </AdTHeadeRow>
           </AdTHead>
-          {currentPosts
-            ?.filter(
-              (list) =>
-                list.pk?.toString().includes(userInput) ||
-                list.total_products?.toString().includes(userInput) ||
-                list.total_price?.toString().includes(userInput) ||
-                list.created_at
-                  ?.toLowerCase()
-                  .includes(userInput.toLowerCase()) ||
-                list.status?.toLowerCase().includes(userInput.toLowerCase()) ||
-                list.user?.username
-                  ?.toLowerCase()
-                  .includes(userInput.toLowerCase())
+          {userInput === null ? (
+            <>
+              {currentPosts
+                ?.filter(
+                  (list) =>
+                    list.pk?.toString().includes(userInput) ||
+                    list.total_products?.toString().includes(userInput) ||
+                    list.total_price?.toString().includes(userInput) ||
+                    list.created_at
+                      ?.toLowerCase()
+                      .includes(userInput.toLowerCase()) ||
+                    list.status?.toLowerCase().includes(userInput.toLowerCase()) ||
+                    list.user?.username
+                      ?.toLowerCase()
+                      .includes(userInput.toLowerCase())
+                )
+                .map((pendingOrder) => {
+                  return (
+                    <AdTBody key={pendingOrder?.pk}>
+                      <AdTBodyRow>
+                        <AdTBodyCell className='id'>{pendingOrder?.pk}</AdTBodyCell>
+                        <AdTBodyCell className='username'>
+                          {pendingOrder?.user?.username}
+                        </AdTBodyCell>
+                        <AdTBodyCell className='username'>
+                          {pendingOrder?.total_products}
+                        </AdTBodyCell>
+                        <AdTBodyCell className='qty'>
+                          <AdButtonUtils
+                            onClick={(e) => {
+                              handleDetails(pendingOrder?.pk);
+                            }}
+                          >
+                            View
+                          </AdButtonUtils>
+                        </AdTBodyCell>
+                        <AdTBodyCell className='totalPrice'>
+                          ${pendingOrder?.total_price?.toLocaleString()}
+                        </AdTBodyCell>
+                        <AdTBodyCell style={{ width: '25%' }}>
+                          {new Date(pendingOrder?.created_at).toLocaleString(
+                            'en-ca'
+                          )}
+                        </AdTBodyCell>
+                        <AdTBodyCell>{pendingOrder?.status}</AdTBodyCell>
+                        <AdTBodyCell style={{ width: '18%' }}>
+                          <AdButtonCancel
+                            onClick={() => handleCancel(pendingOrder?.pk)}
+                          >
+                            CANCEL
+                          </AdButtonCancel>
+                          <AdButtonAccept
+                            onClick={() => handleAccept(pendingOrder?.pk)}
+                          >
+                            ACCEPT
+                          </AdButtonAccept>
+                        </AdTBodyCell>
+                      </AdTBodyRow>
+                    </AdTBody>
+                  );
+                })}
+              </>
+          ):(
+            <>
+            {orders
+            ?.filter((list) =>
+                  list.pk?.toString().includes(userInput) ||
+                  list.total_products?.toString().includes(userInput) ||
+                  list.total_price?.toString().includes(userInput) ||
+                  list.created_at
+                    ?.toLowerCase()
+                    .includes(userInput.toLowerCase()) ||
+                  list.status?.toLowerCase().includes(userInput.toLowerCase()) ||
+                  list.user?.username
+                    ?.toLowerCase()
+                    .includes(userInput.toLowerCase())
             )
+            .slice(firstPostIndex, lastPostIndex)
             .map((pendingOrder) => {
               return (
                 <AdTBody key={pendingOrder?.pk}>
@@ -220,7 +284,10 @@ const OrderPending = ({ meData }) => {
                   </AdTBodyRow>
                 </AdTBody>
               );
-            })}
+            })
+            }
+            </>
+          )}
         </AdTable>
       </AdListMid>
       <AdListBottom>

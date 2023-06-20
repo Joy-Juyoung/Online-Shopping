@@ -63,17 +63,18 @@ const ItemList = ({ meData, catData }) => {
 
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
+  const currentPosts = products?.slice(firstPostIndex, lastPostIndex);
   // const currentPosts = products?.slice(firstPostIndex, lastPostIndex);
-  const currentPosts = products
-    ?.slice(firstPostIndex, lastPostIndex)
-    ?.filter(
-      (list) =>
-        list.pk?.toString().includes(userInput) ||
-        list.price?.toString().includes(userInput) ||
-        list.name?.toLowerCase().includes(userInput.toLowerCase()) ||
-        list.kind?.name?.toLowerCase().includes(userInput.toLowerCase()) ||
-        list.created_at?.toLowerCase().includes(userInput.toLowerCase())
-    );
+  // const currentPosts = products
+  //   ?.slice(firstPostIndex, lastPostIndex)
+  //   ?.filter(
+  //     (list) =>
+  //       list.pk?.toString().includes(userInput) ||
+  //       list.price?.toString().includes(userInput) ||
+  //       list.name?.toLowerCase().includes(userInput.toLowerCase()) ||
+  //       list.kind?.name?.toLowerCase().includes(userInput.toLowerCase()) ||
+  //       list.created_at?.toLowerCase().includes(userInput.toLowerCase())
+  //   );
   const handleDeleteItem = async (pk) => {
     // console.log('pk', pk);
     if (window.confirm('Are you sure you want to delete this Item?')) {
@@ -150,55 +151,129 @@ const ItemList = ({ meData, catData }) => {
               <AdTHeadCell></AdTHeadCell>
             </AdTHeadeRow>
           </AdTHead>
-          {/* {searchedList?.map((product) => {  */}
-          {currentPosts?.map((product) => {
-            return (
-              <AdTBody key={product?.pk}>
-                <AdTBodyRow>
-                  <AdTBodyCell style={{ width: '5%' }}>
-                    {product?.pk}
-                  </AdTBodyCell>
-                  <AdTBodyCell style={{ width: '8%', height: '40px' }}>
-                    {product?.photos?.length === 0 ? (
-                      <BodyImg src={NoneImg} alt='No Image' />
-                    ) : (
-                      <BodyImg
-                        src={product?.photos[0]?.picture}
-                        alt={product?.name}
-                      />
-                    )}
-                  </AdTBodyCell>
-                  <AdTBodyCell style={{ width: '25%' }}>
-                    {product?.name?.length > 30 ? (
-                      `${product?.name?.substring(0, 30)}...`
-                    ) : (
-                      <> {product?.name}</>
-                    )}
-                  </AdTBodyCell>
-                  <AdTBodyCell style={{ width: '7%' }}>
-                    ${product?.price?.toLocaleString()}
-                  </AdTBodyCell>
-                  <AdTBodyCell style={{ width: '12%' }}>
-                    {product?.kind?.name}
-                  </AdTBodyCell>
-                  <AdTBodyCell style={{ width: '18%' }}>
-                    {new Date(product?.created_at).toLocaleString('en-ca')}
-                  </AdTBodyCell>
-                  <AdTBodyCell style={{ width: '10%' }}>
-                    <AdIconDelete onClick={() => handlePhotoItem(product?.pk)}>
-                      <ButtonUtils>+ Photos</ButtonUtils>
-                    </AdIconDelete>
-                  </AdTBodyCell>
+          {userInput === null ? (
+            <>
+            {currentPosts
+            ?.filter(
+              (list) =>
+                list.pk?.toString().includes(userInput) ||
+                list.price?.toString().includes(userInput) ||
+                list.name?.toLowerCase().includes(userInput.toLowerCase()) ||
+                list.kind?.name?.toLowerCase().includes(userInput.toLowerCase()) ||
+                list.created_at?.toLowerCase().includes(userInput.toLowerCase())
+            )
+            .map((product) => {
+              return (
+                <AdTBody key={product?.pk}>
+                  <AdTBodyRow>
+                    <AdTBodyCell style={{ width: '5%' }}>
+                      {product?.pk}
+                    </AdTBodyCell>
+                    <AdTBodyCell style={{ width: '8%', height: '40px' }}>
+                      {product?.photos?.length === 0 ? (
+                        <BodyImg src={NoneImg} alt='No Image' />
+                      ) : (
+                        <BodyImg
+                          src={product?.photos[0]?.picture}
+                          alt={product?.name}
+                        />
+                      )}
+                    </AdTBodyCell>
+                    <AdTBodyCell style={{ width: '25%' }}>
+                      {product?.name?.length > 30 ? (
+                        `${product?.name?.substring(0, 30)}...`
+                      ) : (
+                        <> {product?.name}</>
+                      )}
+                    </AdTBodyCell>
+                    <AdTBodyCell style={{ width: '7%' }}>
+                      ${product?.price?.toLocaleString()}
+                    </AdTBodyCell>
+                    <AdTBodyCell style={{ width: '12%' }}>
+                      {product?.kind?.name}
+                    </AdTBodyCell>
+                    <AdTBodyCell style={{ width: '18%' }}>
+                      {new Date(product?.created_at).toLocaleString('en-ca')}
+                    </AdTBodyCell>
+                    <AdTBodyCell style={{ width: '10%' }}>
+                      <AdIconDelete onClick={() => handlePhotoItem(product?.pk)}>
+                        <ButtonUtils>+ Photos</ButtonUtils>
+                      </AdIconDelete>
+                    </AdTBodyCell>
 
-                  <AdTBodyCell style={{ width: '5%' }}>
-                    <AdIconDelete onClick={() => handleDeleteItem(product?.pk)}>
-                      <DeleteIcon />
-                    </AdIconDelete>
-                  </AdTBodyCell>
-                </AdTBodyRow>
-              </AdTBody>
-            );
-          })}
+                    <AdTBodyCell style={{ width: '5%' }}>
+                      <AdIconDelete onClick={() => handleDeleteItem(product?.pk)}>
+                        <DeleteIcon />
+                      </AdIconDelete>
+                    </AdTBodyCell>
+                  </AdTBodyRow>
+                </AdTBody>
+              );
+            })}
+            </>
+          ):(
+            <>
+              {products
+                ?.filter(
+                  (list) =>
+                    list.pk?.toString().includes(userInput) ||
+                    list.price?.toString().includes(userInput) ||
+                    list.name?.toLowerCase().includes(userInput.toLowerCase()) ||
+                    list.kind?.name?.toLowerCase().includes(userInput.toLowerCase()) ||
+                    list.created_at?.toLowerCase().includes(userInput.toLowerCase())
+                )
+                .slice(firstPostIndex, lastPostIndex)
+                .map((product) => {
+                  return (
+                    <AdTBody key={product?.pk}>
+                      <AdTBodyRow>
+                        <AdTBodyCell style={{ width: '5%' }}>
+                          {product?.pk}
+                        </AdTBodyCell>
+                        <AdTBodyCell style={{ width: '8%', height: '40px' }}>
+                          {product?.photos?.length === 0 ? (
+                            <BodyImg src={NoneImg} alt='No Image' />
+                          ) : (
+                            <BodyImg
+                              src={product?.photos[0]?.picture}
+                              alt={product?.name}
+                            />
+                          )}
+                        </AdTBodyCell>
+                        <AdTBodyCell style={{ width: '25%' }}>
+                          {product?.name?.length > 30 ? (
+                            `${product?.name?.substring(0, 30)}...`
+                          ) : (
+                            <> {product?.name}</>
+                          )}
+                        </AdTBodyCell>
+                        <AdTBodyCell style={{ width: '7%' }}>
+                          ${product?.price?.toLocaleString()}
+                        </AdTBodyCell>
+                        <AdTBodyCell style={{ width: '12%' }}>
+                          {product?.kind?.name}
+                        </AdTBodyCell>
+                        <AdTBodyCell style={{ width: '18%' }}>
+                          {new Date(product?.created_at).toLocaleString('en-ca')}
+                        </AdTBodyCell>
+                        <AdTBodyCell style={{ width: '10%' }}>
+                          <AdIconDelete onClick={() => handlePhotoItem(product?.pk)}>
+                            <ButtonUtils>+ Photos</ButtonUtils>
+                          </AdIconDelete>
+                        </AdTBodyCell>
+    
+                        <AdTBodyCell style={{ width: '5%' }}>
+                          <AdIconDelete onClick={() => handleDeleteItem(product?.pk)}>
+                            <DeleteIcon />
+                          </AdIconDelete>
+                        </AdTBodyCell>
+                      </AdTBodyRow>
+                    </AdTBody>
+                  );
+                })
+                }
+            </>
+          )}
         </AdTable>
       </AdListMid>
       <AddItemModal
