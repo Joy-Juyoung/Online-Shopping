@@ -69,20 +69,13 @@ const CustomersManage = ({ meData }) => {
             onChange={(e) => setUserInput(e.target.value)}
           />
         </AdListSearch>
-        <AdListUtils>
-          <ButtonSmall>Delete</ButtonSmall>
-        </AdListUtils>
       </AdListTop>
 
       <AdListMid>
         <AdTable>
           <AdTHead>
             <AdTHeadeRow>
-              {/* <AdTHeadCell className='check'>
-                <input type='checkbox' />
-              </AdTHeadCell> */}
               <AdTHeadCell className='id'>ID</AdTHeadCell>
-              {/* <AdTHeadCell className='type'>TYPE</AdTHeadCell> */}
               <AdTHeadCell className='username'>NAME</AdTHeadCell>
               <AdTHeadCell className='address'>ADDRESS</AdTHeadCell>
               <AdTHeadCell className='phone'>PHONE</AdTHeadCell>
@@ -173,38 +166,6 @@ const CustomersManage = ({ meData }) => {
                 })}
             </>
           )}
-          {/* {currentPosts
-            ?.filter(
-              (list) =>
-                list.username.toLowerCase().includes(userInput.toLowerCase()) ||
-                list.type.toLowerCase().includes(userInput.toLowerCase()) ||
-                list.pk?.toString().includes(userInput) ||
-                list.balance?.toString().includes(userInput) ||
-                list.address?.toString().includes(userInput) ||
-                list.phone_number?.toString().includes(userInput)
-            )
-            .map((user) => {
-              return (
-                <AdTBody key={user?.pk}>
-                  <AdTBodyRow>
-                    <AdTBodyCell className='id'>{user?.pk}</AdTBodyCell>
-                    <AdTBodyCell className='username'>
-                      {user?.username}
-                    </AdTBodyCell>
-                    <AdTBodyCell className='address'>
-                      {user?.address}
-                    </AdTBodyCell>
-                    <AdTBodyCell className='phone'>
-                      {user?.phone_number}
-                    </AdTBodyCell>
-                    <AdTBodyCell className='balance'>
-                      ${user?.balance?.toLocaleString()}
-                    </AdTBodyCell>
-                    <AdTBodyCell className='type'>{user?.type}</AdTBodyCell>
-                  </AdTBodyRow>
-                </AdTBody>
-              );
-            })} */}
         </AdTable>
       </AdListMid>
       <AdListBottom>
