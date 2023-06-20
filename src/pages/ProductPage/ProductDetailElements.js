@@ -65,9 +65,25 @@ export const DetailCoupon = styled.div`
   margin-left: auto;
   position: relative;
   p {
-    font-size: 14px;
+    font-size: 20px;
     color: #000;
+    font-weight: bold;
+    text-shadow: 2px 2px 2px #333;
   }
+   button {
+    margin-left: 10px;
+    width: 90px;
+    border: 2px solid rgb(255, 174, 0);
+    background: rgb(255, 255, 247);
+    border-radius: 5px;
+    cursor: pointer;
+
+    :hover {
+      border: 2px solid black;
+      background: rgb(255, 174, 0);
+      color: #000;
+    }
+   }
 `;
 
 export const DetailStock = styled.div`
