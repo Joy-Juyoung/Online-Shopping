@@ -90,13 +90,45 @@ const SideFilter = ({
                     )}
                     {catData?.map((cat) => {
                       return (
-                        <Link key={cat.pk} to={`/products/category/${cat.pk}`}>
+                        <Link
+                          key={cat.pk}
+                          to={
+                            cat?.productKinds?.length !== 0 &&
+                            `/products/category/${cat.pk}`
+                          }
+                        >
                           {cat?.name === getAllKinds?.name ? (
                             <LocateList>
                               <p>{cat?.name.toUpperCase()}</p>
                             </LocateList>
                           ) : (
-                            <li>{cat?.name.toUpperCase()}</li>
+                            <>
+                              {cat?.productKinds?.length !== 0 ? (
+                                <li>{cat?.name.toUpperCase()}</li>
+                              ) : (
+                                <li
+                                  style={{
+                                    cursor: 'not-allowed',
+                                    color: 'gray',
+                                  }}
+                                >
+                                  {cat?.name.toUpperCase()}
+                                  <span
+                                    style={{
+                                      marginLeft: '15px',
+                                      fontSize: '13px',
+                                      // color: 'gray',
+                                      // border: '1px solid lightgray',
+                                      background: 'lightgray',
+                                      borderRadius: '5px',
+                                      padding: '3px 5px',
+                                    }}
+                                  >
+                                    Incompleted
+                                  </span>
+                                </li>
+                              )}
+                            </>
                           )}
                         </Link>
                       );

@@ -16,7 +16,7 @@ import {
 } from '../AdminCommonElements';
 import axios from '../../../api/axios';
 import Loading from '../../../components/Loading';
-import Pagination from '../../../components/AdminComponents//Pagination';
+import PaginationOrigin from '../../../components/AdminComponents/Pagination';
 
 import AdminModal from '../../../components/AdminComponents/AdminModal';
 import {
@@ -172,7 +172,7 @@ const OrderList = ({ meData, setIsAdminBoard, isAdminBoard }) => {
         </AdTable>
       </AdListMid>
       <AdListBottom>
-        <Pagination
+        <PaginationOrigin
           totalPosts={orders?.length}
           postsPerPage={postsPerPage}
           setCurrentPage={setCurrentPage}

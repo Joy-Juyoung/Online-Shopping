@@ -18,11 +18,8 @@ import {
 } from '../AdminCommonElements';
 import axios from '../../../api/axios';
 import Loading from '../../../components/Loading';
-import Pagination from '../../../components/AdminComponents//Pagination';
+import PaginationOrigin from '../../../components/AdminComponents/Pagination';
 import { ButtonSmall, ButtonUtils } from '../../../components/ButtonElements';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import EditIcon from '@mui/icons-material/Edit';
 import AddItemModal from './AddItemModal';
 import AddNewItem from './AddNewItem';
 import { AdIconDelete } from './listStyle';
@@ -232,7 +229,7 @@ const ItemList = ({ meData, catData }) => {
       </AddItemModal>
 
       <AdListBottom>
-        <Pagination
+        <PaginationOrigin
           totalPosts={products?.length}
           postsPerPage={postsPerPage}
           setCurrentPage={setCurrentPage}
