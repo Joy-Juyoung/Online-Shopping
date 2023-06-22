@@ -2,5 +2,10 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  /* font-family: "Encode Sans Expanded", sans-serif; */
+  /* font-family: proximanova, -apple-system, BlinkMacSystemFont, 'Noto Sans',
+    'Segoe UI', Roboto, system-ui, 'Helvetica Neue', Arial, sans-serif; */
+  /* font-family: 'Lato', sans-serif; */
+  font-family: 'Kanit', sans-serif;
+  /* font-family: 'Karla', sans-serif; */
+  /* font-family: 'DM Sans', sans-serif; */
 }

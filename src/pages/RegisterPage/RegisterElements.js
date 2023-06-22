@@ -1,45 +1,70 @@
 import styled from 'styled-components';
 
-export const RegisterInput = styled.div``;
-
-export const RegisterInputLabel = styled.div`
-  margin: 20px 0 5px;
-`;
-
-export const Agreements = styled.div`
-  margin: 20px 0 30px;
-  display: felx;
+export const ErrorMsg = styled.div`
+  text-align: center;
+  margin: 20px 0 -20px;
+  padding: 10px 0;
+  border: 1px solid #ffe9ad;
+  background: #ffe9ad;
+  color: red;
+  display: flex;
   align-items: center;
-  flex-direction: column;
   justify-content: center;
 `;
 
-export const AgreementsWrap = styled.div``;
-
-export const AgreeAll = styled.div`
-  display: felx;
-  align-items: center;
-  margin-bottom: 10px;
+export const RegisterForm = styled.form`
+  /* margin: 0 0 50px; */
+  /* height: 50vh; */
 `;
 
-export const AgreeAllCheckbox = styled.input`
-  width: 20px;
-  cursor: pointer;
+export const RegisterInput = styled.div`
+  margin: 0 0 20px;
 `;
 
-export const AgreeEach = styled.div`
-  display: felx;
-  align-items: center;
-  margin-bottom: 5px;
+export const RegisterInputLabel = styled.label``;
 
-  & button {
-    outline: none;
-    border: none;
-    background: none;
-    cursor: pointer;
+export const VerificationMsg = styled.div`
+  display: flex;
+  align-items: center;
+
+  span {
+    margin-left: 10px;
+    color: grey;
   }
 `;
 
-export const AgreeContents = styled.div`
-  margin-left: 10px;
+export const GobackLogin = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    margin-right: 10px;
+  }
+`;
+export const RegisterSuccessMsg = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+  margin: 50px auto;
+
+  div {
+    text-align: center;
+    width: 100%;
+  }
+
+  h1 {
+    font-size: 25px;
+    margin: 20px 0;
+  }
+  p {
+    text-align: center;
+    margin: 20px 0 30px;
+    padding: 15px;
+    border: 1px solid #009605;
+    background: #dff0d7;
+    color: #009605;
+    font-weight: 600;
+  }
 `;
