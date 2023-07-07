@@ -72,13 +72,13 @@ const HeroPage = ({ meData, catData }) => {
   if (loading)
     return (
       <div>
-        <DBNotification />
+        {/* <DBNotification /> */}
         <Loading />
       </div>
     );
   return (
     <MainContainer>
-      {/* <DBNotification /> */}
+      <DBNotification />
       <MainWrapper>
         <MidInfo>
           <SectionWrap className='start__left'>
