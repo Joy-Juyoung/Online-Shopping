@@ -35,6 +35,7 @@ import Slider from './Slider';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from '../../api/axios';
 import PartLoader from '../../components/PartLoader';
+import DBNotification from '../../components/DBNotification';
 
 const HeroPage = ({ meData, catData }) => {
   // const navigate = useNavigate();
@@ -71,11 +72,13 @@ const HeroPage = ({ meData, catData }) => {
   if (loading)
     return (
       <div>
+        <DBNotification />
         <Loading />
       </div>
     );
   return (
     <MainContainer>
+      {/* <DBNotification /> */}
       <MainWrapper>
         <MidInfo>
           <SectionWrap className='start__left'>

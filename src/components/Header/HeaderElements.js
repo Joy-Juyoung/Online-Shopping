@@ -95,6 +95,12 @@ export const MidLink = styled(Link)`
   & :hover {
     color: gray;
   }
+
+  img {
+    height: 40px;
+    display: flex;
+    align-items: center;
+  }
 `;
 
 export const RightSide = styled.div`

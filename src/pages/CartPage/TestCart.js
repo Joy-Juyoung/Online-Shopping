@@ -52,6 +52,10 @@ const TestCart = ({ checkedList, setCheckedList, setIsCount, isCount }) => {
   const [checkedItem, setCheckedItem] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
 
+  const [isCheckAll, setIsCheckAll] = useState(false);
+  const [isCheck, setIsCheck] = useState([]);
+  const [list, setList] = useState([]);
+
   const handleCheckedItems = (e) => {
     setCheckedItem({ ...checkedItem, [e.target.value]: e.target.checked });
   };
@@ -100,24 +104,13 @@ const TestCart = ({ checkedList, setCheckedList, setIsCount, isCount }) => {
   }, []);
   // console.log('carts', carts);
 
-  // const handleAllDeleteCart = async () => {
-  //   if (checkedList?.length !== 0) {
-  //     if (
-  //       window.confirm(
-  //         'Are you sure you want to delete checked items in your cart?'
-  //       )
-  //     ) {
-  //       const deleteItem = checkedList?.map((c) => {
-  //         axios.delete(`/carts/${c.pk}`, {
-  //           headers: { 'Content-Type': 'application/json' },
-  //           withCredentials: true,
-  //         });
-  //       });
-  //       setCarts(deleteItem);
-  //       // window.location.reload();
-  //     }
-  //   }
-  // };
+  const handleSelectAll = (e) => {
+    setIsCheckAll(!isCheckAll);
+    setIsCheck(list.map((li) => li.id));
+    if (isCheckAll) {
+      setIsCheck([]);
+    }
+  };
 
   const handleDeleteCart = async (pk) => {
     // console.log('pk', pk);
@@ -183,8 +176,24 @@ const TestCart = ({ checkedList, setCheckedList, setIsCount, isCount }) => {
           <CartBodyWrap>
             <CartLeftInfo>
               <CartLeftCheckBar>
-                <CheckBarWrap>
+                {/* <CheckBarWrap>
                   <OrderCheckBox>total {carts?.length}</OrderCheckBox>
+                </CheckBarWrap> */}
+                <CheckBarWrap>
+                  <OrderCheckBox>
+                    <input
+                      type='checkbox'
+                      // checked={checkList.length === IdList.length}
+                      onChange={handleSelectAll}
+                      name='selectAll'
+                      id='selectAll'
+                      isChecked={isCheckAll}
+                    />
+                    <label>All</label>
+                  </OrderCheckBox>
+                  <OrderCheckBox>
+                    <label>total {carts?.length}</label>
+                  </OrderCheckBox>
                 </CheckBarWrap>
               </CartLeftCheckBar>
               <CartProductLists>
