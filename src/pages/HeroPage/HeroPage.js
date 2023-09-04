@@ -76,6 +76,7 @@ const HeroPage = ({ meData, catData }) => {
         <Loading />
       </div>
     );
+
   return (
     <MainContainer>
       <DBNotification />
